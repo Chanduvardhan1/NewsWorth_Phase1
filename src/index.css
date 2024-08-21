@@ -2,3 +2,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    .active {
+      @apply !font-bold;
+    }
+  }
+  
+  
+  @layer components {
+    .primary-btn {
+      @apply bg-blue-600 p-[5px] px-4 rounded-[50px] text-white font-bold hover:bg-red-700 transform hover:scale-105;
+    }
+  }
+  
+  * {
+    /* font-family: "Open Sans", "sans-serif"; */
+    font-size: 16px;
+  }
