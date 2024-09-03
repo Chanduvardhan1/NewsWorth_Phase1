@@ -11,6 +11,11 @@ import Navbar from './Navbar/navbar.jsx';
 import Login from './login/login.jsx';
 import Signup from './signup/signup.jsx';
 import Profile from '../src/profile/profile.jsx';
+import Contactus from './contactus/contactus.jsx';
+import Resetpassword from './resetpassword/resetpassword.jsx';
+import Resetmobile from './resetpasswordmobile/resetpassword.jsx';
+import Landing from './landing/landing.jsx';
+
 
 function App() {  
   return (
@@ -25,6 +30,11 @@ function App() {
     <Route path="login" element={<Login />} />
     <Route path="signup" element={<Signup />} />
     <Route path="Profile" element={<Profile />} />
+    <Route path="contactus" element={<Contactus />} />
+    <Route path="resetpassword" element={<Resetpassword />} />
+    <Route path="resetmobile" element={<Resetmobile />} />
+
+    <Route path="landing" element={<Landing />} />
 
 
   </Route>

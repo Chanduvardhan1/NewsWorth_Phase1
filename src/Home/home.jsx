@@ -1,39 +1,54 @@
 import React from "react";
-import logo from "../../images/home/NewsWorth.png"
+import logo from "../../src/assets/Images/home/background.png"
 import Navbar from "../Navbar/navbar";
-import home from '../../images/home/NW-image.png'
+import home from '../../src/assets/Images/home/background.png'
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleContactUs= () => {
+    navigate('/contactus')
+  };
   return (
     <>
    <Navbar/>
-   <main className="flex justify-between mx-5 px-5">
+   <div className="relative ">
+   <main className="h-[500px] w-full overflow-hidden  flex px-10">
+    <div className="w-[50%] flex flex-col justify-center items-center">
     <div className="flex flex-col justify-center gap-3">
-      <div className=" text-[20px] font-bold items-start justify-start">
-        <h1>Feture</h1>
+      <div className=" text-[32px] font-bold items-start justify-start blue-color">
+        <h1>Feature</h1>
       </div>
      
         <div className="flex flex-col gap-5">
-         <li>This is the <span className=" text-orange-500 font-bold">Fist</span> point</li>
-          <li>This is the <span className=" text-blue-500 font-bold">Second</span> point</li>
-          <li>This is the <span className=" text-green-500 font-bold">Third</span> point</li>
-          <li>This is the <span className=" text-yellow-500 font-bold">Fourth</span> point</li>
-          <li>This is the <span className=" text-red-500 font-bold">Fifth</span> point</li>
+         <li> Unfiltered stories, unmatched quality.<span className=" text-orange-500 font-bold"></span> </li>
+          <li>Certify, protect, and monetize your content on NewsWorth.<span className=" text-blue-500 font-bold"></span> </li>
+          <li>Capture content using the "<span className="blue-color font-bold">NewsWorth Eye</span>" mobile app, with cloud storage.</li>
+          <li> Access the "<span className=" text-[#ce003d] font-bold">NewsWorth Wall</span>"  web portal, featuring a content marketplace.</li>
+          <li> Set your own pricing for your content.<span className="red-color font-bold"></span> </li>
+          <li>Certify, protect, and monetize your content on NewsWorth.<span className=" text-blue-500 font-bold"></span> </li>
 
          
         </div>
         
       
     </div>
-    <div>
-      <img src={home} alt="" width={500}  height={500}/>
+    </div>
+    <div  className="w-[50%] flex justify-center items-center">
+      <img src={home} alt="" width={500}  height={500} className="hover:duration-300 hover:scale-105 "/>
     </div>
    </main>
-   <div className="flex justify-end pr-10 gap-1">
-    <p>Contact US</p>|
-    <p>11111 visited</p>|
-    <p>© CopyRight cricle of IND PVTLTD</p>
+   <div className="fixed bottom-0 right-0 ">
 
+
+   <div className="flex justify-end pr-10 gap-1">
+    <p onClick={handleContactUs} className=" cursor-pointer">Contact Us</p>|
+    <p>11111 Visited</p>|
+    <p>© 2024 Newsworth of IND PVT LTD.</p>
+
+   </div>
+   </div>
    </div>
     </>
   

@@ -12,7 +12,17 @@
   
   @layer components {
     .primary-btn {
-      @apply bg-blue-600 p-[5px] px-4 rounded-[50px] text-white font-bold hover:bg-red-700 transform hover:scale-105;
+      @apply bg-blue-600 p-[5px] px-4 rounded-[50px] text-white font-bold hover:bg-red-700 transition-transform duration-300 ease-in-out transform hover:scale-105;
+    }
+  }
+  @layer components {
+    .blue-color {
+      @apply text-[#0f2b9fd9];
+    }
+  }
+  @layer components {
+    .red-color {
+      @apply text-[#ce003d];
     }
   }
   
