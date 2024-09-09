@@ -84,7 +84,7 @@ const contactus = () => {
                     variant="outlined"
                     type="text"
                   
-                    
+                    required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     InputProps={{
@@ -106,7 +106,7 @@ const contactus = () => {
                     label="Last Name"
                     variant="outlined"
                     type="text"
-                  
+                    required
                     
                   
                     InputProps={{
@@ -135,7 +135,7 @@ const contactus = () => {
                         
                           variant="outlined"
                      
-                          
+                          required
                           InputProps={{
                             style: {
                               backgroundSize: "19px 16px",
@@ -170,7 +170,7 @@ const contactus = () => {
                           value={mobilenumber}
                           onChange={(e) => setMobileNumber(e.target.value)}
                           variant="outlined"
-                     
+                          required
                           
                           InputProps={{
                             style: {
@@ -206,7 +206,7 @@ const contactus = () => {
                          onChange={(e) => setMessage(e.target.value)}
                         
                           variant="outlined"
-                     
+                          required
                           
                           InputProps={{
                             style: {

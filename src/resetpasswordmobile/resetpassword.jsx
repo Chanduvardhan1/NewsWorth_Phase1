@@ -1,7 +1,8 @@
 import React, { useState,useEffect } from "react";
 import logo from "../assets/Images/home/NewsWorth.png"
 import Navbar from "../Navbar/navbar";
-import home from '../../src/assets/Images/home/background.png'
+import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
+
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FaEye, FaEyeSlash } from "react-icons/fa";

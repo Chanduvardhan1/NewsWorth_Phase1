@@ -15,7 +15,8 @@ import Contactus from './contactus/contactus.jsx';
 import Resetpassword from './resetpassword/resetpassword.jsx';
 import Resetmobile from './resetpasswordmobile/resetpassword.jsx';
 import Landing from './landing/landing.jsx';
-
+import Footer from './footer/footer.jsx';
+import Dashboard from './dashboard/dashboard.jsx';
 
 function App() {  
   return (
@@ -36,6 +37,8 @@ function App() {
 
     <Route path="landing" element={<Landing />} />
 
+    <Route path="footer" element={<Footer />} />
+    <Route path="dashboard" element={<Dashboard />} />
 
   </Route>
 </Routes>

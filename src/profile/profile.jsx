@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import Navbar from "../Navbar/navbar";
-import home from '../../src/assets/Images/home/background.png'
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
+
 import { useNavigate } from "react-router-dom";
 import { URL } from "../url";
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
@@ -9,58 +9,27 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const signup = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showOTP, setshowOTP] = useState(false);
-  const [showOTP1, setshowOTP1] = useState(false);
-  const [resendAvailable1, setResendAvailable1] = useState(true);
-  const [showOtpField1, setShowOtpField1] = useState(false);
-  const [resendAvailable2, setResendAvailable2] = useState(true);
-  const [showOtpField2, setShowOtpField2] = useState(false);
-  const [loginMethod, setLoginMethod] = useState('email');
-  const [verify, setVerify] = useState(false);
-  const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(false);
+  const [data1, setdata1] = useState('');
   const [showRegistr, setShowRegistr] = useState(true);
 
   const navigate = useNavigate();
- 
-  const [userName, setUserName] = useState('');
-  const [emailOrMobile, setEmailOrMobile] = useState('');
+
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
 
-  const [dob, setDob] = useState('');
-  const [isChecked, setIsChecked] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [resendTime1, setResendTime1] = useState(10 * 60);
-  const [resendTime2, setResendTime2] = useState(10 * 60);
 
-  const [mobileOTP, setMobileOTP] = useState('');
-  const [emailOTP, setEmailOTP] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
 
 
 // ----------register--------
-  const [firstName, setFirstName] = useState('');
-  const [middleName, setMiddleName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [gender, setGender] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [country, setCountry] = useState('');
 
-  const [orgname, setOrgname] = useState('');
-  const [orgnumber, setOrgnumber] = useState('');
-  const [gstnumber, setGstnumber] = useState('');
 
+ 
   const [pincode, setPincode] = useState('');
-  const [district, setDistrict] = useState('');
   const [state, setState] = useState('');
-const [location , setLocation] = useState('')
-const [countryname , setCountryname] = useState('')
-const [address ,setAddress] = useState('')
-const [categories, setCategories] = useState([]);
-const [selectedCategory, setSelectedCategory] = useState("");
+
 const [message, setMessage] = useState('');
-const [selectedUserType, setSelectedUserType] = useState("");
 const [userType, setUserType] = useState([]);
 
 const [locationDetails, setLocationDetails] = useState([]);
@@ -69,8 +38,115 @@ const [selectedDistrict, setSelectedDistrict] = useState('')
 const [uniqueDistricts, setUniqueDistricts] = useState([]);
 
 
+const [userid, setUserid] = useState('');
+const [firstname, setFirstname] = useState('');
+const [middlename, setMiddlename] = useState('');
+const [lastname, setLastname] = useState('');
+const [useremail, setUseremail] = useState('');
+const [userphonenumber, setUserphonenumber] = useState('');
+const [country, setCountry] = useState('');
+const [gender, setGender] = useState('');
+const [dateofbirth, setDateofbirth] = useState('');
 
+const [useraddressline1, setUseraddressline1] = useState('');
+const [useraddressline2, setUseraddressline2] = useState('');
+const [isEditable, setIsEditable] = useState(false);
+useEffect(() => {
+  fetchUserProfile();
+}, []);
 
+const fetchUserProfile = async () => {
+  try {
+    const response = await fetch(`${URL}/get_prfl_dtls?user_id=49`,{
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZHUgdmFyZGhhbiBrIiwiZXhwIjoyMDQwNzI0NDk4fQ.RnK47QiAmU0Xmt7hv10c8KrWpLz6Uj9Vvtmt4A0G0_M',
+      },
+      body: ''
+    });
+
+    const data = await response.json();
+    if (data.response === 'success') {
+      setdata1(data.response_message)
+      setUserid(data.response_message.user_id);
+      setFirstname(data.response_message.first_name);
+      setMiddlename(data.response_message.middle_name);
+      setLastname(data.response_message.last_name);
+      setUseremail(data.response_message.user_email);
+      setUserphonenumber(data.response_message.user_phone_number || ''); // Ensure empty value if null
+      setCountry(data.response_message.country);
+      setGender(data.response_message.gender);
+      setDateofbirth(data.response_message.date_of_birth);
+
+      setPincode(data.response_message.pin_code);
+      setSelectedDistrict(data.response_message.district_name); // Ensure empty value if null
+      setState(data.response_message.state_name);
+      setSelectedCity(data.response_message.location_name);
+
+      setUseraddressline1(data.response_message.user_address_line_1);
+      setUseraddressline2(data.response_message.user_address_line_2);
+    } else {
+      console.error('Error fetching user profile:', data.message);
+    }
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+  }
+};
+const handleSaveClick = async () => {
+  const userProfileData = {
+    user_id:userid,
+    first_name:firstname,
+    middle_name:middlename,
+    last_name:lastname,
+    gender:gender,
+    user_email:useremail,
+    user_phone_number:userphonenumber,
+    user_type: "Journalist", // Assuming this is static or dynamically set elsewhere
+    date_of_birth:dateofbirth,
+    country_name:country,
+    user_address_line_1: useraddressline1,
+    user_address_line_2: useraddressline2,
+    pin_code: pincode,
+    location_name: selectedCity,
+    district_name: selectedDistrict,
+    state_name: state
+  };
+
+  try {
+    const response = await fetch(`${URL}/edt_prfl_dtls`, {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZHUgdmFyZGhhbiBrIiwiZXhwIjoyMDQwNzI0NDk4fQ.RnK47QiAmU0Xmt7hv10c8KrWpLz6Uj9Vvtmt4A0G0_M',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userProfileData),
+    });
+
+    const data = await response.json();
+    if (data.response === 'success') {
+      toast.success(data.response_message);
+
+      // Handle success, maybe show a success message or reset the isEditable flag
+      setShowRegistr(true)
+      setIsEditable(false);
+    } else {
+      // Handle error response
+      console.error('Error updating user profile:', data.message);
+    }
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+  }
+};
+const handleEditClick = () => {
+  setIsEditable(true);
+  setShowRegistr(false)
+};
+const handleCancel = () =>{
+  setShowRegistr(true)
+  setIsEditable(false);
+}
 
 // const handleCheckboxChange = () => {
 //     setIsChecked(!isChecked);
@@ -85,78 +161,56 @@ const [uniqueDistricts, setUniqueDistricts] = useState([]);
   const handleMobileChange = (e) => {
     const inputValue = e.target.value;
     if (/^\d*$/.test(inputValue)) {
-      setMobile(inputValue);
+      setUserphonenumber(inputValue);
     }
   };
 
 
 const handleEmailChange = (e) => {
   const value = e.target.value.toLowerCase(); // Convert input to lowercase
-  setEmail(value);
+  setUseremail(value);
 };
 
- 
-  const handleLoginMethodChange = (method) => {
-    setLoginMethod(method);
-  };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-  const handleLogin= () => {
-    navigate('/login')
-   };
+const fetchLocationDetails = async () => {
+  try {
+    const response = await fetch(`${URL}/location_details/`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ pincode })
+    });
+    const result = await response.json();
+    const data = result.data;
 
-const showdropdwon = () =>{
-  setShowRegistrationSuccess(true)
-}
+    // Remove duplicate locations and districts
+    const uniqueLocations = [...new Map(data.map(item => [item.location, item])).values()];
+    const uniqueDistrictsList = [...new Map(data.map(item => [item.district, item.district])).values()];
+
+    setLocationDetails(uniqueLocations);
+    setUniqueDistricts(uniqueDistrictsList);
+
+    setState(uniqueLocations[0]?.state || '');
+    setCountry(uniqueLocations[0]?.country || '');
+    setSelectedDistrict(''); // Reset district selection when pincode changes
+
+  } catch (error) {
+    console.error('Error fetching location details:', error);
+  }
+};
+
+const handlePincodeChange = (event) => {
+  setPincode(event.target.value);
+};
 
 
-
-
-
-
-
-
-
-
-
-
-
-  
-  const [address1, setAddress1] = useState({});
-
-   
-
-  const handleGenderChange = (event) => {
-    setGender(event.target.value);
-  };
-  const handleUserType = (event) => {
-    setUserType(event.target.value);
-  };
-  const handleemailOTPChange = (e) => {
-    const value = e.target.value;
-    const regex = /^[0-9]*$/; // Regular expression to match only numbers
-  
-    // Check if the value contains only numbers and is not longer than 6 digits
-    if (regex.test(value) && value.length <= 6) {
-      setEmailOTP(value);
-    }
-  };
-  const handlemobileOTPChange = (e) => {
-    const value = e.target.value;
-    const regex = /^[0-9]*$/; // Regular expression to match only numbers
-  
-    // Check if the value contains only numbers and is not longer than 6 digits
-    if (regex.test(value) && value.length <= 6) {
-      setMobileOTP(value);
-    }
-  };
   return (
     <>
    <Navbar/>
    <ToastContainer />
-   <main className="w-full h-[500px]  flex px-10">
+   <main className="flex flex-col md:flex-row justify-center items-center w-full min-h-screen bg-gray-50 px-6 py-10">
    
    
 
@@ -164,10 +218,24 @@ const showdropdwon = () =>{
       <div className=" flex flex-col gap-[20px] ">
 
     <div className="flex justify-center">
-      <h1 className="blue-color font-bold text-[32px]">Registration</h1>
+      <h1 className="blue-color font-bold text-[32px]">My Profile</h1>
     </div>
 
-
+<div className="flex  items-center gap-3">
+<div className="relative w-[100px] h-[100px]">
+  <img src="src\assets\Images\landing\pic.jpg" alt="" className="w-full h-full rounded-[50px]" />
+  
+  {/* Camera icon */}
+  <img
+    src="src\assets\Images\home\add-photo.png" 
+    alt="camera icon"
+    className="absolute bottom-0 right-0 w-[25px] h-[25px] rounded-full"
+  />
+</div>
+  <div>
+    <h1 className=" font-bold text-[18px]">{data1.first_name} {data1.middle_name} {data1.last_name} </h1>
+  </div>
+</div>
 
   <div className="flex flex-col gap-[10px]">
     <div className=" flex gap-[5px] justify-center">
@@ -178,8 +246,10 @@ const showdropdwon = () =>{
                     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
                     required
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    value={firstname}
+                    onChange={(e) => setFirstname(e.target.value)}
+                    disabled={!isEditable}
+
                     InputProps={{
                       style: {             
                         
@@ -199,9 +269,9 @@ const showdropdwon = () =>{
                     variant="outlined"
                     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
-                    value={middleName}
-                    onChange={(e) => setMiddleName(e.target.value)}
-                   
+                    value={middlename}
+                    onChange={(e) => setMiddlename(e.target.value)}
+                    disabled={!isEditable}
                 
                     InputProps={{
                       style: {
@@ -220,8 +290,9 @@ const showdropdwon = () =>{
                     required            
                     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
      
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
+                    value={lastname}
+                    onChange={(e) => setLastname(e.target.value)}
+                    disabled={!isEditable}
                     InputProps={{
                       style: {
                         
@@ -240,8 +311,9 @@ const showdropdwon = () =>{
       id="Date of Birth" 
       label="Date of Birth" 
       focused
-      value={dob}
-      onChange={(e) => setDob(e.target.value)} 
+      value={dateofbirth}
+      onChange={(e) => setDateofbirth(e.target.value)}
+      disabled={!isEditable}
      variant="outlined"
      className="w-full  px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
@@ -268,7 +340,8 @@ const showdropdwon = () =>{
           <Select
             labelId="gender-label"
             value={gender}
-            onChange={(e) => setGender(e.target.value)} 
+            onChange={(e) => setGender(e.target.value)}
+            disabled={!isEditable}
             label="Gender"
             className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
@@ -289,6 +362,120 @@ const showdropdwon = () =>{
 </div>
 <div className=" flex gap-[5px] justify-center">
 <TextField
+     id="Pincode" 
+     label="Pincode" 
+     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+     value={pincode}
+     disabled={!isEditable}
+     onChange={handlePincodeChange}
+     onBlur={fetchLocationDetails}
+     variant="outlined"
+     required
+      InputProps={{
+        style: {
+       
+          height: "50px",
+          borderRadius: "10px",
+        },
+        endAdornment: (
+          <div
+            
+          >
+        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+
+          </div>
+        ),
+        autoComplete: "off",
+      }} />
+      
+      <FormControl variant="outlined" required className="w-full mb-4">
+          <InputLabel id="gender-label">City</InputLabel>
+          <Select
+         className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+         value={selectedCity}
+         onChange={(e) => setSelectedCity(e.target.value)}
+            labelId="City"
+            label="City"
+            disabled={!isEditable}
+            style={{
+              
+              height: "50px",
+              borderRadius: "10px",
+            }}
+            name="UserType"
+          >
+            <MenuItem value="">
+              {/* <em>None</em> */}
+            </MenuItem>
+            {locationDetails.map((location) => (
+              <MenuItem key={location.location_id} value={location.location}>
+                {location.location}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+</div>
+<div className=" flex gap-[5px] justify-center">
+       <FormControl variant="outlined" required className="w-full mb-4">
+          <InputLabel id="gender-label">District</InputLabel>
+          <Select
+         className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+
+            labelId="District"
+            label="District"
+            disabled={!isEditable}
+            value={selectedDistrict}
+            onChange={(e) => setSelectedDistrict(e.target.value)}
+            style={{
+              
+              height: "50px",
+              borderRadius: "10px",
+            }}
+            name="UserType"
+          >
+            <MenuItem value="">
+              {/* <em>None</em> */}
+            </MenuItem>
+            {uniqueDistricts.map((district, index) => (
+              <MenuItem key={index} value={district}>
+                {district}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+       <TextField
+     id="State" 
+     label="State" 
+     value={state}
+     disabled={!isEditable}
+     onChange={(e) => setState(e.target.value)}
+
+     variant="outlined"
+    
+
+     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+
+     required
+      InputProps={{
+        style: {
+       
+          height: "50px",
+          borderRadius: "10px",
+        },
+        endAdornment: (
+          <div
+            
+          >
+        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+
+          </div>
+        ),
+        autoComplete: "off",
+      }} />
+</div>
+
+<div className=" flex gap-[5px] justify-center">
+<TextField
      id="Country" 
      label="Country" 
      variant="outlined"
@@ -296,7 +483,8 @@ const showdropdwon = () =>{
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      value={country}
-     onChange={(e) => setCountry(e.target.value)} 
+     onChange={(e) => setCountry(e.target.value)}
+     disabled={!isEditable}
       InputProps={{
         style: {
        
@@ -323,8 +511,9 @@ const showdropdwon = () =>{
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      variant="outlined"
-     value={mobile}
-     onChange={handleMobileChange}  
+     value={userphonenumber}
+     onChange={handleMobileChange}
+     disabled={!isEditable} 
       InputProps={{
         style: {
        
@@ -349,8 +538,9 @@ const showdropdwon = () =>{
      variant="outlined"
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
-     value={email}
-     onChange={handleEmailChange} 
+     value={useremail}
+     onChange={handleEmailChange}
+     disabled={!isEditable}
       InputProps={{
         style: {
        
@@ -370,165 +560,96 @@ const showdropdwon = () =>{
       }} />
 
 </div>
+<div className=" flex gap-[5px] justify-center">
+<TextField
+     id="Country" 
+     label="User address line 1" 
+     variant="outlined"
+     required
+     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
+     value={useraddressline1}
+     onChange={(e) => setUseraddressline1(e.target.value)}
+     disabled={!isEditable}
+      InputProps={{
+        style: {
+       
+          
+          height: "50px",
+          borderRadius: "10px",
+        },
+        endAdornment: (
+          <div
+            
+          >
+        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+
+          </div>
+        ),
+        autoComplete: "off",
+      }} />
+      
+</div>
+<div className=" flex gap-[5px] justify-center">
+<TextField
+     id="Country" 
+     label="User address line 2" 
+     variant="outlined"
+     required
+     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+
+     value={useraddressline2}
+     onChange={(e) => setUseraddressline2(e.target.value)}
+     disabled={!isEditable}
+      InputProps={{
+        style: {
+       
+          
+          height: "50px",
+          borderRadius: "10px",
+        },
+        endAdornment: (
+          <div
+            
+          >
+        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+
+          </div>
+        ),
+        autoComplete: "off",
+      }} />
+      
+</div>
+{showRegistr ?(
+           <div className="flex justify-end">
+           <button className="primary-btn" onClick={handleEditClick}>Edit</button>
+         </div>
+
+):(
+  <div className="flex justify-between ">
+  <div className="">
+  <button className="primary-btn"onClick={handleCancel}>Cancel</button>
+</div>
+  <div className="">
+           <button className="primary-btn"onClick={handleSaveClick} >Save</button>
+         </div>
+         </div>
+)}
 <div className="flex justify-between"> 
   <div className="">
 
    {message && <p className="text-red-500  w-[320px]">{message}</p>}
   </div>
 
-   {!showOtpField1 ? (
-    <div className="flex justify-end  ">
-    <button className="primary-btn" onClick={sendOtp}>Send OTP</button>
-  </div>
-    
-  ) : (
-    <div className="flex justify-end space-x-4  items-center ">
-      <span className={`text-sm ${resendAvailable1 ? 'text-gray-500' : 'text-red-500'}`}>
-        {resendAvailable1 ? "" : ` (${formatTime(resendTime1)})`}
-      </span>
-      <button
-       onClick={sendOtp}
-        disabled={!resendAvailable1}
-        className={`p-[5px] px-4 rounded-[50px] ${resendAvailable1 ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
-      >
-        {resendAvailable1 ? "Resend OTP" : "Resend OTP"}
-      </button>
-    </div>
-  )}
+
 </div>
-  {showOTP && (
-  <div className=" flex gap-[5px] justify-center">
-  <TextField
-       id="Mobile OTP" 
-       label="Mobile OTP" 
-       variant="outlined"
-       required
-       className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
-       value={mobileOTP}
-       onChange={handlemobileOTPChange}
-        InputProps={{
-          style: {
-         
-            
-            height: "50px",
-            borderRadius: "10px",
-          },
-          endAdornment: (
-            <div
-              
-            >
-          {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
-  
-            </div>
-          ),
-          autoComplete: "off",
-        }} />
-         <TextField
-       id="Email OTP" 
-       label="Email OTP" 
-       variant="outlined"
-       className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
-       required
-       value={emailOTP}
-     onChange={handleemailOTPChange}
-        InputProps={{
-          style: {
-         
-           
-            height: "50px",
-            borderRadius: "10px",
-          },
-          endAdornment: (
-            <div
-              
-            >
-          {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
-  
-            </div>
-          ),
-          autoComplete: "off",
-        }} />
-  </div>
-  )}
-{verify &&(
-    <div className="flex justify-end  ">
-    <button className="primary-btn" onClick={verifySignup}>Verify</button>
-  </div>
-)}
-<div className=" flex gap-[5px] justify-center">
-<TextField
-     id="Password" 
-     label="Password" 
-     type={showPassword ? "text" : "password"}
-     variant="outlined"
-     required
-     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
-     value={password}
-     onChange={(e) => setPassword(e.target.value)}
-      InputProps={{
-        style: {
-       
-         
-          height: "50px",
-          borderRadius: "10px",
-        },
-        endAdornment:showPassword !== undefined && (
-          <div
-          onClick={togglePasswordVisibility}
-          className=" text-[#a7a3ff] cursor-pointer"  
-          >
-                  {showPassword ? <FaEye/> : <FaEyeSlash />}
-
-          </div>
-        ),
-        autoComplete: "off",
-      }} />
-       <TextField
-     id="Confirm Password" 
-     label="Confirm Password" 
-     variant="outlined"
-     type={showPassword ? "text" : "password"}
-     required
-     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
-     value={confirmPassword}
-     onChange={(e) => setConfirmPassword(e.target.value)}
-      InputProps={{
-        style: {
-          
-          height: "50px",
-          borderRadius: "10px",
-        },
-        endAdornment:showPassword !== undefined && (
-          <div
-          onClick={togglePasswordVisibility}
-          className=" text-[#a7a3ff] cursor-pointer"  
-          >
-                  {showPassword ? <FaEye/> : <FaEyeSlash />}
-
-          </div>
-        ),
-        autoComplete: "off",
-      }} />
-</div>
 
 {errorMessage && <p className="text-red-500  w-[320px]">{errorMessage}</p>}
 
 
-{showRegistr ?(
-           <div className="flex justify-end">
-           <button className="p-[5px] px-4 rounded-[50px] text-white font-bold  cursor-not-allowed bg-gray-500">Register</button>
-         </div>
 
-):(
-  <div className="flex justify-end ">
-           <button className="primary-btn" onClick={handleRegister}>Register</button>
-         </div>
-)}
   </div>
 
 

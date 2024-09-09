@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../Navbar/navbar";
-import home from '../../src/assets/Images/home/background.png'
+import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
+
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -145,7 +146,7 @@ const [errorMessage, setErrorMessage] = useState('')
     <>
    <Navbar/>
    <div className=" relative">
-   <main className="w-full h-[500px]  flex px-10">
+   <main className="w-full h-[500px]  flex px-[5%]">
    
   <div className="w-[50%]">
    
@@ -495,7 +496,7 @@ const [errorMessage, setErrorMessage] = useState('')
  </div>
    )}
    </div>
-   <div className="w-[50%] flex justify-center items-center">
+   <div className="w-[50%] flex justify-end items-center">
   
    <img src={home} alt="" width={500}  height={500} className="hover:duration-300 hover:scale-105 "/>
 

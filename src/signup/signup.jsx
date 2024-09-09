@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import Navbar from "../Navbar/navbar";
-import home from '../../src/assets/Images/home/background.png'
+import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
+
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../url";
@@ -18,7 +19,7 @@ const signup = () => {
   const [showOtpField2, setShowOtpField2] = useState(false);
   const [loginMethod, setLoginMethod] = useState('email');
   const [verify, setVerify] = useState(false);
-  const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(false);
+  const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(true);
   const [showRegistr, setShowRegistr] = useState(true);
 
   const navigate = useNavigate();
@@ -67,7 +68,8 @@ const [locationDetails, setLocationDetails] = useState([]);
 const [selectedCity, setSelectedCity] = useState('');
 const [selectedDistrict, setSelectedDistrict] = useState('')
 const [uniqueDistricts, setUniqueDistricts] = useState([]);
-
+const [hideOtpButtons, setHideOtpButtons] = useState(false); // New state to control OTP buttons visibility
+const [pincodeMessage, setPincodeMessage] = useState('');
 //   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 useEffect(() => {
@@ -382,7 +384,7 @@ const handleUserTypeChange = (event) => {
 
 const sendOtp = async () => {
   if (!email && !mobile) {
-    setMessage('Please enter either an mobile number or email.');
+    setMessage('Please enter either mobile number or email.');
     return; 
   }
   setResendAvailable1(false);
@@ -404,13 +406,13 @@ const sendOtp = async () => {
     });
 
     const result = await response.json();
-    if (result.response === 'success' && result.response_message === "Email is alreday registered.Please verify your email to proceed") {
+    if  (result.response === 'fail' && result.response_message === "Please click here to complete your registration and activate your account." && result.data === "verified") {
       toast.success(result.response_message);
       setVerify(false);
       setshowOTP(false);
       setShowRegistr(false);
       setShowOtpField1(true);
-
+      setHideOtpButtons(true);
     } else if (result.response === 'success') {
       setMessage('');
       toast.success(result.response_message);
@@ -479,6 +481,10 @@ const fetchLocationDetails = async () => {
       body: JSON.stringify({ pincode })
     });
     const result = await response.json();
+    if (result.response === 'fail' && result.response_message === 'Failed to fetch location details.') {
+      setPincodeMessage('Failed to fetch location details. Please try again.');
+      return; // Stop further execution if the fetch fails
+    }
     const data = result.data;
 
     // Remove duplicate locations and districts
@@ -487,57 +493,65 @@ const fetchLocationDetails = async () => {
 
     setLocationDetails(uniqueLocations);
     setUniqueDistricts(uniqueDistrictsList);
-
+    
+    setSelectedDistrict(uniqueLocations[0]?.district || '');
     setState(uniqueLocations[0]?.state || '');
     setCountry(uniqueLocations[0]?.country || '');
-    setSelectedDistrict(''); // Reset district selection when pincode changes
+     // Reset district selection when pincode changes
 
   } catch (error) {
+    setPincodeMessage('An error occurred while fetching location details.');
+
     console.error('Error fetching location details:', error);
   }
 };
 
 const handlePincodeChange = (event) => {
-  setPincode(event.target.value);
+  const value = event.target.value;
+
+  // Allow only numbers and limit to 6 characters
+  if (/^\d*$/.test(value) && value.length <= 6) {
+    setPincode(value);
+  }
 };
+useEffect(() => {
+  if (pincode.length === 6) {
+    fetchLocationDetails();
+  }
+}, [pincode]);
 
 const handleRegister = async () => {
   const platform = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     ? "mobile"
     : "Web";
-    if (!firstName || !lastName) {
-      setErrorMessage("Please enter first name and last name.");
-      return;
-    }
-    if (!dob) {
-      setErrorMessage("Please enter date of birth.");
-      return;
-    }
-    if (!gender) {
-      setErrorMessage("Please select the gender.");
-      return;
-    }
-  // Validate required fields
- 
-  
 
+  // Validate required fields
+  if (!firstName || !lastName) {
+    setErrorMessage("Please enter first name and last name.");
+    return;
+  }
+  if (!dob) {
+    setErrorMessage("Please enter date of birth.");
+    return;
+  }
+  if (!gender) {
+    setErrorMessage("Please select the gender.");
+    return;
+  }
   if (!country) {
     setErrorMessage("Please enter country.");
     return;
   }
-
- 
   if (!password || !confirmPassword) {
     setErrorMessage('Please enter a new password and confirm password.');
     return;
   }
-
   if (password !== confirmPassword) {
     setErrorMessage("Passwords do not match.");
     return;
   }
 
-
+  // Prepare data for submission
   const data = {
     platform: platform,
     first_name: firstName,
@@ -569,13 +583,13 @@ const handleRegister = async () => {
       toast.success(result.response_message);
       navigate('/login');
     } else if (result.response === 'fail') {
-      // Check for specific error messages in the detail array
+      // Check for specific error messages in the "detail" array
       if (result.detail && Array.isArray(result.detail)) {
         const dobError = result.detail.find(error => 
           error.loc && error.loc.includes("dob") && error.msg.includes("18 years old")
         );
         if (dobError) {
-          setErrorMessage(dobError.msg);  // Display specific error message related to DOB
+          setErrorMessage(dobError.msg);  // Display specific error message for DOB
         } else {
           setErrorMessage(result.response_message);  // General error message
         }
@@ -591,42 +605,37 @@ const handleRegister = async () => {
   }
 };
 
+
 const handleRegister1 = async () => {
   const platform = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     ? "mobile"
     : "Web";
-    if (!firstName || !lastName) {
-      setErrorMessage("Please enter first name and last name.");
-      return;
-    }
-    if (!dob) {
-      setErrorMessage("Please enter date of birth.");
-      return;
-    }
-    if (!gender) {
-      setErrorMessage("Please select the gender.");
-      return;
-    }
-  // Validate required fields
- 
-  
 
+  // Validate required fields
+  if (!firstName || !lastName) {
+    setErrorMessage("Please enter first name and last name.");
+    return;
+  }
+  if (!dob) {
+    setErrorMessage("Please enter date of birth.");
+    return;
+  }
+  if (!gender) {
+    setErrorMessage("Please select the gender.");
+    return;
+  }
   if (!country) {
     setErrorMessage("Please enter country.");
     return;
   }
-
- 
   if (!password || !confirmPassword) {
     setErrorMessage('Please enter a new password and confirm password.');
     return;
   }
-
   if (password !== confirmPassword) {
     setErrorMessage("Passwords do not match.");
     return;
   }
-
 
   const data = {
     platform: platform,
@@ -634,9 +643,9 @@ const handleRegister1 = async () => {
     org_number: orgnumber,
     gst_number: gstnumber,
     org_address: address,
-    pin_code:pincode,
+    pin_code: pincode,
     location_name: selectedCity,
-    district_name:selectedDistrict,
+    district_name: selectedDistrict,
     state_name: state,
     country_name: country,
     first_name: firstName,
@@ -669,11 +678,12 @@ const handleRegister1 = async () => {
     } else if (result.response === 'fail') {
       // Check for specific error messages in the detail array
       if (result.detail && Array.isArray(result.detail)) {
+        // Look for the DOB-related error
         const dobError = result.detail.find(error => 
-          error.loc && error.loc.includes("dob") && error.msg.includes("18 years old")
+          error.loc && error.loc.includes("dob") && error.msg.includes("You must be at least 18 years old")
         );
         if (dobError) {
-          setErrorMessage(dobError.msg);  // Display specific error message related to DOB
+          setErrorMessage(dobError.msg);  // Show the specific DOB error message
         } else {
           setErrorMessage(result.response_message);  // General error message
         }
@@ -688,6 +698,9 @@ const handleRegister1 = async () => {
     setErrorMessage('An error occurred during registration.');
   }
 };
+
+
+
   
   const [address1, setAddress1] = useState({});
 
@@ -747,7 +760,7 @@ const handleRegister1 = async () => {
     <>
    <Navbar/>
    <ToastContainer />
-   <main className="w-full h-[500px]  flex px-10">
+   <main className="w-full h-[500px]  flex px-[5%]">
    
    
 
@@ -871,8 +884,8 @@ const handleRegister1 = async () => {
 </div>
 <div className=" flex gap-[5px] justify-center">
 <TextField
-     id="Gst Number" 
-     label="Gst Number" 
+     id="GST Number" 
+     label="GST Number" 
       value={gstnumber}
          onChange={(e) => setGstnumber(e.target.value)}
      variant="outlined"
@@ -975,33 +988,38 @@ const handleRegister1 = async () => {
           </Select>
         </FormControl>
 </div>
-<div className=" flex gap-[5px] justify-center">
-       <FormControl variant="outlined" required className="w-full mb-4">
-          <InputLabel id="gender-label">District</InputLabel>
-          <Select
-         className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+{pincodeMessage && <div className=" text-red-500">{pincodeMessage}</div>} {/* Display error message */}
 
-            labelId="District"
-            label="District"
-            value={selectedDistrict}
-            onChange={(e) => setSelectedDistrict(e.target.value)}
-            style={{
-              
-              height: "50px",
-              borderRadius: "10px",
-            }}
-            name="UserType"
+<div className=" flex gap-[5px] justify-center">
+    
+        <TextField
+     id="District" 
+     label="District" 
+     value={selectedDistrict}
+     onChange={(e) => setSelectedDistrict(e.target.value)}
+
+     variant="outlined"
+    
+
+     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+
+     required
+      InputProps={{
+        style: {
+       
+          height: "50px",
+          borderRadius: "10px",
+        },
+        endAdornment: (
+          <div
+            
           >
-            <MenuItem value="">
-              {/* <em>None</em> */}
-            </MenuItem>
-            {uniqueDistricts.map((district, index) => (
-              <MenuItem key={index} value={district}>
-                {district}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+
+          </div>
+        ),
+        autoComplete: "off",
+      }} />
        <TextField
      id="State" 
      label="State" 
@@ -1377,6 +1395,8 @@ const handleRegister1 = async () => {
         autoComplete: "off",
       }} />
 </div>
+{errorMessage && <p className="text-red-500  w-[320px]">{errorMessage}</p>}
+
 {showRegistr ?(
            <div className="flex justify-end">
            <button className="p-[5px] px-4 rounded-[50px] text-white font-bold  cursor-not-allowed bg-gray-500">Register</button>
@@ -1598,26 +1618,27 @@ const handleRegister1 = async () => {
 
    {message && <p className="text-red-500  w-[320px]">{message}</p>}
   </div>
-
-   {!showOtpField1 ? (
-    <div className="flex justify-end  ">
-    <button className="primary-btn" onClick={sendOtp}>Send OTP</button>
-  </div>
-    
+  {!hideOtpButtons && (
+  !showOtpField1 ? (
+    <div className="flex justify-end">
+      <button className="primary-btn" onClick={sendOtp}>Send OTP</button>
+    </div>
   ) : (
-    <div className="flex justify-end space-x-4  items-center ">
+    <div className="flex justify-end space-x-4 items-center">
       <span className={`text-sm ${resendAvailable1 ? 'text-gray-500' : 'text-red-500'}`}>
         {resendAvailable1 ? "" : ` (${formatTime(resendTime1)})`}
       </span>
       <button
-       onClick={sendOtp}
+        onClick={sendOtp}
         disabled={!resendAvailable1}
         className={`p-[5px] px-4 rounded-[50px] ${resendAvailable1 ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
       >
         {resendAvailable1 ? "Resend OTP" : "Resend OTP"}
       </button>
     </div>
-  )}
+  )
+)}
+
 </div>
   {showOTP && (
   <div className=" flex gap-[5px] justify-center">
@@ -1762,7 +1783,7 @@ const handleRegister1 = async () => {
     </div>
   </div>
 
- <div  className="w-[50%] flex justify-center items-center">
+ <div  className="w-[50%] flex justify-end items-center">
       <img src={home} alt="" width={500}  height={500} className="hover:duration-300 hover:scale-105 "/>
     </div>
    </main>

@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../../src/assets/Images/home/background.png"
 import Navbar from "../Navbar/navbar";
-import home from '../../src/assets/Images/home/background.png'
+import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -14,14 +14,14 @@ const Home = () => {
     <>
    <Navbar/>
    <div className="relative ">
-   <main className="h-[500px] w-full overflow-hidden  flex px-10">
-    <div className="w-[50%] flex flex-col justify-center items-center">
-    <div className="flex flex-col justify-center gap-3">
-      <div className=" text-[32px] font-bold items-start justify-start blue-color">
+   <main className="h-[500px] w-full overflow-hidden  flex px-[5%]">
+    <div className="w-[50%] flex flex-col pt-[50px] items-center">
+    <div className="flex flex-col  gap-3">
+      {/* <div className=" text-[32px] font-bold items-start justify-start blue-color">
         <h1>Feature</h1>
-      </div>
+      </div> */}
      
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 ">
          <li> Unfiltered stories, unmatched quality.<span className=" text-orange-500 font-bold"></span> </li>
           <li>Certify, protect, and monetize your content on NewsWorth.<span className=" text-blue-500 font-bold"></span> </li>
           <li>Capture content using the "<span className="blue-color font-bold">NewsWorth Eye</span>" mobile app, with cloud storage.</li>
@@ -35,7 +35,7 @@ const Home = () => {
       
     </div>
     </div>
-    <div  className="w-[50%] flex justify-center items-center">
+    <div  className="w-[50%] flex justify-end items-center">
       <img src={home} alt="" width={500}  height={500} className="hover:duration-300 hover:scale-105 "/>
     </div>
    </main>
@@ -43,9 +43,9 @@ const Home = () => {
 
 
    <div className="flex justify-end pr-10 gap-1">
-    <p onClick={handleContactUs} className=" cursor-pointer">Contact Us</p>|
+    <p onClick={handleContactUs} className=" cursor-pointer font-bold blue-color hover:red-color">Contact Us</p>|
     <p>11111 Visited</p>|
-    <p>© 2024 Newsworth of IND PVT LTD.</p>
+    <p>Circle Of Minds Innovation Pvt Ltd.</p>
 
    </div>
    </div>
