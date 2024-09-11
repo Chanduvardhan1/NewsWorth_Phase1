@@ -17,6 +17,7 @@ import Resetmobile from './resetpasswordmobile/resetpassword.jsx';
 import Landing from './landing/landing.jsx';
 import Footer from './footer/footer.jsx';
 import Dashboard from './dashboard/dashboard.jsx';
+import Watch from './watch/watch.jsx';
 
 function App() {  
   return (
@@ -36,6 +37,7 @@ function App() {
     <Route path="resetmobile" element={<Resetmobile />} />
 
     <Route path="landing" element={<Landing />} />
+    <Route path="watch" element={<Watch />} />
 
     <Route path="footer" element={<Footer />} />
     <Route path="dashboard" element={<Dashboard />} />

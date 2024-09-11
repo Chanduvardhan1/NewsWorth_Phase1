@@ -92,6 +92,8 @@ const cardData = [
       userName: 'chandu',
       days: '10 days',
       location: 'Bangalore',
+      createdBy:'Chandu',
+      Date:'6-09-2024',
       cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
     },
     {
@@ -104,6 +106,9 @@ const cardData = [
         userName: 'Ram',
         days: '1 days',
         location: 'Bangalore',
+        location: 'Bangalore',
+        createdBy:'Chandu',
+        Date:'6-09-2024',
         cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
       },
       {
@@ -116,6 +121,9 @@ const cardData = [
         userName: 'Vardhan',
         days: '10 days',
         location: 'Bangalore',
+        location: 'Bangalore',
+        createdBy:'Chandu',
+        Date:'6-09-2024',
         cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
       },
       {
@@ -128,16 +136,23 @@ const cardData = [
         userName: 'chandu',
         days: '10 days',
         location: 'Bangalore',
+        location: 'Bangalore',
+        createdBy:'Chandu',
+        Date:'6-09-2024',
         cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
       },
     // You can add more card data objects here
   ];
 const dashboard = () => {
-    const [isFlipped, setIsFlipped] = useState(false);
+    const [flippedCards, setFlippedCards] = useState({});
 
-    const handleFlip = () => {
-      setIsFlipped(!isFlipped);
-    };
+  // Function to handle flip
+  const handleFlip = (cardId) => {
+    setFlippedCards((prevState) => ({
+      ...prevState,
+      [cardId]: !prevState[cardId], // Toggle the flip state
+    }));
+  };
     // var settings = {
     //     dots: true,
     //     arrows: true,
@@ -169,9 +184,9 @@ const dashboard = () => {
     <p>Wildlife</p>
     <p>Fashion</p>
 </div>
-<div className="flex flex-wrap gap-[25px] mb-6">
+<div className="flex  gap-[25px] mb-6">
       {cardData.map((card) => (
-        <div key={card.id} className="shadow-md rounded-[20px] overflow-hidden w-[23%] h-[20%]">
+        <div key={card.id} className="shadow-md flex-wrap rounded-[20px] overflow-hidden w-[100%] h-[100%] justify-center items-center">
           <div className="h-[10%] rounded-[30px]">
             <img src={card.imgSrc} alt="post" className="flex w-[100%] h-[100px]" />
           </div>
@@ -278,40 +293,92 @@ const dashboard = () => {
         </div>
       </div> */}
          
-             <div className="flex flex-wrap gap-[25px] ">
+          <div className="flex flex-wrap gap-[25px] ">
       {cardData1.map((card) => (
-        <div key={card.id} className="shadow-md overflow-hidden border-solid border-[1px] border-gray-300 w-[23%] h-[20%] ">
+        <div key={card.id} className="shadow-md overflow-hidden border-solid border-[1px] border-gray-300 w-[23%] h-[20%]">
           <div className="flex justify-end px-2 pt-1">
-            <img src="src/assets/Images/dashboard/flip.png" alt="flip" className="w-[20px] h-[20px]" />
+            {/* Flip button */}
+            <img
+              src="src/assets/Images/dashboard/flip.png"
+              alt="flip"
+              className="w-[20px] h-[20px] cursor-pointer"
+              onClick={() => handleFlip(card.id)}
+            />
           </div>
-          <div className="flex justify-between p-2">
-            <div className="p-1 border-solid border-[1px] border-blue-300">
-              <img src={card.icon} alt="icon" className="w-[20px] h-[20px]" />
+
+          {/* Conditional rendering based on flip state */}
+          {!flippedCards[card.id] ? (
+            // Front side of the card
+            <>
+              <div className="flex justify-between p-2">
+                <div className="p-1 border-solid border-[1px] border-blue-300">
+                  <img src={card.icon} alt="icon" className="w-[20px] h-[20px]" />
+                </div>
+                <div className="p-1 border-solid border-[1px] border-blue-300">
+                  <h1 className="font-bold">{card.title}</h1>
+                </div>
+                <div className="p-1 border-solid border-[1px] border-blue-300">
+                  <h1>{card.price}</h1>
+                </div>
+              </div>
+              <div className="p-2">
+                <p className="truncate p-1 border-solid border-[1px] border-blue-300">
+                  {card.description}
+                </p>
+              </div>
+              <div>
+                <img src={card.image} alt="social media" className="flex w-[100%] h-[150px]" />
+              </div>
+              <div className="flex justify-between items-center p-2 border-solid border-t-[1px] border-black">
+                <h1>{card.userName}</h1>
+                <p>|</p>
+                <h1>{card.days}</h1>
+                <p>|</p>
+                <h1>{card.location}</h1>
+                <p>|</p>
+                <img src={card.cartIcon} alt="cart" className="w-[20px] h-[20px]" />
+              </div>
+            </>
+          ) : (
+            // Back side of the card
+            <div className="">
+                  <div className="flex justify-between p-2">
+                <div className="p-1 border-solid border-[1px] border-blue-300">
+                  <img src={card.icon} alt="icon" className="w-[20px] h-[20px]" />
+                </div>
+                <div className="p-1 border-solid border-[1px] border-blue-300">
+                  <h1 className="font-bold">{card.title}</h1>
+                </div>
+                <div className="p-1 border-solid border-[1px] border-blue-300">
+                  <h1>{card.price}</h1>
+                </div>
+              </div>
+              <div className="p-2">
+                <p className="truncate p-1 border-solid border-[1px] border-blue-300">
+                  {card.description}
+                </p>
+              </div>
+              <div className="flex flex-col w-[100%] h-[150px] p-2">
+              <p className=" font-bold">Date: <span className=" font-normal">{card.Date}</span> </p>
+              <p className=" font-bold">Created by: <span className=" font-normal">{card.createdBy}</span> </p>
+              <p className=" font-bold">Location: <span className=" font-normal">{card.location}</span> </p>
+              </div>
+              <div className="flex justify-between items-center p-2 border-solid border-t-[1px] border-black">
+                <h1>{card.userName}</h1>
+                <p>|</p>
+                <h1>{card.days}</h1>
+                <p>|</p>
+                <h1>{card.location}</h1>
+                <p>|</p>
+                <img src={card.cartIcon} alt="cart" className="w-[20px] h-[20px]" />
+              </div>
+              {/* <h1 className="font-bold">Additional Details</h1>
+              <p>Location: {card.location}</p>
+              <p>Created by: {card.createdBy}</p>
+              <p>Created on: {card.createdOn}</p> */}
+              {/* Add more details here as needed */}
             </div>
-            <div className="p-1 border-solid border-[1px] border-blue-300">
-              <h1 className="font-bold">{card.title}</h1>
-            </div>
-            <div className="p-1 border-solid border-[1px] border-blue-300">
-              <h1>{card.price}</h1>
-            </div>
-          </div>
-          <div className="p-2">
-            <p className="truncate p-1 border-solid border-[1px] border-blue-300">
-              {card.description}
-            </p>
-          </div>
-          <div>
-            <img src={card.image} alt="social media" className="flex w-[100%] h-[150px]" />
-          </div>
-          <div className="flex justify-between items-center p-2 border-solid border-t-[1px] border-black">
-            <h1>{card.userName}</h1>
-            <p>|</p>
-            <h1>{card.days}</h1>
-            <p>|</p>
-            <h1>{card.location}</h1>
-            <p>|</p>
-            <img src={card.cartIcon} alt="cart" className="w-[20px] h-[20px]" />
-          </div>
+          )}
         </div>
       ))}
     </div>

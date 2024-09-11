@@ -534,6 +534,24 @@ const handleRegister = async () => {
     setErrorMessage("Please enter date of birth.");
     return;
   }
+
+  // Check if user is above 18 years old
+  const birthDate = new Date(dob);
+  const today = new Date();
+  const age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  const dayDiff = today.getDate() - birthDate.getDate();
+
+  // Adjust age if the birthday hasn't occurred this year yet
+  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+    age--;
+  }
+
+  if (age < 18) {
+    setErrorMessage("You must be at least 18 years old to register.");
+    return;
+  }
+
   if (!gender) {
     setErrorMessage("Please select the gender.");
     return;
@@ -543,7 +561,7 @@ const handleRegister = async () => {
     return;
   }
   if (!password || !confirmPassword) {
-    setErrorMessage('Please enter a new password and confirm password.');
+    setErrorMessage("Please enter a new password and confirm password.");
     return;
   }
   if (password !== confirmPassword) {
@@ -579,22 +597,22 @@ const handleRegister = async () => {
 
     const result = await response.json();
 
+    console.log(result);
+
     if (response.ok && result.response === 'success') {
       toast.success(result.response_message);
       navigate('/login');
     } else if (result.response === 'fail') {
-      // Check for specific error messages in the "detail" array
       if (result.detail && Array.isArray(result.detail)) {
-        const dobError = result.detail.find(error => 
-          error.loc && error.loc.includes("dob") && error.msg.includes("18 years old")
-        );
-        if (dobError) {
-          setErrorMessage(dobError.msg);  // Display specific error message for DOB
+        const firstError = result.detail[0];
+
+        if (firstError.loc && firstError.loc.includes("dob") && firstError.msg) {
+          setErrorMessage(firstError.msg);
         } else {
-          setErrorMessage(result.response_message);  // General error message
+          setErrorMessage(result.response_message || 'Failed to register. Please check your input.');
         }
       } else {
-        setErrorMessage(result.response_message);
+        setErrorMessage(result.response_message || 'Failed to register. Please try again.');
       }
     } else {
       setErrorMessage('Failed to register. Please try again.');
@@ -606,11 +624,29 @@ const handleRegister = async () => {
 };
 
 
+
+
+
+
 const handleRegister1 = async () => {
   const platform = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     ? "mobile"
     : "Web";
 
+
+    if (!orgname) {
+      setErrorMessage("Please enter organization name.");
+      return;
+    }  if (!orgnumber) {
+      setErrorMessage("Please enter organization number.");
+      return;
+    }  if (!gstnumber) {
+      setErrorMessage("Please enter GST number.");
+      return;
+    }if (!address) {
+      setErrorMessage("Please enter address.");
+      return;
+    }
   // Validate required fields
   if (!firstName || !lastName) {
     setErrorMessage("Please enter first name and last name.");
@@ -618,6 +654,23 @@ const handleRegister1 = async () => {
   }
   if (!dob) {
     setErrorMessage("Please enter date of birth.");
+    return;
+  }
+
+  // Check if user is above 18 years old
+  const birthDate = new Date(dob);
+  const today = new Date();
+  const age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  const dayDiff = today.getDate() - birthDate.getDate();
+
+  // Adjust age if the birthday hasn't occurred this year yet
+  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+    age--;
+  }
+
+  if (age < 18) {
+    setErrorMessage("You must be at least 18 years old to register.");
     return;
   }
   if (!gender) {
