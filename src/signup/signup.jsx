@@ -21,6 +21,7 @@ const signup = () => {
   const [verify, setVerify] = useState(false);
   const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(true);
   const [showRegistr, setShowRegistr] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
 
   const navigate = useNavigate();
@@ -425,6 +426,8 @@ const sendOtp = async () => {
       setShowRegistr(false);
       setShowOtpField1(true);
       setHideOtpButtons(true);
+      setShowPassword1(true);
+      setIsEditable(false);
     } else if (result.response === 'success') {
       setMessage('');
       setSuccess(result.response_message);
@@ -492,7 +495,7 @@ const verifySignup = async () => {
 const fetchLocationDetails = async () => {
   setPincodeMessage('')
   try {
-    const response = await fetch('http://98.70.33.226:8014/location_details/', {
+    const response = await fetch(`${URL}/location_details/`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -539,6 +542,46 @@ useEffect(() => {
     fetchLocationDetails();
   }
 }, [pincode]);
+
+const handleOrgNameChange = (e) => {
+  setOrgname(e.target.value);
+  if (e.target.value) {
+    setErrorMessage("");
+    setHasError(false);
+  }
+};
+
+const handleOrgNumberChange = (e) => {
+  setOrgnumber(e.target.value);
+  if (e.target.value) {
+    setErrorMessage("");
+    setHasError(false);
+  }
+};
+
+const handleGSTNumberChange = (e) => {
+  setGstnumber(e.target.value);
+  if (e.target.value) {
+    setErrorMessage("");
+    setHasError(false);
+  }
+};
+
+const handleFirstNameChange = (e) => {
+  setFirstName(e.target.value);
+  if (e.target.value && lastName) {
+    setErrorMessage("");
+    setHasError(false);
+  }
+};
+
+const handleLastNameChange = (e) => {
+  setLastName(e.target.value);
+  if (e.target.value && firstName) {
+    setErrorMessage("");
+    setHasError(false);
+  }
+};
 
 const handleRegister = async () => {
   const platform = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
@@ -652,76 +695,102 @@ const handleRegister = async () => {
 
 
 const handleRegister1 = async () => {
+  
   const platform = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-    ? "mobile"
-    : "Web";
+  ? "mobile"
+  : "Web";
+  let hasError = false;
 
 
-    if (!orgname) {
-      setErrorMessage("Please enter organization name.");
-      return;
-    }  if (!orgnumber) {
-      setErrorMessage("Please enter organization number.");
-      return;
-    }  if (!gstnumber) {
-      setErrorMessage("Please enter GST number.");
-      return;
-    }if (!address) {
-      setErrorMessage("Please enter address.");
-      return;
-    }
-  // Validate required fields
-  if (!firstName || !lastName) {
-    setErrorMessage("Please enter first name and last name.");
-    return;
-  }
-  if (!dob) {
-    setErrorMessage("Please enter date of birth.");
-    return;
-  }
+
+  // if (!dob) {
+  //   setErrorMessage("Please enter date of birth.");
+  //   return;
+  // }
 
   // Check if user is above 18 years old
-  const birthDate = new Date(dob);
-  const today = new Date();
-  const age = today.getFullYear() - birthDate.getFullYear();
-  const monthDiff = today.getMonth() - birthDate.getMonth();
-  const dayDiff = today.getDate() - birthDate.getDate();
+  // const birthDate = new Date(dob);
+  // const today = new Date();
+  // const age = today.getFullYear() - birthDate.getFullYear();
+  // const monthDiff = today.getMonth() - birthDate.getMonth();
+  // const dayDiff = today.getDate() - birthDate.getDate();
 
-  // Adjust age if the birthday hasn't occurred this year yet
-  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-    age--;
-  }
+  // // Adjust age if the birthday hasn't occurred this year yet
+  // if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+  //   age--;
+  // }
 
-  if (age < 18) {
-    setErrorMessage("You must be at least 18 years old to register.");
+  // if (age < 18) {
+  //   setErrorMessage("You must be at least 18 years old to register.");
+  //   return;
+  // }
+  // if (!gender) {
+  //   setErrorMessage("Please select the gender.");
+  //   return;
+  // }
+ 
+
+  if (!orgname) {
+    setErrorMessage("Please enter organization name.");
+    setHasError(true);
     return;
   }
-  if (!gender) {
-    setErrorMessage("Please select the gender.");
+  if (!orgnumber) {
+    setErrorMessage("Please enter organization number.");
+    setHasError(true);
     return;
   }
+  if (!gstnumber) {
+    setErrorMessage("Please enter GST number.");
+    setHasError(true);
+    return;
+  }
+
+  // Validate name
+  if (!firstName || !lastName) {
+    setErrorMessage("Please enter first name and last name.");
+    setHasError(true);
+    return;
+  }
+
+  // Validate other fields
   if (!country) {
     setErrorMessage("Please enter country.");
+    setHasError(true);
     return;
   }
   if (!password || !confirmPassword) {
-    setErrorMessage('Please enter a new password and confirm password.');
+    setErrorMessage("Please enter a new password and confirm password.");
+    setHasError(true);
     return;
   }
   if (password !== confirmPassword) {
     setErrorMessage("Passwords and confirmPassword do not match.");
+    setHasError(true);
     return;
   }
+
+  // Check terms and conditions
   if (!isChecked1) {
-    setErrorMessage("Please agree to the terms and conditions to proceed.");
+    setErrorMessage("Please agree to the terms and conditions.");
+    setHasError(true);
     return;
   }
+
+  // Proceed with submission if there are no errors
+  setErrorMessage("");
+  // Continue with form submission logic
+
+
+if (hasError) {
+    return;
+}
   const data = {
     platform: platform,
     org_name: orgname,
     org_number: orgnumber,
     gst_number: gstnumber,
-    org_address: address,
+  
     pin_code: pincode,
     location_name: selectedCity,
     district_name: selectedDistrict,
@@ -730,13 +799,13 @@ const handleRegister1 = async () => {
     first_name: firstName,
     middle_name: middleName,
     last_name: lastName,
-    gender: gender,
+
     user_email: email,
     user_phone_number: mobile,
     password: password,
     confirm_password: confirmPassword,
     user_type: selectedUserType,
-    dob: dob,
+   
   };
 
   try {
@@ -916,8 +985,8 @@ const handleCheckboxChange = (e) => {
      label="Organization Name" 
      variant="outlined"
       value={orgname}
-         onChange={(e) => setOrgname(e.target.value)}
-         disabled={!isEditable}
+      onChange={handleOrgNameChange} 
+        //  disabled={!isEditable}
 
     //  className="w-full mb-4 px-7 py-4 rounded-xl bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
@@ -944,8 +1013,8 @@ const handleCheckboxChange = (e) => {
      label="Organization Number" 
      variant="outlined"
       value={orgnumber}
-         onChange={(e) => setOrgnumber(e.target.value)}
-         disabled={!isEditable}
+      onChange={handleOrgNumberChange}
+        //  disabled={!isEditable}
 
          className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
@@ -972,9 +1041,9 @@ const handleCheckboxChange = (e) => {
      id="GST Number" 
      label="GST Number" 
       value={gstnumber}
-         onChange={(e) => setGstnumber(e.target.value)}
+      onChange={handleGSTNumberChange}
      variant="outlined"
-     disabled={!isEditable}
+    //  disabled={!isEditable}
 
      //  className="w-full mb-4 px-7 py-4 rounded-xl bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
@@ -996,7 +1065,7 @@ const handleCheckboxChange = (e) => {
         ),
         autoComplete: "off",
       }} />
-       <TextField
+       {/* <TextField
      id="Address" 
      label="Address" 
      variant="outlined"
@@ -1018,10 +1087,10 @@ const handleCheckboxChange = (e) => {
           >
         {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
 
-          </div>
+          {/* </div>
         ),
         autoComplete: "off",
-      }} />
+      }} />  */}
 </div>
 <div className=" flex gap-[5px] justify-center">
 <TextField
@@ -1031,7 +1100,7 @@ const handleCheckboxChange = (e) => {
      value={pincode}
      onChange={handlePincodeChange}
      onBlur={fetchLocationDetails}
-     disabled={!isEditable}
+    //  disabled={!isEditable}
 
      variant="outlined"
      required
@@ -1057,7 +1126,7 @@ const handleCheckboxChange = (e) => {
           <Select
          className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
          value={selectedCity}
-         disabled={!isEditable}
+        //  disabled={!isEditable}
 
          onChange={(e) => setSelectedCity(e.target.value)}
             labelId="City"
@@ -1089,7 +1158,7 @@ const handleCheckboxChange = (e) => {
      label="District" 
      value={selectedDistrict}
      onChange={(e) => setSelectedDistrict(e.target.value)}
-     disabled={!isEditable}
+    //  disabled={!isEditable}
 
      variant="outlined"
     
@@ -1118,7 +1187,7 @@ const handleCheckboxChange = (e) => {
      label="State" 
      value={state}
      onChange={(e) => setState(e.target.value)}
-     disabled={!isEditable}
+    //  disabled={!isEditable}
 
      variant="outlined"
     
@@ -1148,7 +1217,7 @@ const handleCheckboxChange = (e) => {
      id="Country" 
      value={country}
      onChange={(e) => setCountry(e.target.value)}
-     disabled={!isEditable}
+    //  disabled={!isEditable}
 
      label="Country" 
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
@@ -1179,10 +1248,10 @@ const handleCheckboxChange = (e) => {
                     label="First Name"
                     variant="outlined"
                     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
+                    disabled={!isEditable}
                     required
                     value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    onChange={handleFirstNameChange}
                     InputProps={{
                       style: {             
                         
@@ -1201,7 +1270,7 @@ const handleCheckboxChange = (e) => {
                     label="Middle Name"
                     variant="outlined"
                     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
+                    // disabled={!isEditable}
                     value={middleName}
                     onChange={(e) => setMiddleName(e.target.value)}
                    
@@ -1222,9 +1291,9 @@ const handleCheckboxChange = (e) => {
                     variant="outlined"
                     required            
                     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-     
+                    // disabled={!isEditable}
                     value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
+                    onChange={handleLastNameChange}
                     InputProps={{
                       style: {
                         
@@ -1237,7 +1306,7 @@ const handleCheckboxChange = (e) => {
                     name="last_name"
                   />
                 </div>
-                <div className=" flex gap-[5px] justify-center">
+                {/* <div className=" flex gap-[5px] justify-center">
 <TextField
       type="date"
       id="Date of Birth" 
@@ -1262,7 +1331,7 @@ const handleCheckboxChange = (e) => {
           >
         {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
 
-          </div>
+          {/* </div>
         ),
         autoComplete: "off",
       }} />
@@ -1289,14 +1358,14 @@ const handleCheckboxChange = (e) => {
             <MenuItem value="Female">Female</MenuItem>
           </Select>
         </FormControl>
-</div>
+</div>  */}
 
                 <div className=" flex gap-[5px] justify-center items-center">
 <TextField
      id="Mobile" 
      label="Mobile" 
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
+     disabled={!isEditable}
      variant="outlined"
      value={mobile}
      onChange={handleMobileChange}  
@@ -1323,7 +1392,7 @@ const handleCheckboxChange = (e) => {
      label="Email" 
      variant="outlined"
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
+     disabled={!isEditable}
      value={email}
      onChange={handleEmailChange} 
       InputProps={{
@@ -1446,7 +1515,7 @@ const handleCheckboxChange = (e) => {
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      value={password}
-     onChange={(e) => setPassword(e.target.value)}
+     onChange={(e) => { setPassword(e.target.value); setErrorMessage(""); }}
       InputProps={{
         style: {
        
@@ -1474,7 +1543,7 @@ const handleCheckboxChange = (e) => {
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      value={confirmPassword}
-     onChange={(e) => setConfirmPassword(e.target.value)}
+     onChange={(e) => { setConfirmPassword(e.target.value); setErrorMessage(""); }} 
       InputProps={{
         style: {
           
@@ -1499,7 +1568,9 @@ const handleCheckboxChange = (e) => {
     <input
       type="checkbox"
       id="termsCheckbox"
-      onChange={handleCheckboxChange}
+      checked={isChecked1}
+
+      onChange={(e) => { setIsChecked1(e.target.checked); setErrorMessage(""); }} 
       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
       required
     />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect,useRef,useContext } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -6,7 +6,9 @@ import Landing from "../landing/landing";
 import facebook from "../../src/assets/Images/footer/facebook-app-symbol.png"
 import Footer from "../footer/footer";
 import { useNavigate } from 'react-router-dom';
-
+import { URL } from "../url";
+import { useLocation } from 'react-router-dom';
+import { AuthContext } from "../Authcontext/AuthContext";
 // const testimonialData = [
 //     {
 //       id: 1,
@@ -83,68 +85,68 @@ const cardData = [
     
     // Add more data objects here if needed
   ];
-  const cardData1 = [
-    {
-      id: 1,
-      icon: 'src/assets/Images/dashboard/musical-note.png',
-      title: 'Vinesh Phogat',
-      price: 'RS | 100',
-      description: 'The Congress candidate for Julana, Vinesh Phogat, has mentioned in her affidavit that she owns a Volvo XC 60 (₹35 lakhs), a Hyundai Creta, and an Innova car. She has taken a loan of ₹13 lakhs for the Innova and is paying EMIs. She owns a plot worth ₹2 crore in Sonipat. She also has ₹1.95 lakhs in cash. According to her IT returns, she earned ₹13,85,000 in the last financial year. Her husband, Somveer, owns a Mahindra Scorpio.',
-      image: 'src/assets/Images/dashboard/news1.webp',
-      userName: 'chandu',
-      days: '10 days',
-      location: 'Bangalore',
-      createdBy:'Chandu',
-      Date:'6-09-2024',
-      cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
-    },
-    {
-        id: 2,
-        icon: 'src/assets/Images/dashboard/musical-note.png',
-        title: 'Cricket practice',
-        price: 'RS | 300',
-        description: ' Cricketers practiced at the RDT Stadium in Anantapur. Players arrived at the stadium from their hotels in special buses and sweated it out in the nets...',
-        image: 'src/assets/Images/dashboard/crickit.webp',
-        userName: 'Ram',
-        days: '1 days',
-        location: 'Bangalore',
-        location: 'Bangalore',
-        createdBy:'Chandu',
-        Date:'6-09-2024',
-        cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
-      },
-      {
-        id: 3,
-        icon: 'src/assets/Images/dashboard/musical-note.png',
-        title: 'Virat Kohli',
-        price: 'RS | 500',
-        description: 'Cricketer Virat Kohli is on the brink of achieving a rare record. He has scored 26,952 runs in 591 international innings so far. With just 58 more runs, he will become the first player to reach 27,000 runs in the fewest innings. Currently, the record is held by Sachin Tendulkar with 27,000 runs in 623 innings. In international cricket, only Sachin Tendulkar, Ricky Ponting, and Kumar Sangakkara have scored over 27,000 runs.',
-        image: 'src/assets/Images/dashboard/viratkhoil.webp',
-        userName: 'Vardhan',
-        days: '10 days',
-        location: 'Bangalore',
-        location: 'Bangalore',
-        createdBy:'Chandu',
-        Date:'6-09-2024',
-        cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
-      },
-      {
-        id: 4,
-        icon: 'src/assets/Images/dashboard/musical-note.png',
-        title: ' Asia Champions Trophy',
-        price: 'RS | 150',
-        description: 'In the Asia Champions Trophy, the Indian hockey team has advanced to the semifinals. They secured a 3-1 victory over Korea in todays match, ensuring their place in the semifinals with one league match still remaining. As the defending champions, India has remained unbeaten in the league stage so far. Notably, the Indian team, led by Harmanpreet Singh, will play their final league match against Pakistan on the 14th of this month.',
-        image: 'src/assets/Images/dashboard/hockey.webp',
-        userName: 'chandu',
-        days: '10 days',
-        location: 'Bangalore',
-        location: 'Bangalore',
-        createdBy:'Chandu',
-        Date:'6-09-2024',
-        cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
-      },
-    // You can add more card data objects here
-  ];
+  // const cardData1 = [
+  //   {
+  //     id: 1,
+  //     icon: 'src/assets/Images/dashboard/musical-note.png',
+  //     title: 'Vinesh Phogat',
+  //     price: 'RS | 100',
+  //     description: 'The Congress candidate for Julana, Vinesh Phogat, has mentioned in her affidavit that she owns a Volvo XC 60 (₹35 lakhs), a Hyundai Creta, and an Innova car. She has taken a loan of ₹13 lakhs for the Innova and is paying EMIs. She owns a plot worth ₹2 crore in Sonipat. She also has ₹1.95 lakhs in cash. According to her IT returns, she earned ₹13,85,000 in the last financial year. Her husband, Somveer, owns a Mahindra Scorpio.',
+  //     image: 'src/assets/Images/dashboard/news1.webp',
+  //     userName: 'chandu',
+  //     days: '10 days',
+  //     location: 'Bangalore',
+  //     createdBy:'Chandu',
+  //     Date:'6-09-2024',
+  //     cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
+  //   },
+  //   {
+  //       id: 2,
+  //       icon: 'src/assets/Images/dashboard/musical-note.png',
+  //       title: 'Cricket practice',
+  //       price: 'RS | 300',
+  //       description: ' Cricketers practiced at the RDT Stadium in Anantapur. Players arrived at the stadium from their hotels in special buses and sweated it out in the nets...',
+  //       image: 'src/assets/Images/dashboard/crickit.webp',
+  //       userName: 'Ram',
+  //       days: '1 days',
+  //       location: 'Bangalore',
+  //       location: 'Bangalore',
+  //       createdBy:'Chandu',
+  //       Date:'6-09-2024',
+  //       cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
+  //     },
+  //     {
+  //       id: 3,
+  //       icon: 'src/assets/Images/dashboard/musical-note.png',
+  //       title: 'Virat Kohli',
+  //       price: 'RS | 500',
+  //       description: 'Cricketer Virat Kohli is on the brink of achieving a rare record. He has scored 26,952 runs in 591 international innings so far. With just 58 more runs, he will become the first player to reach 27,000 runs in the fewest innings. Currently, the record is held by Sachin Tendulkar with 27,000 runs in 623 innings. In international cricket, only Sachin Tendulkar, Ricky Ponting, and Kumar Sangakkara have scored over 27,000 runs.',
+  //       image: 'src/assets/Images/dashboard/viratkhoil.webp',
+  //       userName: 'Vardhan',
+  //       days: '10 days',
+  //       location: 'Bangalore',
+  //       location: 'Bangalore',
+  //       createdBy:'Chandu',
+  //       Date:'6-09-2024',
+  //       cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
+  //     },
+  //     {
+  //       id: 4,
+  //       icon: 'src/assets/Images/dashboard/musical-note.png',
+  //       title: ' Asia Champions Trophy',
+  //       price: 'RS | 150',
+  //       description: 'In the Asia Champions Trophy, the Indian hockey team has advanced to the semifinals. They secured a 3-1 victory over Korea in todays match, ensuring their place in the semifinals with one league match still remaining. As the defending champions, India has remained unbeaten in the league stage so far. Notably, the Indian team, led by Harmanpreet Singh, will play their final league match against Pakistan on the 14th of this month.',
+  //       image: 'src/assets/Images/dashboard/hockey.webp',
+  //       userName: 'chandu',
+  //       days: '10 days',
+  //       location: 'Bangalore',
+  //       location: 'Bangalore',
+  //       createdBy:'Chandu',
+  //       Date:'6-09-2024',
+  //       cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
+  //     },
+  //   // You can add more card data objects here
+  // ];
   const videoData = [
     {
       id: 1,
@@ -200,8 +202,12 @@ const cardData = [
   ];
 const dashboard = () => {
     const [flippedCards, setFlippedCards] = useState({});
+    const [cardData1, setCardData1] = useState([]);
     const navigate = useNavigate();
     const videoRef = useRef(null);
+    const location = useLocation();
+    const { user_id } = location.state || {};
+    const { isAuthenticated, authToken } = useContext(AuthContext);
 
     const handleVideoClick = () => {
       navigate(`/watch`);
@@ -221,12 +227,45 @@ const dashboard = () => {
     };
   
   // Function to handle flip
-  const handleFlip = (cardId) => {
-    setFlippedCards((prevState) => ({
-      ...prevState,
-      [cardId]: !prevState[cardId], // Toggle the flip state
+  const handleFlip = (id) => {
+    setFlippedCards((prev) => ({
+      ...prev,
+      [id]: !prev[id],
     }));
   };
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login"); // Redirect to login if not authenticated
+      return;
+    }
+    const fetchData = async () => {
+      try {
+
+  
+        const response = await fetch(
+          `${URL}/landing page?user_id=95`,
+          {
+            method: "POST",
+            headers: {
+              "accept": "application/json",
+              Authorization: `Bearer ${authToken}`,
+
+            },
+            body: JSON.stringify({}) // Empty body for a POST request
+          }
+        );
+        const data = await response.json();
+
+        if (data.response === "success") {
+          setCardData1(data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
+    };
+
+    fetchData();
+  }, [user_id]);
     // var settings = {
     //     dots: true,
     //     arrows: true,
@@ -360,49 +399,51 @@ className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
 </div>
 
 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
-  {cardData1.map((card) => (
-    <div key={card.id}   className=" shadow-md overflow-hidden border border-gray-300 rounded-lg flex flex-col h-full">
+{cardData1
+        .filter((card) => card.content_type === "Image") // Filter by content_type
+        .map((card, index) => (
+    <div key={index}   className=" shadow-md overflow-hidden border border-gray-300 rounded-lg flex flex-col h-full">
       <div  className="flex justify-end px-2 pt-1" >
         {/* Flip button */}
         <img
           src="src/assets/Images/dashboard/flip.png"
           alt="flip"
           className="w-5 h-5 cursor-pointer"
-          onClick={() => handleFlip(card.id)}
+          onClick={() => handleFlip(index)}
         />
       </div>
 
       {/* Conditional rendering based on flip state */}
-      {!flippedCards[card.id] ? (
+      {!flippedCards[index] ? (
         // Front side of the card
         <>
           <div className="flex justify-between p-2 border-b border-blue-300">
             <div className="p-1 border border-blue-300 rounded-md">
-              <img src={card.icon} alt="icon" className="w-5 h-5" />
+              <img src="src/assets/Images/dashboard/musical-note.png" alt="icon" className="w-5 h-5" />
             </div>
             <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="font-bold text-sm">{card.title}</h1>
+              <h1 className="font-bold text-sm">{card.content_title}</h1>
             </div>
             <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="text-sm">{card.price}</h1>
+              <h1 className="text-sm">{card.final_price}</h1>
             </div>
           </div>
           <div className="p-2">
             <p className="truncate text-gray-500 p-1 border border-blue-300 rounded-md text-sm">
-              {card.description}
+              {card.content_description}
             </p>
           </div>
           <div onClick={handleImagesClick} className="flex justify-center cursor-pointer">
-            <img src={card.image} alt="social media" className="w-full h-40 " />
+            <img src={card.content_link} alt="social media" className="w-full h-40 " />
           </div>
-          <div className="flex justify-between items-center p-2 border-t border-black text-sm">
-            <h1>{card.userName}</h1>
+          <div className="flex justify-between items-center gap-[5px] p-2 border-t border-black text-sm">
+            <h1 className=" lg:truncate lg:w-[20%]">{card.uploaded_by}</h1>
             <p>|</p>
-            <h1>{card.days}</h1>
+            <h1 className=" lg:truncate lg:w-[20%]">{card.age_in_days}</h1>
             <p>|</p>
-            <h1>{card.location}</h1>
+            <h1 className=" lg:truncate lg:w-[60%]">{card.gps_location}</h1>
             <p>|</p>
-            <img src={card.cartIcon} alt="cart" className="w-5 h-5" />
+            <img src='src/assets/Images/dashboard/grocery-store.png' alt="cart" className="w-5 h-5" />
           </div>
         </>
       ) : (
@@ -410,33 +451,33 @@ className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
         <div className="flex flex-col ">
           <div className="flex justify-between p-2 border-b border-blue-300">
             <div className="p-1 border border-blue-300 rounded-md">
-              <img src={card.icon} alt="icon" className="w-5 h-5" />
+              <img src='src/assets/Images/dashboard/musical-note.png' alt="icon" className="w-5 h-5" />
             </div>
             <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="font-bold text-sm">{card.title}</h1>
+              <h1 className="font-bold text-sm">{card.content_title}</h1>
             </div>
             <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="text-sm">{card.price}</h1>
+              <h1 className="text-sm">{card.final_price}</h1>
             </div>
           </div>
           <div className="p-2">
             <p className="truncate p-1 border border-blue-300 rounded-md text-sm">
-              {card.description}
+              {card.content_description}
             </p>
           </div>
           <div className="flex flex-col w-full h-40 p-2 text-sm">
-            <p className="font-bold">Date: <span className="font-normal">{card.Date}</span></p>
-            <p className="font-bold">Created by: <span className="font-normal">{card.createdBy}</span></p>
-            <p className="font-bold">Location: <span className="font-normal">{card.location}</span></p>
+            <p className="font-bold">Date: <span className="font-normal">{card.uploaded_time}</span></p>
+            <p className="font-bold">Created by: <span className="font-normal">{card.uploaded_by}</span></p>
+            <p className="font-bold">Location: <span className="font-normal">{card.final_price}</span></p>
           </div>
-          <div className="flex justify-between items-center p-2 border-t border-black text-sm">
-            <h1>{card.userName}</h1>
+          <div className="flex justify-between items-center gap-[5px] p-2 border-t border-black text-sm">
+          <h1 className=" lg:truncate lg:w-[20%]">{card.uploaded_by}</h1>
             <p>|</p>
-            <h1>{card.days}</h1>
+            <h1 className=" lg:truncate lg:w-[20%]">{card.age_in_days}</h1>
             <p>|</p>
-            <h1>{card.location}</h1>
+            <h1 className=" lg:truncate lg:w-[60%]">{card.gps_location}</h1>
             <p>|</p>
-            <img src={card.cartIcon} alt="cart" className="w-5 h-5" />
+            <img src='src/assets/Images/dashboard/grocery-store.png' alt="cart" className="w-5 h-5" />
           </div>
         </div>
       )}

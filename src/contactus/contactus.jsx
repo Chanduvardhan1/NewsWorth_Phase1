@@ -66,10 +66,10 @@ const contactus = () => {
     <>
    <Navbar/>
    <div>
-   <main className="w-full h-[500px]  flex px-10">
+   <main className="w-full h-[500px]  flex px-[5%]">
    
-    <div className="w-[50%]">
-    <div className="pr-[10px] ">
+    <div className="w-[50%] flex flex-col justify-center">
+    <div className="pr-[10px]  ">
       <div  className="flex text-[30px] font-extrabold justify-center items-center pb-5">
         <h1 className="blue-color ">Get in Touch With Us</h1>
       </div>
@@ -244,7 +244,7 @@ const contactus = () => {
     </div>
     </div>
     </div>
-    <div className="w-[50%] flex justify-center items-center">
+    <div className="w-[50%] flex justify-end items-center">
   
   <img src={home} alt="" width={500}  height={500}/>
 
