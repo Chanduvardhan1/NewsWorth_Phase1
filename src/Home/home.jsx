@@ -16,7 +16,7 @@ const Home = () => {
    <Navbar/>
    <div className="relative ">
    <main className="h-[500px] w-full overflow-hidden  flex px-[5%]">
-    <div className="w-[50%] flex flex-col pt-[50px] items-center">
+    <div className="w-[50%] flex flex-col  items-center justify-center">
     <div className="flex flex-col  gap-3">
       {/* <div className=" text-[32px] font-bold items-start justify-start blue-color">
         <h1>Feature</h1>

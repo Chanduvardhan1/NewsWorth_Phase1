@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/image.png'
+import { AuthContext } from "../Authcontext/AuthContext.jsx"
 
 
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
@@ -21,6 +22,7 @@ const login = () => {
   const [mobile, setMobile] = useState('');
   const [password, setPassword] = useState('');
 const [errorMessage, setErrorMessage] = useState('')
+const { login } =  useContext(AuthContext);
 
   const handleLoginMethodChange = (method) => {
     setLoginMethod(method);
@@ -100,7 +102,9 @@ const [errorMessage, setErrorMessage] = useState('')
       const data = await response.json();
   
       if (data.response === 'success') {
-        navigate('/dashboard');  // Redirect to the dashboard or another page after successful login
+        const userId = data.data[0].user_id; // Get the user_id from the response
+        login(accessToken);
+        navigate('/dashboard', { state: { user_id: userId } });
       } else if (data.detail === "Incorrect username or password") {
         setErrorMessage("Incorrect username or password. Please try again.");
       } else {
@@ -176,7 +180,7 @@ const [errorMessage, setErrorMessage] = useState('')
         className={`cursor-pointer flex-1 text-center py-2 ${loginMethod === 'gmail' ? '' : ''}`}
         onClick={() => setUserType('User Id')}
       >
-        Gmail
+        User Id
       </div>
       <div
     className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${

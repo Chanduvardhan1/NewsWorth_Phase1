@@ -19,11 +19,14 @@ import Footer from './footer/footer.jsx';
 import Dashboard from './dashboard/dashboard.jsx';
 import Watch from './watch/watch.jsx';
 import Watchimages from './watchimages/watchimages.jsx';
+import { AuthProvider } from './Authcontext/AuthContext.jsx';
 
+import PrivateRoute from './privateRoute/privateRoute.jsx';
 function App() {  
   return (
     <>
-      
+             <AuthProvider>
+
       <BrowserRouter>
       <Routes>
   <Route path="/" element={<Layout />}>
@@ -42,14 +45,14 @@ function App() {
     <Route path="Watchimages" element={<Watchimages />} />
 
     <Route path="footer" element={<Footer />} />
-    <Route path="dashboard" element={<Dashboard />} />
+    <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
 
   </Route>
 </Routes>
 
         {/* <VerificationHandler /> */}
       </BrowserRouter>
-  
+      </AuthProvider>
     </>
   );
 }
