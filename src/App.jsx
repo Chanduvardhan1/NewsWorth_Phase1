@@ -18,6 +18,7 @@ import Landing from './landing/landing.jsx';
 import Footer from './footer/footer.jsx';
 import Dashboard from './dashboard/dashboard.jsx';
 import Watch from './watch/watch.jsx';
+import Watchimages from './watchimages/watchimages.jsx';
 
 function App() {  
   return (
@@ -38,6 +39,7 @@ function App() {
 
     <Route path="landing" element={<Landing />} />
     <Route path="watch" element={<Watch />} />
+    <Route path="Watchimages" element={<Watchimages />} />
 
     <Route path="footer" element={<Footer />} />
     <Route path="dashboard" element={<Dashboard />} />

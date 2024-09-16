@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../Navbar/navbar";
-import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
+import home from '../../src/assets/Images/home/image.png'
+
 
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
@@ -45,7 +46,10 @@ const [errorMessage, setErrorMessage] = useState('')
  
    
   const handleLogin = async () => {
-
+    if (!email) {
+      setErrorMessage("Please enter your email");
+      return;
+    }
     if (!password) {
       setErrorMessage("Please enter your password");
       return;
@@ -71,7 +75,7 @@ const [errorMessage, setErrorMessage] = useState('')
       const tokenData = await tokenResponse.json();
       if (!tokenResponse.ok) {
         if (tokenData.detail === "Incorrect username or password") {
-          setErrorMessage("Incorrect username or password. Please try again.");
+          setErrorMessage("Incorrect email or password. Please try again.");
         } else {
           setErrorMessage("Failed to retrieve access token. Please try again.");
         }
@@ -118,7 +122,7 @@ const [errorMessage, setErrorMessage] = useState('')
         },
         body: JSON.stringify({
           Forogot_option: userType,
-          email_or_mobile: userType === "Email" ? email : mobile,
+          email_or_mobile: userType === "Email" ? email : email,
         }),
       });
   
@@ -132,7 +136,7 @@ const [errorMessage, setErrorMessage] = useState('')
       if (data.response === 'success' && data.response_message === "OTP Sent Successfully, Please reset your password") {
         navigate('/resetpassword', { state: { userId: data.data[0].user_id, email } });
       } else if (data.response === 'success' && data.response_message === "OTP Succuessfully Sent") {
-        navigate('/resetmobile', { state: { userId: data.data[0].user_id, mobile } });
+        navigate('/resetmobile', { state: { userId: data.data[0].user_id,email  } });
       } else {
         setErrorMessage(data.response_message);
       }
@@ -144,366 +148,292 @@ const [errorMessage, setErrorMessage] = useState('')
   
   return (
     <>
-   <Navbar/>
-   <div className=" relative">
-   <main className="w-full h-[500px]  flex px-[5%]">
-   
-  <div className="w-[50%]">
-   
- {!showforgat&& (
-   <div className="pr-[10px]">
-   <div  className="flex text-[30px] font-extrabold justify-center items-center pb-5 blue-color">
-     <h1>Login</h1>
-   </div>
- <div className="flex flex-col justify-center items-center">
-     <div className="flex flex-col gap-[10px]  bg-white rounded-[28px] shadow-lg p-7 pb-5 border-solid border-[1px] ">
-
-
-<div className="flex flex-col gap-[10px] pt-[20px]"> 
-<FormControl variant="outlined" required>
-          <InputLabel id="gender-label">Login Option</InputLabel>
-          <Select
-            labelId="Login Option"
-            value={userType}
-          onChange={handleUserTypeChange}
-            label="User Type"
-            style={{
-              width: "325px",
-              height: "50px",
-              borderRadius: "10px",
-            }}
-            name="UserType"
-          >
-            <MenuItem value="">
-              {/* <em>None</em> */}
-            </MenuItem>
-            <MenuItem value="Email">Email</MenuItem>
-            <MenuItem value="User Id">User Id</MenuItem>
-            <MenuItem value="Mobile">Mobile</MenuItem>
-          </Select>
-        </FormControl>
-        {userType === "Email" && (
-<TextField
-                       id="email"
-                       label="Email"
-                       required
-                       value={email}
-                       onChange={(e) => setEmail(e.target.value)}
-                       variant="outlined"
-                  
-                       
-                       InputProps={{
-                         style: {
-                           backgroundSize: "19px 16px",
-                           backgroundPosition: "295px center",
-                           backgroundRepeat: "no-repeat",
-                           width: "325px",
-                           height: "50px",
-                           backgroundColor: "white",
-                           border: "none",
-                           fontFamily: "poppins",
-                           paddingLeft: "0px",
-                           borderRadius: "10px",
-                           gap:"5px"
-                         },
-                         endAdornment: (
-                           <div className=" text-blue-400"
-                            
-                             
-                           >
-                            <img src="src\assets\Images\login\envelope.png" alt="" className="w-[25px] text-blue-800" />
-                           </div>
-                         ),
-                         autoComplete: "off",
-                       }}
-                     />
-                      )}
-                      {userType === "User Id" && (
-                     <TextField
-                       id="User id"
-                       label="User id"
-                       required
-                       value={email}
-                       onChange={(e) => setEmail(e.target.value)}
-                       variant="outlined"
-                  
-                       
-                       InputProps={{
-                         style: {
-                           backgroundSize: "19px 16px",
-                           backgroundPosition: "295px center",
-                           backgroundRepeat: "no-repeat",
-                           width: "325px",
-                           height: "50px",
-                           backgroundColor: "white",
-                           border: "none",
-                           fontFamily: "poppins",
-                           paddingLeft: "0px",
-                           borderRadius: "10px",
-                           gap:"5px"
-                         },
-                         endAdornment: (
-                           <div className=" text-blue-400"
-                            
-                             
-                           >
-                            <img src="images\home\login\envelope.png" alt="" className="w-[25px] text-blue-800" />
-                           </div>
-                         ),
-                         autoComplete: "off",
-                       }}
-                     />
-                      )}
-                        {userType === "Mobile" && (
-                       <TextField
-                       id="Mobile"
-                       label="Mobile"
-                       required
-                       value={email}
-                       onChange={(e) => setEmail(e.target.value)}
-                       variant="outlined"
-                  
-                       
-                       InputProps={{
-                         style: {
-                           backgroundSize: "19px 16px",
-                           backgroundPosition: "295px center",
-                           backgroundRepeat: "no-repeat",
-                           width: "325px",
-                           height: "50px",
-                           backgroundColor: "white",
-                           border: "none",
-                           fontFamily: "poppins",
-                           paddingLeft: "0px",
-                           borderRadius: "10px",
-                           gap:"5px"
-                         },
-                         endAdornment: (
-                           <div className=" text-blue-400"
-                            
-                             
-                           >
-                            <img src="src\assets\Images\signup\iphone.png" alt="" className="w-[20px] text-blue-800" />
-                           </div>
-                         ),
-                         autoComplete: "off",
-                       }}
-                     />
-                      )}
-   <TextField
-    id="password" 
-    label="Password" 
-    variant="outlined"
-    value={password}
-    onChange={(e) => setPassword(e.target.value)}
-    type={showPassword ? "text" : "password"}
-    required
-     InputProps={{
-       style: {
-         backgroundSize: "19px 16px",
-         backgroundPosition: "295px center",
-         backgroundRepeat: "no-repeat",
-         width: "325px",
-         height: "50px",
-         backgroundColor: "white",
-         border: "none",
-         fontFamily: "poppins",
-         paddingLeft: "0px",
-         borderRadius: "10px",
-         gap:"5px"
-       },
-       endAdornment:showPassword !== undefined && (
-         <div
-         onClick={togglePasswordVisibility}
-           className="text-[#a7a3ff] cursor-pointer"
-         >
-                 {showPassword ? <FaEye/> : <FaEyeSlash />}
-
-         </div>
-       ),
-       autoComplete: "off",
-     }} />
-
-
-</div>
-
-
- 
-<div className="flex justify-end items-end text-blue-500 ">
-
-<p onClick={showForgat} className="cursor-pointer" >Forgot Password?</p>
-</div>
-<div className=" flex justify-center items-center pt-[10px]">
- <p>Don't have an account yet? Please <span className=" text-blue-500 cursor-pointer" onClick={handleSignup}>Sign Up</span></p>
-</div>
-<div className="flex justify-center ">
- <button className="primary-btn" onClick={handleLogin}>Login</button>
-</div>
-<div>
-{errorMessage && <p className="text-red-500 w-[315px] justify-center flex">{errorMessage}</p>}
-
-</div>
-{/* <div className=" flex justify-between gap-5 items-center">
- <div className=" w-full h-[1px] border-solid border-[1px]"></div>
- <div>Or</div>
- <div className=" w-full h-[1px] border-solid border-[1px]"></div>
-</div>
-<div className="flex gap-[23%] cursor-pointer  transition-all hover:duration-300 hover:scale-105  bg-white  shadow-lg p-[8px] bor1der-solid border-[1px]">
- <img src="images\home\signup\google.png" alt=""  className=" w-[25px] h-[25px] flex justify-start items-start"/>
- <div className="flex justify-center ">Login With Google</div>
-</div> */}
-</div>
- </div>
- </div>
-   )}
-   {showforgat&&(
-<div className=" flex w-full h-[500px]  justify-center items-center">
-    <div className=" flex flex-col justify-center  gap-[10px]  ">
-<div className="flex gap-[10px] ">
-<img
-                          src={forgotPasswordIcon}
-                          alt="Go Back"
-                          width={12}
-                          height={17}
-                          className="cursor-pointer"
-                          onClick={showForgatback} 
-                        />
-  <p onClick={showForgatback} className="text-[25px] cursor-pointer font-bold red-color">Go Back</p>
-</div>
-<div className="text-[30px] font-bold text-[#1c3c9ff5]">
-  <h1>Forgot Password</h1>
-</div>
-<p className=" font-bold"> Reset using {userType === "Email" && (<span>email</span>)} {userType === "Mobile" && (<span>mobile</span>)}  {userType === "User Id" && (<span>User id</span>)}</p>
-{userType === "Email"&& (
-<div>
-<TextField
-                       id="email"
-                       label="Email"
-                       required
-                     
-                       variant="outlined"
-                  
-                       value={email}
-                       onChange={(e) => setEmail(e.target.value)}
-                       InputProps={{
-                         style: {
-                           backgroundSize: "19px 16px",
-                           backgroundPosition: "295px center",
-                           backgroundRepeat: "no-repeat",
-                           width: "325px",
-                           height: "50px",
-                           backgroundColor: "white",
-                           border: "none",
-                           fontFamily: "poppins",
-                           paddingLeft: "0px",
-                           borderRadius: "10px",
-                           gap:"5px"
-                         },
-                         endAdornment: (
-                           <div className=" text-blue-400"
-                            
-                             
-                           >
-                            <img src="images\home\login\envelope.png" alt="" className="w-[25px] text-blue-800" />
-                           </div>
-                         ),
-                         autoComplete: "off",
-                       }}
-                     />
-</div>
-)}
-{userType === "Mobile" && (
-<div>
-<TextField
-                       id="Mobile Number"
-                       label="Mobile Number"
-                       required
-                       value={mobile}
-                       onChange={(e) => setMobile(e.target.value)}
-                       variant="outlined"
-                  
-                       
-                       InputProps={{
-                         style: {
-                           backgroundSize: "19px 16px",
-                           backgroundPosition: "295px center",
-                           backgroundRepeat: "no-repeat",
-                           width: "325px",
-                           height: "50px",
-                           backgroundColor: "white",
-                           border: "none",
-                           fontFamily: "poppins",
-                           paddingLeft: "0px",
-                           borderRadius: "10px",
-                           gap:"5px"
-                         },
-                         endAdornment: (
-                           <div className=" text-blue-400"
-                            
-                             
-                           >
-                            <img src="images\home\login\envelope.png" alt="" className="w-[25px] text-blue-800" />
-                           </div>
-                         ),
-                         autoComplete: "off",
-                       }}
-                     />
-</div>
-)}
-{userType === "User Id" && (
-<div>
-<TextField
-                       id="User id"
-                       label="User id"
-                       required
-                     
-                       variant="outlined"
-                  
-                       value={email}
-                       onChange={(e) => setEmail(e.target.value)}
-                       InputProps={{
-                         style: {
-                           backgroundSize: "19px 16px",
-                           backgroundPosition: "295px center",
-                           backgroundRepeat: "no-repeat",
-                           width: "325px",
-                           height: "50px",
-                           backgroundColor: "white",
-                           border: "none",
-                           fontFamily: "poppins",
-                           paddingLeft: "0px",
-                           borderRadius: "10px",
-                           gap:"5px"
-                         },
-                         endAdornment: (
-                           <div className=" text-blue-400"
-                            
-                             
-                           >
-                            <img src="images\home\login\envelope.png" alt="" className="w-[25px] text-blue-800" />
-                           </div>
-                         ),
-                         autoComplete: "off",
-                       }}
-                     />
-</div>
-)}
-<div className="flex justify-end">
-  <p className="primary-btn cursor-pointer" onClick={handleForgotPassword}>Send OTP</p>
-</div>
+    <Navbar/>
+    <div className="relative">
+       <main className="w-full h-auto lg:h-[500px] flex flex-col lg:flex-row px-4 lg:px-[5%]">
+          <div className="w-full lg:w-[50%]">
+             {!showforgat && (
+                <div className="pr-0 lg:pr-[10px]">
+                   <div className="flex text-[24px] lg:text-[30px] font-extrabold justify-center items-center pb-5 blue-color">
+                      <h1>Login</h1>
+                   </div>
+                   <div className="flex flex-col justify-center items-center">
+                      <div className="flex flex-col gap-[10px] bg-white rounded-[28px] shadow-lg p-5 lg:p-7 pb-5 border-solid border-[1px]">
+                      <div className="relative flex justify-between w-full font-bold">
+      <div
+        className={`cursor-pointer flex-1 text-center py-2 ${loginMethod === 'email' ? '' : ''}`}
+        onClick={() => setUserType('Email')}
+      >
+        Email
+      </div>
+      <div
+        className={`cursor-pointer flex-1 text-center py-2 ${loginMethod === 'mobile' ? '' : ''}`}
+        onClick={() => setUserType('Mobile')}
+      >
+        Mobile
+      </div>
+      <div
+        className={`cursor-pointer flex-1 text-center py-2 ${loginMethod === 'gmail' ? '' : ''}`}
+        onClick={() => setUserType('User Id')}
+      >
+        Gmail
+      </div>
+      <div
+    className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
+      userType === 'Email' ? 'left-0 bg-red-500' : 
+      userType === 'Mobile' ? 'left-1/3 bg-blue-500' : 
+      'left-2/3 bg-green-500'
+    }`}
+  />
+    </div>
+                         <div className="flex flex-col gap-[10px] pt-[10px]">
+             
+                            {/* <FormControl variant="outlined" required>
+                               <InputLabel id="gender-label">Login Option</InputLabel>
+                               <Select
+                                  labelId="Login Option"
+                                  value={userType}
+                                  onChange={handleUserTypeChange}
+                                  label="User Type"
+                                  className="w-full lg:w-[325px] h-[50px] "
+                                  name="UserType"
+                                  style={{ height: "50px", borderRadius: "10px" }}
+                               >
+                                  <MenuItem value=""></MenuItem>
+                                  <MenuItem value="Email">Email</MenuItem>
+                                  <MenuItem value="User Id">User Id</MenuItem>
+                                  <MenuItem value="Mobile">Mobile</MenuItem>
+                               </Select>
+                            </FormControl> */}
+                            {userType === "Email" && (
+                            <TextField
+                               id="email"
+                               label="Email"
+                               required
+                               style={{ height: "50px", borderRadius: "10px" }}
+                               value={email}
+                               onChange={(e) => setEmail(e.target.value)}
+                               variant="outlined"
+                               InputProps={{
+                                style: {
+       
+                                  height: "50px",
+                                  borderRadius: "10px",
+                                },
+                                  className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
+                                  endAdornment: (
+                                  <div className="text-blue-400">
+                                     <img src="src/assets/Images/login/envelope.png" alt="" className="w-[25px] text-blue-800" />
+                                  </div>
+                                  ),
+                                  autoComplete: "off",
+                               }}
+                            />
+                            )}
+                            {userType === "User Id" && (
+                            <TextField
+                               id="User id"
+                               label="User id"
+                               required
+                               value={email}
+                               onChange={(e) => setEmail(e.target.value)}
+                               variant="outlined"
+                               InputProps={{
+                                style: {
+       
+                                  height: "50px",
+                                  borderRadius: "10px",
+                                },
+                                  className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
+                                  endAdornment: (
+                                  <div className="text-blue-400">
+                                     <img src="images/home/login/envelope.png" alt="" className="w-[25px] text-blue-800" />
+                                  </div>
+                                  ),
+                                  autoComplete: "off",
+                               }}
+                            />
+                            )}
+                            {userType === "Mobile" && (
+                            <TextField
+                               id="Mobile"
+                               label="Mobile"
+                               required
+                               value={email}
+                               onChange={(e) => setEmail(e.target.value)}
+                               variant="outlined"
+                               InputProps={{
+                                style: {
+       
+                                  height: "50px",
+                                  borderRadius: "10px",
+                                },
+                                  className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
+                                  endAdornment: (
+                                  <div className="text-blue-400">
+                                     <img src="src/assets/Images/signup/iphone.png" alt="" className="w-[20px] text-blue-800" />
+                                  </div>
+                                  ),
+                                  autoComplete: "off",
+                               }}
+                            />
+                            )}
+                            <TextField
+                               id="password" 
+                               label="Password" 
+                               variant="outlined"
+                               value={password}
+                               onChange={(e) => setPassword(e.target.value)}
+                               type={showPassword ? "text" : "password"}
+                               required
+                               InputProps={{
+                                style: {
+       
+                                  height: "50px",
+                                  borderRadius: "10px",
+                                },
+                                  className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
+                                  endAdornment:showPassword !== undefined && (
+                                  <div
+                                     onClick={togglePasswordVisibility}
+                                     className="text-[#a7a3ff] cursor-pointer"
+                                  >
+                                     {showPassword ? <FaEye/> : <FaEyeSlash />}
+                                  </div>
+                                  ),
+                                  autoComplete: "off",
+                               }}
+                            />
+                         </div>
+                         <div className="flex justify-end items-end text-blue-500">
+                            <p onClick={showForgat} className="cursor-pointer">Forgot Password?</p>
+                         </div>
+                         <div className="flex justify-center items-center pt-[10px]">
+                            <p>Don't have an account yet? Please <span className="text-blue-500 cursor-pointer" onClick={handleSignup}>Sign Up</span></p>
+                         </div>
+                         <div className="flex justify-center">
+                            <button className="primary-btn" onClick={handleLogin}>Login</button>
+                         </div>
+                         {errorMessage && <p className="text-red-500 w-[315px] justify-center flex">{errorMessage}</p>}
+                      </div>
+                   </div>
+                </div>
+             )}
+             {showforgat && (
+             <div className="flex w-full h-[500px] justify-center items-center">
+                <div className="flex flex-col justify-center gap-[10px]">
+                   <div className="flex gap-[10px]">
+                      <img
+                         src={forgotPasswordIcon}
+                         alt="Go Back"
+                         width={12}
+                         height={17}
+                         className="cursor-pointer"
+                         onClick={showForgatback} 
+                      />
+                      <p onClick={showForgatback} className="text-[25px] cursor-pointer font-bold red-color">Go Back</p>
+                   </div>
+                   <div className="text-[30px] font-bold text-[#1c3c9ff5]">
+                      <h1>Forgot Password</h1>
+                   </div>
+                   <p className="font-bold"> Reset using {userType === "Email" && (<span>email</span>)} {userType === "Mobile" && (<span>mobile</span>)}  {userType === "User Id" && (<span>User id</span>)}</p>
+                   {userType === "Email"&& (
+                   <div>
+                      <TextField
+                         id="email"
+                         label="Email"
+                         required
+                         variant="outlined"
+                         value={email}
+                         onChange={(e) => setEmail(e.target.value)}
+                         InputProps={{
+                          style: {
+       
+                            height: "50px",
+                            borderRadius: "10px",
+                          },
+                            className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
+                            endAdornment: (
+                            <div className="text-blue-400">
+                               <img src="images/home/login/envelope.png" alt="" className="w-[25px] text-blue-800" />
+                            </div>
+                            ),
+                            autoComplete: "off",
+                         }}
+                      />
+                   </div>
+                   )}
+                   {userType === "Mobile" && (
+                   <div>
+                      <TextField
+                         id="Mobile Number"
+                         label="Mobile Number"
+                         required
+                         value={email}
+                         onChange={(e) => setEmail(e.target.value)}
+                         variant="outlined"
+                         InputProps={{
+                          style: {
+       
+                            height: "50px",
+                            borderRadius: "10px",
+                          },
+                            className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
+                            endAdornment: (
+                            <div className="text-blue-400">
+                               <img src="images/home/login/envelope.png" alt="" className="w-[25px] text-blue-800" />
+                            </div>
+                            ),
+                            autoComplete: "off",
+                         }}
+                      />
+                   </div>
+                   )}
+                   {userType === "User Id" && (
+                   <div>
+                      <TextField
+                         id="User id"
+                         label="User id"
+                         required
+                         variant="outlined"
+                         value={email}
+                         onChange={(e) => setEmail(e.target.value)}
+                         InputProps={{
+                          style: {
+       
+                            height: "50px",
+                            borderRadius: "10px",
+                          },
+                            className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
+                            endAdornment: (
+                            <div className="text-blue-400">
+                               <img src="images/home/login/envelope.png" alt="" className="w-[25px] text-blue-800" />
+                            </div>
+                            ),
+                            autoComplete: "off",
+                         }}
+                      />
+                   </div>
+                   )}
+                   <div className="flex justify-end">
+                      <p className="primary-btn cursor-pointer" onClick={handleForgotPassword}>Send OTP</p>
+                   </div>
+                </div>
+             </div>
+             )}
+          </div>
+          <div className="w-full lg:w-[50%] flex justify-center lg:justify-end items-center">
+             <img src={home} alt="" className="w-[300px] lg:w-[500px] h-auto hover:duration-300 hover:scale-105" />
+          </div>
+       </main>
     </div>
 
- </div>
-   )}
-   </div>
-   <div className="w-[50%] flex justify-end items-center">
-  
-   <img src={home} alt="" width={500}  height={500} className="hover:duration-300 hover:scale-105 "/>
+    
 
- </div>
-   </main>
-   </div>
-    </>
+   
+       
+ </>
+ 
   
   );
 };

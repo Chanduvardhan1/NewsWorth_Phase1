@@ -1,7 +1,8 @@
 import React from "react";
 import logo from "../../src/assets/Images/home/background.png"
 import Navbar from "../Navbar/navbar";
-import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
+import home from '../../src/assets/Images/home/image.png'
+
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -44,8 +45,8 @@ const Home = () => {
 
    <div className="flex justify-end pr-10 gap-1">
     <p onClick={handleContactUs} className=" cursor-pointer font-bold blue-color hover:red-color">Contact Us</p>|
-    <p>11111 Visited</p>|
-    <p>Circle Of Minds Innovation Pvt Ltd.</p>
+    <p>0 Visited</p>|
+    <p>© Circle Of Minds Innovation Pvt Ltd.</p>
 
    </div>
    </div>

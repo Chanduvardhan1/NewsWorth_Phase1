@@ -3,12 +3,98 @@ import React, { useState, useEffect ,useRef} from "react";
 import Navbar from "../Navbar/navbar";
 import { useNavigate } from "react-router-dom";
 import Landing from "../landing/landing";
-import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
+import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+const videos = [
+    {
+       id: 1,
+       src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
+      title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
+      channel: "iDream Trending",
+      views: "1.8M views",
+      uploadDate: "1 month ago",
+      moreIconSrc: "src/assets/Images/dashboard/more.png",
+    },
+    {
+        id: 2,
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
+        title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
+        channel: "iDream Trending",
+        views: "1.8M views",
+        uploadDate: "1 month ago",
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
+      },
+      {
+        id: 3,
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
+        title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
+        channel: "iDream Trending",
+        views: "1.8M views",
+        uploadDate: "1 month ago",
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
+      },
+      {
+        id: 4,
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
+        title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
+        channel: "iDream Trending",
+        views: "1.8M views",
+        uploadDate: "1 month ago",
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
+      },
+      {
+        id: 5,
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
+        title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
+        channel: "iDream Trending",
+        views: "1.8M views",
+        uploadDate: "1 month ago",
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
+      },
+      {
+        id: 6,
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
+        title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
+        channel: "iDream Trending",
+        views: "1.8M views",
+        uploadDate: "1 month ago",
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
+      },
+      {
+        id: 7,
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
+        title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
+        channel: "iDream Trending",
+        views: "1.8M views",
+        uploadDate: "1 month ago",
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
+      },
+      {
+        id: 8,
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
+        title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
+        channel: "iDream Trending",
+        views: "1.8M views",
+        uploadDate: "1 month ago",
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
+      },
+      {
+        id: 9,
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
+        title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
+        channel: "iDream Trending",
+        views: "1.8M views",
+        uploadDate: "1 month ago",
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
+      },
+    // Add more video objects as needed
+  ];
 const watch = () => {
   const navigate = useNavigate();
   const videoRef = useRef(null);
-
+ 
+  
   // Function to play the video on hover
   const handleMouseEnter = () => {
     if (videoRef.current) {
@@ -94,90 +180,7 @@ const watch = () => {
     setActiveReplyId(null);
     setReplyText('');
   };
-  const videos = [
-    {
-       id: 1,
-       src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
-      title: "Venkatesh & Brahmanandam Ultimate Comedy | Telugu Back-to-back",
-      channel: "iDream Trending",
-      views: "1.8M views",
-      uploadDate: "1 month ago",
-      moreIconSrc: "src/assets/Images/dashboard/more.png",
-    },
-    {
-        id: 2,
-        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
-        title: "Venkatesh & Brahmanandam Ultimate Comedy | Telugu Back-to-back",
-        channel: "iDream Trending",
-        views: "1.8M views",
-        uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
-      },
-      {
-        id: 3,
-        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
-        title: "Venkatesh & Brahmanandam Ultimate Comedy | Telugu Back-to-back",
-        channel: "iDream Trending",
-        views: "1.8M views",
-        uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
-      },
-      {
-        id: 4,
-        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
-        title: "Venkatesh & Brahmanandam Ultimate Comedy | Telugu Back-to-back",
-        channel: "iDream Trending",
-        views: "1.8M views",
-        uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
-      },
-      {
-        id: 5,
-        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
-        title: "Venkatesh & Brahmanandam Ultimate Comedy | Telugu Back-to-back",
-        channel: "iDream Trending",
-        views: "1.8M views",
-        uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
-      },
-      {
-        id: 6,
-        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
-        title: "Venkatesh & Brahmanandam Ultimate Comedy | Telugu Back-to-back",
-        channel: "iDream Trending",
-        views: "1.8M views",
-        uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
-      },
-      {
-        id: 7,
-        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
-        title: "Venkatesh & Brahmanandam Ultimate Comedy | Telugu Back-to-back",
-        channel: "iDream Trending",
-        views: "1.8M views",
-        uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
-      },
-      {
-        id: 8,
-        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
-        title: "Venkatesh & Brahmanandam Ultimate Comedy | Telugu Back-to-back",
-        channel: "iDream Trending",
-        views: "1.8M views",
-        uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
-      },
-      {
-        id: 9,
-        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
-        title: "Venkatesh & Brahmanandam Ultimate Comedy | Telugu Back-to-back",
-        channel: "iDream Trending",
-        views: "1.8M views",
-        uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
-      },
-    // Add more video objects as needed
-  ];
+
   return (
     <>
    <Landing/>
