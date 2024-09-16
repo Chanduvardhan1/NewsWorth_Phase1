@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../Navbar/navbar";
-import home from '../../src/assets/Images/home/background.png'
+import home from '../../src/assets/Images/home/image.png'
 import TextField from '@mui/material/TextField';
 import { URL } from "../url";
 

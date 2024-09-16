@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import logo from "../assets/Images/home/NewsWorth.png"
 import Navbar from "../Navbar/navbar";
-import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
+import home from '../../src/assets/Images/home/image.png'
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -25,7 +25,7 @@ const [resendTime, setResendTime] = useState(600);
 
 const location = useLocation();
 const userId = location.state?.userId;
-const mobile = location.state?.mobile;
+const email = location.state?.email;
 
 const [otp, setOtp] = useState('');
 const [newPassword, setNewPassword] = useState('');
@@ -154,7 +154,7 @@ useEffect(() => {
                        id="mobile"
                        label="Mobile"
                        required
-                       value={mobile}
+                       value={email}
                        variant="outlined"                       
                        InputProps={{
                          style: {

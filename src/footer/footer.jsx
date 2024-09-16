@@ -25,7 +25,7 @@ const footer = () => {
     <h1>Help & FAQ</h1>
     </div>
     <div className="mt-[50px]">
-    <p>Copyright @2019 NewsWorth. All rights reserved.</p>
+    <p>© Circle Of Minds Innovation Pvt Ltd.</p>
 </div>
 </div>
     </div>

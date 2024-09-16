@@ -34,8 +34,8 @@ const landing = () => {
         <img src="src\assets\Images\landing\bell.png" className="w-[20px] h-[20px]" alt="" />
       </div>
         <div>
-            <h1>chandu</h1>
-            <p>user_id:1</p>
+            <h1>Chandu</h1>
+            <p>User Id:1</p>
         </div>
         <div>
             <img src="src\assets\Images\landing\pic.jpg" alt="" className=" w-[45px] h-[45px]" />

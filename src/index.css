@@ -25,10 +25,38 @@
       @apply text-[#ce003d];
     }
   }
+  @layer components {
+    .perspective {
+      perspective: 1000px;
+    }
+    
+    .card {
+      @apply relative w-full h-full transition-transform duration-500;
+      transform-style: preserve-3d;
+    }
   
-
-
-
+    .card-inner {
+      @apply absolute w-full h-full transition-transform duration-500;
+      transform-style: preserve-3d;
+    }
+  
+    .card-front, .card-back {
+      @apply absolute w-full h-full;
+      backface-visibility: hidden;
+    }
+  
+    .card-back {
+      transform: rotateY(180deg);
+    }
+  
+    .flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+  }
+  
+  
+  
+  
 
   * {
     /* font-family: "Open Sans", "sans-serif"; */
