@@ -46,7 +46,7 @@ const Home = () => {
    <div className="flex justify-end pr-10 gap-1">
     <p onClick={handleContactUs} className=" cursor-pointer font-bold blue-color hover:red-color">Contact Us</p>|
     <p>0 Visited</p>|
-    <p>© Circle Of Minds Innovation Pvt Ltd.</p>
+    <p>©Circle Of Minds Innovation Pvt Ltd.</p>
 
    </div>
    </div>
