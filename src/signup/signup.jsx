@@ -34,8 +34,8 @@ const signup = () => {
   const [dob, setDob] = useState('');
   const [isChecked, setIsChecked] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [resendTime1, setResendTime1] = useState(10 * 60);
-  const [resendTime2, setResendTime2] = useState(10 * 60);
+  const [resendTime1, setResendTime1] = useState(5 * 60);
+  const [resendTime2, setResendTime2] = useState(5 * 60);
 
   const [mobileOTP, setMobileOTP] = useState('');
   const [emailOTP, setEmailOTP] = useState('');
@@ -48,7 +48,7 @@ const signup = () => {
   const [gender, setGender] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState('India');
 
   const [orgname, setOrgname] = useState('');
   const [orgnumber, setOrgnumber] = useState('');
@@ -75,9 +75,11 @@ const [pincodeMessage, setPincodeMessage] = useState('');
 const [success, setSuccess] = useState('');
 const [isChecked1, setIsChecked1] = useState(false); 
 const [showPassword1, setShowPassword1] = useState(false);
+const [showreset, setResset] = useState(false);
 
 const [isEditable, setIsEditable] = useState(true);
-
+const [showMobileOTP, setShowMobileOTP] = useState(false);
+  const [showEmailOTP, setShowEmailOTP] = useState(false);
 //   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 useEffect(() => {
@@ -389,6 +391,9 @@ const handleUserTypeChange = (event) => {
   const selectedType = userType.find(type => type.user_type_id === selectedId)?.user_type;
   setSelectedUserType(selectedType);  // Store the actual user type value (e.g., "Journalist")
 };
+const handleRest = () => {
+  setIsEditable((prevState) => !prevState); // Toggle the value of isEditable
+};
 
 const sendOtp = async () => {
   setMessage('');
@@ -399,7 +404,7 @@ const sendOtp = async () => {
   }
  
   setResendAvailable1(false);
-  setResendTime1(10 * 60);
+  setResendTime1(5 * 60);
   const data = {
     first_name: firstName,
     mobile: mobile,
@@ -419,21 +424,77 @@ const sendOtp = async () => {
     const result = await response.json();
     setMessage('');
     setSuccess('');
-    if  (result.response === 'fail' && result.response_message === "Please click here to complete your registration and activate your account." && result.data === "verified") {
+    if  (result.response === 'fail' && result.response_message ==="Please click here to complete your registration and activate your account." && result.data === "verified") {
       setSuccess(result.response_message);
       setVerify(false);
       setshowOTP(false);
+      setResset(true);
       setShowRegistr(false);
       setShowOtpField1(true);
       setHideOtpButtons(true);
       setShowPassword1(true);
       setIsEditable(false);
     } else if (result.response === 'success') {
+      setSuccess(result.response_message);
       setMessage('');
       setSuccess(result.response_message);
       setshowOTP(true);
+      setResset(true);
       setShowOtpField1(true);
       setVerify(true);
+      setIsEditable(false);
+      if (result.response_message.includes('Mobile') && result.response_message.includes('Email')) {
+       
+        setMessage('');
+        setSuccess(result.response_message);
+        setshowOTP(true);
+        setResset(true);
+        setShowOtpField1(true);
+        setVerify(true);
+        setIsEditable(false);
+        setShowMobileOTP(true);
+        setShowEmailOTP(true);
+      } else if(result.response_message.includes('email') && result.response_message.includes('mobile')) {
+        setMessage('');
+        setSuccess(result.response_message);
+        setshowOTP(true);
+        setResset(true);
+        setShowOtpField1(true);
+        setVerify(true);
+        setIsEditable(false);
+        setShowMobileOTP(true);
+        setShowEmailOTP(true);
+      } else if (result.response_message.includes('Mobile')) {
+        setMessage('');
+        setSuccess(result.response_message);
+        setshowOTP(true);
+        setResset(true);
+        setShowOtpField1(true);
+        setVerify(true);
+        setIsEditable(false);
+        setShowMobileOTP(true);
+        setShowEmailOTP(false);
+      } else if (result.response_message.includes('email')) {
+        setMessage('');
+        setSuccess(result.response_message);
+        setshowOTP(true);
+        setResset(true);
+        setShowOtpField1(true);
+        setVerify(true);
+        setIsEditable(false);
+        setShowMobileOTP(false);
+        setShowEmailOTP(true);
+      }else if (result.response_message.includes('Email')) {
+        setMessage('');
+        setSuccess(result.response_message);
+        setshowOTP(true);
+        setResset(true);
+        setShowOtpField1(true);
+        setVerify(true);
+        setIsEditable(false);
+        setShowMobileOTP(false);
+        setShowEmailOTP(true);
+      }
     }else if (result.response === 'failure' && result.response_message === "Email already registered. Please use a different email address.") {
       setMessage(result.response_message);
     }else {
@@ -986,7 +1047,7 @@ const handleCheckboxChange = (e) => {
      variant="outlined"
       value={orgname}
       onChange={handleOrgNameChange} 
-        //  disabled={!isEditable}
+         disabled={!isEditable}
 
     //  className="w-full mb-4 px-7 py-4 rounded-xl bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
@@ -1014,7 +1075,7 @@ const handleCheckboxChange = (e) => {
      variant="outlined"
       value={orgnumber}
       onChange={handleOrgNumberChange}
-        //  disabled={!isEditable}
+         disabled={!isEditable}
 
          className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
@@ -1043,7 +1104,7 @@ const handleCheckboxChange = (e) => {
       value={gstnumber}
       onChange={handleGSTNumberChange}
      variant="outlined"
-    //  disabled={!isEditable}
+     disabled={!isEditable}
 
      //  className="w-full mb-4 px-7 py-4 rounded-xl bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
@@ -1100,7 +1161,7 @@ const handleCheckboxChange = (e) => {
      value={pincode}
      onChange={handlePincodeChange}
      onBlur={fetchLocationDetails}
-    //  disabled={!isEditable}
+     disabled={!isEditable}
 
      variant="outlined"
      required
@@ -1126,7 +1187,7 @@ const handleCheckboxChange = (e) => {
           <Select
          className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
          value={selectedCity}
-        //  disabled={!isEditable}
+         disabled={!isEditable}
 
          onChange={(e) => setSelectedCity(e.target.value)}
             labelId="City"
@@ -1158,7 +1219,7 @@ const handleCheckboxChange = (e) => {
      label="District" 
      value={selectedDistrict}
      onChange={(e) => setSelectedDistrict(e.target.value)}
-    //  disabled={!isEditable}
+     disabled={!isEditable}
 
      variant="outlined"
     
@@ -1187,7 +1248,7 @@ const handleCheckboxChange = (e) => {
      label="State" 
      value={state}
      onChange={(e) => setState(e.target.value)}
-    //  disabled={!isEditable}
+     disabled={!isEditable}
 
      variant="outlined"
     
@@ -1217,7 +1278,7 @@ const handleCheckboxChange = (e) => {
      id="Country" 
      value={country}
      onChange={(e) => setCountry(e.target.value)}
-    //  disabled={!isEditable}
+     disabled={!isEditable}
 
      label="Country" 
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
@@ -1270,7 +1331,7 @@ const handleCheckboxChange = (e) => {
                     label="Middle Name"
                     variant="outlined"
                     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-                    // disabled={!isEditable}
+                    disabled={!isEditable}
                     value={middleName}
                     onChange={(e) => setMiddleName(e.target.value)}
                    
@@ -1291,7 +1352,7 @@ const handleCheckboxChange = (e) => {
                     variant="outlined"
                     required            
                     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-                    // disabled={!isEditable}
+                    disabled={!isEditable}
                     value={lastName}
                     onChange={handleLastNameChange}
                     InputProps={{
@@ -1386,7 +1447,7 @@ const handleCheckboxChange = (e) => {
         ),
         autoComplete: "off",
       }} />
-      <p>Or</p>
+      <p>or</p>
        <TextField
      id="Email" 
      label="Email" 
@@ -1421,8 +1482,13 @@ const handleCheckboxChange = (e) => {
 
    {message && <p className="text-red-500  w-[320px]">{message}</p>}
   </div>
+  <div className="flex gap-[10px]">
+    {showreset &&(
+      <button className="primary-btn" onClick={handleRest}>Reset</button>
 
-  {!hideOtpButtons && (
+    )}
+   
+   {!hideOtpButtons && (
   !showOtpField1 ? (
     <div className="flex justify-end">
       <button className="primary-btn" onClick={sendOtp}>Send OTP</button>
@@ -1442,9 +1508,12 @@ const handleCheckboxChange = (e) => {
     </div>
   )
 )}
+  </div>
+
 </div>
-  {showOTP && (
-  <div className=" flex gap-[5px] justify-center">
+<div className=" flex gap-[5px] justify-center">
+  {showMobileOTP && (
+
   <TextField
        id="Mobile OTP" 
        label="Mobile OTP" 
@@ -1471,6 +1540,9 @@ const handleCheckboxChange = (e) => {
           ),
           autoComplete: "off",
         }} />
+      )}
+            {showEmailOTP && (
+
          <TextField
        id="Email OTP" 
        label="Email OTP" 
@@ -1497,8 +1569,8 @@ const handleCheckboxChange = (e) => {
           ),
           autoComplete: "off",
         }} />
+            )}
   </div>
-  )}
 {verify &&(
     <div className="flex justify-end">
     <button className="primary-btn" onClick={verifySignup}>Verify</button>
@@ -1604,7 +1676,7 @@ const handleCheckboxChange = (e) => {
                     label="First Name"
                     variant="outlined"
                     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
+                    disabled={!isEditable}
                     required
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
@@ -1626,7 +1698,7 @@ const handleCheckboxChange = (e) => {
                     label="Middle Name"
                     variant="outlined"
                     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
+                    disabled={!isEditable}
                     value={middleName}
                     onChange={(e) => setMiddleName(e.target.value)}
                    
@@ -1647,7 +1719,7 @@ const handleCheckboxChange = (e) => {
                     variant="outlined"
                     required            
                     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-     
+                    disabled={!isEditable}  
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     InputProps={{
@@ -1668,6 +1740,7 @@ const handleCheckboxChange = (e) => {
       id="Date of Birth" 
       label="Date of Birth" 
       focused
+      disabled={!isEditable}
       value={dob}
       onChange={(e) => setDob(e.target.value)} 
      variant="outlined"
@@ -1699,7 +1772,7 @@ const handleCheckboxChange = (e) => {
             onChange={(e) => setGender(e.target.value)} 
             label="Gender"
             className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
+            disabled={!isEditable}
             style={{
               
               height: "50px",
@@ -1708,10 +1781,10 @@ const handleCheckboxChange = (e) => {
             name="gender"
           >
             <MenuItem value="">
-              <em>None</em>
+              {/* <em>None</em> */}
             </MenuItem>
-            <MenuItem value="Male">Male</MenuItem>
             <MenuItem value="Female">Female</MenuItem>
+            <MenuItem value="Male">Male</MenuItem>
           </Select>
         </FormControl>
 </div>
@@ -1722,7 +1795,7 @@ const handleCheckboxChange = (e) => {
      variant="outlined"
      required
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
+     disabled={!isEditable}
      value={country}
      onChange={(e) => setCountry(e.target.value)} 
       InputProps={{
@@ -1749,7 +1822,7 @@ const handleCheckboxChange = (e) => {
      id="Mobile" 
      label="Mobile" 
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
+     disabled={!isEditable}
      variant="outlined"
      value={mobile}
      onChange={handleMobileChange}  
@@ -1770,13 +1843,13 @@ const handleCheckboxChange = (e) => {
         ),
         autoComplete: "off",
       }} />
-      <p>Or</p>
+      <p>or</p>
        <TextField
      id="Email" 
      label="Email" 
      variant="outlined"
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
+ disabled={!isEditable}
      value={email}
      onChange={handleEmailChange} 
       InputProps={{
@@ -1805,7 +1878,13 @@ const handleCheckboxChange = (e) => {
 
    {message && <p className="text-red-500  w-[320px]">{message}</p>}
   </div>
-  {!hideOtpButtons && (
+  <div className="flex gap-[10px]">
+    {showreset &&(
+      <button className="primary-btn" onClick={handleRest}>Reset</button>
+
+    )}
+   
+    {!hideOtpButtons && (
   !showOtpField1 ? (
     <div className="flex justify-end">
       <button className="primary-btn" onClick={sendOtp}>Send OTP</button>
@@ -1825,10 +1904,14 @@ const handleCheckboxChange = (e) => {
     </div>
   )
 )}
+  </div>
+
 
 </div>
-  {showOTP && (
+ 
   <div className=" flex gap-[5px] justify-center">
+  {showMobileOTP && (
+
   <TextField
        id="Mobile OTP" 
        label="Mobile OTP" 
@@ -1855,6 +1938,9 @@ const handleCheckboxChange = (e) => {
           ),
           autoComplete: "off",
         }} />
+      )}
+            {showEmailOTP && (
+
          <TextField
        id="Email OTP" 
        label="Email OTP" 
@@ -1881,8 +1967,9 @@ const handleCheckboxChange = (e) => {
           ),
           autoComplete: "off",
         }} />
+            )}
   </div>
-  )}
+  
 {verify &&(
     <div className="flex justify-end  ">
     <button className="primary-btn" onClick={verifySignup}>Verify</button>

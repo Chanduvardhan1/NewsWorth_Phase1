@@ -90,6 +90,106 @@ const videos = [
       },
     // Add more video objects as needed
   ];
+  const videoData = [
+    {
+      id: 1,
+      videoSrc: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4', // video file or URL
+      thumbnail: 'your-thumbnail-1.jpg', // thumbnail URL if needed
+      title: 'YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024',
+      channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+      views: '9.2M views',
+      duration: '2:29',
+      postedTime: '18 hours ago',
+      channelName: 'SakshiTV'
+    },
+    {
+      id: 2,
+      videoSrc: 'src/assets/Images/home/10_30 PM _ 12th September 2024 _ ETV News _ News Headlines _ ETV Andhra Pradesh.mp4', // video file or URL
+
+      thumbnail: 'your-thumbnail-2.jpg',
+      title: '10:30 PM | 12th September 2024 | ETV News | News Headlines | ETV Andhra Pradesh',
+      channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+      views: '280 views',
+      duration: '1:31',
+      postedTime: '2 days ago',
+      channelName: 'ETV Andhra Pradesh'
+    },
+    {
+        id: 3,
+        videoSrc: 'src/assets/Images/home/CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation.mp4', // video file or URL
+  
+        thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
+
+        title: 'CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation',
+        channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+        views: '1.5M views',
+        duration: '1:22',
+        postedTime: '2 days ago',
+        channelName: 'XYZ Productions'
+      },
+      {
+        id: 4,
+        videoSrc: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4', // video file or URL
+  
+        thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
+        title: 'Some Other Trailer | Actor | Actress',
+        channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+        views: '1.5M views',
+        duration: '3:10',
+        postedTime: '2 days ago',
+        channelName: 'XYZ Productions'
+      },
+      {
+        id: 5,
+        videoSrc: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4', // video file or URL
+        thumbnail: 'your-thumbnail-1.jpg', // thumbnail URL if needed
+        title: 'YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024',
+        channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+        views: '9.2M views',
+        duration: '2:29',
+        postedTime: '18 hours ago',
+        channelName: 'SakshiTV'
+      },
+      {
+        id: 6,
+        videoSrc: 'src/assets/Images/home/10_30 PM _ 12th September 2024 _ ETV News _ News Headlines _ ETV Andhra Pradesh.mp4', // video file or URL
+  
+        thumbnail: 'your-thumbnail-2.jpg',
+        title: '10:30 PM | 12th September 2024 | ETV News | News Headlines | ETV Andhra Pradesh',
+        channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+        views: '280 views',
+        duration: '1:31',
+        postedTime: '2 days ago',
+        channelName: 'ETV Andhra Pradesh'
+      },
+      {
+          id: 7,
+          videoSrc: 'src/assets/Images/home/CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation.mp4', // video file or URL
+    
+          thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
+  
+          title: 'CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation',
+          channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+          views: '1.5M views',
+          duration: '1:22',
+          postedTime: '2 days ago',
+          channelName: 'XYZ Productions'
+        },
+        {
+          id: 8,
+          videoSrc: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4', // video file or URL
+    
+          thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
+          title: 'Some Other Trailer | Actor | Actress',
+          channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+          views: '1.5M views',
+          duration: '3:10',
+          postedTime: '2 days ago',
+          channelName: 'XYZ Productions'
+        },
+   
+    // Add more video objects here
+  ];
 const watch = () => {
   const navigate = useNavigate();
   const videoRef = useRef(null);
@@ -186,7 +286,9 @@ const watch = () => {
    <Landing/>
    <div className="relative p-[20px] ">
   
-   <div className="xl:flex xl:flex-row md:flex md:flex-col justify-center">
+   {/* <div className="xl:flex xl:flex-row md:flex md:flex-col justify-center"> */}
+   <div className="flex flex-col justify-center">
+
     <div className="p-[10px]">
         <div>
         <video  src="src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4" controls>
@@ -335,10 +437,10 @@ const watch = () => {
       ))}
     </div>
     <div>
-    {videos.map((video) => (
+    {/* {videos.map((video) => (
     <div key={video.id} className="flex shadow-md rounded-[10px] overflow-hidden mt-4 max-w-[600px]">
   {/* Thumbnail Section */}
-  <div className="w-[40%] h-auto">
+  {/* <div className="w-[40%] h-auto">
     <video
           ref={videoRef}
           
@@ -375,7 +477,80 @@ const watch = () => {
     
     </div>
 </div>
+  ))}  */}
+  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-6">
+
+  {videoData.map((video) => (
+    <div
+      key={video.id}
+      // onClick={handleVideoClick}
+      className="relative max-w-sm rounded overflow-hidden shadow-lg bg-white group"
+    >
+      {/* Video Thumbnail / Video Clip */}
+      <div className="relative">
+        <video
+          ref={videoRef}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className="w-full h-48 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
+          muted
+          loop
+          src={video.videoSrc}
+        >
+          {/* Add poster attribute to show the image initially */}
+        </video>
+
+        {/* Video Duration Overlay */}
+        <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
+          {video.duration}
+        </div>
+      </div>
+
+      {/* Hover Effect: Full Card with Details */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 bg-white">
+        {/* Channel Icon */}
+        <div className="flex ">
+
+       
+        <img
+          className="w-10 h-10 rounded-full mr-4"
+          src={video.channelIcon}
+          alt="Channel Icon"
+        />
+        <div>
+          {/* Title and Details */}
+          <h2 className="text-sm font-semibold text-gray-900 line-clamp-2 md:line-clamp-2">
+            {video.title}
+          </h2>
+          <p className="text-sm text-gray-500">{video.channelName}</p>
+          <p className="text-sm text-gray-500">
+            {video.views} • {video.postedTime}
+          </p>
+        </div>
+     
+        {/* Options Icon */}
+        <div className="ml-auto">
+          <svg
+            className="w-6 h-6 text-gray-500"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 6v.01M12 12v.01M12 18v.01"
+            />
+          </svg>
+        </div>
+        </div>
+      </div>
+    </div>
   ))}
+</div>
+
     </div>
    </div>
    </div>

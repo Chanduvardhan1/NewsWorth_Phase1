@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Landing from "../landing/landing";
 import facebook from "../../src/assets/Images/footer/facebook-app-symbol.png"
-import Footer from "../footer/footer";
+// import Footer from "../footer/footer";
 import { useNavigate } from 'react-router-dom';
 import { URL } from "../url";
 import { useLocation } from 'react-router-dom';
@@ -395,7 +395,7 @@ className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
        ))}
     </div>
     <div>
-    <h1 className="font-bold text-[30px] my-[20px]">Images</h1>
+    <h1 className="font-bold cur text-[30px] my-[20px]">Images</h1>
 </div>
 
 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
@@ -650,7 +650,7 @@ className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
 
 
    </div>
-          <Footer/>
+          {/* <Footer/> */}
    </div>
     </div>
   );
