@@ -1,6 +1,6 @@
 import React , { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../../src/assets/Images/home/NewsWorth.png"
+import logo from "../../src/assets/Images/home/newsworthlogo.png"
 import { NavLink } from 'react-router-dom';
 
 

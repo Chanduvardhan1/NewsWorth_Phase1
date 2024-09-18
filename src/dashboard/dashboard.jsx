@@ -85,68 +85,71 @@ const cardData = [
     
     // Add more data objects here if needed
   ];
-  // const cardData1 = [
-  //   {
-  //     id: 1,
-  //     icon: 'src/assets/Images/dashboard/musical-note.png',
-  //     title: 'Vinesh Phogat',
-  //     price: 'RS | 100',
-  //     description: 'The Congress candidate for Julana, Vinesh Phogat, has mentioned in her affidavit that she owns a Volvo XC 60 (₹35 lakhs), a Hyundai Creta, and an Innova car. She has taken a loan of ₹13 lakhs for the Innova and is paying EMIs. She owns a plot worth ₹2 crore in Sonipat. She also has ₹1.95 lakhs in cash. According to her IT returns, she earned ₹13,85,000 in the last financial year. Her husband, Somveer, owns a Mahindra Scorpio.',
-  //     image: 'src/assets/Images/dashboard/news1.webp',
-  //     userName: 'chandu',
-  //     days: '10 days',
-  //     location: 'Bangalore',
-  //     createdBy:'Chandu',
-  //     Date:'6-09-2024',
-  //     cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
-  //   },
-  //   {
-  //       id: 2,
-  //       icon: 'src/assets/Images/dashboard/musical-note.png',
-  //       title: 'Cricket practice',
-  //       price: 'RS | 300',
-  //       description: ' Cricketers practiced at the RDT Stadium in Anantapur. Players arrived at the stadium from their hotels in special buses and sweated it out in the nets...',
-  //       image: 'src/assets/Images/dashboard/crickit.webp',
-  //       userName: 'Ram',
-  //       days: '1 days',
-  //       location: 'Bangalore',
-  //       location: 'Bangalore',
-  //       createdBy:'Chandu',
-  //       Date:'6-09-2024',
-  //       cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
-  //     },
-  //     {
-  //       id: 3,
-  //       icon: 'src/assets/Images/dashboard/musical-note.png',
-  //       title: 'Virat Kohli',
-  //       price: 'RS | 500',
-  //       description: 'Cricketer Virat Kohli is on the brink of achieving a rare record. He has scored 26,952 runs in 591 international innings so far. With just 58 more runs, he will become the first player to reach 27,000 runs in the fewest innings. Currently, the record is held by Sachin Tendulkar with 27,000 runs in 623 innings. In international cricket, only Sachin Tendulkar, Ricky Ponting, and Kumar Sangakkara have scored over 27,000 runs.',
-  //       image: 'src/assets/Images/dashboard/viratkhoil.webp',
-  //       userName: 'Vardhan',
-  //       days: '10 days',
-  //       location: 'Bangalore',
-  //       location: 'Bangalore',
-  //       createdBy:'Chandu',
-  //       Date:'6-09-2024',
-  //       cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
-  //     },
-  //     {
-  //       id: 4,
-  //       icon: 'src/assets/Images/dashboard/musical-note.png',
-  //       title: ' Asia Champions Trophy',
-  //       price: 'RS | 150',
-  //       description: 'In the Asia Champions Trophy, the Indian hockey team has advanced to the semifinals. They secured a 3-1 victory over Korea in todays match, ensuring their place in the semifinals with one league match still remaining. As the defending champions, India has remained unbeaten in the league stage so far. Notably, the Indian team, led by Harmanpreet Singh, will play their final league match against Pakistan on the 14th of this month.',
-  //       image: 'src/assets/Images/dashboard/hockey.webp',
-  //       userName: 'chandu',
-  //       days: '10 days',
-  //       location: 'Bangalore',
-  //       location: 'Bangalore',
-  //       createdBy:'Chandu',
-  //       Date:'6-09-2024',
-  //       cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
-  //     },
-  //   // You can add more card data objects here
-  // ];
+  const cardData2 = [
+    {
+      id: 1,
+      icon: 'src/assets/Images/dashboard/musical-note.png',
+      title: 'Vinesh Phogat',
+      price: 'RS | 100',
+      description: 'The Congress candidate for Julana, Vinesh Phogat, has mentioned in her affidavit that she owns a Volvo XC 60 (₹35 lakhs), a Hyundai Creta, and an Innova car. She has taken a loan of ₹13 lakhs for the Innova and is paying EMIs. She owns a plot worth ₹2 crore in Sonipat. She also has ₹1.95 lakhs in cash. According to her IT returns, she earned ₹13,85,000 in the last financial year. Her husband, Somveer, owns a Mahindra Scorpio.',
+      image: 'src/assets/Images/home/breaking-news-in-2029-5994.mp3',
+      userName: 'chandu',
+      days: '10 days',
+      location: 'Bangalore',
+      createdBy:'Chandu',
+      Date:'6-09-2024',
+      cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
+    },
+    {
+        id: 2,
+        icon: 'src/assets/Images/dashboard/musical-note.png',
+        title: 'Cricket practice',
+        price: 'RS | 300',
+        description: ' Cricketers practiced at the RDT Stadium in Anantapur. Players arrived at the stadium from their hotels in special buses and sweated it out in the nets...',
+        image: 'src/assets/Images/home/breaking-news-in-2029-5994.mp3',
+
+        userName: 'Ram',
+        days: '1 days',
+        location: 'Bangalore',
+        location: 'Bangalore',
+        createdBy:'Chandu',
+        Date:'6-09-2024',
+        cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
+      },
+      {
+        id: 3,
+        icon: 'src/assets/Images/dashboard/musical-note.png',
+        title: 'Virat Kohli',
+        price: 'RS | 500',
+        description: 'Cricketer Virat Kohli is on the brink of achieving a rare record. He has scored 26,952 runs in 591 international innings so far. With just 58 more runs, he will become the first player to reach 27,000 runs in the fewest innings. Currently, the record is held by Sachin Tendulkar with 27,000 runs in 623 innings. In international cricket, only Sachin Tendulkar, Ricky Ponting, and Kumar Sangakkara have scored over 27,000 runs.',
+        image: 'src/assets/Images/home/breaking-news-in-2029-5994.mp3',
+
+        userName: 'Vardhan',
+        days: '10 days',
+        location: 'Bangalore',
+        location: 'Bangalore',
+        createdBy:'Chandu',
+        Date:'6-09-2024',
+        cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
+      },
+      {
+        id: 4,
+        icon: 'src/assets/Images/dashboard/musical-note.png',
+        title: ' Asia Champions Trophy',
+        price: 'RS | 150',
+        description: 'In the Asia Champions Trophy, the Indian hockey team has advanced to the semifinals. They secured a 3-1 victory over Korea in todays match, ensuring their place in the semifinals with one league match still remaining. As the defending champions, India has remained unbeaten in the league stage so far. Notably, the Indian team, led by Harmanpreet Singh, will play their final league match against Pakistan on the 14th of this month.',
+        image: 'src/assets/Images/home/breaking-news-in-2029-5994.mp3',
+      
+        userName: 'chandu',
+        days: '10 days',
+        location: 'Bangalore',
+        location: 'Bangalore',
+        createdBy:'Chandu',
+        Date:'6-09-2024',
+        cartIcon: 'src/assets/Images/dashboard/grocery-store.png'
+      },
+    // You can add more card data objects here
+  ];
   const videoData = [
     {
       id: 1,
@@ -228,6 +231,12 @@ const dashboard = () => {
   
   // Function to handle flip
   const handleFlip = (id) => {
+    setFlippedCards((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+  const handleFlip1 = (id) => {
     setFlippedCards((prev) => ({
       ...prev,
       [id]: !prev[id],
@@ -484,8 +493,7 @@ className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
     </div>
   ))}
 </div>
-
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
   {cardData.map((card) => (
     <div key={card.id} className="shadow-md rounded-xl overflow-hidden flex flex-col items-center">
       <div onClick={handleImagesClick} className="w-full h-40 sm:h-48 lg:h-56 xl:h-64 rounded-t-xl overflow-hidden">
@@ -529,6 +537,97 @@ className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
     </div>
   ))}
 </div>
+<div>
+    <h1 className="font-bold text-[30px] my-[20px]">Audio</h1>
+</div>
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
+{cardData2.map((card) => (
+    <div key={card.id}   className=" shadow-md overflow-hidden border border-gray-300 rounded-lg flex flex-col h-full">
+      <div  className="flex justify-end px-2 pt-1" >
+        {/* Flip button */}
+        <img
+          src="src/assets/Images/dashboard/flip.png"
+          alt="flip"
+          className="w-5 h-5 cursor-pointer"
+          onClick={() => handleFlip1(card.id)}
+        />
+      </div>
+
+      {/* Conditional rendering based on flip state */}
+      {!flippedCards[card.id] ? (
+        // Front side of the card
+        <>
+          <div className="flex justify-between p-2 border-b border-blue-300">
+            <div className="p-1 border border-blue-300 rounded-md">
+              <img src="src/assets/Images/dashboard/musical-note.png" alt="icon" className="w-5 h-5" />
+            </div>
+            <div className="p-1 border border-blue-300 rounded-md">
+              <h1 className="font-bold text-sm">{card.title}</h1>
+            </div>
+            <div className="p-1 border border-blue-300 rounded-md">
+              <h1 className="text-sm">{card.price}</h1>
+            </div>
+          </div>
+          <div className="p-2">
+            <p className="truncate text-gray-500 p-1 border border-blue-300 rounded-md text-sm">
+              {card.description}
+            </p>
+          </div>
+          <div  className="flex justify-center cursor-pointer">
+          <audio  controls className="w-full h-40 pb-16">
+    <source src={card.image} type="audio/mp3" /> {/* Assuming the audio file is in MP3 format */}
+  </audio>
+          </div>
+          <div className="flex justify-between items-center gap-[5px] p-2 border-t border-black text-sm">
+            <h1 className=" ">{card.userName}</h1>
+            <p>|</p>
+            <h1 className=" ">{card.days}</h1>
+            <p>|</p>
+            <h1 className="">{card.location}</h1>
+            <p>|</p>
+            <img src='src/assets/Images/dashboard/grocery-store.png' alt="cart" className="w-5 h-5" />
+          </div>
+        </>
+      ) : (
+        // Back side of the card
+        <div className="flex flex-col ">
+          <div className="flex justify-between p-2 border-b border-blue-300">
+            <div className="p-1 border border-blue-300 rounded-md">
+              <img src='src/assets/Images/dashboard/musical-note.png' alt="icon" className="w-5 h-5" />
+            </div>
+            <div className="p-1 border border-blue-300 rounded-md">
+              <h1 className="font-bold text-sm">{card.title}</h1>
+            </div>
+            <div className="p-1 border border-blue-300 rounded-md">
+              <h1 className="text-sm">{card.price}</h1>
+            </div>
+          </div>
+          <div className="p-2">
+            <p className="truncate p-1 border border-blue-300 rounded-md text-sm">
+              {card.description}
+            </p>
+          </div>
+          <div className="flex flex-col w-full h-40 p-2 text-sm">
+            <p className="font-bold">Date: <span className="font-normal">{card.Date}</span></p>
+            <p className="font-bold">Created by: <span className="font-normal">{card.createdBy}</span></p>
+            <p className="font-bold">Location: <span className="font-normal">{card.location}</span></p>
+          </div>
+          <div className="flex justify-between items-center gap-[5px] p-2 border-t border-black text-sm">
+          <h1 className=" ">{card.userName}</h1>
+            <p>|</p>
+            <h1 className=" ">{card.days}</h1>
+            <p>|</p>
+            <h1 className=" ">{card.location}</h1>
+            <p>|</p>
+            <img src='src/assets/Images/dashboard/grocery-store.png' alt="cart" className="w-5 h-5" />
+          </div>
+        </div>
+      )}
+    </div>
+  ))}
+</div>
+
+
 
 
 {/* <div className="shadow-md rounded-[20px] overflow-hidden w-[20%] h-[20%]">

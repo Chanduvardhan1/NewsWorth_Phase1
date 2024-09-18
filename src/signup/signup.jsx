@@ -538,10 +538,13 @@ const verifySignup = async () => {
      
       toast.success(result.response_message);
       setVerify(false);
-      setshowOTP(false);
       setShowRegistr(false);
       setShowPassword1(true);
       setIsEditable(false);
+      setShowMobileOTP(false);
+      setShowEmailOTP(false);
+      setHideOtpButtons(true);
+      // setResset(false);
     }  else if (result.response === 'fail' && result.response_message === 'Invalid or incorrect OTP.') {
       setMessage('Invalid or incorrect OTP. Please check and try again.');
       setSuccess('');
@@ -1785,6 +1788,7 @@ const handleCheckboxChange = (e) => {
             </MenuItem>
             <MenuItem value="Female">Female</MenuItem>
             <MenuItem value="Male">Male</MenuItem>
+            <MenuItem value="I prefer not to say">I prefer not to say</MenuItem>
           </Select>
         </FormControl>
 </div>

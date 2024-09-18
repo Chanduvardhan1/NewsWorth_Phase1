@@ -322,7 +322,7 @@ const watch = () => {
                 <div >
                     <img src="src\assets\Images\dashboard\share.png" alt="" className="w-[20px] h-[20px]" />
                 </div>
-                <p>shere</p>
+                <p>Share</p>
             </div>
             <div className="flex gap-[5px] ml-[8px]  bg-gray-300 rounded-[50px] p-[5px] items-center "> 
                 <div >
