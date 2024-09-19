@@ -4,6 +4,15 @@ import Navbar from "../Navbar/navbar";
 import { useNavigate } from "react-router-dom";
 import Landing from "../landing/landing";
 import { useParams } from 'react-router-dom';
+import videoSrc from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4';
+import videoSrc6 from '../../src/assets/Images/home/10_30 PM _ 12th September 2024 _ ETV News _ News Headlines _ ETV Andhra Pradesh.mp4';
+import videoSrc7 from '../../src/assets/Images/home/CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation.mp4';
+import shareImg from '../../src/assets/Images/dashboard/share.png';
+import moreImg from '../../src/assets/Images/dashboard/more.png';
+import likeImg from '../../src/assets/Images/dashboard/like.png';
+import NewsWorth from '../../src/assets/Images/home/NewsWorth.png';
+import pic from '../../src/assets/Images/landing/pic.jpg';
+
 
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 const videos = [
@@ -93,10 +102,10 @@ const videos = [
   const videoData = [
     {
       id: 1,
-      videoSrc: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4', // video file or URL
+      videoSrc: videoSrc, // video file or URL
       thumbnail: 'your-thumbnail-1.jpg', // thumbnail URL if needed
       title: 'YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024',
-      channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+      channelIcon: pic, // channel icon image
       views: '9.2M views',
       duration: '2:29',
       postedTime: '18 hours ago',
@@ -104,11 +113,11 @@ const videos = [
     },
     {
       id: 2,
-      videoSrc: 'src/assets/Images/home/10_30 PM _ 12th September 2024 _ ETV News _ News Headlines _ ETV Andhra Pradesh.mp4', // video file or URL
+      videoSrc: videoSrc, // video file or URL
 
       thumbnail: 'your-thumbnail-2.jpg',
       title: '10:30 PM | 12th September 2024 | ETV News | News Headlines | ETV Andhra Pradesh',
-      channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+      channelIcon: pic,
       views: '280 views',
       duration: '1:31',
       postedTime: '2 days ago',
@@ -116,12 +125,12 @@ const videos = [
     },
     {
         id: 3,
-        videoSrc: 'src/assets/Images/home/CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation.mp4', // video file or URL
+        videoSrc: videoSrc, // video file or URL
   
         thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
 
         title: 'CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation',
-        channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+        channelIcon: pic,
         views: '1.5M views',
         duration: '1:22',
         postedTime: '2 days ago',
@@ -129,11 +138,11 @@ const videos = [
       },
       {
         id: 4,
-        videoSrc: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4', // video file or URL
+        videoSrc: videoSrc, // video file or URL
   
         thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
         title: 'Some Other Trailer | Actor | Actress',
-        channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+        channelIcon: pic,
         views: '1.5M views',
         duration: '3:10',
         postedTime: '2 days ago',
@@ -141,10 +150,11 @@ const videos = [
       },
       {
         id: 5,
-        videoSrc: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4', // video file or URL
+        videoSrc: videoSrc, // video file or URL
+
         thumbnail: 'your-thumbnail-1.jpg', // thumbnail URL if needed
         title: 'YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024',
-        channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+        channelIcon: pic,
         views: '9.2M views',
         duration: '2:29',
         postedTime: '18 hours ago',
@@ -152,24 +162,25 @@ const videos = [
       },
       {
         id: 6,
-        videoSrc: 'src/assets/Images/home/10_30 PM _ 12th September 2024 _ ETV News _ News Headlines _ ETV Andhra Pradesh.mp4', // video file or URL
+        videoSrc: videoSrc6, // video file or URL
   
         thumbnail: 'your-thumbnail-2.jpg',
         title: '10:30 PM | 12th September 2024 | ETV News | News Headlines | ETV Andhra Pradesh',
-        channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
-        views: '280 views',
+
+        channelIcon: pic,
+              views: '280 views',
         duration: '1:31',
         postedTime: '2 days ago',
         channelName: 'ETV Andhra Pradesh'
       },
       {
           id: 7,
-          videoSrc: 'src/assets/Images/home/CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation.mp4', // video file or URL
+          videoSrc:videoSrc7, // video file or URL
     
           thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
   
           title: 'CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation',
-          channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+          channelIcon: pic,
           views: '1.5M views',
           duration: '1:22',
           postedTime: '2 days ago',
@@ -177,11 +188,11 @@ const videos = [
         },
         {
           id: 8,
-          videoSrc: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4', // video file or URL
+          videoSrc: videoSrc, // video file or URL
     
           thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
           title: 'Some Other Trailer | Actor | Actress',
-          channelIcon: 'src/assets/Images/landing/pic.jpg', // channel icon image
+          channelIcon: pic,
           views: '1.5M views',
           duration: '3:10',
           postedTime: '2 days ago',
@@ -291,7 +302,7 @@ const watch = () => {
 
     <div className="p-[10px]">
         <div>
-        <video  src="src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4" controls>
+        <video  src={videoSrc} controls>
         </video>
         </div>
         <div className="text-[18px] font-bold p-[5px] ">
@@ -301,7 +312,7 @@ const watch = () => {
         <div className="flex flex-row justify-between p-[5px]">
         <div className="flex gap-[10px] items-center">
             <div className="mx-[5px]">
-                <img src="src\assets\Images\home\NewsWorth.png" alt="" className="w-[25px] h-[25px] " />
+                <img src={NewsWorth} alt="" className="w-[25px] h-[25px] " />
             </div>
             <div>
             <div className="flex gap-[10px]">
@@ -313,20 +324,20 @@ const watch = () => {
         </div>
         <div className="flex justify-center items-center">
         <div className="flex flex-row gap-[5px] bg-gray-300 rounded-[28px] p-[4px] px-[10px] items-center">
-                <img src="src\assets\Images\dashboard\like.png" alt="" className="w-[20px] h-[20px]" />
+                <img src={likeImg} alt="" className="w-[20px] h-[20px]" />
                 <p>83k</p>
                 <p>|</p>
-                <img src="src\assets\Images\dashboard\like.png" className="w-[20px] h-[20px] rotate-180" alt="" />
+                <img src={likeImg} className="w-[20px] h-[20px] rotate-180" alt="" />
             </div>
             <div className="flex gap-[5px] ml-[8px]  bg-gray-300 rounded-[28px] p-[4px] px-[10px] items-center "> 
                 <div >
-                    <img src="src\assets\Images\dashboard\share.png" alt="" className="w-[20px] h-[20px]" />
+                    <img src={shareImg} alt="" className="w-[20px] h-[20px]" />
                 </div>
                 <p>Share</p>
             </div>
             <div className="flex gap-[5px] ml-[8px]  bg-gray-300 rounded-[50px] p-[5px] items-center "> 
                 <div >
-                    <img src="src\assets\Images\dashboard\more.png" alt="" className="w-[25px] h-[20px]" />
+                    <img src={moreImg} alt="" className="w-[25px] h-[20px]" />
                 </div>
             </div>
             </div>
@@ -360,7 +371,7 @@ const watch = () => {
  </div>
  {isExpanded && (
         <div className="flex justify-between">
-          <img src="src/assets/Images/landing/pic.jpg" alt="User" className="w-[30px] h-[30px]" />
+          <img src={pic} alt="User" className="w-[30px] h-[30px]" />
           <div className="flex gap-[10px]">
             <button className="primary-btn" onClick={() => setIsExpanded(false)}>Cancel</button>
             <button className="primary-btn" onClick={handleSubmit}>Submit</button>
@@ -374,7 +385,7 @@ const watch = () => {
         <div key={index} className="flex relative justify-between p-4 border-b">
           <div className="flex">
             <div>
-              <img src="src/assets/Images/landing/pic.jpg" alt="User" className="w-[50px] h-[50px]" />
+              <img src={pic} alt="User" className="w-[50px] h-[50px]" />
             </div>
             <div>
               <div className="flex p-[4px] font-bold">
@@ -385,9 +396,9 @@ const watch = () => {
                 {commentItem.content}
               </div>
               <div className="flex p-[4px] items-center">
-                <img src="src/assets/Images/dashboard/like.png" alt="like" className="w-[20px] h-[20px]" />
+                <img src={likeImg} alt="like" className="w-[20px] h-[20px]" />
                 <p className="mx-[8px]">{commentItem.likes}k</p>
-                <img src="src/assets/Images/dashboard/like.png" alt="dislike" className="w-[20px] h-[20px] rotate-180 ml-[10px]" />
+                <img src={likeImg} alt="dislike" className="w-[20px] h-[20px] rotate-180 ml-[10px]" />
                 <p className="ml-[20px] cursor-pointer" onClick={() => handleReplyClick(commentItem.id)}>Reply</p>
 
               </div>
@@ -431,7 +442,7 @@ const watch = () => {
             </div>
           </div>
           <div>
-            <img src="src/assets/Images/dashboard/more.png" alt="more" className="w-[20px] h-[20px]" />
+            <img src={moreImg} alt="more" className="w-[20px] h-[20px]" />
           </div>
         </div>
       ))}

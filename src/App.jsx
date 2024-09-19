@@ -20,8 +20,9 @@ import Dashboard from './dashboard/dashboard.jsx';
 import Watch from './watch/watch.jsx';
 import Watchimages from './watchimages/watchimages.jsx';
 import { AuthProvider } from './Authcontext/AuthContext.jsx';
-
+import Images from './dashboard/images.jsx';
 import PrivateRoute from './privateRoute/privateRoute.jsx';
+import Audio from './dashboard/audio.jsx';
 function App() {  
   return (
     <>
@@ -39,6 +40,8 @@ function App() {
     <Route path="contactus" element={<Contactus />} />
     <Route path="resetpassword" element={<Resetpassword />} />
     <Route path="resetmobile" element={<Resetmobile />} />
+    <Route path="images" element={<PrivateRoute><Images /></PrivateRoute>} />
+    <Route path="audio" element={<PrivateRoute><Audio /></PrivateRoute>} />
 
     <Route path="landing" element={<Landing />} />
     <Route path="watch" element={<Watch />} />

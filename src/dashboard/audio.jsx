@@ -19,34 +19,18 @@ import bookmarkImg from '../../src/assets/Images/dashboard/bookmark.png';
 import shareImg from '../../src/assets/Images/dashboard/share.png';
 import moreImg from '../../src/assets/Images/dashboard/more.png';
 import likeImg from '../../src/assets/Images/dashboard/like.png';
-import Filters from "../filters/filters";
+
 
 import videoSrc from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4';
 import videoSrc1 from '../../src/assets/Images/home/10_30 PM _ 12th September 2024 _ ETV News _ News Headlines _ ETV Andhra Pradesh.mp4';
 import videoSrc2 from '../../src/assets/Images/home/CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation.mp4';
 import videoSrc3 from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4';
 
-
+import Filters from "../filters/filters";
 import channelIcon from '../../src/assets/Images/landing/pic.jpg';
 
 
-// const testimonialData = [
-//     {
-//       id: 1,
-//       title: facebook
-    
-//     },
-//     {
-//       id: 2,
-//       title1: "Mission",
-//       text1: "Transforming business operations with AI-powered software, enabling advanced analytics, automation, and augmented decision-making. Driving operational efficiency, strategic innovation, and intelligence for businesses, ushering in a new era of data-driven operations.",
-//     },
-//     {
-//       id: 3,
-//       title1: "Values",
-//       text1: "Excellence is our standard the growth and well-being of our team members is our priority. We embrace innovation, encourage open debate, and strive for big dreams while fostering teamwork to achieve success.",
-//     },
-//   ];
+
 const cardData = [
     {
       id: 1,
@@ -224,7 +208,7 @@ const cardData = [
    
     // Add more video objects here
   ];
-const dashboard = () => {
+const audio = () => {
     const [flippedCards, setFlippedCards] = useState({});
     const [cardData1, setCardData1] = useState([]);
     const navigate = useNavigate();
@@ -314,222 +298,20 @@ const dashboard = () => {
    <div className=" relative">
     <Landing/>
     <div className="p-[20px] bg-white">
-   <Filters/>
-   <div>
-    <h1 className="font-bold text-[30px] my-[20px]">Videos</h1>
-</div>
+    <Filters/>
+    
 <div>
-  <Dashboard1/>
-</div>
-
-
-<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-6">
-
-{videoData.map((video) => (
-
-<div key={video.id} 
-          onClick={handleVideoClick}
-
-className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
-      {/* Video Thumbnail / Video Clip */}
-      <div
-        className="relative group"
-     
-      >
-        <video
-          ref={videoRef}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          className="w-full h-48 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
-          muted
-          loop
-          src={video.videoSrc}
-        //   poster={video.thumbnail} // Show thumbnail image until the video is played
-        >
-        
-        </video>
-
-        {/* Video Duration Overlay */}
-        <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
-          {video.duration}
-        </div>
-      </div>
-
-      {/* Video Info */}
-      <div className="p-4 flex">
-        {/* Channel Icon */}
-        <img
-          className="w-10 h-10 rounded-full mr-4"
-          src={video.channelIcon}
-          alt="Channel Icon"
-        />
-        <div>
-          {/* Title and Details */}
-          <h2 className="text-sm font-semibold text-gray-900 line-clamp-2 md:line-clamp-2">{video.title}</h2>
-          <p className="text-sm text-gray-500">
-            {video.channelName}
-          </p>
-          <p className="text-sm text-gray-500"> {video.views} • {video.postedTime}</p>
-        </div>
-
-        {/* Options Icon */}
-        <div className="ml-auto">
-          <svg
-            className="w-6 h-6 text-gray-500"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 6v.01M12 12v.01M12 18v.01"
-            />
-          </svg>
-        </div>
-      </div>
-    </div>
-       ))}
-    </div>
-    {/* <div>
-    <h1 className="font-bold cur text-[30px] my-[20px]">Images</h1>
-</div> */}
-
-{/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
-{cardData1
-        .filter((card) => card.content_type === "Image") // Filter by content_type
-        .map((card, index) => (
-    <div key={index}   className=" shadow-md overflow-hidden border border-gray-300 rounded-lg flex flex-col h-full">
-      <div  className="flex justify-end px-2 pt-1" >
-        <img
-          src="src/assets/Images/dashboard/flip.png"
-          alt="flip"
-          className="w-5 h-5 cursor-pointer"
-          onClick={() => handleFlip(index)}
-        />
-      </div>
-
-      {!flippedCards[index] ? (
-        <>
-          <div className="flex justify-between p-2 border-b border-blue-300">
-            <div className="p-1 border border-blue-300 rounded-md">
-              <img src="src/assets/Images/dashboard/musical-note.png" alt="icon" className="w-5 h-5" />
-            </div>
-            <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="font-bold text-sm">{card.content_title}</h1>
-            </div>
-            <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="text-sm">{card.final_price}</h1>
-            </div>
-          </div>
-          <div className="p-2">
-            <p className="truncate text-gray-500 p-1 border border-blue-300 rounded-md text-sm">
-              {card.content_description}
-            </p>
-          </div>
-          <div onClick={handleImagesClick} className="flex justify-center cursor-pointer">
-            <img src={card.content_link} alt="social media" className="w-full h-40 " />
-          </div>
-          <div className="flex justify-between items-center gap-[5px] p-2 border-t border-black text-sm">
-            <h1 className=" lg:truncate lg:w-[20%]">{card.uploaded_by}</h1>
-            <p>|</p>
-            <h1 className=" lg:truncate lg:w-[20%]">{card.age_in_days}</h1>
-            <p>|</p>
-            <h1 className=" lg:truncate lg:w-[60%]">{card.gps_location}</h1>
-            <p>|</p>
-            <img src='src/assets/Images/dashboard/grocery-store.png' alt="cart" className="w-5 h-5" />
-          </div>
-        </>
-      ) : (
-        <div className="flex flex-col ">
-          <div className="flex justify-between p-2 border-b border-blue-300">
-            <div className="p-1 border border-blue-300 rounded-md">
-              <img src='src/assets/Images/dashboard/musical-note.png' alt="icon" className="w-5 h-5" />
-            </div>
-            <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="font-bold text-sm">{card.content_title}</h1>
-            </div>
-            <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="text-sm">{card.final_price}</h1>
-            </div>
-          </div>
-          <div className="p-2">
-            <p className="truncate p-1 border border-blue-300 rounded-md text-sm">
-              {card.content_description}
-            </p>
-          </div>
-          <div className="flex flex-col w-full h-40 p-2 text-sm">
-            <p className="font-bold">Date: <span className="font-normal">{card.uploaded_time}</span></p>
-            <p className="font-bold">Created by: <span className="font-normal">{card.uploaded_by}</span></p>
-            <p className="font-bold">Location: <span className="font-normal">{card.final_price}</span></p>
-          </div>
-          <div className="flex justify-between items-center gap-[5px] p-2 border-t border-black text-sm">
-          <h1 className=" lg:truncate lg:w-[20%]">{card.uploaded_by}</h1>
-            <p>|</p>
-            <h1 className=" lg:truncate lg:w-[20%]">{card.age_in_days}</h1>
-            <p>|</p>
-            <h1 className=" lg:truncate lg:w-[60%]">{card.gps_location}</h1>
-            <p>|</p>
-            <img src='src/assets/Images/dashboard/grocery-store.png' alt="cart" className="w-5 h-5" />
-          </div>
-        </div>
-      )}
-    </div>
-  ))}
-</div> */}
-{/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
-  {cardData.map((card) => (
-    <div key={card.id} className="shadow-md rounded-xl overflow-hidden flex flex-col items-center">
-      <div onClick={handleImagesClick} className="w-full h-40 sm:h-48 lg:h-56 xl:h-64 rounded-t-xl overflow-hidden">
-        <img src={card.imgSrc} alt="post" className="w-full h-full cursor-pointer" />
-      </div>
-      <div className="flex flex-col p-4 w-full">
-        <div className="flex gap-1 pb-2 items-center text-xs sm:text-sm text-gray-600">
-          <p className="font-bold ">{card.userName}</p>
-          <span>.</span>
-          <p>{card.timeAgo}</p>
-        </div>
-        <div className="flex flex-col gap-1 pb-4">
-          <h1 className="font-bold text-base sm:text-lg">{card.location}</h1>
-          <p className="text-sm text-gray-700 line-clamp-2 md:line-clamp-2">{card.description}</p>
-        </div>
-        <div className="flex flex-col sm:flex-row justify-between gap-2">
-          <div className="flex gap-2">
-            <div className="rounded-full bg-gray-300 p-2">
-              <img src={card.likeImg} alt="like" className="w-5 h-5" />
-            </div>
-            <div className="rounded-full bg-gray-300 p-2">
-              <img src={card.likeImg} alt="like" className="w-5 h-5 rotate-180" />
-            </div>
-            <div className="rounded-full bg-gray-300 p-2">
-              <img src={card.chatImg} alt="chat" className="w-5 h-5" />
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <div className="rounded-full bg-gray-300 p-2">
-              <img src={card.bookmarkImg} alt="bookmark" className="w-5 h-5" />
-            </div>
-            <div className="rounded-full bg-gray-300 p-2">
-              <img src={card.shareImg} alt="share" className="w-5 h-5" />
-            </div>
-            <div className="rounded-full bg-gray-300 p-2">
-              <img src={card.moreImg} alt="more" className="w-5 h-5" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  ))}
-</div> */}
-{/* <div>
     <h1 className="font-bold text-[30px] my-[20px]">Audio</h1>
+</div>
+{/* <div>
+  <Dashboard1/>
 </div> */}
-{/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
+
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
 {cardData2.map((card) => (
     <div key={card.id}   className=" shadow-md overflow-hidden border border-gray-300 rounded-lg flex flex-col h-full">
       <div  className="flex justify-end px-2 pt-1" >
+        {/* Flip button */}
         <img
           src="src/assets/Images/dashboard/flip.png"
           alt="flip"
@@ -538,7 +320,9 @@ className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
         />
       </div>
 
+      {/* Conditional rendering based on flip state */}
       {!flippedCards[card.id] ? (
+        // Front side of the card
         <>
           <div className="flex justify-between p-2 border-b border-blue-300">
             <div className="p-1 border border-blue-300 rounded-md">
@@ -559,7 +343,7 @@ className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
           <div  className="flex justify-center cursor-pointer">
           <audio  controls className="w-full h-40 pb-16">
     <source src={card.image} type="audio/mp3" /> {/* Assuming the audio file is in MP3 format */}
-  {/* </audio>
+  </audio>
           </div>
           <div className="flex justify-between items-center gap-[5px] p-2 border-t border-black text-sm">
             <h1 className=" ">{card.userName}</h1>
@@ -572,6 +356,7 @@ className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
           </div>
         </>
       ) : (
+        // Back side of the card
         <div className="flex flex-col ">
           <div className="flex justify-between p-2 border-b border-blue-300">
             <div className="p-1 border border-blue-300 rounded-md">
@@ -607,7 +392,7 @@ className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
       )}
     </div>
   ))}
-</div> */}
+</div>
 
 
 
@@ -737,4 +522,4 @@ className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
   );
 };
 
-export default dashboard;
+export default audio;

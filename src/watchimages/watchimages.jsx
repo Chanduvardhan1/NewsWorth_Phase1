@@ -4,81 +4,95 @@ import Navbar from "../Navbar/navbar";
 import { useNavigate } from "react-router-dom";
 import Landing from "../landing/landing";
 import { useParams } from 'react-router-dom';
+import shareImg from '../../src/assets/Images/dashboard/share.png';
+import moreImg from '../../src/assets/Images/dashboard/more.png';
+import likeImg from '../../src/assets/Images/dashboard/like.png';
+import NewsWorth from '../../src/assets/Images/home/NewsWorth.png';
+import pic from '../../src/assets/Images/landing/pic.jpg';
+import src from '../../src/assets/Images/dashboard/crickit.webp';
+
+import news1 from '../../src/assets/Images/dashboard/news1.webp';
 
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 const videos = [
     {
        id: 1,
-       src:"src/assets/Images/dashboard/crickit.webp",
+       src:src,
 
       title: "Cricketers' practice in Anantapur.",
       channel: "iDream Trending",
       views: "1.8M views",
       uploadDate: "1 month ago",
-      moreIconSrc: "src/assets/Images/dashboard/more.png",
+      moreIconSrc: moreImg,
     },
     {
         id: 2,
-        src:"src/assets/Images/dashboard/crickit.webp",
+        src:src,
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
+        moreIconSrc: moreImg,
       },
       {
         id: 3,
-        src:"src/assets/Images/dashboard/crickit.webp",
+        src:src,
+
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
+        moreIconSrc: moreImg,
       },
       {
         id: 4,
-        src:"src/assets/Images/dashboard/crickit.webp",
+        src:src,
+
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
+        moreIconSrc: moreImg,
       },
       {
         id: 5,
-        src:"src/assets/Images/dashboard/crickit.webp",
+        src:src,
+
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
+        moreIconSrc: moreImg,
       },
       {
         id: 6,
-        src:"src/assets/Images/dashboard/crickit.webp",
+        src:src,
+
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
+        moreIconSrc: moreImg,
       },
       {
         id: 7,
-        src:"src/assets/Images/dashboard/crickit.webp",
+        src:src,
+
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
+        moreIconSrc: moreImg,
       },
       {
         id: 8,
-        src:"src/assets/Images/dashboard/crickit.webp",
+        src:src,
+
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
+        moreIconSrc: moreImg,
       },
       {
         id: 9,
@@ -87,7 +101,7 @@ const videos = [
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: "src/assets/Images/dashboard/more.png",
+        moreIconSrc: moreImg,
       },
     // Add more video objects as needed
   ];
@@ -194,7 +208,7 @@ const watchimages = () => {
 <h1 >The assets of Congress candidate Vinesh Phogat are as follows...</h1>
 </div>
         <div className="w-[100%]">
-       <img src="src\assets\Images\dashboard\news1.webp" alt=""  className="w-[100%] h-auto"  />
+       <img src={news1} alt=""  className="w-[100%] h-auto"  />
         </div>
         <div className="text-[18px] font-bold p-[5px] ">
 
@@ -203,7 +217,7 @@ const watchimages = () => {
         <div className="flex flex-row justify-between p-[5px]">
         <div className="flex gap-[10px] items-center">
             <div className="mx-[5px]">
-                <img src="src\assets\Images\home\NewsWorth.png" alt="" className="w-[25px] h-[25px] " />
+                <img src={NewsWorth} alt="" className="w-[25px] h-[25px] " />
             </div>
             <div>
             <div className="flex gap-[10px]">
@@ -215,20 +229,20 @@ const watchimages = () => {
         </div>
         <div className="flex justify-center items-center">
         <div className="flex flex-row gap-[5px] bg-gray-300 rounded-[28px] p-[4px] px-[10px] items-center">
-                <img src="src\assets\Images\dashboard\like.png" alt="" className="w-[20px] h-[20px]" />
+                <img src={likeImg} alt="" className="w-[20px] h-[20px]" />
                 <p>83k</p>
                 <p>|</p>
-                <img src="src\assets\Images\dashboard\like.png" className="w-[20px] h-[20px] rotate-180" alt="" />
+                <img src={likeImg} className="w-[20px] h-[20px] rotate-180" alt="" />
             </div>
             <div className="flex gap-[5px] ml-[8px]  bg-gray-300 rounded-[28px] p-[4px] px-[10px] items-center "> 
                 <div >
-                    <img src="src\assets\Images\dashboard\share.png" alt="" className="w-[20px] h-[20px]" />
+                    <img src={shareImg} alt="" className="w-[20px] h-[20px]" />
                 </div>
                 <p>shere</p>
             </div>
             <div className="flex gap-[5px] ml-[8px]  bg-gray-300 rounded-[50px] p-[5px] items-center "> 
                 <div >
-                    <img src="src\assets\Images\dashboard\more.png" alt="" className="w-[25px] h-[20px]" />
+                    <img src={moreImg} alt="" className="w-[25px] h-[20px]" />
                 </div>
             </div>
             </div>
@@ -245,7 +259,7 @@ const watchimages = () => {
                 
 <div>
 
-                        <img src="src\assets\Images\landing\pic.jpg" alt=""  className="w-[50px] h-[50px]"/>
+                        <img src={pic} alt=""  className="w-[50px] h-[50px]"/>
 </div>
                 
                     
@@ -262,7 +276,7 @@ const watchimages = () => {
  </div>
  {isExpanded && (
         <div className="flex justify-between">
-          <img src="src/assets/Images/landing/pic.jpg" alt="User" className="w-[30px] h-[30px]" />
+          <img src={pic} alt="User" className="w-[30px] h-[30px]" />
           <div className="flex gap-[10px]">
             <button className="primary-btn" onClick={() => setIsExpanded(false)}>Cancel</button>
             <button className="primary-btn" onClick={handleSubmit}>Submit</button>
@@ -276,7 +290,7 @@ const watchimages = () => {
         <div key={index} className="flex relative justify-between p-4 border-b">
           <div className="flex">
             <div>
-              <img src="src/assets/Images/landing/pic.jpg" alt="User" className="w-[50px] h-[50px]" />
+              <img src={pic} alt="User" className="w-[50px] h-[50px]" />
             </div>
             <div>
               <div className="flex p-[4px] font-bold">
@@ -287,9 +301,9 @@ const watchimages = () => {
                 {commentItem.content}
               </div>
               <div className="flex p-[4px] items-center">
-                <img src="src/assets/Images/dashboard/like.png" alt="like" className="w-[20px] h-[20px]" />
+                <img src={likeImg} alt="like" className="w-[20px] h-[20px]" />
                 <p className="mx-[8px]">{commentItem.likes}k</p>
-                <img src="src/assets/Images/dashboard/like.png" alt="dislike" className="w-[20px] h-[20px] rotate-180 ml-[10px]" />
+                <img src={likeImg} alt="dislike" className="w-[20px] h-[20px] rotate-180 ml-[10px]" />
                 <p className="ml-[20px] cursor-pointer" onClick={() => handleReplyClick(commentItem.id)}>Reply</p>
 
               </div>
@@ -315,7 +329,7 @@ const watchimages = () => {
                   />
                   <div className="flex justify-between">
                     <img
-                      src="src/assets/Images/landing/pic.jpg"
+                      src={pic}
                       alt=""
                       className="w-[30px] h-[30px]"
                     />
@@ -333,7 +347,7 @@ const watchimages = () => {
             </div>
           </div>
           <div>
-            <img src="src/assets/Images/dashboard/more.png" alt="more" className="w-[20px] h-[20px]" />
+            <img src={moreImg} alt="more" className="w-[20px] h-[20px]" />
           </div>
         </div>
       ))}

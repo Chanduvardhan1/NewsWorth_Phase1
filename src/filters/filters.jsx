@@ -1,0 +1,114 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
+const filters = () => {
+  const navigate = useNavigate();
+  const location = useLocation(); // To get the current route
+  const [activePage, setActivePage] = useState(""); // Track the active page
+
+  // Update activePage when location changes
+  useEffect(() => {
+    setActivePage(location.pathname); // Update active page based on the current path
+  }, [location.pathname]);
+
+  const handleNavigation = (path) => {
+    navigate(path); // Navigate to the selected path
+  };
+
+  return (
+    <>
+      <div className="font-bold flex justify-between mb-6">
+        <p
+          onClick={() => handleNavigation("/dashboard")}
+          className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
+            activePage === "/dashboard" ? "font-extrabold" : "font-bold"
+          }`}
+        >
+          Home
+        </p>
+        <p
+        //   onClick={() => handleNavigation("/general")}
+          className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
+            activePage === "/#" ? "font-extrabold" : "font-bold"
+          }`}
+        >
+          General News
+        </p>
+        <p
+          onClick={() => handleNavigation("/images")}
+          className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
+            activePage === "/images" ? "font-extrabold" : "font-bold"
+          }`}
+        >
+          Images
+        </p>
+        <p
+          onClick={() => handleNavigation("/audio")}
+          className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
+            activePage === "/audio" ? "font-extrabold" : "font-bold"
+          }`}
+        >
+          Audio
+        </p>
+        <p
+        //   onClick={() => handleNavigation("/entertainment")}
+          className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
+            activePage === "/entertainment" ? "font-extrabold" : "font-bold"
+          }`}
+        >
+          Entertainment
+        </p>
+        <p
+        //   onClick={() => handleNavigation("/sports")}
+          className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
+            activePage === "/sports" ? "font-extrabold" : "font-bold"
+          }`}
+        >
+          Sports
+        </p>
+        <p
+        //   onClick={() => handleNavigation("/business")}
+          className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
+            activePage === "/business" ? "font-extrabold" : "font-bold"
+          }`}
+        >
+          Business
+        </p>
+        <p
+        //   onClick={() => handleNavigation("/health")}
+          className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
+            activePage === "/health" ? "font-extrabold" : "font-bold"
+          }`}
+        >
+          Health
+        </p>
+        <p
+        //   onClick={() => handleNavigation("/educational")}
+          className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
+            activePage === "/educational" ? "font-extrabold" : "font-bold"
+          }`}
+        >
+          Educational
+        </p>
+        <p
+        //   onClick={() => handleNavigation("/wildlife")}
+          className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
+            activePage === "/wildlife" ? "font-extrabold" : "font-bold"
+          }`}
+        >
+          Wildlife
+        </p>
+        <p
+        //   onClick={() => handleNavigation("/fashion")}
+          className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
+            activePage === "/fashion" ? "font-extrabold" : "font-bold"
+          }`}
+        >
+          Fashion
+        </p>
+      </div>
+    </>
+  );
+};
+
+export default filters;

@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import logo from '../../src/assets/Images/home/NewsWorth.png'
+import ball from '../../src/assets/Images/landing/bell.png'
+import photo from '../../src/assets/Images/landing/pic.jpg'
 
 const landing = () => {
 
@@ -9,7 +12,7 @@ const landing = () => {
 <div className=" w-full flex justify-between p-[5px] shadow-md ">
     <div className="flex justify-center items-center">
         <div>
-        <img src="src\assets\Images\home\NewsWorth.png" alt="" />
+        <img src={logo} alt="" />
         </div>
         <div>
         <h1 className="text-[25px] font-bold ">NewsWorth</h1>
@@ -32,14 +35,14 @@ const landing = () => {
     
         </div>
       <div>
-        <img src="src\assets\Images\landing\bell.png" className="w-[20px] h-[20px]" alt="" />
+        <img src={ball} className="w-[20px] h-[20px]" alt="" />
       </div>
         <div>
             <h1>Chandu</h1>
             <p>User Id:1</p>
         </div>
         <div>
-            <img src="src\assets\Images\landing\pic.jpg" alt="" className=" w-[45px] h-[45px]" />
+            <img src={photo} alt="" className=" w-[45px] h-[45px]" />
         </div>
     </div>
 </div>

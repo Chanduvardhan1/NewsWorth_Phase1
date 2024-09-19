@@ -62,8 +62,8 @@ const home1 = () => {
     dots: true,
     arrows: true,
     
-    // nextArrow: <SampleNextArrow />,
-    // prevArrow: <SamplePrevArrow />,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
     infinite: true,
     speed: 1000,
     slidesToShow: 1,
