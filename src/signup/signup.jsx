@@ -76,6 +76,7 @@ const [success, setSuccess] = useState('');
 const [isChecked1, setIsChecked1] = useState(false); 
 const [showPassword1, setShowPassword1] = useState(false);
 const [showreset, setResset] = useState(false);
+const [otpButtonEnabled, setOtpButtonEnabled] = useState(false);
 
 const [isEditable, setIsEditable] = useState(true);
 const [showMobileOTP, setShowMobileOTP] = useState(false);
@@ -926,8 +927,11 @@ if (hasError) {
 const handleCheckboxChange = (e) => {
   setIsChecked1(e.target.checked);
 };
+useEffect(() => {
+  // Enable the button if either mobile or email is filled
+  setOtpButtonEnabled(mobile.trim() !== '' || email.trim() !== '');
+}, [mobile, email]);
 
-  
   const [address1, setAddress1] = useState({});
 
    
@@ -1506,7 +1510,7 @@ const handleCheckboxChange = (e) => {
    {!hideOtpButtons && (
   !showOtpField1 ? (
     <div className="flex justify-end">
-      <button className="primary-btn" onClick={sendOtp}>Send OTP</button>
+      <button               className={`primary-btn ${!otpButtonEnabled ? 'cursor-not-allowed opacity-50' : ''}`}onClick={sendOtp} disabled={!otpButtonEnabled}>Send OTP</button>
     </div>
   ) : (
     <div className="flex justify-end space-x-4 items-center">
@@ -1903,7 +1907,8 @@ const handleCheckboxChange = (e) => {
     {!hideOtpButtons && (
   !showOtpField1 ? (
     <div className="flex justify-end">
-      <button className="primary-btn" onClick={sendOtp}>Send OTP</button>
+      <button               className={`primary-btn ${!otpButtonEnabled ? 'cursor-not-allowed opacity-50' : ''}`} onClick={sendOtp}        
+             disabled={!otpButtonEnabled}  >Send OTP</button>
     </div>
   ) : (
     <div className="flex justify-end space-x-4 items-center">
