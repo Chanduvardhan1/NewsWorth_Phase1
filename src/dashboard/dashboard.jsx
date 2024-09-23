@@ -3,6 +3,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import Landing from "../landing/landing";
+import { Transition } from "@headlessui/react";
+
 import facebook from "../../src/assets/Images/footer/facebook-app-symbol.png"
 // import Footer from "../footer/footer";
 import { useNavigate } from 'react-router-dom';
@@ -32,6 +34,10 @@ import camera from '../../src/assets/Images/dashboard/photo-device.png'
 
 import channelIcon from '../../src/assets/Images/landing/pic.jpg';
 
+import Image1 from '../../src/assets/Images/dashboard/viratkhoil.webp';
+import Image2 from '../../src/assets/Images/dashboard/Vig.webp';
+import Image3 from '../../src/assets/Images/dashboard/social-media.jpg';
+import Image4 from '../../src/assets/Images/dashboard/news1.webp';
 
 // const testimonialData = [
 //     {
@@ -174,60 +180,197 @@ const cardData = [
       },
     // You can add more card data objects here
   ];
+  // const videoData = [
+  //   {
+  //     id: 1,
+  //     videoSrc: videoSrc, // video file or URL
+  //     thumbnail: 'your-thumbnail-1.jpg', // thumbnail URL if needed
+  //     title: 'YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024',
+  //     channelIcon: channelIcon, // channel icon image
+  //     views: '9.2M views',
+  //     duration: '2:29',
+  //     postedTime: '18 hours ago',
+  //     channelName: 'SakshiTV'
+  //   },
+  //   {
+  //     id: 2,
+  //     videoSrc: videoSrc1, // video file or URL
+
+  //     thumbnail: 'your-thumbnail-2.jpg',
+  //     title: '10:30 PM | 12th September 2024 | ETV News | News Headlines | ETV Andhra Pradesh',
+  //     channelIcon: channelIcon, // channel icon image
+  //     views: '280 views',
+  //     duration: '1:31',
+  //     postedTime: '2 days ago',
+  //     channelName: 'ETV Andhra Pradesh'
+  //   },
+  //   {
+  //       id: 3,
+  //       videoSrc: videoSrc2, // video file or URL
+  
+  //       thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
+
+  //       title: 'CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation',
+  //       channelIcon: channelIcon, // channel icon image
+  //       views: '1.5M views',
+  //       duration: '1:22',
+  //       postedTime: '2 days ago',
+  //       channelName: 'XYZ Productions'
+  //     },
+  //     {
+  //       id: 4,
+  //       videoSrc: videoSrc3, // video file or URL
+  
+  //       thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
+  //       title: 'Some Other Trailer | Actor | Actress',
+  //       channelIcon: channelIcon, // channel icon image
+  //       views: '1.5M views',
+  //       duration: '3:10',
+  //       postedTime: '2 days ago',
+  //       channelName: 'XYZ Productions'
+  //     },
+    
+   
+  //   // Add more video objects here
+  // ];
   const videoData = [
     {
       id: 1,
-      videoSrc: videoSrc, // video file or URL
-      thumbnail: 'your-thumbnail-1.jpg', // thumbnail URL if needed
-      title: 'YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024',
-      channelIcon: channelIcon, // channel icon image
-      views: '9.2M views',
-      duration: '2:29',
-      postedTime: '18 hours ago',
-      channelName: 'SakshiTV'
+      videoSrc: videoSrc, // Replace with actual video source
+      price: '₹ 300.00',
+      discountPrice: '₹ 369',
+      discount: '23%',
+      video: video, // Replace with actual icon path
+      card: card, // Replace with actual icon path
+      description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...',
+      timeAgo: '1 days and 20 hours ago',
+      location: 'Bangalore, Karnataka, India',
+      author: 'By Ram M Reddy',
     },
     {
       id: 2,
-      videoSrc: videoSrc1, // video file or URL
-
-      thumbnail: 'your-thumbnail-2.jpg',
-      title: '10:30 PM | 12th September 2024 | ETV News | News Headlines | ETV Andhra Pradesh',
-      channelIcon: channelIcon, // channel icon image
-      views: '280 views',
-      duration: '1:31',
-      postedTime: '2 days ago',
-      channelName: 'ETV Andhra Pradesh'
+      videoSrc: videoSrc1,
+      price: '₹ 300.00',
+      discountPrice: '₹ 369',
+      discount: '23%',
+      video: video, // Replace with actual icon path
+      card: card,
+      description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested...',
+      timeAgo: '2 day and 15 hours ago',
+      location: 'Mumbai, Maharashtra, India',
+      author: 'By Narasimha Reddy ',
     },
     {
-        id: 3,
-        videoSrc: videoSrc2, // video file or URL
-  
-        thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
-
-        title: 'CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation',
-        channelIcon: channelIcon, // channel icon image
-        views: '1.5M views',
-        duration: '1:22',
-        postedTime: '2 days ago',
-        channelName: 'XYZ Productions'
-      },
-      {
-        id: 4,
-        videoSrc: videoSrc3, // video file or URL
-  
-        thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
-        title: 'Some Other Trailer | Actor | Actress',
-        channelIcon: channelIcon, // channel icon image
-        views: '1.5M views',
-        duration: '3:10',
-        postedTime: '2 days ago',
-        channelName: 'XYZ Productions'
-      },
-    
-   
-    // Add more video objects here
+      id: 3,
+      videoSrc: videoSrc2,
+      price: '₹ 300.00',
+      discountPrice: '₹ 369',
+      discount: '23%',
+      video: video, // Replace with actual icon path
+      card: card,
+      description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested...',
+      timeAgo: '3 day and 15 hours ago',
+      location: 'Mumbai, Maharashtra, India',
+      author: 'By Sruthi',
+    },
+    // Add more objects for additional videos...
   ];
-const dashboard = () => {
+  const imageData = [
+    {
+      id: 1,
+      imageSrc: Image1,
+      overlayText: 'New Arrival',
+      leftIcon: camera,
+      rightIcon: card,
+      price:'₹ 300.00',
+      discountPrice: '₹ 369',
+      discount: 23,
+      description: 'A short description of the image...',
+      timeAgo: '2 days ago',
+      location: 'New York, USA',
+      author: 'John Doe',
+      articleText: 'Some more detailed text about the image or article...'
+    },
+    {
+      id: 2,
+      imageSrc: Image2,
+      overlayText: 'New Arrival',
+      leftIcon: camera,
+      rightIcon: card,
+      price:'₹ 300.00',
+      discountPrice: '₹ 369',
+      discount: 23,
+      description: 'A short description of the image...',
+      timeAgo: '2 days ago',
+      location: 'New York, USA',
+      author: 'John Doe',
+      articleText: 'Some more detailed text about the image or article...'
+    },
+    {
+      id: 3,
+      imageSrc: Image3,
+      overlayText: 'New Arrival',
+      leftIcon: camera,
+      rightIcon: card,
+      price:'₹ 300.00',
+      discountPrice: '₹ 369',
+      discount: 23,
+      description: 'A short description of the image...',
+      timeAgo: '2 days ago',
+      location: 'New York, USA',
+      author: 'John Doe',
+      articleText: 'Some more detailed text about the image or article...'
+    },
+    // More objects
+  ];
+
+  const videoData1 = [
+    {
+      id: 1,
+      videoSrc: Image1,
+      description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...',
+      timeAgo: '2 days and 20 hours ago',
+      location: 'Bangalore, Karnataka, India',
+      author: 'Ram M Reddy',
+      articleText: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders...',
+      price: '₹ 300.00',
+      discountPrice: '₹ 369',
+      discount: 23,
+      audioIcon: Auido,
+      rightIcon: card,
+    },
+    {
+      id: 2,
+      videoSrc: Image4,
+      description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...',
+      timeAgo: '2 days and 20 hours ago',
+      location: 'Bangalore, Karnataka, India',
+      author: 'Ram M Reddy',
+      articleText: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders...',
+      price: '₹ 300.00',
+      discountPrice: '₹ 369',
+      discount: 23,
+      audioIcon: Auido,
+      rightIcon: card,
+    },
+    {
+      id: 1,
+      videoSrc: Image3,
+      description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...',
+      timeAgo: '2 days and 20 hours ago',
+      location: 'Bangalore, Karnataka, India',
+      author: 'Ram M Reddy',
+      articleText: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders...',
+      price: '₹ 300.00',
+      discountPrice: '₹ 369',
+      discount: 23,
+      audioIcon: Auido,
+      rightIcon: card,
+    },
+    // More video objects can be added here
+  ];
+
+  const dashboard = () => {
     const [flippedCards, setFlippedCards] = useState({});
     const [cardData1, setCardData1] = useState([]);
     const navigate = useNavigate();
@@ -240,7 +383,8 @@ const dashboard = () => {
     const [duration, setDuration] = useState(0);
     const audioRef = useRef(null);
     const progressRef = useRef(null);
-  
+    const [isOpen, setIsOpen] = useState(false);
+
     useEffect(() => {
       const audio = audioRef.current;
   
@@ -360,7 +504,7 @@ const dashboard = () => {
     const screenWidth = window.innerWidth;
 
     if (screenWidth >= 1024) {
-      setButtonsPerPage(12); // Large screens: show 6 buttons
+      setButtonsPerPage(13); // Large screens: show 6 buttons
     } else if (screenWidth >= 768) {
       setButtonsPerPage(4); // Medium screens: show 4 buttons
     } else {
@@ -399,54 +543,89 @@ const dashboard = () => {
   // Slice the button array to show only a subset based on the currentIndex
   const visibleButtons = buttonLabels.slice(currentIndex, currentIndex + buttonsPerPage);
 
-    // var settings = {
-    //     dots: true,
-    //     arrows: true,
-    //     infinite: true,
-    //     speed: 1000,
-    //     slidesToShow: 1,
-    //     slidesToScroll: 1,
-    //     autoplay: true,
-    //     autoplaySpeed: 4000,
-    //     cssEase: "linear",
-    //     pauseOnHover: true,
-    //     pauseOnFocus: true,
-    //   };
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <div>
    <div className=" relative">
     <Landing/>
     <div className="p-[20px] bg-white">
    <Filters/>
-   <div>
-    <h1 className="font-bold text-[30px] my-[20px]">Videos</h1>
-</div> 
+      {/* Button to toggle the sidebar */}
+      
+
+      {/* Sidebar */}
+      <div
+        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transform ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-500 ease-in-out`}
+      >
+        <div className="flex flex-col justify-between h-full p-4">
+          <div>
+            <div className="mb-4">
+              <select
+                name="Sort By"
+                id="Sort By"
+                className="w-full p-2 border border-gray-300 rounded"
+              >
+                <option value="">Sort By</option>
+              </select>
+            </div>
+            <div className="mb-4">
+              <select
+                name="Filter By"
+                id="Filter By"
+                className="w-full p-2 border border-gray-300 rounded"
+              >
+                <option value="">Filter By</option>
+              </select>
+            </div>
+            <div className="mb-4">
+              <select
+                name="Price Range"
+                id="Price Range"
+                className="w-full p-2 border border-gray-300 rounded"
+              >
+                <option value="">Price Range</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Cart */}
+          <div className="flex items-center">
+            <img src={card} alt="Cart Icon" className="w-8 h-8 mr-2" />
+            <p className="text-lg">2 items</p>
+          </div>
+        </div>
+      </div>
+   
 <div className="flex w-full items-center p-4">
       {/* Audio Tab */}
       <div
-        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-pink-500 text-white' : 'bg-white text-pink-500'} p-2 rounded`}
+        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-[#ce003d] text-white' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Audio')}
       >
-        <h1 className="text-[18px]">Audio</h1>
         <img src={Auido} alt="Audio Icon" className="w-[25px] h-[25px]" />
+        <h1 className="text-[18px]">Audio</h1>
       </div>
 
       {/* Videos Tab */}
       <div
-        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-pink-500 text-white' : 'bg-white text-pink-500'} p-2 rounded`}
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-[#ce003d] text-white' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Videos')}
       >
-        <h1 className="text-[18px]">Videos</h1>
         <img src={video} alt="Video Icon" className="w-[25px] h-[25px]" />
+        <h1 className="text-[18px]">Videos</h1>
       </div>
 
       {/* Images Tab */}
       <div
-        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-pink-500 text-white' : 'bg-white text-pink-500'} p-2 rounded`}
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-[#ce003d] text-white' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Images')}
       >
-        <h1 className="text-[18px]">Images</h1>
         <img src={camera} alt="Image Icon" className="w-[25px] h-[25px]" />
+        <h1 className="text-[18px]">Images</h1>
       </div>
     </div>
 
@@ -454,7 +633,7 @@ const dashboard = () => {
    
 
       {/* Buttons container */}
-      <div className="flex space-x-2 mx-2">
+      <div className="flex space-x-3 mx-3">
         {visibleButtons.map((label, index) => (
           <button key={index} className="bg-gray-400 text-white py-1 px-4 rounded">
             {label}
@@ -480,659 +659,218 @@ const dashboard = () => {
     </div>
 
 
-
-{/* <div className="">
-  <Dashboard1/>
-</div> */}
-
-
-<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-6">
-
-{videoData.map((video) => (
-
-<div key={video.id} 
-          onClick={handleVideoClick}
-
-className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
-      {/* Video Thumbnail / Video Clip */}
-      <div
-        className="relative group"
-     
-      >
-        <video
-          ref={videoRef}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          className="w-full h-48 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
-          muted
-          loop
-          src={video.videoSrc}
-        //   poster={video.thumbnail} // Show thumbnail image until the video is played
-        >
-        
-        </video>
-
-        {/* Video Duration Overlay */}
-        <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
-          {video.duration}
-        </div>
-      </div>
-
-      {/* Video Info */}
-      <div className="p-4 flex">
-        {/* Channel Icon */}
-        <img
-          className="w-10 h-10 rounded-full mr-4"
-          src={video.channelIcon}
-          alt="Channel Icon"
-        />
-        <div>
-          {/* Title and Details */}
-          <h2 className="text-sm font-semibold text-gray-900 line-clamp-2 md:line-clamp-2">{video.title}</h2>
-          <p className="text-sm text-gray-500">
-            {video.channelName}
-          </p>
-          <p className="text-sm text-gray-500"> {video.views} • {video.postedTime}</p>
-        </div>
-
-        {/* Options Icon */}
-        <div className="ml-auto">
-          <svg
-            className="w-6 h-6 text-gray-500"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 6v.01M12 12v.01M12 18v.01"
-            />
-          </svg>
-        </div>
-      </div>
-    </div>
-       ))}
-    </div>
-
-
-    <div>
-    <h1 className="font-bold text-[30px] my-[20px]">Latest</h1>
-</div>
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-6">
-
-{videoData.map((video) => (
-
-<div key={video.id} 
-          onClick={handleVideoClick}
-
-className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
-      {/* Video Thumbnail / Video Clip */}
-      <div
-        className="relative group"
-     
-      >
-        <video
-          ref={videoRef}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          className="w-full h-48 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
-          muted
-          loop
-          src={video.videoSrc}
-        //   poster={video.thumbnail} // Show thumbnail image until the video is played
-        >
-        
-        </video>
-
-        {/* Video Duration Overlay */}
-        <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
-          {video.duration}
-        </div>
-      </div>
-
-      {/* Video Info */}
-      <div className="p-4 flex">
-        {/* Channel Icon */}
-        <img
-          className="w-10 h-10 rounded-full mr-4"
-          src={video.channelIcon}
-          alt="Channel Icon"
-        />
-        <div>
-          {/* Title and Details */}
-          <h2 className="text-sm font-semibold text-gray-900 line-clamp-2 md:line-clamp-2">{video.title}</h2>
-          <p className="text-sm text-gray-500">
-            {video.channelName}
-          </p>
-          <p className="text-sm text-gray-500"> {video.views} • {video.postedTime}</p>
-        </div>
-
-        {/* Options Icon */}
-        <div className="ml-auto">
-          <svg
-            className="w-6 h-6 text-gray-500"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 6v.01M12 12v.01M12 18v.01"
-            />
-          </svg>
-        </div>
-      </div>
-    </div>
-       ))}
-    </div>
-
-
+  {activeTab ==='Videos' &&(
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
-  <div className="w-full max-w-md rounded overflow-hidden shadow-lg bg-white">
-    {/* Video Section */}
-    <div className="relative group">
-      <video
-        ref={videoRef}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        className="w-full h-60 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
-        muted
-        loop
-        src={videoSrc}
-      ></video>
-      
-      {/* Expand Icon */}
-      {/* <div className="absolute top-2 right-2 bg-black bg-opacity-75 p-1 rounded-full">
-        <img src="/expand-icon.png" alt="Expand" className="w-4 h-4"/>
-      </div> */}
-      
-      {/* Video Duration Overlay */}
-      <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
-        03:24
-      </div>
-    </div>
+      {videoData.map((videoItem) => {
+        const videoRef = React.createRef();
+        return (
+          <div key={videoItem.id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">
+            {/* Video Section */}
+            <div className="relative group">
+              <video
+                ref={videoRef}
+                onMouseEnter={() => handleMouseEnter(videoRef)}
+                onMouseLeave={() => handleMouseLeave(videoRef)}
+                className="w-full h-60 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
+                muted
+                loop
+                src={videoItem.videoSrc}
+              ></video>
 
-    {/* Video Info */}
-    <div className="p-4 flex justify-between items-center">
-      {/* Left Icon */}
-      <img src={video} alt="" className="w-10 h-10"/>
-      
-      {/* Price Info */}
-      <div className="text-lg">
-        <p className="font-bold text-blue-600">Price ₹ 300.00 <span className="text-sm text-gray-500"><span className="line-through text-sm text-gray-500">₹ 369</span> at Discount 23%
-        </span></p>
+              {/* Video Duration Overlay */}
+              <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
+                03:24 {/* You can make this dynamic if you have a duration in your data */}
+              </div>
+            </div>
+
+            {/* Video Info */}
+            <div className="p-4 flex justify-between items-center">
+              {/* Left Icon */}
+              <img src={videoItem.video} alt="" className="w-[25px] h-[25px]" />
+
+              {/* Price Info */}
+              <div className="text-lg">
+                <p className="font-bold text-blue-600">
+                  Price {videoItem.price}{' '}
+                  <span className="text-sm text-gray-500">
+                    <span className="line-through text-sm text-gray-500">{videoItem.discountPrice}</span> at Discount {videoItem.discount}
+                  </span>
+                </p>
+              </div>
+
+              {/* Right Icon */}
+              <img  onClick={toggleSidebar} src={videoItem.card} alt="" className="w-[25px] h-[25px] cursor-pointer" />
+            </div>
+
+            {/* Description */}
+            <div className="flex justify-between px-4">
+              <p className="text-blue-500 font-bold line-clamp-2 w-[60%] h-12">
+                {videoItem.description}
+              </p>
+              <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
+                <p className="text-[12px] line-clamp-1 text-[#ce003d]">{videoItem.timeAgo}</p>
+                <p className="text-[12px] line-clamp-1">{videoItem.location}</p>
+                <p className="text-[12px] font-semibold text-blue-500">{videoItem.author}</p>
+              </div>
+            </div>
+
+            {/* Article Text */}
+            <div className="px-4 py-4">
+              <p className="text-gray-500 line-clamp-2">
+                {videoItem.description}
+              </p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  )}
+  
+{activeTab ==='Images' && (
+ <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+ {imageData.map((imageItem) => {
+   return (
+     <div key={imageItem.id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">
+       {/* Image Section */}
+       <div className="relative group">
+         <img
+           src={imageItem.imageSrc}
+           alt={imageItem.title}
+           className="w-full h-60  group-hover:opacity-100 opacity-90 transition-opacity duration-300"
+         />
+
+         {/* Image Duration Overlay or Other Overlay Info */}
+         <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
+           {imageItem.overlayText || 'Overlay Text'}
+         </div>
+       </div>
+
+       {/* Image Info */}
+       <div className="p-4 flex justify-between items-center">
+         {/* Left Icon */}
+         <img src={imageItem.leftIcon}   alt="" className="w-[25px] h-[25px] cursor-pointer" />
+
+         {/* Price Info */}
+         <div className="text-lg">
+           <p className="font-bold text-blue-600">
+             Price {imageItem.price}{' '}
+             <span className="text-sm text-gray-500">
+               <span className="line-through text-sm text-gray-500">{imageItem.discountPrice}</span> at Discount {imageItem.discount}%
+             </span>
+           </p>
+         </div>
+
+         {/* Right Icon */}
+         <img src={imageItem.rightIcon} alt="" onClick={toggleSidebar} className="w-[25px] h-[25px] cursor-pointer" />
+       </div>
+
+       {/* Description */}
+       <div className="flex justify-between px-4">
+       <p className="text-blue-600 font-bold line-clamp-2 w-[60%] h-12">
+           {imageItem.description}
+         </p>
+         <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
+           <p className="text-[12px] line-clamp-1 text-[#ce003d]">{imageItem.timeAgo}</p>
+           <p className="text-[12px] line-clamp-1">{imageItem.location}</p>
+           <p className="text-[12px] font-semibold text-blue-600">{imageItem.author}</p>
+         </div>
+       </div>
+
+       {/* Article Text */}
+       <div className="px-4 py-4">
+         <p className="text-gray-600 line-clamp-2">
+           {imageItem.articleText}
+         </p>
+       </div>
+     </div>
+   );
+ })}
+</div>
+)}
+   {activeTab ==='Audio' && (
+   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+   {videoData1.map((item) => (
+     <div key={item.id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">
+       {/* Video Section */}
+       <div className="relative group">
      
-      </div>
-      
-      {/* Right Icon */}
-      <img src={card} alt="" className="w-10 h-10"/>
-    </div>
+<img src={item.videoSrc} alt=""  className="w-full h-60  group-hover:opacity-100 opacity-90 transition-opacity duration-300"
+/>
+         {/* Duration Overlay */}
+         {/* <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">03:24</div> */}
+       </div>
 
-    {/* Description */}
-    <div className="flex justify-between px-4">
-      <p className="text-blue-500 font-bold  line-clamp-2 w-[40%] h-12">
-      A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...
+       {/* Description */}
+       <div className="flex justify-between px-4">
+         <p className="text-blue-500 font-bold line-clamp-2 w-[60%] h-12">
+           {item.description}
+         </p>
+         <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
+           <p className="text-[12px] line-clamp-1 text-[#ce003d]">{item.timeAgo}</p>
+           <p className="text-[12px] line-clamp-1">{item.location}</p>
+           <p className="text-[12px] font-semibold text-blue-500">By {item.author}</p>
+         </div>
+       </div>
 
-      </p>
-      <div className="text-sm text-gray-500 flex flex-col  w-[60%] truncate">
-        <p className="flex justify-end">2 days and 20 hours ago</p>
-        <p className="flex justify-end truncate line-clamp-1">Bangalore, Karnataka, India</p>
-        <p className="flex justify-end font-semibold text-blue-500 ">By Ram M Reddy</p>
-      </div>
-    </div>
+       {/* Article Text */}
+       <div className="px-4 py-4">
+         <p className="text-gray-500 line-clamp-2">
+           {item.articleText}
+         </p>
+       </div>
 
-    {/* Article Text */}
-    <div className="px-4 py-4">
-      <p className="text-gray-700 line-clamp-2">
-        'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...
-      </p>
-    </div>
-  </div>
-</div>
+       {/* Price Info */}
+       <div className="px-4 flex justify-between items-center">
+         <img src={item.audioIcon} alt="" className="w-[25px] h-[25px]" />
+         <div className="text-lg">
+           <p className="font-bold text-blue-600">
+             Price {item.price} <span className="text-sm text-gray-500"><span className="line-through text-sm text-gray-500">{item.discountPrice}</span> at Discount {item.discount}%</span>
+           </p>
+         </div>
+         <img onClick={toggleSidebar}  src={item.rightIcon} alt="" className="w-[25px] h-[25px] cursor-pointer" />
+       </div>
 
+       <div className="px-4 p-2 w-full flex items-center">
+         {/* Time Display */}
+         <span className="text-xs text-pink-500">{formatTime(currentTime)}</span>
 
+         {/* Progress Bar */}
+         <div className="relative flex-grow mx-2">
+           <input
+             ref={progressRef}
+             type="range"
+             defaultValue="0"
+             max="100"
+             className="w-full h-1 bg-blue-500 rounded-full"
+             onChange={handleProgressChange}
+           />
+         </div>
 
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
-  <div className="w-full max-w-md rounded overflow-hidden shadow-lg bg-white">
-    {/* Video Section */}
-    <div className="relative group">
-      <video
-        ref={videoRef}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        className="w-full h-60 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
-        muted
-        loop
-        src={videoSrc}
-      ></video>
-      
-      {/* Expand Icon */}
-      {/* <div className="absolute top-2 right-2 bg-black bg-opacity-75 p-1 rounded-full">
-        <img src="/expand-icon.png" alt="Expand" className="w-4 h-4"/>
-      </div> */}
-      
-      {/* Video Duration Overlay */}
-      <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
-        03:24
-      </div>
-    </div>
+         {/* Play/Pause Button */}
+         <button onClick={togglePlayPause} className="text-blue-500">
+           {isPlaying ? (
+             <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+               <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+             </svg>
+           ) : (
+             <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+               <path d="M5 3v18l15-9L5 3z" />
+             </svg>
+           )}
+         </button>
 
-    {/* Video Info */}
-   
-
-    {/* Description */}
-    <div className="flex justify-between px-4 p-2">
-      <p className="text-blue-500 font-bold  line-clamp-2 w-[40%] h-12">
-      A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...
-
-      </p>
-      <div className="text-sm text-gray-500 flex flex-col  w-[60%] truncate">
-        <p className="flex justify-end">2 days and 20 hours ago</p>
-        <p className="flex justify-end truncate line-clamp-1">Bangalore, Karnataka, India</p>
-        <p className="flex justify-end font-semibold text-blue-500 ">By Ram M Reddy</p>
-      </div>
-    </div>
-
-    {/* Article Text */}
-    <div className="px-4 py-4">
-      <p className="text-gray-700 line-clamp-2">
-        'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...
-      </p>
-    </div>
-    <div className="p-2 flex justify-between items-center">
-      {/* Left Icon */}
-      <img src={video} alt="" className="w-10 h-10"/>
-      
-      {/* Price Info */}
-      <div className="text-lg">
-        <p className="font-bold text-blue-600">Price ₹ 300.00 <span className="text-sm text-gray-500"><span className="line-through text-sm text-gray-500">₹ 369</span> at Discount 23%
-        </span></p>
-     
-      </div>
-      
-      {/* Right Icon */}
-      <img src={card} alt="" className="w-10 h-10"/>
-    </div>
-    <div className="w-64 flex items-center">
-      {/* Time Display */}
-      <span className="text-xs text-pink-500">{formatTime(currentTime)}</span>
-      
-      {/* Progress Bar */}
-      <div className="relative flex-grow mx-2">
-        <input
-          ref={progressRef}
-          type="range"
-          defaultValue="0"
-          max="100"
-          className="w-full h-1 bg-blue-500 rounded-full"
-          onChange={handleProgressChange}
-        />
-      </div>
-
-      {/* Play/Pause Button */}
-      <button onClick={togglePlayPause} className="text-blue-500">
-        {isPlaying ? (
-          <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-          </svg>
-        ) : (
-          <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M5 3v18l15-9L5 3z"/>
-          </svg>
-        )}
-      </button>
-
-      {/* Audio Element */}
-      <audio ref={audioRef} src="your-audio-file.mp3" preload="metadata"></audio>
-    </div>
-  </div>
-</div>
-
-    {/* <div>
-    <h1 className="font-bold cur text-[30px] my-[20px]">Images</h1>
-</div> */}
-
-{/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
-{cardData1
-        .filter((card) => card.content_type === "Image") // Filter by content_type
-        .map((card, index) => (
-    <div key={index}   className=" shadow-md overflow-hidden border border-gray-300 rounded-lg flex flex-col h-full">
-      <div  className="flex justify-end px-2 pt-1" >
-        <img
-          src="src/assets/Images/dashboard/flip.png"
-          alt="flip"
-          className="w-5 h-5 cursor-pointer"
-          onClick={() => handleFlip(index)}
-        />
-      </div>
-
-      {!flippedCards[index] ? (
-        <>
-          <div className="flex justify-between p-2 border-b border-blue-300">
-            <div className="p-1 border border-blue-300 rounded-md">
-              <img src="src/assets/Images/dashboard/musical-note.png" alt="icon" className="w-5 h-5" />
-            </div>
-            <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="font-bold text-sm">{card.content_title}</h1>
-            </div>
-            <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="text-sm">{card.final_price}</h1>
-            </div>
-          </div>
-          <div className="p-2">
-            <p className="truncate text-gray-500 p-1 border border-blue-300 rounded-md text-sm">
-              {card.content_description}
-            </p>
-          </div>
-          <div onClick={handleImagesClick} className="flex justify-center cursor-pointer">
-            <img src={card.content_link} alt="social media" className="w-full h-40 " />
-          </div>
-          <div className="flex justify-between items-center gap-[5px] p-2 border-t border-black text-sm">
-            <h1 className=" lg:truncate lg:w-[20%]">{card.uploaded_by}</h1>
-            <p>|</p>
-            <h1 className=" lg:truncate lg:w-[20%]">{card.age_in_days}</h1>
-            <p>|</p>
-            <h1 className=" lg:truncate lg:w-[60%]">{card.gps_location}</h1>
-            <p>|</p>
-            <img src='src/assets/Images/dashboard/grocery-store.png' alt="cart" className="w-5 h-5" />
-          </div>
-        </>
-      ) : (
-        <div className="flex flex-col ">
-          <div className="flex justify-between p-2 border-b border-blue-300">
-            <div className="p-1 border border-blue-300 rounded-md">
-              <img src='src/assets/Images/dashboard/musical-note.png' alt="icon" className="w-5 h-5" />
-            </div>
-            <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="font-bold text-sm">{card.content_title}</h1>
-            </div>
-            <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="text-sm">{card.final_price}</h1>
-            </div>
-          </div>
-          <div className="p-2">
-            <p className="truncate p-1 border border-blue-300 rounded-md text-sm">
-              {card.content_description}
-            </p>
-          </div>
-          <div className="flex flex-col w-full h-40 p-2 text-sm">
-            <p className="font-bold">Date: <span className="font-normal">{card.uploaded_time}</span></p>
-            <p className="font-bold">Created by: <span className="font-normal">{card.uploaded_by}</span></p>
-            <p className="font-bold">Location: <span className="font-normal">{card.final_price}</span></p>
-          </div>
-          <div className="flex justify-between items-center gap-[5px] p-2 border-t border-black text-sm">
-          <h1 className=" lg:truncate lg:w-[20%]">{card.uploaded_by}</h1>
-            <p>|</p>
-            <h1 className=" lg:truncate lg:w-[20%]">{card.age_in_days}</h1>
-            <p>|</p>
-            <h1 className=" lg:truncate lg:w-[60%]">{card.gps_location}</h1>
-            <p>|</p>
-            <img src='src/assets/Images/dashboard/grocery-store.png' alt="cart" className="w-5 h-5" />
-          </div>
-        </div>
-      )}
-    </div>
-  ))}
-</div> */}
-{/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
-  {cardData.map((card) => (
-    <div key={card.id} className="shadow-md rounded-xl overflow-hidden flex flex-col items-center">
-      <div onClick={handleImagesClick} className="w-full h-40 sm:h-48 lg:h-56 xl:h-64 rounded-t-xl overflow-hidden">
-        <img src={card.imgSrc} alt="post" className="w-full h-full cursor-pointer" />
-      </div>
-      <div className="flex flex-col p-4 w-full">
-        <div className="flex gap-1 pb-2 items-center text-xs sm:text-sm text-gray-600">
-          <p className="font-bold ">{card.userName}</p>
-          <span>.</span>
-          <p>{card.timeAgo}</p>
-        </div>
-        <div className="flex flex-col gap-1 pb-4">
-          <h1 className="font-bold text-base sm:text-lg">{card.location}</h1>
-          <p className="text-sm text-gray-700 line-clamp-2 md:line-clamp-2">{card.description}</p>
-        </div>
-        <div className="flex flex-col sm:flex-row justify-between gap-2">
-          <div className="flex gap-2">
-            <div className="rounded-full bg-gray-300 p-2">
-              <img src={card.likeImg} alt="like" className="w-5 h-5" />
-            </div>
-            <div className="rounded-full bg-gray-300 p-2">
-              <img src={card.likeImg} alt="like" className="w-5 h-5 rotate-180" />
-            </div>
-            <div className="rounded-full bg-gray-300 p-2">
-              <img src={card.chatImg} alt="chat" className="w-5 h-5" />
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <div className="rounded-full bg-gray-300 p-2">
-              <img src={card.bookmarkImg} alt="bookmark" className="w-5 h-5" />
-            </div>
-            <div className="rounded-full bg-gray-300 p-2">
-              <img src={card.shareImg} alt="share" className="w-5 h-5" />
-            </div>
-            <div className="rounded-full bg-gray-300 p-2">
-              <img src={card.moreImg} alt="more" className="w-5 h-5" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  ))}
-</div> */}
-{/* <div>
-    <h1 className="font-bold text-[30px] my-[20px]">Audio</h1>
-</div> */}
-{/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
-{cardData2.map((card) => (
-    <div key={card.id}   className=" shadow-md overflow-hidden border border-gray-300 rounded-lg flex flex-col h-full">
-      <div  className="flex justify-end px-2 pt-1" >
-        <img
-          src="src/assets/Images/dashboard/flip.png"
-          alt="flip"
-          className="w-5 h-5 cursor-pointer"
-          onClick={() => handleFlip1(card.id)}
-        />
-      </div>
-
-      {!flippedCards[card.id] ? (
-        <>
-          <div className="flex justify-between p-2 border-b border-blue-300">
-            <div className="p-1 border border-blue-300 rounded-md">
-              <img src="src/assets/Images/dashboard/musical-note.png" alt="icon" className="w-5 h-5" />
-            </div>
-            <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="font-bold text-sm">{card.title}</h1>
-            </div>
-            <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="text-sm">{card.price}</h1>
-            </div>
-          </div>
-          <div className="p-2">
-            <p className="truncate text-gray-500 p-1 border border-blue-300 rounded-md text-sm">
-              {card.description}
-            </p>
-          </div>
-          <div  className="flex justify-center cursor-pointer">
-          <audio  controls className="w-full h-40 pb-16">
-    <source src={card.image} type="audio/mp3" /> {/* Assuming the audio file is in MP3 format */}
-  {/* </audio>
-          </div>
-          <div className="flex justify-between items-center gap-[5px] p-2 border-t border-black text-sm">
-            <h1 className=" ">{card.userName}</h1>
-            <p>|</p>
-            <h1 className=" ">{card.days}</h1>
-            <p>|</p>
-            <h1 className="">{card.location}</h1>
-            <p>|</p>
-            <img src='src/assets/Images/dashboard/grocery-store.png' alt="cart" className="w-5 h-5" />
-          </div>
-        </>
-      ) : (
-        <div className="flex flex-col ">
-          <div className="flex justify-between p-2 border-b border-blue-300">
-            <div className="p-1 border border-blue-300 rounded-md">
-              <img src='src/assets/Images/dashboard/musical-note.png' alt="icon" className="w-5 h-5" />
-            </div>
-            <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="font-bold text-sm">{card.title}</h1>
-            </div>
-            <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="text-sm">{card.price}</h1>
-            </div>
-          </div>
-          <div className="p-2">
-            <p className="truncate p-1 border border-blue-300 rounded-md text-sm">
-              {card.description}
-            </p>
-          </div>
-          <div className="flex flex-col w-full h-40 p-2 text-sm">
-            <p className="font-bold">Date: <span className="font-normal">{card.Date}</span></p>
-            <p className="font-bold">Created by: <span className="font-normal">{card.createdBy}</span></p>
-            <p className="font-bold">Location: <span className="font-normal">{card.location}</span></p>
-          </div>
-          <div className="flex justify-between items-center gap-[5px] p-2 border-t border-black text-sm">
-          <h1 className=" ">{card.userName}</h1>
-            <p>|</p>
-            <h1 className=" ">{card.days}</h1>
-            <p>|</p>
-            <h1 className=" ">{card.location}</h1>
-            <p>|</p>
-            <img src='src/assets/Images/dashboard/grocery-store.png' alt="cart" className="w-5 h-5" />
-          </div>
-        </div>
-      )}
-    </div>
-  ))}
-</div> */}
+         {/* Audio Element */}
+         <audio ref={audioRef} src="your-audio-file.mp3" preload="metadata"></audio>
+       </div>
+     </div>
+   ))}
+ </div>
+   )}
 
 
-
-
-{/* <div className="shadow-md rounded-[20px] overflow-hidden w-[20%] h-[20%]">
-    <div className="h-[10%]rounded-[20px] ">
-        <img src="src\assets\Images\dashboard\NZ.jpg" alt="" className="flex w-[100%] h-[100px] "  />
-    </div>
-    <div className=" flex flex-col p-[15px]">
-    <div className="flex gap-[5px] p-1 pb-[10px] items-center">
-        <p className=" font-bold text-[12px]">Kung Jiyeon</p>
-        <p>.</p>
-        <p className="text-[12px]">2 hours ago</p>
-    </div>
-    <div className=" flex flex-col gap-[5px] pb-[20px]">
-        <h1 className=" font-bold">Indianapolis</h1>
-        <p className=" text-gray-400">Lorem lpsum is simply dummy text of the printing and typesetting</p>
-    </div>
-<div className=" flex justify-between">
-    <div className=" flex gap-[10px] ">
-        <div className=" rounded-[50px] bg-gray-300 p-[5px]">
-
-        <img src="src\assets\Images\dashboard\like.png" alt="" className="w-[20px] h-[20px]" />
-        </div>
-        <div className=" rounded-[50px] bg-gray-300 p-[5px]">
-
-<img src="src\assets\Images\dashboard\chat.png" alt="" className="w-[20px] h-[20px]" />
-</div>
-
-    </div>
-    <div className="flex gap-[10px]">
-    <div className=" rounded-[50px] bg-gray-300 p-[5px]">
-
-        <img src="src\assets\Images\dashboard\bookmark.png" alt="" className="w-[20px] h-[20px]" />
-        </div>
-        <div className=" rounded-[50px] bg-gray-300 p-[5px]">
-
-<img src="src\assets\Images\dashboard\share.png" alt="" className="w-[20px] h-[20px]" />
-</div>
-<div className=" rounded-[50px] bg-gray-300 p-[5px]">
-
-<img src="src\assets\Images\dashboard\more.png" alt="" className="w-[20px] h-[20px]" />
-</div>
-       
-    </div>
-</div>
-    </div>
-</div> */}
-
-{/* <div data-aos-duration="300" className="py-1">
-        <div className=" mx-auto">
-    
-          <div className="grid grid-cols-1   gap-6">
-            <Slider {...settings}>
-              {testimonialData.map(({ id, title, text, title1, text1 }) => {
-                return (
-                  <div
-                    key={id}
-                    className="bg-white rounded-3xl p-6 mt-6 min-h-[400px]  shadow-md xl:h-[370px]  2xl:min-h-[400px] items-center justify-center "
-                  >
-                    <h1 className="text-2xl font-bold text-secondary mt-16">
-                      {title}
-                    </h1>
-                   
-                  </div>
-                );
-              })}
-            </Slider>
-          </div>
-        </div>
-      </div> */}
-         
-     
-
-
-     {/* <div className="flex shadow-md rounded-[20px] overflow-hidden mt-6  h-[20%] pb-[10px]">
-    <div className="h-[10%] rounded-[20px] ">
-        <img src="src\assets\Images\dashboard\NZ.jpg" alt="" className="flex w-[100%] h-[172px] "  />
-    </div>
-    <div className="flex flex-col p-[15px] ">
-    <div className="flex gap-[5px] p-1 pb-[10px] items-center">
-        <p className=" font-bold text-[12px]">Kung Jiyeon</p>
-        <p>.</p>
-        <p className="text-[12px]">2 hours ago</p>
-    </div>
-    <div className=" flex flex-col gap-[5px] pb-[20px]">
-        <h1 className=" font-bold">Indianapolis</h1>
-        <p className=" text-gray-400">Lorem lpsum is simply dummy text of the printing and typesetting</p>
-    </div>
-<div className=" flex justify-between">
-    <div className=" flex gap-[10px] ">
-        <div className=" rounded-[50px] bg-gray-300 p-[5px]">
-
-        <img src="src\assets\Images\dashboard\like.png" alt="" className="w-[20px] h-[20px]" />
-        </div>
-        <div className=" rounded-[50px] bg-gray-300 p-[5px]">
-
-<img src="src\assets\Images\dashboard\chat.png" alt="" className="w-[20px] h-[20px]" />
-</div>
-
-    </div>
-    <div className="flex gap-[10px]">
-    <div className=" rounded-[50px] bg-gray-300 p-[5px]">
-
-        <img src="src\assets\Images\dashboard\bookmark.png" alt="" className="w-[20px] h-[20px]" />
-        </div>
-        <div className=" rounded-[50px] bg-gray-300 p-[5px]">
-
-<img src="src\assets\Images\dashboard\share.png" alt="" className="w-[20px] h-[20px]" />
-</div>
-<div className=" rounded-[50px] bg-gray-300 p-[5px]">
-
-<img src="src\assets\Images\dashboard\more.png" alt="" className="w-[20px] h-[20px]" />
-</div>
-       
-    </div>
-</div>
-    </div>
-    
-</div> */}
 
 
    </div>
-          {/* <Footer/> */}
    </div>
     </div>
   );

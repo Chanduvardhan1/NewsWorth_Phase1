@@ -76,12 +76,13 @@ const { login } =  useContext(AuthContext);
   
       const tokenData = await tokenResponse.json();
       if (!tokenResponse.ok) {
-        if (tokenData.detail === "Incorrect username or password") {
+        if (tokenData.detail === "Incorrect username or password" || 
+            tokenData.detail === "Incorrect email/phone number/User ID or password") {
           setErrorMessage("Incorrect email or password. Please try again.");
         } else {
           setErrorMessage("Failed to retrieve access token. Please try again.");
         }
-        return; // Exit if the token retrieval fails
+        return; 
       }
       const accessToken = tokenData.access_token;
   
@@ -184,7 +185,7 @@ const { login } =  useContext(AuthContext);
         className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'gmail' ? '' : ''}`}
         onClick={() => setUserType('User Id')}
       >
-        User Id
+        User ID
       </div>
       <div
     className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
