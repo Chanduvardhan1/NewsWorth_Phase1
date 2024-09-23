@@ -25,7 +25,10 @@ import videoSrc from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ 
 import videoSrc1 from '../../src/assets/Images/home/10_30 PM _ 12th September 2024 _ ETV News _ News Headlines _ ETV Andhra Pradesh.mp4';
 import videoSrc2 from '../../src/assets/Images/home/CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation.mp4';
 import videoSrc3 from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4';
-
+import card from '../../src/assets/Images/dashboard/grocery-store.png'
+import Auido from '../../src/assets/Images/dashboard/voice-assistant.png'
+import video from '../../src/assets/Images/dashboard/video-camera.png'
+import camera from '../../src/assets/Images/dashboard/photo-device.png'
 
 import channelIcon from '../../src/assets/Images/landing/pic.jpg';
 
@@ -232,7 +235,59 @@ const dashboard = () => {
     const location = useLocation();
     const { user_id } = location.state || {};
     const { isAuthenticated, authToken } = useContext(AuthContext);
-
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
+    const audioRef = useRef(null);
+    const progressRef = useRef(null);
+  
+    useEffect(() => {
+      const audio = audioRef.current;
+  
+      // Set audio duration when metadata is loaded
+      const onLoadedMetadata = () => {
+        setDuration(audio.duration);
+      };
+  
+      // Update current time while audio is playing
+      const onTimeUpdate = () => {
+        setCurrentTime(audio.currentTime);
+        if (progressRef.current) {
+          progressRef.current.value = (audio.currentTime / audio.duration) * 100;
+        }
+      };
+  
+      audio.addEventListener('loadedmetadata', onLoadedMetadata);
+      audio.addEventListener('timeupdate', onTimeUpdate);
+  
+      return () => {
+        audio.removeEventListener('loadedmetadata', onLoadedMetadata);
+        audio.removeEventListener('timeupdate', onTimeUpdate);
+      };
+    }, []);
+  
+    const togglePlayPause = () => {
+      const audio = audioRef.current;
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+      setIsPlaying(!isPlaying);
+    };
+  
+    const handleProgressChange = (e) => {
+      const audio = audioRef.current;
+      const newTime = (e.target.value / 100) * audio.duration;
+      audio.currentTime = newTime;
+      setCurrentTime(newTime);
+    };
+  
+    const formatTime = (time) => {
+      const minutes = Math.floor(time / 60);
+      const seconds = Math.floor(time % 60).toString().padStart(2, '0');
+      return `${minutes}:${seconds}`;
+    };
     const handleVideoClick = () => {
       navigate(`/watch`);
     };
@@ -296,6 +351,54 @@ const dashboard = () => {
 
     fetchData();
   }, [user_id]);
+  const [activeTab, setActiveTab] = useState('Audio'); // Default to Audio
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [buttonsPerPage, setButtonsPerPage] = useState(6); // Default number of visible buttons
+
+  // Number of buttons visible at once
+  const updateButtonsPerPage = () => {
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth >= 1024) {
+      setButtonsPerPage(12); // Large screens: show 6 buttons
+    } else if (screenWidth >= 768) {
+      setButtonsPerPage(4); // Medium screens: show 4 buttons
+    } else {
+      setButtonsPerPage(2); // Small screens: show 2 buttons
+    }
+  };
+
+  useEffect(() => {
+    updateButtonsPerPage(); // Set initial value based on the current screen size
+    window.addEventListener("resize", updateButtonsPerPage); // Update on screen resize
+
+    // Cleanup listener on component unmount
+    return () => window.removeEventListener("resize", updateButtonsPerPage);
+  }, [])
+
+  const buttonLabels = [
+    "Social", "Political", "Social", "Political", "Social", "Political",
+    "Social", "Political", "Social", "Political", "Social", "Political",
+    "Social", "Political", "Social", "Political", "Social", "Political",
+  ];
+
+  // Function to go to the previous set of buttons
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1); // Move one button to the left
+    }
+  };
+
+  // Function to go to the next set of buttons
+  const handleNext = () => {
+    if (currentIndex + buttonsPerPage < buttonLabels.length) {
+      setCurrentIndex(currentIndex + 1); // Move one button to the right
+    }
+  };
+
+  // Slice the button array to show only a subset based on the currentIndex
+  const visibleButtons = buttonLabels.slice(currentIndex, currentIndex + buttonsPerPage);
+
     // var settings = {
     //     dots: true,
     //     arrows: true,
@@ -317,10 +420,70 @@ const dashboard = () => {
    <Filters/>
    <div>
     <h1 className="font-bold text-[30px] my-[20px]">Videos</h1>
-</div>
-<div>
+</div> 
+<div className="flex w-full items-center p-4">
+      {/* Audio Tab */}
+      <div
+        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-pink-500 text-white' : 'bg-white text-pink-500'} p-2 rounded`}
+        onClick={() => setActiveTab('Audio')}
+      >
+        <h1 className="text-[18px]">Audio</h1>
+        <img src={Auido} alt="Audio Icon" className="w-[25px] h-[25px]" />
+      </div>
+
+      {/* Videos Tab */}
+      <div
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-pink-500 text-white' : 'bg-white text-pink-500'} p-2 rounded`}
+        onClick={() => setActiveTab('Videos')}
+      >
+        <h1 className="text-[18px]">Videos</h1>
+        <img src={video} alt="Video Icon" className="w-[25px] h-[25px]" />
+      </div>
+
+      {/* Images Tab */}
+      <div
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-pink-500 text-white' : 'bg-white text-pink-500'} p-2 rounded`}
+        onClick={() => setActiveTab('Images')}
+      >
+        <h1 className="text-[18px]">Images</h1>
+        <img src={camera} alt="Image Icon" className="w-[25px] h-[25px]" />
+      </div>
+    </div>
+
+    <div className="flex  items-center my-4 ">
+   
+
+      {/* Buttons container */}
+      <div className="flex space-x-2 mx-2">
+        {visibleButtons.map((label, index) => (
+          <button key={index} className="bg-gray-400 text-white py-1 px-4 rounded">
+            {label}
+          </button>
+        ))}
+      </div>
+   {/* Less than button */}
+   <button 
+        className="p-2 text-gray-600" 
+        onClick={handlePrevious}
+        disabled={currentIndex === 0}
+      >
+        &lt;
+      </button>
+      {/* Greater than button */}
+      <button 
+        className="p-2 text-gray-600" 
+        onClick={handleNext}
+        disabled={currentIndex + buttonsPerPage >= buttonLabels.length}
+      >
+        &gt;
+      </button>
+    </div>
+
+
+
+{/* <div className="">
   <Dashboard1/>
-</div>
+</div> */}
 
 
 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-6">
@@ -393,6 +556,244 @@ className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
     </div>
        ))}
     </div>
+
+
+    <div>
+    <h1 className="font-bold text-[30px] my-[20px]">Latest</h1>
+</div>
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-6">
+
+{videoData.map((video) => (
+
+<div key={video.id} 
+          onClick={handleVideoClick}
+
+className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+      {/* Video Thumbnail / Video Clip */}
+      <div
+        className="relative group"
+     
+      >
+        <video
+          ref={videoRef}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className="w-full h-48 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
+          muted
+          loop
+          src={video.videoSrc}
+        //   poster={video.thumbnail} // Show thumbnail image until the video is played
+        >
+        
+        </video>
+
+        {/* Video Duration Overlay */}
+        <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
+          {video.duration}
+        </div>
+      </div>
+
+      {/* Video Info */}
+      <div className="p-4 flex">
+        {/* Channel Icon */}
+        <img
+          className="w-10 h-10 rounded-full mr-4"
+          src={video.channelIcon}
+          alt="Channel Icon"
+        />
+        <div>
+          {/* Title and Details */}
+          <h2 className="text-sm font-semibold text-gray-900 line-clamp-2 md:line-clamp-2">{video.title}</h2>
+          <p className="text-sm text-gray-500">
+            {video.channelName}
+          </p>
+          <p className="text-sm text-gray-500"> {video.views} • {video.postedTime}</p>
+        </div>
+
+        {/* Options Icon */}
+        <div className="ml-auto">
+          <svg
+            className="w-6 h-6 text-gray-500"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 6v.01M12 12v.01M12 18v.01"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+       ))}
+    </div>
+
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+  <div className="w-full max-w-md rounded overflow-hidden shadow-lg bg-white">
+    {/* Video Section */}
+    <div className="relative group">
+      <video
+        ref={videoRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="w-full h-60 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
+        muted
+        loop
+        src={videoSrc}
+      ></video>
+      
+      {/* Expand Icon */}
+      {/* <div className="absolute top-2 right-2 bg-black bg-opacity-75 p-1 rounded-full">
+        <img src="/expand-icon.png" alt="Expand" className="w-4 h-4"/>
+      </div> */}
+      
+      {/* Video Duration Overlay */}
+      <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
+        03:24
+      </div>
+    </div>
+
+    {/* Video Info */}
+    <div className="p-4 flex justify-between items-center">
+      {/* Left Icon */}
+      <img src={video} alt="" className="w-10 h-10"/>
+      
+      {/* Price Info */}
+      <div className="text-lg">
+        <p className="font-bold text-blue-600">Price ₹ 300.00 <span className="text-sm text-gray-500"><span className="line-through text-sm text-gray-500">₹ 369</span> at Discount 23%
+        </span></p>
+     
+      </div>
+      
+      {/* Right Icon */}
+      <img src={card} alt="" className="w-10 h-10"/>
+    </div>
+
+    {/* Description */}
+    <div className="flex justify-between px-4">
+      <p className="text-blue-500 font-bold  line-clamp-2 w-[40%] h-12">
+      A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...
+
+      </p>
+      <div className="text-sm text-gray-500 flex flex-col  w-[60%] truncate">
+        <p className="flex justify-end">2 days and 20 hours ago</p>
+        <p className="flex justify-end truncate line-clamp-1">Bangalore, Karnataka, India</p>
+        <p className="flex justify-end font-semibold text-blue-500 ">By Ram M Reddy</p>
+      </div>
+    </div>
+
+    {/* Article Text */}
+    <div className="px-4 py-4">
+      <p className="text-gray-700 line-clamp-2">
+        'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+  <div className="w-full max-w-md rounded overflow-hidden shadow-lg bg-white">
+    {/* Video Section */}
+    <div className="relative group">
+      <video
+        ref={videoRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="w-full h-60 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
+        muted
+        loop
+        src={videoSrc}
+      ></video>
+      
+      {/* Expand Icon */}
+      {/* <div className="absolute top-2 right-2 bg-black bg-opacity-75 p-1 rounded-full">
+        <img src="/expand-icon.png" alt="Expand" className="w-4 h-4"/>
+      </div> */}
+      
+      {/* Video Duration Overlay */}
+      <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
+        03:24
+      </div>
+    </div>
+
+    {/* Video Info */}
+   
+
+    {/* Description */}
+    <div className="flex justify-between px-4 p-2">
+      <p className="text-blue-500 font-bold  line-clamp-2 w-[40%] h-12">
+      A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...
+
+      </p>
+      <div className="text-sm text-gray-500 flex flex-col  w-[60%] truncate">
+        <p className="flex justify-end">2 days and 20 hours ago</p>
+        <p className="flex justify-end truncate line-clamp-1">Bangalore, Karnataka, India</p>
+        <p className="flex justify-end font-semibold text-blue-500 ">By Ram M Reddy</p>
+      </div>
+    </div>
+
+    {/* Article Text */}
+    <div className="px-4 py-4">
+      <p className="text-gray-700 line-clamp-2">
+        'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...
+      </p>
+    </div>
+    <div className="p-2 flex justify-between items-center">
+      {/* Left Icon */}
+      <img src={video} alt="" className="w-10 h-10"/>
+      
+      {/* Price Info */}
+      <div className="text-lg">
+        <p className="font-bold text-blue-600">Price ₹ 300.00 <span className="text-sm text-gray-500"><span className="line-through text-sm text-gray-500">₹ 369</span> at Discount 23%
+        </span></p>
+     
+      </div>
+      
+      {/* Right Icon */}
+      <img src={card} alt="" className="w-10 h-10"/>
+    </div>
+    <div className="w-64 flex items-center">
+      {/* Time Display */}
+      <span className="text-xs text-pink-500">{formatTime(currentTime)}</span>
+      
+      {/* Progress Bar */}
+      <div className="relative flex-grow mx-2">
+        <input
+          ref={progressRef}
+          type="range"
+          defaultValue="0"
+          max="100"
+          className="w-full h-1 bg-blue-500 rounded-full"
+          onChange={handleProgressChange}
+        />
+      </div>
+
+      {/* Play/Pause Button */}
+      <button onClick={togglePlayPause} className="text-blue-500">
+        {isPlaying ? (
+          <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+          </svg>
+        ) : (
+          <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5 3v18l15-9L5 3z"/>
+          </svg>
+        )}
+      </button>
+
+      {/* Audio Element */}
+      <audio ref={audioRef} src="your-audio-file.mp3" preload="metadata"></audio>
+    </div>
+  </div>
+</div>
+
     {/* <div>
     <h1 className="font-bold cur text-[30px] my-[20px]">Images</h1>
 </div> */}

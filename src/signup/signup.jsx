@@ -434,6 +434,16 @@ const sendOtp = async () => {
       setHideOtpButtons(true);
       setShowPassword1(true);
       setIsEditable(false);
+    } else if(result.response === 'success' && result.response_message ==="Please complete your registration and activate your account." && result.data === "verified") {
+      setSuccess(result.response_message);
+      setVerify(false);
+      setshowOTP(false);
+      setResset(true);
+      setShowRegistr(false);
+      setShowOtpField1(true);
+      setHideOtpButtons(true);
+      setShowPassword1(true);
+      setIsEditable(false);
     } else if (result.response === 'success') {
       setSuccess(result.response_message);
       setMessage('');
@@ -536,7 +546,7 @@ const verifySignup = async () => {
     setSuccess('');
     if (result.response === 'success') {
      
-      toast.success(result.response_message);
+      setSuccess(result.response_message);
       setVerify(false);
       setShowRegistr(false);
       setShowPassword1(true);
@@ -651,7 +661,8 @@ const handleRegister = async () => {
   const platform = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     ? "mobile"
     : "Web";
-
+    setMessage('');
+    setSuccess('');
   // Validate required fields
   if (!firstName || !lastName) {
     setErrorMessage("Please enter first name and last name.");
@@ -765,7 +776,8 @@ const handleRegister1 = async () => {
   : "Web";
   let hasError = false;
 
-
+  setMessage('');
+  setSuccess('');
 
   // if (!dob) {
   //   setErrorMessage("Please enter date of birth.");

@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import logo from '../../src/assets/Images/home/NewsWorth.png'
 import ball from '../../src/assets/Images/landing/bell.png'
 import photo from '../../src/assets/Images/landing/pic.jpg'
+import { useLocation } from 'react-router-dom';
 
 const landing = () => {
+  const location = useLocation();
+  const userId = location.state?.user_id || localStorage.getItem("userId");
+  const userName = location.state?.user_name ||localStorage.getItem("userName");
 
 
   return (
@@ -38,8 +42,8 @@ const landing = () => {
         <img src={ball} className="w-[20px] h-[20px]" alt="" />
       </div>
         <div>
-            <h1>Chandu</h1>
-            <p>User Id:1</p>
+            <h1>Welcome <span className=" font-bold">{userName}</span> </h1>
+            <p>User ID: {userId}</p>
         </div>
         <div>
             <img src={photo} alt="" className=" w-[45px] h-[45px]" />

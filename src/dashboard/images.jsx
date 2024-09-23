@@ -334,8 +334,8 @@ const images = () => {
             <div className="p-1 border border-blue-300 rounded-md">
               <h1 className="font-bold text-sm">{card.content_title}</h1>
             </div>
-            <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="text-sm">{card.final_price}</h1>
+            <div className="p-1 border border-red-300 rounded-md">
+              <h1 className="text-sm blue-color">{card.final_price}</h1>
             </div>
           </div>
           <div className="p-2">
@@ -347,11 +347,16 @@ const images = () => {
             <img src={card.content_link} alt="social media" className="w-full h-40 " />
           </div>
           <div className="flex justify-between items-center gap-[5px] p-2 border-t border-black text-sm">
-            <h1 className=" lg:truncate lg:w-[20%]">{card.uploaded_by}</h1>
+          <h1 className="lg:truncate lg:w-[40%] hover:overflow-visible hover:whitespace-nowrap hover:w-auto">
+  {card.uploaded_by}
+</h1>       
+{/* <h1 className="absolute hidden group-hover:block lg:w-auto top-full left-0 bg-white text-black">
+    {card.uploaded_by}
+  </h1>  */}
             <p>|</p>
-            <h1 className=" lg:truncate lg:w-[20%]">{card.age_in_days}</h1>
+            <h1 className=" lg:truncate lg:w-[20%] hover:overflow-visible hover:whitespace-nowrap hover:w-auto">{card.age_in_days}</h1>
             <p>|</p>
-            <h1 className=" lg:truncate lg:w-[60%]">{card.gps_location}</h1>
+            <h1 className=" lg:truncate lg:w-[30%] hover:overflow-visible hover:whitespace-nowrap hover:w-auto">{card.gps_location}</h1>
             <p>|</p>
             <img src='src/assets/Images/dashboard/grocery-store.png' alt="cart" className="w-5 h-5" />
           </div>
@@ -366,8 +371,8 @@ const images = () => {
             <div className="p-1 border border-blue-300 rounded-md">
               <h1 className="font-bold text-sm">{card.content_title}</h1>
             </div>
-            <div className="p-1 border border-blue-300 rounded-md">
-              <h1 className="text-sm">{card.final_price}</h1>
+            <div className="p-1 border border-red-300 rounded-md">
+              <h1 className="text-sm blue-color">{card.final_price}</h1>
             </div>
           </div>
           <div className="p-2">
@@ -381,11 +386,13 @@ const images = () => {
             <p className="font-bold">Location: <span className="font-normal">{card.final_price}</span></p>
           </div>
           <div className="flex justify-between items-center gap-[5px] p-2 border-t border-black text-sm">
-          <h1 className=" lg:truncate lg:w-[20%]">{card.uploaded_by}</h1>
+          <h1 className=" lg:truncate lg:w-[40%] hover:overflow-visible hover:whitespace-normal ">{card.uploaded_by}</h1>
+        <h1 className="cursor-pointer hidden group-hover:inline-block absolute left-2 top-0 w-auto max-w-[280px] z-30 bg-black text-white py-1 px-1 border border-black-300 rounded leading-tight">
+        {card.uploaded_by}</h1>
             <p>|</p>
-            <h1 className=" lg:truncate lg:w-[20%]">{card.age_in_days}</h1>
+            <h1 className=" lg:truncate lg:w-[20%] hover:overflow-visible hover:whitespace-normal">{card.age_in_days}</h1>
             <p>|</p>
-            <h1 className=" lg:truncate lg:w-[60%]">{card.gps_location}</h1>
+            <h1 className=" lg:truncate lg:w-[30%] hover:overflow-visible hover:whitespace-normal">{card.gps_location}</h1>
             <p>|</p>
             <img src='src/assets/Images/dashboard/grocery-store.png' alt="cart" className="w-5 h-5" />
           </div>
@@ -395,7 +402,7 @@ const images = () => {
   ))}
 </div>
 <div>
-    <h1 className="font-bold cur text-[30px] my-[20px]">latest</h1>
+    <h1 className="font-bold cur text-[30px] my-[20px]">Latest</h1>
 </div>
 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
   {cardData.map((card) => (

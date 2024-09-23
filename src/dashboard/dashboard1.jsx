@@ -65,11 +65,11 @@ const dashboard1 = () => {
   };
   return (
     <>
-      <div data-aos-duration="300" className="py-10 pl-5 order-2 sm:order-1 space-y-8 2xl:relative 2xl:right-[55px]">
+      <div data-aos-duration="300" className="py-10 px-5 order-2 sm:order-1 space-y-8 2xl:relative 2xl:right-[55px]">
         <div className=" mx-auto ">
           {/* heading section */}
           {/* testimonial section */}
-          <div className="grid grid-cols-1 max-w-[800px]  gap-6">
+          <div className="grid grid-cols-1 max-w-full  gap-6">
             <Slider {...settings}>
               {testimonialData.map(
                 ({
@@ -84,7 +84,7 @@ const dashboard1 = () => {
                       <div>
                       <video
   
-          className="w-full object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
+          className="w-full lg:max-h-[450px]  group-hover:opacity-100 opacity-90 transition-opacity duration-300"
           muted
           loop
           src={image}

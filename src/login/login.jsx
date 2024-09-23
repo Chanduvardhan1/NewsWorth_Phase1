@@ -103,8 +103,12 @@ const { login } =  useContext(AuthContext);
   
       if (data.response === 'success') {
         const userId = data.data[0].user_id; // Get the user_id from the response
+        const userName = data.data[0].user_name;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("userName", userName);
         login(accessToken);
-        navigate('/dashboard', { state: { user_id: userId } });
+        navigate('/dashboard', { state: { user_id: userId,user_name:userName } });
       } else if (data.detail === "Incorrect username or password") {
         setErrorMessage("Incorrect username or password. Please try again.");
       } else {
@@ -165,19 +169,19 @@ const { login } =  useContext(AuthContext);
                       <div className="flex flex-col gap-[10px] bg-white rounded-[28px] shadow-lg p-5 lg:p-7 pb-5 border-solid border-[1px]">
                       <div className="relative flex justify-between w-full font-bold">
       <div
-        className={`cursor-pointer flex-1 text-center py-2 ${loginMethod === 'email' ? '' : ''}`}
+        className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'email' ? '' : ''}`}
         onClick={() => setUserType('Email')}
       >
         Email
       </div>
       <div
-        className={`cursor-pointer flex-1 text-center py-2 ${loginMethod === 'mobile' ? '' : ''}`}
+        className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'mobile' ? '' : ''}`}
         onClick={() => setUserType('Mobile')}
       >
         Mobile
       </div>
       <div
-        className={`cursor-pointer flex-1 text-center py-2 ${loginMethod === 'gmail' ? '' : ''}`}
+        className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'gmail' ? '' : ''}`}
         onClick={() => setUserType('User Id')}
       >
         User Id

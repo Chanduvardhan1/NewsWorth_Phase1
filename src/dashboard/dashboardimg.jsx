@@ -75,7 +75,7 @@ const dashboardimg = () => {
         <div className=" mx-auto ">
           {/* heading section */}
           {/* testimonial section */}
-          <div className="grid grid-cols-1 max-w-[800px]  gap-6">
+          <div className="grid grid-cols-1 max-w-full gap-6">
             <Slider {...settings}>
               {testimonialData.map(
                 ({
