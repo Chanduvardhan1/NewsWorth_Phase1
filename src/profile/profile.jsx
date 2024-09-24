@@ -8,7 +8,8 @@ import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/mater
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from 'react-router-dom';
-
+import photo from '../../src/assets/Images/landing/pic.jpg'
+import camer from '../../src/assets/Images/home/add-photo.png'
 const signup = () => {
   const [data1, setdata1] = useState('');
   const [showRegistr, setShowRegistr] = useState(true);
@@ -240,11 +241,11 @@ useEffect(() => {
 
 <div className="flex flex-col items-center gap-3 w-[20%]">
 <div className="relative w-[100px] h-[100px]">
-  <img src="src\assets\Images\landing\pic.jpg" alt="" className="w-full h-full rounded-[50px]" />
+  <img src={photo} alt="" className="w-full h-full rounded-[50px]" />
   
   {/* Camera icon */}
   <img
-    src="src\assets\Images\home\add-photo.png" 
+    src={camer} 
     alt="camera icon"
     className="absolute bottom-0 right-0 w-[25px] h-[25px] rounded-full"
   />

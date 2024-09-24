@@ -15,7 +15,7 @@ import pic from '../../src/assets/Images/landing/pic.jpg';
 import Auido from '../../src/assets/Images/dashboard/voice-assistant.png'
 import video from '../../src/assets/Images/dashboard/video-camera.png'
 import camera from '../../src/assets/Images/dashboard/photo-device.png'
-import card from '../../src/assets/Images/dashboard/grocery-store.png'
+import card from '../../src/assets/Images/dashboard/add-to-cart.png'
 
 
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
@@ -448,7 +448,7 @@ const watch = () => {
     <div className="text-sm text-gray-500 mt-2">
       <p className="text-pink-500 font-bold text-[12px]">2 days and 20 hours ago</p>
       <p className="text-[12px]">Bangalore, Karnataka, India</p>
-      <p className="font-semibold text-blue-500 text-[12px]">Owner Ram M Reddy</p>
+      <p className="font-semibold text-blue-500 text-[12px]">Creator Ram M Reddy</p>
     </div>
   </div>
 

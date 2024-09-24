@@ -3,6 +3,7 @@ import logo from '../../src/assets/Images/home/NewsWorth.png'
 import ball from '../../src/assets/Images/landing/bell.png'
 import photo from '../../src/assets/Images/landing/pic.jpg'
 import { useNavigate, useLocation } from "react-router-dom";
+import card from '../../src/assets/Images/dashboard/add-to-cart.png'
 
 const landing = () => {
   const location = useLocation();
@@ -54,6 +55,9 @@ const landing = () => {
         </div>
         <div>
             <img src={photo} alt="" className=" w-[45px] h-[45px] cursor-pointer" onClick={handleProfile} />
+        </div>
+        <div>
+            <img src={card} alt="" className=" w-[25px] h-[25px] cursor-pointer" />
         </div>
     </div>
 </div>

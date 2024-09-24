@@ -32,24 +32,24 @@ const Home = () => {
     < Home1/>
     </div> */}
      <div className="flex flex-col gap-5">
-  <li className="animate-slide-left opacity-0"> 
+  <p className="animate-slide-left opacity-0"> 
     Unfiltered stories, unmatched quality.<span className=" text-orange-500 font-bold"></span>
-  </li>
-  <li className="animate-slide-right opacity-0"> 
+  </p>
+  <p className="animate-slide-right opacity-0"> 
     Certify, protect, and monetize your content on NewsWorth.<span className=" text-blue-500 font-bold"></span> 
-  </li>
-  <li className="animate-slide-left opacity-0"> 
+  </p>
+  <p className="animate-slide-left opacity-0"> 
     Capture content using the "<span className="blue-color font-bold">NewsWorth Eye</span>" mobile app, with cloud storage.
-  </li>
-  <li className="animate-slide-right opacity-0"> 
+  </p>
+  <p className="animate-slide-right opacity-0"> 
     Access the "<span className=" text-[#ce003d] font-bold">NewsWorth Wall</span>" web portal, featuring a content marketplace.
-  </li>
-  <li className="animate-slide-left opacity-0"> 
+  </p>
+  <p className="animate-slide-left opacity-0"> 
     Set your own pricing for your content.<span className="red-color font-bold"></span>
-  </li>
-  <li className="animate-slide-right opacity-0"> 
+  </p>
+  <p className="animate-slide-right opacity-0"> 
     Certify, protect, and monetize your content on NewsWorth.<span className=" text-blue-500 font-bold"></span> 
-  </li>
+  </p>
 </div>
 
         

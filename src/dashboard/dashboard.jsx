@@ -27,7 +27,7 @@ import videoSrc from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ 
 import videoSrc1 from '../../src/assets/Images/home/10_30 PM _ 12th September 2024 _ ETV News _ News Headlines _ ETV Andhra Pradesh.mp4';
 import videoSrc2 from '../../src/assets/Images/home/CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation.mp4';
 import videoSrc3 from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4';
-import card from '../../src/assets/Images/dashboard/grocery-store.png'
+import card from '../../src/assets/Images/dashboard/add-to-cart.png'
 import Auido from '../../src/assets/Images/dashboard/voice-assistant.png'
 import video from '../../src/assets/Images/dashboard/video-camera.png'
 import camera from '../../src/assets/Images/dashboard/photo-device.png'
@@ -245,7 +245,7 @@ const cardData = [
       description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...',
       timeAgo: '1 Days and 20 Hours',
       location: 'Bangalore, Karnataka, India',
-      author: 'Owner Ram M Reddy',
+      author: 'Creator Ram M Reddy',
     },
     {
       id: 2,
@@ -258,7 +258,7 @@ const cardData = [
       description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested...',
       timeAgo: '2 Day and 15 Hours',
       location: 'Mumbai, Maharashtra, India',
-      author: 'Owner Narasimha Reddy ',
+      author: 'Creator Narasimha Reddy ',
     },
     {
       id: 3,
@@ -271,7 +271,7 @@ const cardData = [
       description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested...',
       timeAgo: '3 Day and 15 Hours',
       location: 'Mumbai, Maharashtra, India',
-      author: 'Owner Sruthi',
+      author: 'Creator Sruthi',
     },
     // Add more objects for additional videos...
   ];
@@ -288,7 +288,7 @@ const cardData = [
       description: 'A short description of the image...',
       timeAgo: '2 Days',
       location: 'New York, USA',
-      author: 'Owner John Doe',
+      author: 'Creator John Doe',
       articleText: 'Some more detailed text about the image or article...'
     },
     {
@@ -303,7 +303,7 @@ const cardData = [
       description: 'A short description of the image...',
       timeAgo: '2 Days',
       location: 'New York, USA',
-      author: 'Owner John Doe',
+      author: 'Creator John Doe',
       articleText: 'Some more detailed text about the image or article...'
     },
     {
@@ -318,7 +318,7 @@ const cardData = [
       description: 'A short description of the image...',
       timeAgo: '2 days',
       location: 'New York, USA',
-      author: 'Owner John Doe',
+      author: 'Creator John Doe',
       articleText: 'Some more detailed text about the image or article...'
     },
     // More objects
@@ -331,7 +331,7 @@ const cardData = [
       description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...',
       timeAgo: '2 Days and 20 Hours',
       location: 'Bangalore, Karnataka, India',
-      author: 'Owner Ram M Reddy',
+      author: 'Creator Ram M Reddy',
       articleText: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders...',
       price: '₹ 300.00',
       discountPrice: '₹ 369',
@@ -345,7 +345,7 @@ const cardData = [
       description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...',
       timeAgo: '2 Days and 20 Hours',
       location: 'Bangalore, Karnataka, India',
-      author: 'Owner Ram M Reddy',
+      author: 'Creator Ram M Reddy',
       articleText: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders...',
       price: '₹ 300.00',
       discountPrice: '₹ 369',
@@ -359,7 +359,7 @@ const cardData = [
       description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...',
       timeAgo: '2 Days and 20 Hours',
       location: 'Bangalore, Karnataka, India',
-      author: 'Owner Ram M Reddy',
+      author: 'Creator Ram M Reddy',
       articleText: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders...',
       price: '₹ 300.00',
       discountPrice: '₹ 369',
