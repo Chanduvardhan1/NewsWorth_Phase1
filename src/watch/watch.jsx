@@ -15,6 +15,7 @@ import pic from '../../src/assets/Images/landing/pic.jpg';
 import Auido from '../../src/assets/Images/dashboard/voice-assistant.png'
 import video from '../../src/assets/Images/dashboard/video-camera.png'
 import camera from '../../src/assets/Images/dashboard/photo-device.png'
+import card from '../../src/assets/Images/dashboard/grocery-store.png'
 
 
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
@@ -336,7 +337,7 @@ const watch = () => {
     const screenWidth = window.innerWidth;
 
     if (screenWidth >= 1024) {
-      setButtonsPerPage(12); // Large screens: show 6 buttons
+      setButtonsPerPage(13); // Large screens: show 6 buttons
     } else if (screenWidth >= 768) {
       setButtonsPerPage(4); // Medium screens: show 4 buttons
     } else {
@@ -381,29 +382,29 @@ const watch = () => {
    <div className="flex w-full items-center p-4">
       {/* Audio Tab */}
       <div
-        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-pink-500 text-white' : 'bg-white text-pink-500'} p-2 rounded`}
+        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-[#ce003d] text-white' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Audio')}
       >
-        <h1 className="text-[18px]">Audio</h1>
         <img src={Auido} alt="Audio Icon" className="w-[25px] h-[25px]" />
+        <h1 className="text-[18px]">Audio</h1>
       </div>
 
       {/* Videos Tab */}
       <div
-        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-pink-500 text-white' : 'bg-white text-pink-500'} p-2 rounded`}
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-[#ce003d] text-white' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Videos')}
       >
-        <h1 className="text-[18px]">Videos</h1>
         <img src={video} alt="Video Icon" className="w-[25px] h-[25px]" />
+        <h1 className="text-[18px]">Videos</h1>
       </div>
 
       {/* Images Tab */}
       <div
-        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-pink-500 text-white' : 'bg-white text-pink-500'} p-2 rounded`}
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-[#ce003d] text-white' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Images')}
       >
-        <h1 className="text-[18px]">Images</h1>
         <img src={camera} alt="Image Icon" className="w-[25px] h-[25px]" />
+        <h1 className="text-[18px]">Images</h1>
       </div>
     </div>
 
@@ -411,7 +412,7 @@ const watch = () => {
    
 
       {/* Buttons container */}
-      <div className="flex space-x-2 mx-2">
+      <div className="flex space-x-3 mx-3">
         {visibleButtons.map((label, index) => (
           <button key={index} className="bg-gray-400 text-white py-1 px-4 rounded">
             {label}
@@ -461,7 +462,7 @@ const watch = () => {
   {/* Price Info Section */}
   <div className="w-[20%] flex flex-col items-end">
     <div className="flex items-center mb-2">
-      <img src="" alt="" className="w-8 h-8" />
+      <img src={Auido} alt="" className="w-8 h-8" />
       <p className="ml-2">MP3. 335 AUC</p>
     </div>
     <div className="text-lg">
@@ -473,7 +474,7 @@ const watch = () => {
       </p>
     </div>
     <div className="mt-2">
-      <img src="" alt="" className="w-8 h-8" />
+      <img src={card} alt="" className="w-8 h-8" />
     </div>
   </div>
 </div>

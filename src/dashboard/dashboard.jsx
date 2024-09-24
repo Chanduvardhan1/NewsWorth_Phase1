@@ -674,6 +674,7 @@ const cardData = [
                 className="w-full h-60 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
                 muted
                 loop
+                onClick={handleVideoClick}
                 src={videoItem.videoSrc}
               ></video>
 
