@@ -243,9 +243,9 @@ const cardData = [
       video: video, // Replace with actual icon path
       card: card, // Replace with actual icon path
       description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...',
-      timeAgo: '1 days and 20 hours ago',
+      timeAgo: '1 Days and 20 Hours',
       location: 'Bangalore, Karnataka, India',
-      author: 'By Ram M Reddy',
+      author: 'Owner Ram M Reddy',
     },
     {
       id: 2,
@@ -256,9 +256,9 @@ const cardData = [
       video: video, // Replace with actual icon path
       card: card,
       description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested...',
-      timeAgo: '2 day and 15 hours ago',
+      timeAgo: '2 Day and 15 Hours',
       location: 'Mumbai, Maharashtra, India',
-      author: 'By Narasimha Reddy ',
+      author: 'Owner Narasimha Reddy ',
     },
     {
       id: 3,
@@ -269,9 +269,9 @@ const cardData = [
       video: video, // Replace with actual icon path
       card: card,
       description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested...',
-      timeAgo: '3 day and 15 hours ago',
+      timeAgo: '3 Day and 15 Hours',
       location: 'Mumbai, Maharashtra, India',
-      author: 'By Sruthi',
+      author: 'Owner Sruthi',
     },
     // Add more objects for additional videos...
   ];
@@ -286,9 +286,9 @@ const cardData = [
       discountPrice: '₹ 369',
       discount: 23,
       description: 'A short description of the image...',
-      timeAgo: '2 days ago',
+      timeAgo: '2 Days',
       location: 'New York, USA',
-      author: 'John Doe',
+      author: 'Owner John Doe',
       articleText: 'Some more detailed text about the image or article...'
     },
     {
@@ -301,9 +301,9 @@ const cardData = [
       discountPrice: '₹ 369',
       discount: 23,
       description: 'A short description of the image...',
-      timeAgo: '2 days ago',
+      timeAgo: '2 Days',
       location: 'New York, USA',
-      author: 'John Doe',
+      author: 'Owner John Doe',
       articleText: 'Some more detailed text about the image or article...'
     },
     {
@@ -316,9 +316,9 @@ const cardData = [
       discountPrice: '₹ 369',
       discount: 23,
       description: 'A short description of the image...',
-      timeAgo: '2 days ago',
+      timeAgo: '2 days',
       location: 'New York, USA',
-      author: 'John Doe',
+      author: 'Owner John Doe',
       articleText: 'Some more detailed text about the image or article...'
     },
     // More objects
@@ -329,9 +329,9 @@ const cardData = [
       id: 1,
       videoSrc: Image1,
       description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...',
-      timeAgo: '2 days and 20 hours ago',
+      timeAgo: '2 Days and 20 Hours',
       location: 'Bangalore, Karnataka, India',
-      author: 'Ram M Reddy',
+      author: 'Owner Ram M Reddy',
       articleText: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders...',
       price: '₹ 300.00',
       discountPrice: '₹ 369',
@@ -343,9 +343,9 @@ const cardData = [
       id: 2,
       videoSrc: Image4,
       description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...',
-      timeAgo: '2 days and 20 hours ago',
+      timeAgo: '2 Days and 20 Hours',
       location: 'Bangalore, Karnataka, India',
-      author: 'Ram M Reddy',
+      author: 'Owner Ram M Reddy',
       articleText: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders...',
       price: '₹ 300.00',
       discountPrice: '₹ 369',
@@ -354,12 +354,12 @@ const cardData = [
       rightIcon: card,
     },
     {
-      id: 1,
+      id: 3,
       videoSrc: Image3,
       description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...',
-      timeAgo: '2 days and 20 hours ago',
+      timeAgo: '2 Days and 20 Hours',
       location: 'Bangalore, Karnataka, India',
-      author: 'Ram M Reddy',
+      author: 'Owner Ram M Reddy',
       articleText: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders...',
       price: '₹ 300.00',
       discountPrice: '₹ 369',
@@ -705,13 +705,13 @@ const cardData = [
 
             {/* Description */}
             <div className="flex justify-between px-4">
-              <p className="text-blue-500 font-bold line-clamp-2 w-[60%] h-12">
+              <p className="text-blue-500 font-semibold line-clamp-2 w-[60%] h-12">
                 {videoItem.description}
               </p>
               <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
                 <p className="text-[12px] line-clamp-1 text-[#ce003d]">{videoItem.timeAgo}</p>
                 <p className="text-[12px] line-clamp-1">{videoItem.location}</p>
-                <p className="text-[12px] font-semibold text-blue-500">{videoItem.author}</p>
+                <p className="text-[12px]  text-blue-500">{videoItem.author}</p>
               </div>
             </div>
 
@@ -767,13 +767,13 @@ const cardData = [
 
        {/* Description */}
        <div className="flex justify-between px-4">
-       <p className="text-blue-600 font-bold line-clamp-2 w-[60%] h-12">
+       <p className="text-blue-600 font-semibold line-clamp-2 w-[60%] h-12">
            {imageItem.description}
          </p>
          <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
            <p className="text-[12px] line-clamp-1 text-[#ce003d]">{imageItem.timeAgo}</p>
            <p className="text-[12px] line-clamp-1">{imageItem.location}</p>
-           <p className="text-[12px] font-semibold text-blue-600">{imageItem.author}</p>
+           <p className="text-[12px]  text-blue-600">{imageItem.author}</p>
          </div>
        </div>
 
@@ -803,13 +803,13 @@ const cardData = [
 
        {/* Description */}
        <div className="flex justify-between px-4">
-         <p className="text-blue-500 font-bold line-clamp-2 w-[60%] h-12">
+         <p className="text-blue-500 font-semibold line-clamp-2 w-[60%] h-12">
            {item.description}
          </p>
          <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
            <p className="text-[12px] line-clamp-1 text-[#ce003d]">{item.timeAgo}</p>
            <p className="text-[12px] line-clamp-1">{item.location}</p>
-           <p className="text-[12px] font-semibold text-blue-500">By {item.author}</p>
+           <p className="text-[12px]  text-blue-500">{item.author}</p>
          </div>
        </div>
 

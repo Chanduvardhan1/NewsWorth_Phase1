@@ -1,12 +1,13 @@
 import React, { useState,useEffect } from "react";
 import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
-
+import Landing from "../landing/landing";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../url";
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useLocation } from 'react-router-dom';
 
 const signup = () => {
   const [data1, setdata1] = useState('');
@@ -51,13 +52,15 @@ const [dateofbirth, setDateofbirth] = useState('');
 const [useraddressline1, setUseraddressline1] = useState('');
 const [useraddressline2, setUseraddressline2] = useState('');
 const [isEditable, setIsEditable] = useState(false);
+const userId = location.state?.user_id || localStorage.getItem("userId");
+
 useEffect(() => {
   fetchUserProfile();
 }, []);
 
 const fetchUserProfile = async () => {
   try {
-    const response = await fetch(`${URL}/get_prfl_dtls?user_id=49`,{
+    const response = await fetch(`${URL}/get_prfl_dtls?user_id=${userId}`,{
       method: 'POST',
       headers: {
         'accept': 'application/json',
@@ -75,7 +78,7 @@ const fetchUserProfile = async () => {
       setLastname(data.response_message.last_name);
       setUseremail(data.response_message.user_email);
       setUserphonenumber(data.response_message.user_phone_number || ''); // Ensure empty value if null
-      setCountry(data.response_message.country);
+      setCountry(data.response_message.country_name);
       setGender(data.response_message.gender);
       setDateofbirth(data.response_message.date_of_birth);
 
@@ -183,6 +186,10 @@ const fetchLocationDetails = async () => {
       body: JSON.stringify({ pincode })
     });
     const result = await response.json();
+    if (result.response === 'fail' && result.response_message === 'Failed to fetch location details.') {
+      setPincodeMessage('Failed to fetch location details. Please try again.');
+      return; // Stop further execution if the fetch fails
+    }
     const data = result.data;
 
     // Remove duplicate locations and districts
@@ -191,37 +198,47 @@ const fetchLocationDetails = async () => {
 
     setLocationDetails(uniqueLocations);
     setUniqueDistricts(uniqueDistrictsList);
-
+    
+    setSelectedDistrict(uniqueLocations[0]?.district || '');
     setState(uniqueLocations[0]?.state || '');
     setCountry(uniqueLocations[0]?.country || '');
-    setSelectedDistrict(''); // Reset district selection when pincode changes
 
   } catch (error) {
+    setPincodeMessage('An error occurred while fetching location details.');
+
     console.error('Error fetching location details:', error);
   }
 };
 
 const handlePincodeChange = (event) => {
-  setPincode(event.target.value);
-};
+  const value = event.target.value;
 
+  // Allow only numbers and limit to 6 characters
+  if (/^\d*$/.test(value) && value.length <= 6) {
+    setPincode(value);
+  }
+};
+useEffect(() => {
+  if (pincode && pincode.length === 6) {
+    fetchLocationDetails();
+  }
+}, [pincode]);
 
   return (
     <>
-   <Navbar/>
+   <Landing/>
    <ToastContainer />
-   <main className="flex flex-col md:flex-row justify-center items-center w-full min-h-screen bg-gray-50 px-6 py-10">
    
    
 
-    <div className="w-[50%]">
-      <div className=" flex flex-col gap-[20px] ">
+    <div className="">
 
-    <div className="flex justify-center">
+    <div className="flex p-4 pl-[60px] ">
       <h1 className="blue-color font-bold text-[32px]">My Profile</h1>
     </div>
+    <div className=" flex flex-row w-full  gap-[20px] ">
 
-<div className="flex  items-center gap-3">
+<div className="flex flex-col items-center gap-3 w-[20%]">
 <div className="relative w-[100px] h-[100px]">
   <img src="src\assets\Images\landing\pic.jpg" alt="" className="w-full h-full rounded-[50px]" />
   
@@ -237,71 +254,53 @@ const handlePincodeChange = (event) => {
   </div>
 </div>
 
-  <div className="flex flex-col gap-[10px]">
+  <div className="flex flex-col gap-[10px] ">
     <div className=" flex gap-[5px] justify-center">
                   <TextField
                     id="firstName"
                     label="First Name"
-                    variant="outlined"
-                    className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+                    variant="standard"
+                    className="w-full mb-4 px-7 py-4  bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
                     required
                     value={firstname}
                     onChange={(e) => setFirstname(e.target.value)}
                     disabled={!isEditable}
 
-                    InputProps={{
-                      style: {             
-                        
-                        height: "50px",
-                        border: "none",
-                        borderRadius: "10px",
-                        
-                      },
-                      autoComplete: "off",
-                    }}
 
                   />
 
                   <TextField
                     id="middleName"
                     label="Middle Name"
-                    variant="outlined"
+                    variant="standard"
                     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
                     value={middlename}
                     onChange={(e) => setMiddlename(e.target.value)}
                     disabled={!isEditable}
                 
-                    InputProps={{
-                      style: {
-                       
-                        height: "50px",
-                        border: "none",
-                        borderRadius: "10px",
-                      },
-                      autoComplete: "off",
-                    }}
+                    
                   />
                   <TextField
                     id="lastName"
                     label="Last Name"
-                    variant="outlined"
+                    variant="standard"
                     required            
-                    className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+                    className="w-full mb-4 px-7 py-4  bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
      
                     value={lastname}
                     onChange={(e) => setLastname(e.target.value)}
                     disabled={!isEditable}
-                    InputProps={{
-                      style: {
+                    // InputProps={{
+                    //   style: {
                         
-                        height: "50px",
-                        border: "none",
-                        borderRadius: "10px",
-                      },
-                      autoComplete: "off",
-                    }}
+                    //     height: "50px",
+                    //     border: "none",
+                    //     borderRadius: "10px",
+                    //   },
+                    //   autoComplete: "off",
+                    // }}
                     name="last_name"
                   />
                 </div>
@@ -314,28 +313,29 @@ const handlePincodeChange = (event) => {
       value={dateofbirth}
       onChange={(e) => setDateofbirth(e.target.value)}
       disabled={!isEditable}
-     variant="outlined"
+     variant="standard"
      className="w-full  px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      required
-      InputProps={{
-        style: {
+      // InputProps={{
+      //   style: {
        
         
-          height: "50px",
-          borderRadius: "10px",
-        },
-        endAdornment: (
-          <div
+      //     height: "50px",
+      //     borderRadius: "10px",
+      //   },
+      //   endAdornment: (
+      //     <div
             
-          >
-        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+      //     >
+      //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
 
-          </div>
-        ),
-        autoComplete: "off",
-      }} />
-       <FormControl variant="outlined" required className="w-full mb-4">
+      //     </div>
+      //   ),
+      //   autoComplete: "off",
+      // }}
+       />
+       <FormControl variant="standard" required className="w-full mb-4">
           <InputLabel id="gender-label">Gender</InputLabel>
           <Select
             labelId="gender-label"
@@ -345,11 +345,11 @@ const handlePincodeChange = (event) => {
             label="Gender"
             className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
-            style={{
+            // style={{
               
-              height: "50px",
-              borderRadius: "10px",
-            }}
+            //   height: "50px",
+            //   borderRadius: "10px",
+            // }}
             name="gender"
           >
             <MenuItem value="">
@@ -369,26 +369,27 @@ const handlePincodeChange = (event) => {
      disabled={!isEditable}
      onChange={handlePincodeChange}
      onBlur={fetchLocationDetails}
-     variant="outlined"
+     variant="standard"
      required
-      InputProps={{
-        style: {
+      // InputProps={{
+      //   style: {
        
-          height: "50px",
-          borderRadius: "10px",
-        },
-        endAdornment: (
-          <div
+      //     height: "50px",
+      //     borderRadius: "10px",
+      //   },
+      //   endAdornment: (
+      //     <div
             
-          >
-        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+      //     >
+      //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
 
-          </div>
-        ),
-        autoComplete: "off",
-      }} />
+      //     </div>
+      //   ),
+      //   autoComplete: "off",
+      // }}
+       />
       
-      <FormControl variant="outlined" required className="w-full mb-4">
+      <FormControl variant="standard" required className="w-full mb-4">
           <InputLabel id="gender-label">City</InputLabel>
           <Select
          className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
@@ -397,11 +398,11 @@ const handlePincodeChange = (event) => {
             labelId="City"
             label="City"
             disabled={!isEditable}
-            style={{
+            // style={{
               
-              height: "50px",
-              borderRadius: "10px",
-            }}
+            //   height: "50px",
+            //   borderRadius: "10px",
+            // }}
             name="UserType"
           >
             <MenuItem value="">
@@ -416,7 +417,7 @@ const handlePincodeChange = (event) => {
         </FormControl>
 </div>
 <div className=" flex gap-[5px] justify-center">
-       <FormControl variant="outlined" required className="w-full mb-4">
+       <FormControl variant="standard" required className="w-full mb-4">
           <InputLabel id="gender-label">District</InputLabel>
           <Select
          className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
@@ -426,12 +427,8 @@ const handlePincodeChange = (event) => {
             disabled={!isEditable}
             value={selectedDistrict}
             onChange={(e) => setSelectedDistrict(e.target.value)}
-            style={{
-              
-              height: "50px",
-              borderRadius: "10px",
-            }}
-            name="UserType"
+        
+          
           >
             <MenuItem value="">
               {/* <em>None</em> */}
@@ -450,174 +447,180 @@ const handlePincodeChange = (event) => {
      disabled={!isEditable}
      onChange={(e) => setState(e.target.value)}
 
-     variant="outlined"
+     variant="standard"
     
 
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      required
-      InputProps={{
-        style: {
+      // InputProps={{
+      //   style: {
        
-          height: "50px",
-          borderRadius: "10px",
-        },
-        endAdornment: (
-          <div
+      //     height: "50px",
+      //     borderRadius: "10px",
+      //   },
+      //   endAdornment: (
+      //     <div
             
-          >
-        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+      //     >
+      //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
 
-          </div>
-        ),
-        autoComplete: "off",
-      }} />
+      //     </div>
+      //   ),
+      //   autoComplete: "off",
+      // }}
+       />
 </div>
 
 <div className=" flex gap-[5px] justify-center">
 <TextField
      id="Country" 
      label="Country" 
-     variant="outlined"
+     variant="standard"
      required
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      value={country}
      onChange={(e) => setCountry(e.target.value)}
      disabled={!isEditable}
-      InputProps={{
-        style: {
+      // InputProps={{
+      //   style: {
        
           
-          height: "50px",
-          borderRadius: "10px",
-        },
-        endAdornment: (
-          <div
+      //     height: "50px",
+      //     borderRadius: "10px",
+      //   },
+      //   endAdornment: (
+      //     <div
             
-          >
-        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+      //     >
+      //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
 
-          </div>
-        ),
-        autoComplete: "off",
-      }} />
+      //     </div>
+      //   ),
+      //   autoComplete: "off",
+      // }} 
+      />
       
 </div>
-                <div className=" flex gap-[5px] justify-center items-center">
+                <div className=" flex gap-[5px] justify-end items-end">
 <TextField
      id="Mobile" 
      label="Mobile" 
-     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF] placeholder:text-[#CCCCCC]"
 
-     variant="outlined"
+     variant="standard"
      value={userphonenumber}
      onChange={handleMobileChange}
      disabled={!isEditable} 
-      InputProps={{
-        style: {
+      // InputProps={{
+      //   style: {
        
           
-          height: "50px",
-          borderRadius: "10px",
-        },
-        endAdornment: (
-          <div
+      //     height: "50px",
+      //     borderRadius: "10px",
+      //   },
+      //   endAdornment: (
+      //     <div
             
-          >
-        <img src="src\assets\Images\signup\iphone.png" alt="" className="w-[18px] text-blue-800" />
+      //     >
+      //   <img src="src\assets\Images\signup\iphone.png" alt="" className="w-[18px] text-blue-800" />
 
-          </div>
-        ),
-        autoComplete: "off",
-      }} />
-      <p>Or</p>
+      //     </div>
+      //   ),
+      //   autoComplete: "off",
+      // }} 
+      />
+      <p>or</p>
        <TextField
      id="Email" 
      label="Email" 
-     variant="outlined"
+     variant="standard"
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      value={useremail}
      onChange={handleEmailChange}
      disabled={!isEditable}
-      InputProps={{
-        style: {
+      // InputProps={{
+      //   style: {
        
           
-          height: "50px",
-          borderRadius: "10px",
-        },
-        endAdornment: (
-          <div
+      //     height: "50px",
+      //     borderRadius: "10px",
+      //   },
+      //   endAdornment: (
+      //     <div
             
-          >
-        <img src="src\assets\Images\login\envelope.png" alt="" className="w-[25px] text-blue-800" />
+      //     >
+      //   <img src="src\assets\Images\login\envelope.png" alt="" className="w-[25px] text-blue-800" />
 
-          </div>
-        ),
-        autoComplete: "off",
-      }} />
+      //     </div>
+      //   ),
+      //   autoComplete: "off",
+      // }} 
+      />
 
 </div>
 <div className=" flex gap-[5px] justify-center">
 <TextField
      id="Country" 
      label="User address line 1" 
-     variant="outlined"
+     variant="standard"
      required
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      value={useraddressline1}
      onChange={(e) => setUseraddressline1(e.target.value)}
      disabled={!isEditable}
-      InputProps={{
-        style: {
+      // InputProps={{
+      //   style: {
        
           
-          height: "50px",
-          borderRadius: "10px",
-        },
-        endAdornment: (
-          <div
+      //     height: "50px",
+      //     borderRadius: "10px",
+      //   },
+      //   endAdornment: (
+      //     <div
             
-          >
-        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+      //     >
+      //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
 
-          </div>
-        ),
-        autoComplete: "off",
-      }} />
+      //     </div>
+      //   ),
+      //   autoComplete: "off",
+      // }} 
+      />
       
 </div>
 <div className=" flex gap-[5px] justify-center">
 <TextField
      id="Country" 
      label="User address line 2" 
-     variant="outlined"
+     variant="standard"
      required
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      value={useraddressline2}
      onChange={(e) => setUseraddressline2(e.target.value)}
      disabled={!isEditable}
-      InputProps={{
-        style: {
+      // InputProps={{
+      //   style: {
        
           
-          height: "50px",
-          borderRadius: "10px",
-        },
-        endAdornment: (
-          <div
+      //     height: "50px",
+      //     borderRadius: "10px",
+      //   },
+      //   endAdornment: (
+      //     <div
             
-          >
-        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+      //     >
+      //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
 
-          </div>
-        ),
-        autoComplete: "off",
-      }} />
+      //     </div>
+      //   ),
+      //   autoComplete: "off",
+      // }} 
+      />
       
 </div>
 {showRegistr ?(
@@ -660,10 +663,9 @@ const handlePincodeChange = (event) => {
     </div>
   </div>
 
- <div  className="w-[50%] flex justify-center items-center">
+ {/* <div  className="w-[50%] flex justify-center items-center">
       <img src={home} alt="" width={500}  height={500} className="hover:duration-300 hover:scale-105 "/>
-    </div>
-   </main>
+    </div> */}
 
     </>
   

@@ -2,24 +2,31 @@ import React, { useState, useEffect } from "react";
 import logo from '../../src/assets/Images/home/NewsWorth.png'
 import ball from '../../src/assets/Images/landing/bell.png'
 import photo from '../../src/assets/Images/landing/pic.jpg'
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from "react-router-dom";
 
 const landing = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const userId = location.state?.user_id || localStorage.getItem("userId");
   const userName = location.state?.user_name ||localStorage.getItem("userName");
 
 
+  const handleNavigation = () => {
+    navigate('/dashboard'); // Navigate to the selected path
+  };
+  const handleProfile = () => {
+    navigate('/profile'); // Navigate to the selected path
+  };
   return (
     <div>
    <div className=" relative">
 <div className=" w-full flex justify-between p-[5px] shadow-md ">
     <div className="flex justify-center items-center">
         <div>
-        <img src={logo} alt="" />
+        <img src={logo} alt="" onClick={handleNavigation} className=" cursor-pointer" />
         </div>
         <div>
-        <h1 className="text-[25px] font-bold ">NewsWorth</h1>
+        <h1 className="text-[25px] font-bold cursor-pointer " onClick={handleNavigation}>NewsWorth</h1>
 
         </div>
     </div>
@@ -42,11 +49,11 @@ const landing = () => {
         <img src={ball} className="w-[20px] h-[20px]" alt="" />
       </div>
         <div>
-            <h1>Welcome <span className=" font-bold">{userName}</span> </h1>
-            <p>User ID: {userId}</p>
+            <h1 className=" cursor-pointer"  onClick={handleProfile}>Welcome <span  onClick={handleProfile} className=" font-bold cursor-pointer">{userName}</span> </h1>
+            <p className=" cursor-pointer"   onClick={handleProfile}>User ID: {userId}</p>
         </div>
         <div>
-            <img src={photo} alt="" className=" w-[45px] h-[45px]" />
+            <img src={photo} alt="" className=" w-[45px] h-[45px] cursor-pointer" onClick={handleProfile} />
         </div>
     </div>
 </div>

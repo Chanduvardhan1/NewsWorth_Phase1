@@ -17,11 +17,11 @@ const filters = () => {
 
   return (
     <>
-      <div className="font-bold flex justify-between mb-6">
+      <div className="flex justify-between mb-6">
         <p
           onClick={() => handleNavigation("/dashboard")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
-            activePage === "/dashboard" ? "font-extrabold" : "font-bold"
+            activePage === "/dashboard" ? "font-bold" : ""
           }`}
         >
           Home
@@ -29,7 +29,7 @@ const filters = () => {
         <p
         //   onClick={() => handleNavigation("/general")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
-            activePage === "/#" ? "font-extrabold" : "font-bold"
+            activePage === "/#" ? "font-bold" : ""
           }`}
         >
           General News
@@ -37,7 +37,7 @@ const filters = () => {
         <p
           onClick={() => handleNavigation("/images")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
-            activePage === "/images" ? "font-extrabold" : "font-bold"
+            activePage === "/images" ? "font-bold" : ""
           }`}
         >
           Images
@@ -45,7 +45,7 @@ const filters = () => {
         <p
           onClick={() => handleNavigation("/audio")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
-            activePage === "/audio" ? "font-extrabold" : "font-bold"
+            activePage === "/audio" ? "font-bold" : ""
           }`}
         >
           Audio
@@ -53,7 +53,7 @@ const filters = () => {
         <p
         //   onClick={() => handleNavigation("/entertainment")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
-            activePage === "/entertainment" ? "font-extrabold" : "font-bold"
+            activePage === "/entertainment" ? "font-bold" : ""
           }`}
         >
           Entertainment
@@ -61,7 +61,7 @@ const filters = () => {
         <p
         //   onClick={() => handleNavigation("/sports")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
-            activePage === "/sports" ? "font-extrabold" : "font-bold"
+            activePage === "/sports" ? "font-bold" : ""
           }`}
         >
           Sports
@@ -69,7 +69,7 @@ const filters = () => {
         <p
         //   onClick={() => handleNavigation("/business")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
-            activePage === "/business" ? "font-extrabold" : "font-bold"
+            activePage === "/business" ? "font-bold" : ""
           }`}
         >
           Business
@@ -77,7 +77,7 @@ const filters = () => {
         <p
         //   onClick={() => handleNavigation("/health")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
-            activePage === "/health" ? "font-extrabold" : "font-bold"
+            activePage === "/health" ? "font-bold" : ""
           }`}
         >
           Health
@@ -85,7 +85,7 @@ const filters = () => {
         <p
         //   onClick={() => handleNavigation("/educational")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
-            activePage === "/educational" ? "font-extrabold" : "font-bold"
+            activePage === "/educational" ? "font-bold" : ""
           }`}
         >
           Educational
@@ -93,7 +93,7 @@ const filters = () => {
         <p
         //   onClick={() => handleNavigation("/wildlife")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
-            activePage === "/wildlife" ? "font-extrabold" : "font-bold"
+            activePage === "/wildlife" ? "font-bold" : ""
           }`}
         >
           Wildlife
@@ -101,7 +101,7 @@ const filters = () => {
         <p
         //   onClick={() => handleNavigation("/fashion")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
-            activePage === "/fashion" ? "font-extrabold" : "font-bold"
+            activePage === "/fashion" ? "font-bold" : ""
           }`}
         >
           Fashion
