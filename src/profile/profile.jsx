@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from 'react-router-dom';
 import photo from '../../src/assets/Images/landing/pic.jpg'
 import camer from '../../src/assets/Images/home/add-photo.png'
+import logout1 from '../../src/assets/Images/dashboard/power-off.png'
 const signup = () => {
   const [data1, setdata1] = useState('');
   const [showRegistr, setShowRegistr] = useState(true);
@@ -210,6 +211,38 @@ const fetchLocationDetails = async () => {
     console.error('Error fetching location details:', error);
   }
 };
+const handleBackToLogin = () => {
+  // Retrieve the authentication token from AuthContext or localStorage
+  const authToken = localStorage.getItem('authToken') || null;
+
+  fetch(`${URL}/usr_logout/`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${authToken}`, // Include the authentication token
+    },
+    body: JSON.stringify({
+      user_id: userId, // Ensure user.userId is available
+    }),
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Logout response:', data);
+      if (data.response === 'success') {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user_id');
+        navigate("/login");// Redirect to login page
+      } else {
+        console.error('Logout failed:', data.response_message);
+        // Handle unsuccessful logout (optional)
+      }
+    })
+    .catch(error => {
+      console.error('Error logging out:', error);
+      // Handle errors appropriately
+    });
+};
 
 const handlePincodeChange = (event) => {
   const value = event.target.value;
@@ -234,8 +267,9 @@ useEffect(() => {
 
     <div className="">
 
-    <div className="flex p-4 pl-[60px] ">
+    <div className="flex p-4 pl-[60px] justify-between items-center ">
       <h1 className="blue-color font-bold text-[32px]">My Profile</h1>
+      <img src={logout1} alt="" onClick={handleBackToLogin} className="w-[25px] h-[25px] cursor-pointer" />
     </div>
     <div className=" flex flex-row w-full  gap-[20px] ">
 
@@ -256,7 +290,7 @@ useEffect(() => {
 </div>
 
   <div className="flex flex-col gap-[10px] ">
-    <div className=" flex gap-[5px] justify-center">
+    <div className=" flex gap-[15px] justify-center">
                   <TextField
                     id="firstName"
                     label="First Name"
@@ -305,7 +339,7 @@ useEffect(() => {
                     name="last_name"
                   />
                 </div>
-                <div className=" flex gap-[5px] justify-center">
+                <div className=" flex gap-[15px] justify-center">
 <TextField
       type="date"
       id="Date of Birth" 
@@ -344,7 +378,7 @@ useEffect(() => {
             onChange={(e) => setGender(e.target.value)}
             disabled={!isEditable}
             label="Gender"
-            className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            className="w-full  rounded-[10px]   placeholder:text-[#CCCCCC]"
 
             // style={{
               
@@ -361,7 +395,7 @@ useEffect(() => {
           </Select>
         </FormControl>
 </div>
-<div className=" flex gap-[5px] justify-center">
+<div className=" flex gap-[15px] justify-center">
 <TextField
      id="Pincode" 
      label="Pincode" 
@@ -391,9 +425,9 @@ useEffect(() => {
        />
       
       <FormControl variant="standard" required className="w-full mb-4">
-          <InputLabel id="gender-label">City</InputLabel>
+          <InputLabel id="City">City</InputLabel>
           <Select
-         className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+         className="w-full  rounded-[10px]   placeholder:text-[#CCCCCC]"
          value={selectedCity}
          onChange={(e) => setSelectedCity(e.target.value)}
             labelId="City"
@@ -417,11 +451,11 @@ useEffect(() => {
           </Select>
         </FormControl>
 </div>
-<div className=" flex gap-[5px] justify-center">
+<div className=" flex gap-[15px] justify-center">
        <FormControl variant="standard" required className="w-full mb-4">
-          <InputLabel id="gender-label">District</InputLabel>
+          <InputLabel id="District" className="bg-[#FFFFFF] placeholder:text-[#CCCCCC]">District</InputLabel>
           <Select
-         className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+         className="w-full  rounded-[10px]  placeholder:text-[#CCCCCC]"
 
             labelId="District"
             label="District"
@@ -473,7 +507,7 @@ useEffect(() => {
        />
 </div>
 
-<div className=" flex gap-[5px] justify-center">
+<div className=" flex gap-[15px] justify-center">
 <TextField
      id="Country" 
      label="Country" 
@@ -504,7 +538,7 @@ useEffect(() => {
       />
       
 </div>
-                <div className=" flex gap-[5px] justify-end items-end">
+                <div className=" flex gap-[15px] justify-end items-end">
 <TextField
      id="Mobile" 
      label="Mobile" 
@@ -562,7 +596,7 @@ useEffect(() => {
       />
 
 </div>
-<div className=" flex gap-[5px] justify-center">
+<div className=" flex gap-[15px] justify-center">
 <TextField
      id="Country" 
      label="User address line 1" 
@@ -593,7 +627,7 @@ useEffect(() => {
       />
       
 </div>
-<div className=" flex gap-[5px] justify-center">
+<div className=" flex gap-[15px] justify-center">
 <TextField
      id="Country" 
      label="User address line 2" 

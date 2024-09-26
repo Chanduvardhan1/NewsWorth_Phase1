@@ -23,6 +23,7 @@ import { AuthProvider } from './Authcontext/AuthContext.jsx';
 import Images from './dashboard/images.jsx';
 import PrivateRoute from './privateRoute/privateRoute.jsx';
 import Audio from './dashboard/audio.jsx';
+import Cart from './cart/cart.jsx';
 function App() {  
   return (
     <>
@@ -49,6 +50,7 @@ function App() {
 
     <Route path="footer" element={<Footer />} />
     <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+    <Route path="cart" element={<Cart />} />
 
   </Route>
 </Routes>

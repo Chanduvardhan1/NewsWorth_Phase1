@@ -31,14 +31,14 @@ import card from '../../src/assets/Images/dashboard/add-to-cart.png'
 import Auido from '../../src/assets/Images/dashboard/voice-assistant.png'
 import video from '../../src/assets/Images/dashboard/video-camera.png'
 import camera from '../../src/assets/Images/dashboard/photo-device.png'
-
+import check from '../../src/assets/Images/dashboard/check.png'
 import channelIcon from '../../src/assets/Images/landing/pic.jpg';
 
 import Image1 from '../../src/assets/Images/dashboard/viratkhoil.webp';
 import Image2 from '../../src/assets/Images/dashboard/Vig.webp';
 import Image3 from '../../src/assets/Images/dashboard/social-media.jpg';
 import Image4 from '../../src/assets/Images/dashboard/news1.webp';
-
+import lessthan from '../../src/assets/Images/dashboard/less-than-symbol.png'
 // const testimonialData = [
 //     {
 //       id: 1,
@@ -233,96 +233,96 @@ const cardData = [
    
   //   // Add more video objects here
   // ];
-  const videoData = [
-    {
-      id: 1,
-      videoSrc: videoSrc, // Replace with actual video source
-      price: '₹ 300.00',
-      discountPrice: '₹ 369',
-      discount: '23%',
-      video: video, // Replace with actual icon path
-      card: card, // Replace with actual icon path
-      description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...',
-      timeAgo: '1 Days and 20 Hours',
-      location: 'Bangalore, Karnataka, India',
-      author: 'Creator Ram M Reddy',
-    },
-    {
-      id: 2,
-      videoSrc: videoSrc1,
-      price: '₹ 300.00',
-      discountPrice: '₹ 369',
-      discount: '23%',
-      video: video, // Replace with actual icon path
-      card: card,
-      description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested...',
-      timeAgo: '2 Day and 15 Hours',
-      location: 'Mumbai, Maharashtra, India',
-      author: 'Creator Narasimha Reddy ',
-    },
-    {
-      id: 3,
-      videoSrc: videoSrc2,
-      price: '₹ 300.00',
-      discountPrice: '₹ 369',
-      discount: '23%',
-      video: video, // Replace with actual icon path
-      card: card,
-      description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested...',
-      timeAgo: '3 Day and 15 Hours',
-      location: 'Mumbai, Maharashtra, India',
-      author: 'Creator Sruthi',
-    },
-    // Add more objects for additional videos...
-  ];
-  const imageData = [
-    {
-      id: 1,
-      imageSrc: Image1,
-      overlayText: 'New Arrival',
-      leftIcon: camera,
-      rightIcon: card,
-      price:'₹ 300.00',
-      discountPrice: '₹ 369',
-      discount: 23,
-      description: 'A short description of the image...',
-      timeAgo: '2 Days',
-      location: 'New York, USA',
-      author: 'Creator John Doe',
-      articleText: 'Some more detailed text about the image or article...'
-    },
-    {
-      id: 2,
-      imageSrc: Image2,
-      overlayText: 'New Arrival',
-      leftIcon: camera,
-      rightIcon: card,
-      price:'₹ 300.00',
-      discountPrice: '₹ 369',
-      discount: 23,
-      description: 'A short description of the image...',
-      timeAgo: '2 Days',
-      location: 'New York, USA',
-      author: 'Creator John Doe',
-      articleText: 'Some more detailed text about the image or article...'
-    },
-    {
-      id: 3,
-      imageSrc: Image3,
-      overlayText: 'New Arrival',
-      leftIcon: camera,
-      rightIcon: card,
-      price:'₹ 300.00',
-      discountPrice: '₹ 369',
-      discount: 23,
-      description: 'A short description of the image...',
-      timeAgo: '2 days',
-      location: 'New York, USA',
-      author: 'Creator John Doe',
-      articleText: 'Some more detailed text about the image or article...'
-    },
-    // More objects
-  ];
+  // const videoData = [
+  //   {
+  //     id: 1,
+  //     videoSrc: videoSrc, // Replace with actual video source
+  //     price: '₹ 300.00',
+  //     discountPrice: '₹ 369',
+  //     discount: '23%',
+  //     video: video, // Replace with actual icon path
+  //     card: card, // Replace with actual icon path
+  //     description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested...',
+  //     timeAgo: '1 Days and 20 Hours',
+  //     location: 'Bangalore, Karnataka, India',
+  //     author: 'Creator Ram M Reddy',
+  //   },
+  //   {
+  //     id: 2,
+  //     videoSrc: videoSrc1,
+  //     price: '₹ 300.00',
+  //     discountPrice: '₹ 369',
+  //     discount: '23%',
+  //     video: video, // Replace with actual icon path
+  //     card: card,
+  //     description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested...',
+  //     timeAgo: '2 Day and 15 Hours',
+  //     location: 'Mumbai, Maharashtra, India',
+  //     author: 'Creator Narasimha Reddy ',
+  //   },
+  //   {
+  //     id: 3,
+  //     videoSrc: videoSrc2,
+  //     price: '₹ 300.00',
+  //     discountPrice: '₹ 369',
+  //     discount: '23%',
+  //     video: video, // Replace with actual icon path
+  //     card: card,
+  //     description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested...',
+  //     timeAgo: '3 Day and 15 Hours',
+  //     location: 'Mumbai, Maharashtra, India',
+  //     author: 'Creator Sruthi',
+  //   },
+  //   // Add more objects for additional videos...
+  // ];
+  // const imageData = [
+  //   {
+  //     id: 1,
+  //     imageSrc: Image1,
+  //     overlayText: 'New Arrival',
+  //     leftIcon: camera,
+  //     rightIcon: card,
+  //     price:'₹ 300.00',
+  //     discountPrice: '₹ 369',
+  //     discount: 23,
+  //     description: 'A short description of the image...',
+  //     timeAgo: '2 Days',
+  //     location: 'New York, USA',
+  //     author: 'Creator John Doe',
+  //     articleText: 'Some more detailed text about the image or article...'
+  //   },
+  //   {
+  //     id: 2,
+  //     imageSrc: Image2,
+  //     overlayText: 'New Arrival',
+  //     leftIcon: camera,
+  //     rightIcon: card,
+  //     price:'₹ 300.00',
+  //     discountPrice: '₹ 369',
+  //     discount: 23,
+  //     description: 'A short description of the image...',
+  //     timeAgo: '2 Days',
+  //     location: 'New York, USA',
+  //     author: 'Creator John Doe',
+  //     articleText: 'Some more detailed text about the image or article...'
+  //   },
+  //   {
+  //     id: 3,
+  //     imageSrc: Image3,
+  //     overlayText: 'New Arrival',
+  //     leftIcon: camera,
+  //     rightIcon: card,
+  //     price:'₹ 300.00',
+  //     discountPrice: '₹ 369',
+  //     discount: 23,
+  //     description: 'A short description of the image...',
+  //     timeAgo: '2 days',
+  //     location: 'New York, USA',
+  //     author: 'Creator John Doe',
+  //     articleText: 'Some more detailed text about the image or article...'
+  //   },
+  //   // More objects
+  // ];
 
   const videoData1 = [
     {
@@ -384,7 +384,11 @@ const cardData = [
     const audioRef = useRef(null);
     const progressRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
-
+    const [videoData, setVideoData] = useState([]);
+    const [imageData, setImageData] = useState([]);
+    const [cartContent, setCartContent] = useState(null); // To store the content when added to the cart
+    const [showCartNotification, setShowCartNotification] = useState(false); // For showing the cart notification
+const [finalprice,setfinalprice] = useState(null);
     useEffect(() => {
       const audio = audioRef.current;
   
@@ -438,7 +442,9 @@ const cardData = [
     const handleImagesClick = () => {
       navigate(`/Watchimages`);
     };
-
+    const handlecart = () => {
+      navigate(`/cart`);
+    };
     // Handle video play on hover
     const handleMouseEnter = () => {
       videoRef.current.play();
@@ -472,7 +478,7 @@ const cardData = [
 
   
         const response = await fetch(
-          `${URL}/landing page?user_id=95`,
+          `${URL}/landing page?user_id=59`,
           {
             method: "POST",
             headers: {
@@ -486,7 +492,9 @@ const cardData = [
         const data = await response.json();
 
         if (data.response === "success") {
-          setCardData1(data.data);
+          setVideoData(data.data);
+          setImageData(data.data);
+          setCartCount(data.cart_count);
         }
       } catch (error) {
         console.error("Error fetching data", error);
@@ -494,7 +502,40 @@ const cardData = [
     };
 
     fetchData();
-  }, [user_id]);
+  }, [user_id],isAuthenticated, authToken, navigate);
+
+  const handleAddToCart = async (contentId, contentLink,finalprice) => {
+    try {
+      const response = await fetch(`${URL}/add_to_cart`, {
+        method: 'POST',
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: 59,
+          content_id: contentId,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok && data.response === 'success') {
+        // Set the content and show the notification
+        setCartContent(contentLink);
+        setShowCartNotification(true);
+        setfinalprice(finalprice)
+        console.log(cartContent);
+        // Optionally, navigate to the cart
+        // setTimeout(() => navigate('/cart'), 3000); // navigate after 3 seconds
+      } else {
+        console.error('Error adding to cart:', data);
+      }
+    } catch (error) {
+      console.error('Request failed:', error);
+    }
+  };
+
   const [activeTab, setActiveTab] = useState('Audio'); // Default to Audio
   const [currentIndex, setCurrentIndex] = useState(0);
   const [buttonsPerPage, setButtonsPerPage] = useState(6); // Default number of visible buttons
@@ -646,7 +687,7 @@ const cardData = [
         onClick={handlePrevious}
         disabled={currentIndex === 0}
       >
-        &lt;
+       <img src={lessthan} alt="" className="w-[20px] h-[20px]" />
       </button>
       {/* Greater than button */}
       <button 
@@ -654,17 +695,19 @@ const cardData = [
         onClick={handleNext}
         disabled={currentIndex + buttonsPerPage >= buttonLabels.length}
       >
-        &gt;
+              <img src={lessthan} alt="" className="w-[20px] h-[20px] rotate-180" />
       </button>
     </div>
 
 
   {activeTab ==='Videos' &&(
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
-      {videoData.map((videoItem) => {
+     {videoData
+    .filter((videoItem) => videoItem.content_type === "Video") // Filter to show only videos
+    .map((videoItem) => {
         const videoRef = React.createRef();
         return (
-          <div key={videoItem.id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">
+          <div key={videoItem.content_id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">
             {/* Video Section */}
             <div className="relative group">
               <video
@@ -675,50 +718,49 @@ const cardData = [
                 muted
                 loop
                 onClick={handleVideoClick}
-                src={videoItem.videoSrc}
+                src={videoItem.content_link}
               ></video>
 
-              {/* Video Duration Overlay */}
-              <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
-                03:24 {/* You can make this dynamic if you have a duration in your data */}
-              </div>
+              {/* <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
+                03:24 
+              </div> */}
             </div>
 
             {/* Video Info */}
             <div className="p-4 flex justify-between items-center">
               {/* Left Icon */}
-              <img src={videoItem.video} alt="" className="w-[25px] h-[25px]" />
+              <img src={video} alt="" className="w-[25px] h-[25px]" />
 
               {/* Price Info */}
               <div className="text-lg">
                 <p className="font-bold text-blue-600">
                   Price {videoItem.price}{' '}
                   <span className="text-sm text-gray-500">
-                    <span className="line-through text-sm text-gray-500">{videoItem.discountPrice}</span> at Discount {videoItem.discount}
+                    <span className="line-through text-sm text-gray-500">{videoItem.final_price}</span> at Discount {videoItem.discount}
                   </span>
                 </p>
               </div>
 
               {/* Right Icon */}
-              <img  onClick={toggleSidebar} src={videoItem.card} alt="" className="w-[25px] h-[25px] cursor-pointer" />
+              <img   onClick={() => handleAddToCart(videoItem.content_id, videoItem.content_link,videoItem.final_price)} src={card} alt="" className="w-[25px] h-[25px] cursor-pointer" />
             </div>
 
             {/* Description */}
             <div className="flex justify-between px-4">
               <p className="text-blue-500 font-semibold line-clamp-2 w-[60%] h-12">
-                {videoItem.description}
+                {videoItem.content_description}
               </p>
               <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
-                <p className="text-[12px] line-clamp-1 text-[#ce003d]">{videoItem.timeAgo}</p>
-                <p className="text-[12px] line-clamp-1">{videoItem.location}</p>
-                <p className="text-[12px]  text-blue-500">{videoItem.author}</p>
+                <p className="text-[12px] line-clamp-1 text-[#ce003d]">{videoItem.age_in_days}</p>
+                <p className="text-[12px] line-clamp-1">{videoItem.gps_location}</p>
+                <p className="text-[12px]  text-blue-500">{videoItem.uploaded_by}</p>
               </div>
             </div>
 
             {/* Article Text */}
             <div className="px-4 py-4">
               <p className="text-gray-500 line-clamp-2">
-                {videoItem.description}
+                {videoItem.content_description}
               </p>
             </div>
           </div>
@@ -729,13 +771,15 @@ const cardData = [
   
 {activeTab ==='Images' && (
  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
- {imageData.map((imageItem) => {
+  {imageData
+    .filter((imageItem) => imageItem.content_type === "Image") // Filter to show only images
+    .map((imageItem) => {
    return (
      <div key={imageItem.id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">
        {/* Image Section */}
        <div className="relative group">
          <img
-           src={imageItem.imageSrc}
+           src={imageItem.content_link}
            alt={imageItem.title}
            className="w-full h-60  group-hover:opacity-100 opacity-90 transition-opacity duration-300"
          />
@@ -749,38 +793,38 @@ const cardData = [
        {/* Image Info */}
        <div className="p-4 flex justify-between items-center">
          {/* Left Icon */}
-         <img src={imageItem.leftIcon}   alt="" className="w-[25px] h-[25px] cursor-pointer" />
+         <img src={camera}   alt="" className="w-[25px] h-[25px] cursor-pointer" />
 
          {/* Price Info */}
          <div className="text-lg">
            <p className="font-bold text-blue-600">
              Price {imageItem.price}{' '}
              <span className="text-sm text-gray-500">
-               <span className="line-through text-sm text-gray-500">{imageItem.discountPrice}</span> at Discount {imageItem.discount}%
+               <span className="line-through text-sm text-gray-500">{imageItem.final_price}</span> at Discount {imageItem.discount}%
              </span>
            </p>
          </div>
 
          {/* Right Icon */}
-         <img src={imageItem.rightIcon} alt="" onClick={toggleSidebar} className="w-[25px] h-[25px] cursor-pointer" />
+         <img src={card} alt="" onClick={toggleSidebar} className="w-[25px] h-[25px] cursor-pointer" />
        </div>
 
        {/* Description */}
        <div className="flex justify-between px-4">
        <p className="text-blue-600 font-semibold line-clamp-2 w-[60%] h-12">
-           {imageItem.description}
+           {imageItem.content_description}
          </p>
          <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
-           <p className="text-[12px] line-clamp-1 text-[#ce003d]">{imageItem.timeAgo}</p>
-           <p className="text-[12px] line-clamp-1">{imageItem.location}</p>
-           <p className="text-[12px]  text-blue-600">{imageItem.author}</p>
+           <p className="text-[12px] line-clamp-1 text-[#ce003d]">{imageItem.age_in_days}</p>
+           <p className="text-[12px] line-clamp-1">{imageItem.gps_location}</p>
+           <p className="text-[12px]  text-blue-600">{imageItem.uploaded_by}</p>
          </div>
        </div>
 
        {/* Article Text */}
        <div className="px-4 py-4">
          <p className="text-gray-600 line-clamp-2">
-           {imageItem.articleText}
+           {imageItem.content_description}
          </p>
        </div>
      </div>
@@ -867,8 +911,62 @@ const cardData = [
    ))}
  </div>
    )}
+{showCartNotification && (
+  <div
+    className="fixed right-0 top-0 transition-transform duration-500 transform translate-x-0 shadow-xl p-4 bg-white lg:w-[50%]"
+    style={{ transform: showCartNotification ? 'translateX(0)' : 'translateX(100%)' }} // Sliding effect
+  >
+    <div className="flex items-center gap-[5px]">
+      {/* Close button */}
+      <button 
+        className="absolute top-2 right-2 text-xl font-bold" 
+        onClick={() => setShowCartNotification(false)} // Close on click
+      >
+        X
+      </button>
 
+      {/* Show the image from content_link */}
+      <video src={cartContent} className=" object-cover w-[100px] h-[100px]"></video>
+      {/* <img src={cartContent} alt="Added Content" className="w-[100px] h-[100px]" /> */}
 
+      <div className="flex items-center gap-[5px]">
+        <img src={check} alt="Check" className="w-[15px] h-[15px]" />
+        <h2 className="text-xl font-semibold">Added to Cart</h2>
+      </div>
+    </div>
+
+    <div className="flex flex-col gap-2 mt-4">
+      <h1 className="font-semibold text-2xl">Cart Subtotal: ₹{finalprice}</h1>
+      <div className="bg-yellow-400 rounded-2xl flex justify-center">
+        <button className="text-black p-2">  Proceed to Buy ({cartCount} item{cartCount !== 1 ? 's' : ''})</button>
+      </div>
+      <div className="bg-white border-[1px] border-black rounded-2xl flex justify-center">
+        <button className="text-black p-2" onClick={handlecart}>Go to Cart</button>
+      </div>
+    </div>
+  </div>
+)}
+
+{/* <div className="flex justify-between shadow-xl p-4 lg:w-[50%]">
+  <div className="flex justify-center items-center gap-[5px]">
+    <img src={Image1} alt="" className=" w-[100px] h-[100px]" />
+    <div className="flex justify-center gap-[3px]">
+      <img src={check} alt="" className="w-[15px] h-[15px] mt-2 "/>
+      <h2 className="text-xl font-semibold">Added to Cart</h2>
+    </div>
+  </div>
+  <div className="flex flex-col gap-2">
+    <div className="p-2">
+      <h1 className=" font-semibold text-2xl">Cart Subtotal:₹299.99</h1>
+    </div>
+    <div className="bg-yellow-400 border-1px rounded-2xl  flex justify-center ">
+      <button className="text-black p-2">Proceed to Buy (1 items)</button>
+    </div>
+    <div className="bg-white border-[1px] flex justify-center border-black rounded-2xl">
+      <button className="text-black p-2 ">Go to Cart</button>
+    </div>
+  </div>
+</div> */}
 
 
    </div>

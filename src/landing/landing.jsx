@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef} from "react";
 import logo from '../../src/assets/Images/home/NewsWorth.png'
 import ball from '../../src/assets/Images/landing/bell.png'
 import photo from '../../src/assets/Images/landing/pic.jpg'
@@ -10,13 +10,69 @@ const landing = () => {
   const navigate = useNavigate();
   const userId = location.state?.user_id || localStorage.getItem("userId");
   const userName = location.state?.user_name ||localStorage.getItem("userName");
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null); // Create a ref for the dropdown
 
+
+  const handleBackToLogin = () => {
+    // Retrieve the authentication token from AuthContext or localStorage
+    const authToken = localStorage.getItem('authToken') || null;
+  
+    fetch(`${URL}/usr_logout/`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`, // Include the authentication token
+      },
+      body: JSON.stringify({
+        user_id: userId, // Ensure user.userId is available
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Logout response:', data);
+        if (data.response === 'success') {
+          localStorage.removeItem('authToken');
+          localStorage.removeItem('user_id');
+          navigate("/login");// Redirect to login page
+        } else {
+          console.error('Logout failed:', data.response_message);
+          // Handle unsuccessful logout (optional)
+        }
+      })
+      .catch(error => {
+        console.error('Error logging out:', error);
+        // Handle errors appropriately
+      });
+  };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    // Attach the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+  const toggleDropdown = () => {
+    setDropdownOpen(prev => !prev);
+  };
 
   const handleNavigation = () => {
     navigate('/dashboard'); // Navigate to the selected path
   };
   const handleProfile = () => {
     navigate('/profile'); // Navigate to the selected path
+  };
+  const handlecart = () => {
+    navigate('/cart'); // Navigate to the selected path
   };
   return (
     <div>
@@ -27,7 +83,7 @@ const landing = () => {
         <img src={logo} alt="" onClick={handleNavigation} className=" cursor-pointer" />
         </div>
         <div>
-        <h1 className="text-[25px] font-bold cursor-pointer " onClick={handleNavigation}>NewsWorth</h1>
+        <h1 className="text-[25px] font-bold cursor-pointer blue-color  " onClick={handleNavigation}>News<span className="text-[25px] font-bold cursor-pointer red-color  ">Worth</span></h1>
 
         </div>
     </div>
@@ -49,18 +105,47 @@ const landing = () => {
       <div>
         <img src={ball} className="w-[20px] h-[20px]" alt="" />
       </div>
-        <div>
-            <h1 className=" cursor-pointer"  onClick={handleProfile}>Welcome <span  onClick={handleProfile} className=" font-bold cursor-pointer">{userName}</span> </h1>
-            <p className=" cursor-pointer"   onClick={handleProfile}>User ID: {userId}</p>
+      <div>
+            <img src={photo} alt="" className=" w-[45px] h-[45px] cursor-pointer" onClick={toggleDropdown} />
         </div>
         <div>
-            <img src={photo} alt="" className=" w-[45px] h-[45px] cursor-pointer" onClick={handleProfile} />
+            <h1 className=" cursor-pointer red-color" >Welcome <span  className=" font-bold cursor-pointer blue-color">{userName}</span> </h1>
+            <p className=" cursor-pointer"   >User ID: {userId}</p>
         </div>
+       
         <div>
-            <img src={card} alt="" className=" w-[25px] h-[25px] cursor-pointer" />
+            <img src={card} onClick={handlecart} alt="" className=" w-[25px] h-[25px] cursor-pointer" />
         </div>
     </div>
 </div>
+{isDropdownOpen && (
+        <div     ref={dropdownRef} className=" w-[25%] inline-block text-left bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none absolute z-10 right-[180px] top-[70px]">
+          <div>
+            <button className="flex items-center w-full px-4 py-2 text-sm font-medium text-gray-700">
+              <img
+                src="https://via.placeholder.com/40"
+                alt="Profile"
+                className="w-10 h-10 rounded-full mr-2"
+              />
+              <div>
+                <div className="text-sm font-bold">Chandu Vardhan</div>
+                <div className="text-xs text-gray-500">Content Creator</div>
+              </div>
+            </button>
+          </div>
+
+          <div className="flex justify-center px-4 py-1 border-[1px] border-blue-500 rounded-full m-2">
+            <button className="flex justify-center" onClick={handleProfile}>View Profile</button>
+          </div>
+          <div className="border-t border-gray-200"></div>
+          <div className="py-1">
+            <button onClick={handleBackToLogin} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              Sign Out
+            </button>
+          </div>
+        </div>
+      )}
+
    </div>
     </div>
   );
