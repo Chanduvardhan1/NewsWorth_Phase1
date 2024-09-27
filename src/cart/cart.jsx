@@ -74,8 +74,8 @@ import Image4 from '../../src/assets/Images/dashboard/news1.webp';
     const [imageData, setImageData] = useState([]);
 const [shoppingItems,setShoppingItems] =useState([]);
 
-    const handleVideoClick = () => {
-      navigate(`/watch`);
+    const handledashboard = () => {
+      navigate(`/dashboard`);
     };
     const handleImagesClick = () => {
       navigate(`/Watchimages`);
@@ -107,6 +107,36 @@ const [shoppingItems,setShoppingItems] =useState([]);
     
         fetchCartData();
       }, [authToken, URL]);
+
+      const handleRemoveItem = async (contentId) => {
+        try {
+          const response = await fetch(`${URL}/delete_item_in_cart`, { // Replace with your actual endpoint
+            method: 'POST',
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${authToken}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              cart_id: contentId,
+              user_id: 59, // or get this from state if it varies
+            }),
+          });
+    
+          const data = await response.json();
+          if (data.response === "success") {
+            // Update shoppingItems by filtering out the removed item
+            setShoppingItems((prevItems) =>
+              prevItems.filter(item => item.content_id !== contentId)
+            );
+            console.log('Item removed successfully:', data);
+          } else {
+            console.error('Error removing item:', data);
+          }
+        } catch (error) {
+          console.error('Error removing item:', error);
+        }
+      };
   return (
     <div>
    <div className=" relative">
@@ -122,6 +152,7 @@ const [shoppingItems,setShoppingItems] =useState([]);
 <div className="bg-white shadow-md rounded-lg p-6 mt-8 w-[70%]"> 
       <div className="border-b mb-4">
         <h2 className="text-2xl font-semibold blue-color">Shopping Bag</h2>
+        <p className=" underline text-blue-500 cursor-pointer" onClick={handledashboard}>Add to more Carts</p>
         <div className="flex justify-between mt-2 px-2">
           <h2 className="text-[14px] font-semibold text-gray-500">Item</h2>
           <h2 className="text-[14px] font-semibold text-gray-500">Price</h2>
@@ -147,11 +178,11 @@ const [shoppingItems,setShoppingItems] =useState([]);
               </div>
               <div className="ml-4">
                 <h3 className="text-lg font-semibold text-gray-700 line-clamp-2 w-[80%]">
-                  {item.content_id} {/* Adjust as per your actual description field */}
+                  {item.content_description} 
                 </h3>
-                <p className="text-[12px] line-clamp-1 text-[#ce003d]">{item.added_date}</p> {/* Adjust as per your time field */}
-                {/* <p className="text-[12px] line-clamp-1">{item.mobile_os}</p> Adjust as per your location field */}
-                <p className="text-[12px] font-semibold text-blue-500">{item.user_id}</p> {/* Adjust as per your author field */}
+                <p className="text-[12px] line-clamp-1 text-[#ce003d]">{item.added_date}</p> 
+                <p className="text-[12px] line-clamp-1">{item.gps_location}</p>
+                <p className="text-[12px] font-semibold text-blue-500">{item.uploaded_by}</p> 
               </div>
             </div>
 
@@ -161,7 +192,7 @@ const [shoppingItems,setShoppingItems] =useState([]);
           </div>
           <div className="flex justify-end items-center mt-2 border-b">
             <div className="flex space-x-4 mb-2">
-              <button className="text-gray-500 text-sm hover:underline">Remove</button>
+              <button className="text-gray-500 text-sm hover:underline"  onClick={() => handleRemoveItem(item.content_id)} >Remove</button>
               <button className="text-gray-500 text-sm hover:underline">Download</button>
             </div>
           </div>

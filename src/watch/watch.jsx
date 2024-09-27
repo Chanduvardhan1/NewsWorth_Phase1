@@ -439,8 +439,8 @@ const watch = () => {
     <div className="flex flex-row justify-between items-start px-4 py-2 gap-4">
   {/* Text Section */}
   <div className="w-[20%]">
-    <p className="text-blue-500 font-bold line-clamp-2 h-12">
-      Best News and Best Source, And the Best ...
+    <p className="text-blue-500 font-bold mb-[10px]">
+      Best News and Best Source, And the Best
     </p>
     <p className="text-gray-700">
       Best News and Best Source Best News and Best Source Best News and Best Source Best News and Best Source Best News and Best Source Best News and Best Source

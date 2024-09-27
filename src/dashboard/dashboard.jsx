@@ -38,7 +38,11 @@ import Image1 from '../../src/assets/Images/dashboard/viratkhoil.webp';
 import Image2 from '../../src/assets/Images/dashboard/Vig.webp';
 import Image3 from '../../src/assets/Images/dashboard/social-media.jpg';
 import Image4 from '../../src/assets/Images/dashboard/news1.webp';
-import lessthan from '../../src/assets/Images/dashboard/less-than-symbol.png'
+import lessthan from '../../src/assets/Images/dashboard/less-than-symbol.png';
+import play from '../../src/assets/Images/dashboard/play-button (1).png';
+import expanding from '../../src/assets/Images/dashboard/maximize.png'
+
+
 // const testimonialData = [
 //     {
 //       id: 1,
@@ -386,6 +390,8 @@ const cardData = [
     const [isOpen, setIsOpen] = useState(false);
     const [videoData, setVideoData] = useState([]);
     const [imageData, setImageData] = useState([]);
+    const [cartCount, setCartCount] = useState(0); // State for cart count
+
     const [cartContent, setCartContent] = useState(null); // To store the content when added to the cart
     const [showCartNotification, setShowCartNotification] = useState(false); // For showing the cart notification
 const [finalprice,setfinalprice] = useState(null);
@@ -523,9 +529,10 @@ const [finalprice,setfinalprice] = useState(null);
       if (response.ok && data.response === 'success') {
         // Set the content and show the notification
         setCartContent(contentLink);
-        setShowCartNotification(true);
+        navigate('/cart'); 
+        // setShowCartNotification(true);
         setfinalprice(finalprice)
-        console.log(cartContent);
+        
         // Optionally, navigate to the cart
         // setTimeout(() => navigate('/cart'), 3000); // navigate after 3 seconds
       } else {
@@ -714,13 +721,17 @@ const [finalprice,setfinalprice] = useState(null);
                 ref={videoRef}
                 onMouseEnter={() => handleMouseEnter(videoRef)}
                 onMouseLeave={() => handleMouseLeave(videoRef)}
-                className="w-full h-60 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
+                className="w-full h-60 object-cover group-hover:opacity-50 opacity-90 transition-opacity duration-300"
+
                 muted
                 loop
-                onClick={handleVideoClick}
+                // onClick={handleVideoClick}
                 src={videoItem.content_link}
               ></video>
-
+  <div onClick={handleVideoClick} className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+   <img src={play} onClick={handleVideoClick} alt=""  className="w-[20px] h-[20px] text-white group-hover:text-black transition-colors duration-300"
+ />
+  </div>
               {/* <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
                 03:24 
               </div> */}
@@ -781,9 +792,13 @@ const [finalprice,setfinalprice] = useState(null);
          <img
            src={imageItem.content_link}
            alt={imageItem.title}
-           className="w-full h-60  group-hover:opacity-100 opacity-90 transition-opacity duration-300"
-         />
+           className="w-full h-60 object-cover group-hover:opacity-50 opacity-90 transition-opacity duration-300"
 
+         />
+  <div className="absolute top-2 right-2 ">
+   <img src={expanding} className="w-[20px] h-[20px] text-white group-hover:text-black transition-all duration-300 transform group-hover:scale-125"
+ alt="" />
+  </div>
          {/* Image Duration Overlay or Other Overlay Info */}
          <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
            {imageItem.overlayText || 'Overlay Text'}

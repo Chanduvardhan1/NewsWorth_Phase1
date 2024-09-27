@@ -11,6 +11,7 @@ import { useLocation } from 'react-router-dom';
 import photo from '../../src/assets/Images/landing/pic.jpg'
 import camer from '../../src/assets/Images/home/add-photo.png'
 import logout1 from '../../src/assets/Images/dashboard/power-off.png'
+import x from '../../src/assets/Images/dashboard/cross-button.png'
 const signup = () => {
   const [data1, setdata1] = useState('');
   const [showRegistr, setShowRegistr] = useState(true);
@@ -55,11 +56,107 @@ const [useraddressline1, setUseraddressline1] = useState('');
 const [useraddressline2, setUseraddressline2] = useState('');
 const [isEditable, setIsEditable] = useState(false);
 const userId = location.state?.user_id || localStorage.getItem("userId");
+const [selectedFile, setSelectedFile] = useState(null);
+
+const [photo, setPhoto] = useState(''); // State to store the image URL
+const [loading, setLoading] = useState(true); // State to manage loading status
+const [error, setError] = useState(null); // State to handle error
+const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+
+// Fetch profile image from the server
+const fetchProfileImage = async () => {
+  try {
+    const response = await fetch(`${URL}/view-image?user_id=${userId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZHUgdmFyZGhhbiBrIiwiZXhwIjoyNTM0MDIzMDA3OTl9.CRxkCosImYs7S4rSYKl8ISvNqTadNTVx7aeKcs_aV0E',
+        'accept': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      if (data.response === 'success') {
+        setPhoto(data.url); // Set the image URL from the response
+      } else {
+        setError('Failed to load image');
+      }
+    } else {
+      setError('Failed to fetch image');
+    }
+  } catch (error) {
+    setError('Error fetching image: ' + error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+// Upload image to the server
+const uploadImage = async (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    const response = await fetch(`${URL}/upload-image?user_id=${userId}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZHUgdmFyZGhhbiBrIiwiZXhwIjoyNTM0MDIzMDA3OTl9.CRxkCosImYs7S4rSYKl8ISvNqTadNTVx7aeKcs_aV0E',
+      },
+      body: formData,
+    });
+
+    if (response.ok) {
+      // After successfully uploading, fetch the updated image
+      fetchProfileImage();
+    } else {
+      setError('Failed to upload image');
+    }
+  } catch (error) {
+    setError('Error uploading image: ' + error.message);
+  }
+};
+
+const handleIconClick = () => {
+  document.getElementById('fileInput').click();
+};
+
+// Handle file selection
+const handleFileChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    uploadImage(file);
+  }
+};
+
+useEffect(() => {
+  fetchProfileImage();
+}, []);
 
 useEffect(() => {
   fetchUserProfile();
 }, []);
 
+const deleteImage = async () => {
+  try {
+    const response = await fetch(`${URL}/remove-image?user_id=${userid}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZGhhbiBrIiwiZXhwIjoyNTM0MDIzMDA3OTl9.CRxkCosImYs7S4rSYKl8ISvNqTadNTVx7aeKcs_aV0E',
+        'accept': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      // Clear the photo state after successful deletion
+      setPhoto('');
+      setError(null); // Reset any errors
+    } else {
+      setError('Failed to delete image');
+    }
+  } catch (error) {
+    setError('Error deleting image: ' + error.message);
+  }
+};
 const fetchUserProfile = async () => {
   try {
     const response = await fetch(`${URL}/get_prfl_dtls?user_id=${userId}`,{
@@ -257,7 +354,14 @@ useEffect(() => {
     fetchLocationDetails();
   }
 }, [pincode]);
+const openModal = () => {
+  setIsModalOpen(true);
+};
 
+// Close the modal
+const closeModal = () => {
+  setIsModalOpen(false);
+};
   return (
     <>
    <Landing/>
@@ -275,15 +379,77 @@ useEffect(() => {
 
 <div className="flex flex-col items-center gap-3 w-[20%]">
 <div className="relative w-[100px] h-[100px]">
-  <img src={photo} alt="" className="w-full h-full rounded-[50px]" />
-  
-  {/* Camera icon */}
-  <img
-    src={camer} 
-    alt="camera icon"
-    className="absolute bottom-0 right-0 w-[25px] h-[25px] rounded-full"
-  />
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
+        <img
+          src={photo}
+          alt="Profile"
+          onClick={openModal}
+          className="w-full h-full rounded-[50px]"
+        />
+      )}
+
+      {/* Hidden file input for selecting image */}
+      <input
+        type="file"
+        id="fileInput"
+        accept="image/*"
+        style={{ display: 'none' }}
+        onChange={handleFileChange}
+      />
+      
+      {/* Camera icon to trigger file input */}
+      {/* <img
+         src={camer} 
+        alt="camera icon"
+         
+        className="absolute bottom-0 right-0 w-[25px] h-[25px] rounded-full cursor-pointer"
+        onClick={handleIconClick}
+      /> */}
+      {/* <button
+        onClick={deleteImage}
+        className="absolute bottom-0 left-0 w-[25px] h-[25px] rounded-full bg-red-500 text-white"
+        title="Delete Image"
+      >
+        X
+      </button> */}
+       {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={closeModal}
+        >
+         <div class="flex items-center justify-center min-h-screen ">
+  <div class="bg-gray-800 text-white rounded-lg p-6 shadow-lg max-w-xs">
+    <div class="relative">
+      <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-gray-200">
+        <img src={photo} alt="Profile" class="w-full h-full object-cover"/>
+      </div>
+      
+      <div class="absolute top-[-15px] right-[-15px] flex space-x-2">
+        <button class="bg-gray-600 p-2 rounded-full text-white hover:bg-gray-500">
+        
+          <img src={x} alt="" class="h-5 w-5" />
+        </button>
+      </div>
+    </div>
+    
+    <h2 class="text-center text-xl font-semibold mt-4">Profile photo</h2>
+    
+    <div class="mt-4 flex justify-between">
+      <button class="bg-gray-700 px-4 py-2 rounded text-sm text-white hover:bg-gray-600"  onClick={handleIconClick}>Add photo</button>
+      {/* <button class="bg-gray-700 px-4 py-2 rounded text-sm text-white hover:bg-gray-600">Add photo</button> */}
+      {/* <button class="bg-gray-700 px-4 py-2 rounded text-sm text-white hover:bg-gray-600">Frames</button> */}
+      <button class="bg-red-600 px-4 py-2 rounded text-sm text-white hover:bg-red-500">Delete</button>
+    </div>
+  </div>
 </div>
+
+        </div>
+      )}
+    </div>
   <div>
     <h1 className=" font-bold text-[18px]">{data1.first_name} {data1.middle_name} {data1.last_name} </h1>
   </div>
