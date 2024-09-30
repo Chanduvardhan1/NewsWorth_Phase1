@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
+
 import logo from "../../src/assets/Images/home/background.png"
 import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/image.png'
@@ -11,6 +12,14 @@ const Home = () => {
   const handleContactUs= () => {
     navigate('/contactus')
   };
+  const [visitCount, setVisitCount] = useState(0);
+
+  useEffect(() => {
+
+    setVisitCount(prevCount => prevCount + 1);
+
+ 
+  }, []);
   return (
     <>
    <Navbar/>
@@ -27,11 +36,11 @@ const Home = () => {
 
 
 
-            {/* <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5">
 
     < Home1/>
-    </div> */}
-     <div className="flex flex-col gap-5">
+    </div>
+     {/* <div className="flex flex-col gap-5">
   <p className="animate-slide-left opacity-0"> 
     Unfiltered stories, unmatched quality.<span className=" text-orange-500 font-bold"></span>
   </p>
@@ -50,7 +59,7 @@ const Home = () => {
   <p className="animate-slide-right opacity-0"> 
     Certify, protect, and monetize your content on NewsWorth.<span className=" text-blue-500 font-bold"></span> 
   </p>
-</div>
+</div> */}
 
         
       
@@ -63,10 +72,10 @@ const Home = () => {
    <div className="fixed bottom-0 right-0 ">
 
 
-   <div className="flex justify-end pr-10 gap-1">
-    <p onClick={handleContactUs} className=" cursor-pointer font-bold blue-color hover:red-color">Contact Us</p>|
-    <p>0 Visited</p>|
-    <p>©2024, Circle Of Minds Innovation Pvt Ltd.</p>
+   <div className="flex justify-end pr-[65px] gap-1 ">
+    <p onClick={handleContactUs} className=" cursor-pointer text-[14px] blue-color hover:red-color">Contact Us</p>|
+    <p className='text-[14px]'>{visitCount} Visited</p>|
+    <p className='text-[14px]'>©2024, Circle Of Minds Innovation Pvt Ltd.</p>
 
    </div>
    </div>

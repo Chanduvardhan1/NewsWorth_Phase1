@@ -8,7 +8,7 @@ import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/mater
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from 'react-router-dom';
-import photo from '../../src/assets/Images/landing/pic.jpg'
+import defaultPhoto from '../../src/assets/Images/landing/pic.jpg'
 import camer from '../../src/assets/Images/home/add-photo.png'
 import logout1 from '../../src/assets/Images/dashboard/power-off.png'
 import x from '../../src/assets/Images/dashboard/cross-button.png'
@@ -79,13 +79,15 @@ const fetchProfileImage = async () => {
       if (data.response === 'success') {
         setPhoto(data.url); // Set the image URL from the response
       } else {
-        setError('Failed to load image');
+        setPhoto(defaultPhoto);
       }
     } else {
       setError('Failed to fetch image');
+      setPhoto(defaultPhoto);
     }
   } catch (error) {
     setError('Error fetching image: ' + error.message);
+    setPhoto(defaultPhoto);
   } finally {
     setLoading(false);
   }
@@ -385,7 +387,7 @@ const closeModal = () => {
         <p>{error}</p>
       ) : (
         <img
-          src={photo}
+        src={photo} 
           alt="Profile"
           onClick={openModal}
           className="w-full h-full rounded-[50px]"

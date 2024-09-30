@@ -395,6 +395,13 @@ const cardData = [
     const [cartContent, setCartContent] = useState(null); // To store the content when added to the cart
     const [showCartNotification, setShowCartNotification] = useState(false); // For showing the cart notification
 const [finalprice,setfinalprice] = useState(null);
+const [openOptionsId, setOpenOptionsId] = useState(null);
+
+
+const toggleOptions = (content_id) => {
+  setOpenOptionsId(openOptionsId === content_id ? null : content_id);
+};
+
     useEffect(() => {
       const audio = audioRef.current;
   
@@ -738,23 +745,51 @@ const [finalprice,setfinalprice] = useState(null);
             </div>
 
             {/* Video Info */}
-            <div className="p-4 flex justify-between items-center">
-              {/* Left Icon */}
-              <img src={video} alt="" className="w-[25px] h-[25px]" />
+            <div className="p-4 flex justify-between items-center relative">
+      {/* Left Icon */}
+      <img src={video} alt="" className="w-[25px] h-[25px]" />
 
-              {/* Price Info */}
-              <div className="text-lg">
-                <p className="font-bold text-blue-600">
-                  Price {videoItem.price}{' '}
-                  <span className="text-sm text-gray-500">
-                    <span className="line-through text-sm text-gray-500">{videoItem.final_price}</span> at Discount {videoItem.discount}
-                  </span>
-                </p>
-              </div>
+      {/* Price Info */}
+      <div className="text-lg">
+        <p className="font-bold text-blue-600">
+          Price {videoItem.price}{' '}
+          <span className="text-sm text-gray-500">
+            <span className="line-through text-sm text-gray-500">{videoItem.final_price}</span> at Discount {videoItem.discount}
+          </span>
+        </p>
+      </div>
 
-              {/* Right Icon */}
-              <img   onClick={() => handleAddToCart(videoItem.content_id, videoItem.content_link,videoItem.final_price)} src={card} alt="" className="w-[25px] h-[25px] cursor-pointer" />
-            </div>
+      {/* Right Icons */}
+      <div className="flex items-center space-x-4">
+        <img
+          onClick={() => handleAddToCart(videoItem.content_id, videoItem.content_link, videoItem.final_price)}
+          src={card}
+          alt="Add to Cart"
+          className="w-[25px] h-[25px] cursor-pointer"
+        />
+        
+        {/* Three Dots Icon */}
+        <img
+          src={moreImg}
+          alt="More options"
+          className="w-[25px] h-[25px] cursor-pointer"
+          onClick={() => toggleOptions(videoItem.content_id)} // Pass content_id to toggle options
+
+        />
+
+        {/* Dropdown Options */}
+        {openOptionsId === videoItem.content_id && ( // Only show options if this card is selected
+          <div className="absolute top-12 right-0 bg-white shadow-lg rounded-md p-2 w-32 z-10">
+            <button
+              onClick={() => handleDownload(videoItem.content_link)}
+              className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 p-2"
+            >
+              Download
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
 
             {/* Description */}
             <div className="flex justify-between px-4">

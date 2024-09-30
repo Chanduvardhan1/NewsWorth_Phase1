@@ -34,12 +34,12 @@ const navbar = () => {
 </div>
 <div className="flex text-[16px] gap-[45px]  font-bold justify-center items-center cursor-pointer ">
 
-<div className="p-2">
+<div className="p-2 px-4 bg-gray-100 rounded-full shadow-sm">
 <NavLink
 to="/"
           onClick={() => handleNavigation('/')}
-          className={`underline transition-transform duration-300 ease-in-out transform hover:scale-105 text-blue-500 hover:text-red-500 ${
-            activePage === '/' ? 'font-bold' : 'font-normal'
+          className={` transition-transform duration-300 ease-in-out transform hover:scale-105 text-blue-500 hover:text-red-500 ${
+            activePage === '/' ? 'font-extrabold' : 'font-normal'
           }`}
         >
           Home
@@ -49,24 +49,24 @@ to="/"
     <h1 onClick={handleContactUs} className="underline hover:text-blue-400">Contact Us</h1>
 </div> */}
 
-<div className="p-2">
+<div className="p-2 px-4 bg-blue-100 rounded-full shadow-sm">
         <NavLink
           to="/signup"
           onClick={() => handleNavigation('signup')}
-          className={`underline transition-transform duration-300 ease-in-out transform hover:scale-105 text-red-500 hover:text-blue-500 ${
-            activePage === 'signup' ? 'font-bold' : 'font-normal'
+          className={` transition-transform duration-300 ease-in-out transform hover:scale-105 text-red-500 hover:text-blue-500 ${
+            activePage === 'signup' ? 'font-extrabold' : 'font-normal'
           }`}
         >
           Sign Up
         </NavLink>
       </div>
 
-      <div className="p-2">
+      <div className="p-2 px-4 bg-red-100 rounded-full shadow-sm">
         <NavLink
           to="/login"
           onClick={() => handleNavigation('login')}
-          className={`underline transition-transform duration-300 ease-in-out transform hover:scale-105 text-sky-500 hover:text-purple-600 ${
-            activePage === 'login' ? 'font-bold' : 'font-normal'
+          className={` transition-transform duration-300 ease-in-out transform hover:scale-105 text-sky-500 hover:text-purple-600 ${
+            activePage === 'login' ? 'font-extrabold' : 'font-normal'
           }`}
         >
           Login

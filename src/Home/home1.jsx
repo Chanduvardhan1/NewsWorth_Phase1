@@ -1,37 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
+import "aos/dist/aos.css";
+import AOS from "aos";
 import Slider from "react-slick";
 
 const testimonialData = [
   {
     id: 1,
     text: `Unfiltered stories, unmatched quality.`,
+    bgColor: "bg-blue-200",
   },
   {
     id: 2,
-    text:
-      "Certify, protect, and monetize your content on NewsWorth.",
+    text: "Certify, protect, and monetize your content on NewsWorth.",
+    bgColor: "bg-green-200",
   },
   {
     id: 3,
-    text:
-      "Capture content using the NewsWorth Eye mobile app, with cloud storage.",
+    text: "Capture content using the NewsWorth Eye mobile app, with cloud storage.",
+    bgColor: "bg-yellow-200",
   },
   {
     id: 4,
-
-    text:
-      "Access the NewsWorth Wall web portal, featuring a content marketplace.",
+    text: "Access the NewsWorth Wall web portal, featuring a content marketplace.",
+    bgColor: "bg-purple-200",
   },
   {
     id: 5,
-    text:
-      "Set your own pricing for your content.",
+    text: "Set your own pricing for your content.",
+    bgColor: "bg-pink-200",
   },
   {
     id: 6,
-
-    text:
-      "Certify, protect, and monetize your content on NewsWorth.",
+    text: "Certify, protect, and monetize your content on NewsWorth.",
+    bgColor: "bg-gray-200",
   },
 ];
 
@@ -58,6 +59,11 @@ function SamplePrevArrow(props) {
 }
 
 const home1 = () => {
+
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+
   var settings = {
     dots: true,
     arrows: true,
@@ -76,59 +82,29 @@ const home1 = () => {
   };
   return (
     <>
-      <div data-aos-duration="300" className="py-10 order-2 sm:order-1 space-y-8 2xl:relative 2xl:right-[55px]">
-        <div className=" mx-auto ">
-          {/* heading section */}
-          {/* testimonial section */}
-          <div className="grid grid-cols-1 max-w-[600px] mx-auto gap-6">
-            <Slider {...settings}>
-              {testimonialData.map(
-                ({
-                  id,
-                  title,
-                  title1,
-                  title2,
-                  title3,
-                  text,
-                  text3,
-                  text4,
-                  image,
-                  image1,
-                }) => {
-                  return (
-                    <div key={id} className="order-2 sm:order-1 space-y-8 ">
-                      <p className="text-4xl font-medium text-secondary">
-                        {title} <br /> {title1}
-                      </p>
-                      <h1 className="text-3xl font-extrabold text-secondary">
-                        {title2}
-                      </h1>
-                      <p className="flex justify-center items-center xl:w-[550px] 2xl:w-[559px] text-garySecondary font-bold text-[20px]">{text}</p>
-                      <div>
-                        <img src={image} alt="" className="w-[350px]" />
-                      </div>
-                      <div className="2xl:w-[559px] xl:w-[409px]">
-                        <p className="text-[18px]   text-garySecondary">{text3}</p>
-                      </div>
-                      <div className="flex flex-col relative bottom-[50px]">
-                        <div>
-                          <img src={image1} alt="" className="w-[350px]" />
-                        </div>
-                        <div className="flex flex-col justify-center gap-2">
-                          {/* <h1 className="text-3xl font-extrabold text-secondary">
-                            {title3}
-                          </h1> */}
-                          <p className="text-[18px] 2xl:w-[559px] xl:w-[409px] text-garySecondary relative">{text4}</p>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }
-              )}
-            </Slider>
-          </div>
+      <div className="py-10 order-2 sm:order-1 space-y-8 2xl:relative 2xl:right-[55px]">
+      <div className="mx-auto">
+        <div className="grid grid-cols-1 max-w-[600px] mx-auto gap-6">
+          <Slider {...settings}>
+            {testimonialData.map(({ id, text, bgColor }) => {
+              return (
+                <div
+                  key={id}
+                  className={`order-2 sm:order-1 space-y-8 ${bgColor}`}
+                  data-aos="fade-up"
+                >
+                  <div className={`p-5 py-10 h-[150px] flex justify-center${bgColor}`}>
+                    <p className="xl:w-[550px] 2xl:w-[559px] text-gray-800 font-bold text-[20px]">
+                      {text}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </Slider>
         </div>
       </div>
+    </div>
     </>
   );
 };

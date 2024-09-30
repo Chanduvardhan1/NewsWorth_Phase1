@@ -1,7 +1,7 @@
 import React, { useState, useEffect ,useRef} from "react";
 import logo from '../../src/assets/Images/home/NewsWorth.png'
 import ball from '../../src/assets/Images/landing/bell.png'
-import photo from '../../src/assets/Images/landing/pic.jpg'
+import defaultPhoto from '../../src/assets/Images/landing/pic.jpg'
 import { useNavigate, useLocation } from "react-router-dom";
 import card from '../../src/assets/Images/dashboard/add-to-cart.png'
 import { URL } from "../url";
@@ -35,13 +35,14 @@ const landing = () => {
         if (data.response === 'success') {
           setPhoto(data.url); // Set the image URL from the response
         } else {
-          setError('Failed to load image');
+          setPhoto(defaultPhoto);
         }
       } else {
-        setError('Failed to fetch image');
+        setPhoto(defaultPhoto);
       }
     } catch (error) {
       setError('Error fetching image: ' + error.message);
+      setPhoto(defaultPhoto);
     } finally {
       setLoading(false);
     }
@@ -148,7 +149,7 @@ const landing = () => {
         <p>{error}</p>
       ) : (
         <img
-          src={photo}
+        src={photo} 
           alt="Profile"
           className=" w-[45px] h-[45px] cursor-pointer rounded-full" onClick={toggleDropdown} 
         />
