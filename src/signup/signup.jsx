@@ -76,6 +76,8 @@ const [success, setSuccess] = useState('');
 const [isChecked1, setIsChecked1] = useState(false); 
 const [showPassword1, setShowPassword1] = useState(false);
 const [showreset, setResset] = useState(false);
+const [showreset1, setResset1] = useState(false);
+
 const [otpButtonEnabled, setOtpButtonEnabled] = useState(false);
 
 const [isEditable, setIsEditable] = useState(true);
@@ -393,9 +395,14 @@ const handleUserTypeChange = (event) => {
   setSelectedUserType(selectedType);  // Store the actual user type value (e.g., "Journalist")
 };
 const handleRest = () => {
-  setIsEditable((prevState) => !prevState); // Toggle the value of isEditable
+  setIsEditable((prevState) => !prevState); 
+  setResset(true);
+  setResset1(true);// Toggle the value of isEditable
 };
-
+const handleRest1 = () => {
+  setIsEditable((prevState) => !prevState); 
+  setResset1(false);// Toggle the value of isEditable
+};
 const sendOtp = async () => {
   setMessage('');
   setSuccess('');
@@ -406,6 +413,7 @@ const sendOtp = async () => {
  
   setResendAvailable1(false);
   setResendTime1(5 * 60);
+  setOtpButtonEnabled(false);
   const data = {
     first_name: firstName,
     mobile: mobile,
@@ -513,6 +521,7 @@ const sendOtp = async () => {
     }
   } catch (error) {
     console.error('Error sending OTP:', error);
+    setOtpButtonEnabled(true); 
     // Handle error (e.g., show an error message)
   }
 };
@@ -998,24 +1007,26 @@ useEffect(() => {
       <div className=" flex flex-col gap-[20px] ">
 
     <div className="flex justify-center">
-      <h1 className="blue-color font-bold text-[32px]">Registration</h1>
+      <h1 className="blue-color font-bold text-[25px]">Registration</h1>
     </div>
     {!showRegistrationSuccess ?  (
  <div className="flex justify-center">
  <button className="primary-btn" onClick={showdropdwon}>Sign Up</button>
 </div>
     ):(
-      <div className="flex flex-col gap-[10px]">
+      <div className="flex flex-col gap-[10px] text-[14px] ">
 <div className=" flex gap-[5px] justify-center">
-<FormControl variant="outlined" required className="w-full mb-4">
-  <InputLabel id="user-category-label">User Category</InputLabel>
+<FormControl variant="outlined" required className="w-full mb-4 text-[14px]">
+  <InputLabel id="user-category-label"
+      style={{ color: '#666666', fontSize: '14px' }} // Change label color and font size
+>User Category</InputLabel>
   <Select
     labelId="user-category-label"
-    className="w-full rounded-[10px] bg-[#FFFFFF] placeholder:text-[#CCCCCC]"
+    className="w-full rounded-[10px] bg-[#FFFFFF] placeholder:text-[#CCCCCC] text-[14px]"
     value={selectedCategory}
     onChange={handleCategoryChange}
     label="User Category"
-    style={{ height: "50px", borderRadius: "10px" }}
+    style={{ height: "50px", borderRadius: "10px", fontSize:"14px" }}
     name="UserCategory"
   >
     <MenuItem value="">
@@ -1030,7 +1041,8 @@ useEffect(() => {
 </FormControl>
 
 <FormControl variant="outlined" required className="w-full mb-4">
-          <InputLabel id="gender-label">User Type</InputLabel>
+          <InputLabel id="gender-label"
+          style={{ color: '#666666', fontSize: '14px' }} >User Type</InputLabel>
           <Select
          className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
@@ -1039,9 +1051,10 @@ useEffect(() => {
             onChange={handleUserTypeChange}
             label="User Type"
             style={{
-              
+              fontSize: '14px',
               height: "50px",
               borderRadius: "10px",
+              fontSize: '14px'
             }}
             name="UserType"
           >
@@ -1072,9 +1085,15 @@ useEffect(() => {
     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      required
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
       InputProps={{
         style: {
-       
+        fontSize: '14px',
           height: "50px",
           borderRadius: "10px",
         },
@@ -1087,6 +1106,13 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
        <TextField
      id="Organization Number" 
@@ -1099,9 +1125,15 @@ useEffect(() => {
          className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      required
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
       InputProps={{
         style: {
-       
+        fontSize: '14px',
           height: "50px",
           borderRadius: "10px",
         },
@@ -1114,7 +1146,14 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
-      }} />
+      }}
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
+      }}  />
 </div>
 <div className=" flex gap-[5px] justify-center">
 <TextField
@@ -1129,9 +1168,15 @@ useEffect(() => {
     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      required
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
       InputProps={{
         style: {
-       
+          fontSize: '14px', 
           height: "50px",
           borderRadius: "10px",
         },
@@ -1144,6 +1189,13 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
        {/* <TextField
      id="Address" 
@@ -1184,9 +1236,15 @@ useEffect(() => {
 
      variant="outlined"
      required
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
       InputProps={{
         style: {
-       
+        fontSize: '14px',
           height: "50px",
           borderRadius: "10px",
         },
@@ -1199,10 +1257,17 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
       
       <FormControl variant="outlined" required className="w-full mb-4">
-          <InputLabel id="gender-label">City</InputLabel>
+          <InputLabel id="gender-label"  style={{ color: '#666666', fontSize: '14px' }}>City</InputLabel>
           <Select
          className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
          value={selectedCity}
@@ -1212,7 +1277,7 @@ useEffect(() => {
             labelId="City"
             label="City"
             style={{
-              
+              fontSize: '14px',
               height: "50px",
               borderRadius: "10px",
             }}
@@ -1246,9 +1311,15 @@ useEffect(() => {
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      required
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
       InputProps={{
         style: {
-       
+        fontSize: '14px',
           height: "50px",
           borderRadius: "10px",
         },
@@ -1261,6 +1332,13 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
        <TextField
      id="State" 
@@ -1275,9 +1353,15 @@ useEffect(() => {
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      required
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
       InputProps={{
         style: {
-       
+        fontSize: '14px',
           height: "50px",
           borderRadius: "10px",
         },
@@ -1290,6 +1374,13 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
 </div>
 <div className=" flex gap-[5px] justify-center">
@@ -1304,9 +1395,15 @@ useEffect(() => {
 
      variant="outlined"
      required
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
       InputProps={{
         style: {
-       
+        fontSize: '14px',
           height: "50px",
           borderRadius: "10px",
         },
@@ -1319,6 +1416,13 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
      
 </div>
@@ -1332,17 +1436,35 @@ useEffect(() => {
                     required
                     value={firstName}
                     onChange={handleFirstNameChange}
-                    InputProps={{
-                      style: {             
-                        
-                        height: "50px",
-                        border: "none",
-                        borderRadius: "10px",
-                        
+                    InputLabelProps={{
+                      style: {
+                        color: '#666666', // Reduced label color
+                        fontSize: '14px', // Reduced label font size
                       },
-                      autoComplete: "off",
                     }}
-
+                      InputProps={{
+                        style: {
+                        fontSize: '14px',
+                          height: "50px",
+                          borderRadius: "10px",
+                        },
+                        endAdornment: (
+                          <div
+                            
+                          >
+                        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+                
+                          </div>
+                        ),
+                        autoComplete: "off",
+                      }}
+                      sx={{
+                        // Disable autofill background
+                        '& input:-webkit-autofill': {
+                          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+                          WebkitTextFillColor: '#000', // Text color when autofilled
+                        },
+                      }} 
                   />
 
                   <TextField
@@ -1355,15 +1477,35 @@ useEffect(() => {
                     onChange={(e) => setMiddleName(e.target.value)}
                    
                 
-                    InputProps={{
+                    InputLabelProps={{
                       style: {
-                       
-                        height: "50px",
-                        border: "none",
-                        borderRadius: "10px",
+                        color: '#666666', // Reduced label color
+                        fontSize: '14px', // Reduced label font size
                       },
-                      autoComplete: "off",
                     }}
+                      InputProps={{
+                        style: {
+                        fontSize: '14px',
+                          height: "50px",
+                          borderRadius: "10px",
+                        },
+                        endAdornment: (
+                          <div
+                            
+                          >
+                        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+                
+                          </div>
+                        ),
+                        autoComplete: "off",
+                      }}
+                      sx={{
+                        // Disable autofill background
+                        '& input:-webkit-autofill': {
+                          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+                          WebkitTextFillColor: '#000', // Text color when autofilled
+                        },
+                      }} 
                   />
                   <TextField
                     id="lastName"
@@ -1374,15 +1516,35 @@ useEffect(() => {
                     disabled={!isEditable}
                     value={lastName}
                     onChange={handleLastNameChange}
-                    InputProps={{
+                    InputLabelProps={{
                       style: {
-                        
-                        height: "50px",
-                        border: "none",
-                        borderRadius: "10px",
+                        color: '#666666', // Reduced label color
+                        fontSize: '14px', // Reduced label font size
                       },
-                      autoComplete: "off",
                     }}
+                      InputProps={{
+                        style: {
+                        fontSize: '14px',
+                          height: "50px",
+                          borderRadius: "10px",
+                        },
+                        endAdornment: (
+                          <div
+                            
+                          >
+                        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+                
+                          </div>
+                        ),
+                        autoComplete: "off",
+                      }}
+                      sx={{
+                        // Disable autofill background
+                        '& input:-webkit-autofill': {
+                          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+                          WebkitTextFillColor: '#000', // Text color when autofilled
+                        },
+                      }} 
                     name="last_name"
                   />
                 </div>
@@ -1448,11 +1610,17 @@ useEffect(() => {
      disabled={!isEditable}
      variant="outlined"
      value={mobile}
-     onChange={handleMobileChange}  
+     onChange={handleMobileChange} 
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }} 
       InputProps={{
         style: {
        
-          
+          fontSize: '14px',
           height: "50px",
           borderRadius: "10px",
         },
@@ -1465,7 +1633,14 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
-      }} />
+      }}
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
+      }}  />
       <p>or</p>
        <TextField
      id="Email" 
@@ -1475,10 +1650,16 @@ useEffect(() => {
      disabled={!isEditable}
      value={email}
      onChange={handleEmailChange} 
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }} 
       InputProps={{
         style: {
        
-          
+          fontSize: '14px',
           height: "50px",
           borderRadius: "10px",
         },
@@ -1491,6 +1672,13 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
 
 </div>
@@ -1502,11 +1690,15 @@ useEffect(() => {
    {message && <p className="text-red-500  w-[320px]">{message}</p>}
   </div>
   <div className="flex gap-[10px]">
-    {showreset &&(
-      <button className="primary-btn" onClick={handleRest}>Reset</button>
+  {showreset && (
+    showreset1 ? (
+    <button className="primary-btn" onClick={handleRest1}>Save</button>
 
+  ):(
+    <button className="primary-btn" onClick={handleRest}>Edit Details</button>
+  
+  )
     )}
-   
    {!hideOtpButtons && (
   !showOtpField1 ? (
     <div className="flex justify-end">
@@ -1542,10 +1734,16 @@ useEffect(() => {
 
        value={mobileOTP}
        onChange={handlemobileOTPChange}
+       InputLabelProps={{
+        style: {
+          color: '#666666', // Reduced label color
+          fontSize: '14px', // Reduced label font size
+        },
+      }} 
         InputProps={{
           style: {
          
-            
+            fontSize: '14px',
             height: "50px",
             borderRadius: "10px",
           },
@@ -1558,6 +1756,13 @@ useEffect(() => {
             </div>
           ),
           autoComplete: "off",
+        }} 
+        sx={{
+          // Disable autofill background
+          '& input:-webkit-autofill': {
+            WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+            WebkitTextFillColor: '#000', // Text color when autofilled
+          },
         }} />
       )}
             {showEmailOTP && (
@@ -1571,10 +1776,16 @@ useEffect(() => {
        required
        value={emailOTP}
      onChange={handleemailOTPChange}
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }} 
         InputProps={{
           style: {
          
-           
+            fontSize: '14px',
             height: "50px",
             borderRadius: "10px",
           },
@@ -1587,7 +1798,14 @@ useEffect(() => {
             </div>
           ),
           autoComplete: "off",
-        }} />
+        }}
+        sx={{
+          // Disable autofill background
+          '& input:-webkit-autofill': {
+            WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+            WebkitTextFillColor: '#000', // Text color when autofilled
+          },
+        }}  />
             )}
   </div>
 {verify &&(
@@ -1607,10 +1825,16 @@ useEffect(() => {
 
      value={password}
      onChange={(e) => { setPassword(e.target.value); setErrorMessage(""); }}
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }} 
       InputProps={{
         style: {
        
-         
+          fontSize: '14px',
           height: "50px",
           borderRadius: "10px",
         },
@@ -1624,6 +1848,13 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
        <TextField
      id="Confirm Password" 
@@ -1635,9 +1866,15 @@ useEffect(() => {
 
      value={confirmPassword}
      onChange={(e) => { setConfirmPassword(e.target.value); setErrorMessage(""); }} 
-      InputProps={{
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}  
+     InputProps={{
         style: {
-          
+          fontSize: '14px',
           height: "50px",
           borderRadius: "10px",
         },
@@ -1651,6 +1888,13 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
 </div>
 )}
@@ -1699,9 +1943,16 @@ useEffect(() => {
                     required
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
+                
+                    InputLabelProps={{
+                      style: {
+                        color: '#666666', // Reduced label color
+                        fontSize: '14px', // Reduced label font size
+                      },
+                    }}  
                     InputProps={{
                       style: {             
-                        
+                        fontSize: '14px', 
                         height: "50px",
                         border: "none",
                         borderRadius: "10px",
@@ -1709,7 +1960,13 @@ useEffect(() => {
                       },
                       autoComplete: "off",
                     }}
-
+                    sx={{
+                      // Disable autofill background
+                      '& input:-webkit-autofill': {
+                        WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+                        WebkitTextFillColor: '#000', // Text color when autofilled
+                      },
+                    }} 
                   />
 
                   <TextField
@@ -1721,16 +1978,28 @@ useEffect(() => {
                     value={middleName}
                     onChange={(e) => setMiddleName(e.target.value)}
                    
-                
+                    InputLabelProps={{
+                      style: {
+                        color: '#666666', // Reduced label color
+                        fontSize: '14px', // Reduced label font size
+                      },
+                    }} 
                     InputProps={{
                       style: {
-                       
+                        fontSize: '14px',
                         height: "50px",
                         border: "none",
                         borderRadius: "10px",
                       },
                       autoComplete: "off",
                     }}
+                    sx={{
+                      // Disable autofill background
+                      '& input:-webkit-autofill': {
+                        WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+                        WebkitTextFillColor: '#000', // Text color when autofilled
+                      },
+                    }} 
                   />
                   <TextField
                     id="lastName"
@@ -1741,9 +2010,15 @@ useEffect(() => {
                     disabled={!isEditable}  
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
+                    InputLabelProps={{
+                      style: {
+                        color: '#666666', // Reduced label color
+                        fontSize: '14px', // Reduced label font size
+                      },
+                    }} 
                     InputProps={{
                       style: {
-                        
+                        fontSize: '14px', 
                         height: "50px",
                         border: "none",
                         borderRadius: "10px",
@@ -1751,6 +2026,13 @@ useEffect(() => {
                       autoComplete: "off",
                     }}
                     name="last_name"
+                    sx={{
+                      // Disable autofill background
+                      '& input:-webkit-autofill': {
+                        WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+                        WebkitTextFillColor: '#000', // Text color when autofilled
+                      },
+                    }} 
                   />
                 </div>
                 <div className=" flex gap-[5px] justify-center">
@@ -1766,10 +2048,16 @@ useEffect(() => {
      className="w-full  px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
      required
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }} 
       InputProps={{
         style: {
        
-        
+          fontSize: '14px',
           height: "50px",
           borderRadius: "10px",
         },
@@ -1782,6 +2070,13 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
        <FormControl variant="outlined" required className="w-full mb-4">
           <InputLabel id="gender-label">Gender</InputLabel>
@@ -1818,9 +2113,15 @@ useEffect(() => {
      disabled={!isEditable}
      value={country}
      onChange={(e) => setCountry(e.target.value)} 
-      InputProps={{
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
+     InputProps={{
         style: {
-       
+          fontSize: '14px',
           
           height: "50px",
           borderRadius: "10px",
@@ -1834,6 +2135,13 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
       
 </div>
@@ -1845,11 +2153,18 @@ useEffect(() => {
      disabled={!isEditable}
      variant="outlined"
      value={mobile}
-     onChange={handleMobileChange}  
+     onChange={handleMobileChange} 
+      
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
       InputProps={{
         style: {
        
-          
+          fontSize: '14px',
           height: "50px",
           borderRadius: "10px",
         },
@@ -1862,6 +2177,13 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
       <p>or</p>
        <TextField
@@ -1872,10 +2194,16 @@ useEffect(() => {
  disabled={!isEditable}
      value={email}
      onChange={handleEmailChange} 
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
       InputProps={{
         style: {
        
-          
+          fontSize: '14px',
           height: "50px",
           borderRadius: "10px",
         },
@@ -1888,6 +2216,13 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }}
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
 
 </div>
@@ -1899,10 +2234,17 @@ useEffect(() => {
    {message && <p className="text-red-500  w-[320px]">{message}</p>}
   </div>
   <div className="flex gap-[10px]">
-    {showreset &&(
-      <button className="primary-btn" onClick={handleRest}>Reset</button>
+    {showreset && (
+    showreset1 ? (
+    <button className="primary-btn" onClick={handleRest1}>Save</button>
 
+  ):(
+    <button className="primary-btn" onClick={handleRest}>Edit Details</button>
+  
+  )
     )}
+  
+     
    
     {!hideOtpButtons && (
   !showOtpField1 ? (
@@ -1942,10 +2284,16 @@ useEffect(() => {
 
        value={mobileOTP}
        onChange={handlemobileOTPChange}
+       InputLabelProps={{
+        style: {
+          color: '#666666', // Reduced label color
+          fontSize: '14px', // Reduced label font size
+        },
+      }}
         InputProps={{
           style: {
          
-            
+            fontSize: '14px',
             height: "50px",
             borderRadius: "10px",
           },
@@ -1958,6 +2306,13 @@ useEffect(() => {
             </div>
           ),
           autoComplete: "off",
+        }} 
+        sx={{
+          // Disable autofill background
+          '& input:-webkit-autofill': {
+            WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+            WebkitTextFillColor: '#000', // Text color when autofilled
+          },
         }} />
       )}
             {showEmailOTP && (
@@ -1971,10 +2326,16 @@ useEffect(() => {
        required
        value={emailOTP}
      onChange={handleemailOTPChange}
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
         InputProps={{
           style: {
          
-           
+            fontSize: '14px',
             height: "50px",
             borderRadius: "10px",
           },
@@ -1987,6 +2348,13 @@ useEffect(() => {
             </div>
           ),
           autoComplete: "off",
+        }} 
+        sx={{
+          // Disable autofill background
+          '& input:-webkit-autofill': {
+            WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+            WebkitTextFillColor: '#000', // Text color when autofilled
+          },
         }} />
             )}
   </div>
@@ -2008,10 +2376,16 @@ useEffect(() => {
 
      value={password}
      onChange={(e) => setPassword(e.target.value)}
-      InputProps={{
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
+     InputProps={{
         style: {
        
-         
+          fontSize: '14px', 
           height: "50px",
           borderRadius: "10px",
         },
@@ -2025,6 +2399,13 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
        <TextField
      id="Confirm Password" 
@@ -2036,9 +2417,16 @@ useEffect(() => {
 
      value={confirmPassword}
      onChange={(e) => setConfirmPassword(e.target.value)}
-      InputProps={{
+     
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
+     InputProps={{
         style: {
-          
+          fontSize: '14px',
           height: "50px",
           borderRadius: "10px",
         },
@@ -2052,6 +2440,13 @@ useEffect(() => {
           </div>
         ),
         autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
       }} />
 </div>
 )}

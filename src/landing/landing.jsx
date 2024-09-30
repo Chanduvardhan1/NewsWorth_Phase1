@@ -166,7 +166,7 @@ const landing = () => {
     </div>
 </div>
 {isDropdownOpen && (
-        <div     ref={dropdownRef} className=" w-[25%] inline-block text-left bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none absolute z-10 right-[180px] top-[70px]">
+        <div     ref={dropdownRef} className=" w-[18%] inline-block text-left bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none absolute z-10 right-[0px] top-[70px]">
           <div>
             <button className="flex items-center w-full px-4 py-2 text-sm font-medium text-gray-700">
               <img
@@ -185,8 +185,8 @@ const landing = () => {
             <button className="flex justify-center" onClick={handleProfile}>View Profile</button>
           </div>
           <div className="border-t border-gray-200"></div>
-          <div className="py-1">
-            <button onClick={handleBackToLogin} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <div className=" flex justify-center  ">
+            <button onClick={handleBackToLogin} className="block px-4 py-2 text-sm text-white font-semibold hover:bg-blue-300 bg-red-500 rounded-full p-2 my-2">
               Sign Out
             </button>
           </div>

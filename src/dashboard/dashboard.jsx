@@ -688,34 +688,34 @@ const toggleOptions = (content_id) => {
    
 
       {/* Buttons container */}
-      <div className="flex space-x-3 mx-3">
+      {/* <div className="flex space-x-3 mx-3">
         {visibleButtons.map((label, index) => (
           <button key={index} className="bg-gray-400 text-white py-1 px-4 rounded">
             {label}
           </button>
         ))}
-      </div>
+      </div> */}
    {/* Less than button */}
-   <button 
+   {/* <button 
         className="p-2 text-gray-600" 
         onClick={handlePrevious}
         disabled={currentIndex === 0}
       >
        <img src={lessthan} alt="" className="w-[20px] h-[20px]" />
-      </button>
+      </button> */}
       {/* Greater than button */}
-      <button 
+      {/* <button 
         className="p-2 text-gray-600" 
         onClick={handleNext}
         disabled={currentIndex + buttonsPerPage >= buttonLabels.length}
       >
               <img src={lessthan} alt="" className="w-[20px] h-[20px] rotate-180" />
-      </button>
+      </button> */}
     </div>
 
 
   {activeTab ==='Videos' &&(
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+    <div onClick={handleVideoClick} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
      {videoData
     .filter((videoItem) => videoItem.content_type === "Video") // Filter to show only videos
     .map((videoItem) => {

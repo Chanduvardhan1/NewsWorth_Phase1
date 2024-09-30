@@ -34,7 +34,7 @@ const navbar = () => {
 </div>
 <div className="flex text-[16px] gap-[45px]  font-bold justify-center items-center cursor-pointer ">
 
-<div className="p-2 px-4 bg-gray-100 rounded-full shadow-sm">
+<div className="p-2 px-4 bg-red-100 rounded-full shadow-sm">
 <NavLink
 to="/"
           onClick={() => handleNavigation('/')}
@@ -61,7 +61,7 @@ to="/"
         </NavLink>
       </div>
 
-      <div className="p-2 px-4 bg-red-100 rounded-full shadow-sm">
+      <div className="p-2 px-4 bg-orange-100 rounded-full shadow-sm">
         <NavLink
           to="/login"
           onClick={() => handleNavigation('login')}

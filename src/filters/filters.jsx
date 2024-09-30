@@ -17,7 +17,7 @@ const filters = () => {
 
   return (
     <>
-      <div className="flex justify-between mb-6">
+      <div className="flex space-x-4  mb-6">
         <p
           onClick={() => handleNavigation("/dashboard")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${

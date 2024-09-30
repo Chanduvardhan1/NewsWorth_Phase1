@@ -215,29 +215,42 @@ const { login } =  useContext(AuthContext);
                                </Select>
                             </FormControl> */}
                             {userType === "Email" && (
-                            <TextField
-                               id="email"
-                               label="Email"
-                               required
-                               style={{ height: "50px", borderRadius: "10px" }}
-                               value={email}
-                               onChange={(e) => setEmail(e.target.value)}
-                               variant="outlined"
-                               InputProps={{
-                                style: {
-       
-                                  height: "50px",
-                                  borderRadius: "10px",
-                                },
-                                  className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
-                                  endAdornment: (
-                                  <div className="text-blue-400">
-                                     <img src="src/assets/Images/login/envelope.png" alt="" className="w-[25px] text-blue-800" />
-                                  </div>
-                                  ),
-                                  autoComplete: "off",
-                               }}
-                            />
+                         <TextField
+                         id="email"
+                         label="Email"
+                         required
+                         style={{ height: "50px", borderRadius: "10px" }}
+                         value={email}
+                         onChange={(e) => setEmail(e.target.value)}
+                         variant="outlined"
+                         InputLabelProps={{
+                           style: {
+                             color: '#666666', // Reduced label color
+                             fontSize: '14px', // Reduced label font size
+                           },
+                         }}
+                         InputProps={{
+                           style: {
+                             fontSize: '14px',
+                             height: "50px",
+                             borderRadius: "10px",
+                           },
+                           className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
+                           endAdornment: (
+                             <div className="text-blue-400">
+                               <img src="src/assets/Images/login/envelope.png" alt="" className="w-[25px] text-blue-800" />
+                             </div>
+                           ),
+                           autoComplete: "off",
+                         }}
+                         sx={{
+                           // Disable autofill background
+                           '& input:-webkit-autofill': {
+                             WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+                             WebkitTextFillColor: '#000', // Text color when autofilled
+                           },
+                         }}
+                       />
                             )}
                             {userType === "User Id" && (
                             <TextField
@@ -247,9 +260,15 @@ const { login } =  useContext(AuthContext);
                                value={email}
                                onChange={(e) => setEmail(e.target.value)}
                                variant="outlined"
+                               InputLabelProps={{
+                                style: {
+                                  color: '#666666', // Reduced label color
+                                  fontSize: '14px', // Reduced label font size
+                                },
+                              }}
                                InputProps={{
                                 style: {
-       
+                                  fontSize: '14px',
                                   height: "50px",
                                   borderRadius: "10px",
                                 },
@@ -271,9 +290,15 @@ const { login } =  useContext(AuthContext);
                                value={email}
                                onChange={(e) => setEmail(e.target.value)}
                                variant="outlined"
+                               InputLabelProps={{
+                                style: {
+                                  color: '#666666', // Reduced label color
+                                  fontSize: '14px', // Reduced label font size
+                                },
+                              }}
                                InputProps={{
                                 style: {
-       
+                                  fontSize: '14px',
                                   height: "50px",
                                   borderRadius: "10px",
                                 },
@@ -295,9 +320,15 @@ const { login } =  useContext(AuthContext);
                                onChange={(e) => setPassword(e.target.value)}
                                type={showPassword ? "text" : "password"}
                                required
+                               InputLabelProps={{
+                                style: {
+                                  color: '#666666', // Reduced label color
+                                  fontSize: '14px', // Reduced label font size
+                                },
+                              }}
                                InputProps={{
                                 style: {
-       
+                                  fontSize: '14px', 
                                   height: "50px",
                                   borderRadius: "10px",
                                 },
@@ -355,9 +386,15 @@ const { login } =  useContext(AuthContext);
                          variant="outlined"
                          value={email}
                          onChange={(e) => setEmail(e.target.value)}
+                         InputLabelProps={{
+                          style: {
+                            color: '#666666', // Reduced label color
+                            fontSize: '14px', // Reduced label font size
+                          },
+                        }}
                          InputProps={{
                           style: {
-       
+                            fontSize: '14px', 
                             height: "50px",
                             borderRadius: "10px",
                           },
@@ -381,9 +418,15 @@ const { login } =  useContext(AuthContext);
                          value={email}
                          onChange={(e) => setEmail(e.target.value)}
                          variant="outlined"
+                         InputLabelProps={{
+                          style: {
+                            color: '#666666', // Reduced label color
+                            fontSize: '14px', // Reduced label font size
+                          },
+                        }}
                          InputProps={{
                           style: {
-       
+                            fontSize: '14px',
                             height: "50px",
                             borderRadius: "10px",
                           },
@@ -407,9 +450,15 @@ const { login } =  useContext(AuthContext);
                          variant="outlined"
                          value={email}
                          onChange={(e) => setEmail(e.target.value)}
+                         InputLabelProps={{
+                          style: {
+                            color: '#666666', // Reduced label color
+                            fontSize: '14px', // Reduced label font size
+                          },
+                        }}
                          InputProps={{
                           style: {
-       
+                            fontSize: '14px',
                             height: "50px",
                             borderRadius: "10px",
                           },
