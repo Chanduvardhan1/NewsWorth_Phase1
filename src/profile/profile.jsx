@@ -12,11 +12,15 @@ import defaultPhoto from '../../src/assets/Images/landing/pic.jpg'
 import camer from '../../src/assets/Images/home/add-photo.png'
 import logout1 from '../../src/assets/Images/dashboard/power-off.png'
 import x from '../../src/assets/Images/dashboard/cross-button.png'
+import check from '../../src/assets/Images/dashboard/check.png'
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 const signup = () => {
   const [data1, setdata1] = useState('');
   const [showRegistr, setShowRegistr] = useState(true);
 
   const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
 
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
@@ -24,6 +28,9 @@ const signup = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
 
 // ----------register--------
@@ -62,6 +69,8 @@ const [photo, setPhoto] = useState(''); // State to store the image URL
 const [loading, setLoading] = useState(true); // State to manage loading status
 const [error, setError] = useState(null); // State to handle error
 const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+const [userType1, setUserType1] = useState("Email");
+const [loginMethod, setLoginMethod] = useState('email');
 
 // Fetch profile image from the server
 const fetchProfileImage = async () => {
@@ -92,7 +101,9 @@ const fetchProfileImage = async () => {
     setLoading(false);
   }
 };
-
+const handlePopupToggle = () => {
+  setShowPopup(!showPopup);
+};
 // Upload image to the server
 const uploadImage = async (file) => {
   const formData = new FormData();
@@ -359,7 +370,9 @@ useEffect(() => {
 const openModal = () => {
   setIsModalOpen(true);
 };
-
+const togglePasswordVisibility = () => {
+  setShowPassword(!showPassword);
+};
 // Close the modal
 const closeModal = () => {
   setIsModalOpen(false);
@@ -457,407 +470,645 @@ const closeModal = () => {
   </div>
 </div>
 
-  <div className="flex flex-col gap-[10px] ">
-    <div className=" flex gap-[15px] justify-center">
-                  <TextField
-                    id="firstName"
-                    label="First Name"
-                    variant="standard"
-                    className="w-full mb-4 px-7 py-4  bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
-                    required
-                    value={firstname}
-                    onChange={(e) => setFirstname(e.target.value)}
-                    disabled={!isEditable}
-
-
-                  />
-
-                  <TextField
-                    id="middleName"
-                    label="Middle Name"
-                    variant="standard"
-                    className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
-                    value={middlename}
-                    onChange={(e) => setMiddlename(e.target.value)}
-                    disabled={!isEditable}
-                
-                    
-                  />
-                  <TextField
-                    id="lastName"
-                    label="Last Name"
-                    variant="standard"
-                    required            
-                    className="w-full mb-4 px-7 py-4  bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-     
-                    value={lastname}
-                    onChange={(e) => setLastname(e.target.value)}
-                    disabled={!isEditable}
-                    // InputProps={{
-                    //   style: {
-                        
-                    //     height: "50px",
-                    //     border: "none",
-                    //     borderRadius: "10px",
-                    //   },
-                    //   autoComplete: "off",
-                    // }}
-                    name="last_name"
-                  />
-                </div>
+<div className="w-full p-5">
+  <div className=" shadow-xl rounded-2xl p-5">
+  <div className="relative items-start justify-start flex w-[20%] font-bold">
+      <div
+        className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'email' ? '' : ''}`}
+        onClick={() => setUserType1('Email')}
+      >
+        Profile
+      </div>
+      {/* <div
+        className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'mobile' ? '' : ''}`}
+        onClick={() => setUserType1('Mobile')}
+      >
+        Address
+      </div>
+      <div
+        className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'gmail' ? '' : ''}`}
+        onClick={() => setUserType1('User Id')}
+      >
+      Change Password
+      </div> */}
+      {/* <div
+    className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
+      userType1 === 'Email' ? 'left-0 bg-red-500' : 
+      userType1 === 'Mobile' ? 'left-1/3 bg-blue-500' : 
+      'left-2/3 bg-green-500'
+    }`}
+  /> */}
+    </div>
+    <div className="border-[1px] w-[20%] border-gray-100"/>
+    <div className="flex w-full items-start mt-5 py-5">
+        <div className="space-y-1  ">
+          <div>
+          <h2 className=" font-semibold text-gray-800">Name</h2>
+          <p className="text-xl text-gray-700 mb-5 font-bold">Chandu Vardhan</p>
+          
+          </div>
+         
+          <div className="space-y-1">
+            <div className="flex items-center space-x-2">
+              <p className="font-semibold text-gray-800">Verified email</p>
+              <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="flex items-center justify-center gap-[50px]">
+              <p className="text-xl text-gray-700  font-bold">chanduvardhan85@gmail.com</p>
+              <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+              </button>
+              {showPopup && (
+               
+                <div className="flex flex-col gap-[10px] absolute bg-white p-5 shadow-2xl rounded-xl top-[75px] right-[400px]">
+                    <div className="flex justify-end items-center mb-4">
+          {/* <h2 className="text-xl font-semibold text-gray-800">Change password</h2> */}
+          <button  onClick={handlePopupToggle} className="text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
                 <div className=" flex gap-[15px] justify-center">
-<TextField
-      type="date"
-      id="Date of Birth" 
-      label="Date of Birth" 
-      focused
-      value={dateofbirth}
-      onChange={(e) => setDateofbirth(e.target.value)}
-      disabled={!isEditable}
-     variant="standard"
-     className="w-full  px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
-     required
-      // InputProps={{
-      //   style: {
-       
-        
-      //     height: "50px",
-      //     borderRadius: "10px",
-      //   },
-      //   endAdornment: (
-      //     <div
+                              <TextField
+                                id="firstName"
+                                label="First Name"
+                                variant="standard"
+                                className="w-full mb-4 px-7 py-4  bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
             
-      //     >
-      //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
-
-      //     </div>
-      //   ),
-      //   autoComplete: "off",
-      // }}
-       />
-       <FormControl variant="standard" required className="w-full mb-4">
-          <InputLabel id="gender-label">Gender</InputLabel>
-          <Select
-            labelId="gender-label"
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-            disabled={!isEditable}
-            label="Gender"
-            className="w-full  rounded-[10px]   placeholder:text-[#CCCCCC]"
-
-            // style={{
+                                required
+                                value={firstname}
+                                onChange={(e) => setFirstname(e.target.value)}
+                                disabled={!isEditable}
+            
+            
+                              />
+            
+                              <TextField
+                                id="middleName"
+                                label="Middle Name"
+                                variant="standard"
+                                className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                                value={middlename}
+                                onChange={(e) => setMiddlename(e.target.value)}
+                                disabled={!isEditable}
+                            
+                                
+                              />
+                              <TextField
+                                id="lastName"
+                                label="Last Name"
+                                variant="standard"
+                                required            
+                                className="w-full mb-4 px-7 py-4  bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+                 
+                                value={lastname}
+                                onChange={(e) => setLastname(e.target.value)}
+                                disabled={!isEditable}
+                                // InputProps={{
+                                //   style: {
+                                    
+                                //     height: "50px",
+                                //     border: "none",
+                                //     borderRadius: "10px",
+                                //   },
+                                //   autoComplete: "off",
+                                // }}
+                                name="last_name"
+                              />
+                            </div>
+                            <div className=" flex gap-[15px] justify-center">
+            <TextField
+                  type="date"
+                  id="Date of Birth" 
+                  label="Date of Birth" 
+                  focused
+                  value={dateofbirth}
+                  onChange={(e) => setDateofbirth(e.target.value)}
+                  disabled={!isEditable}
+                 variant="standard"
+                 className="w-full  px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                 required
+                  // InputProps={{
+                  //   style: {
+                   
+                    
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }}
+                   />
+                   <FormControl variant="standard" required className="w-full mb-4">
+                      <InputLabel id="gender-label">Gender</InputLabel>
+                      <Select
+                        labelId="gender-label"
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                        disabled={!isEditable}
+                        label="Gender"
+                        className="w-full  rounded-[10px]   placeholder:text-[#CCCCCC]"
+            
+                        // style={{
+                          
+                        //   height: "50px",
+                        //   borderRadius: "10px",
+                        // }}
+                        name="gender"
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        <MenuItem value="Male">Male</MenuItem>
+                        <MenuItem value="Female">Female</MenuItem>
+                      </Select>
+                    </FormControl>
+            </div>
+            <div className=" flex gap-[15px] justify-center">
+            <TextField
+                 id="Pincode" 
+                 label="Pincode" 
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+                 value={pincode}
+                 disabled={!isEditable}
+                 onChange={handlePincodeChange}
+                 onBlur={fetchLocationDetails}
+                 variant="standard"
+                 required
+                  // InputProps={{
+                  //   style: {
+                   
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }}
+                   />
+                  
+                  <FormControl variant="standard" required className="w-full mb-4">
+                      <InputLabel id="City">City</InputLabel>
+                      <Select
+                     className="w-full  rounded-[10px]   placeholder:text-[#CCCCCC]"
+                     value={selectedCity}
+                     onChange={(e) => setSelectedCity(e.target.value)}
+                        labelId="City"
+                        label="City"
+                        disabled={!isEditable}
+                        // style={{
+                          
+                        //   height: "50px",
+                        //   borderRadius: "10px",
+                        // }}
+                        name="UserType"
+                      >
+                        <MenuItem value="">
+                          {/* <em>None</em> */}
+                        </MenuItem>
+                        {locationDetails.map((location) => (
+                          <MenuItem key={location.location_id} value={location.location}>
+                            {location.location}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+            </div>
+            <div className=" flex gap-[15px] justify-center">
+                   <FormControl variant="standard" required className="w-full mb-4">
+                      <InputLabel id="District" className="bg-[#FFFFFF] placeholder:text-[#CCCCCC]">District</InputLabel>
+                      <Select
+                     className="w-full  rounded-[10px]  placeholder:text-[#CCCCCC]"
+            
+                        labelId="District"
+                        label="District"
+                        disabled={!isEditable}
+                        value={selectedDistrict}
+                        onChange={(e) => setSelectedDistrict(e.target.value)}
+                    
+                      
+                      >
+                        <MenuItem value="">
+                          {/* <em>None</em> */}
+                        </MenuItem>
+                        {uniqueDistricts.map((district, index) => (
+                          <MenuItem key={index} value={district}>
+                            {district}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                   <TextField
+                 id="State" 
+                 label="State" 
+                 value={state}
+                 disabled={!isEditable}
+                 onChange={(e) => setState(e.target.value)}
+            
+                 variant="standard"
+                
+            
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                 required
+                  // InputProps={{
+                  //   style: {
+                   
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }}
+                   />
+            </div>
+            
+            <div className=" flex gap-[15px] justify-center">
+            <TextField
+                 id="Country" 
+                 label="Country" 
+                 variant="standard"
+                 required
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                 value={country}
+                 onChange={(e) => setCountry(e.target.value)}
+                 disabled={!isEditable}
+                  // InputProps={{
+                  //   style: {
+                   
+                      
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }} 
+                  />
+                  
+            </div>
+                            <div className=" flex gap-[15px] justify-end items-end">
+            <TextField
+                 id="Mobile" 
+                 label="Mobile" 
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF] placeholder:text-[#CCCCCC]"
+            
+                 variant="standard"
+                 value={userphonenumber}
+                 onChange={handleMobileChange}
+                 disabled={!isEditable} 
+                  // InputProps={{
+                  //   style: {
+                   
+                      
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   <img src="src\assets\Images\signup\iphone.png" alt="" className="w-[18px] text-blue-800" />
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }} 
+                  />
+                  <p>or</p>
+                   <TextField
+                 id="Email" 
+                 label="Email" 
+                 variant="standard"
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                 value={useremail}
+                 onChange={handleEmailChange}
+                 disabled={!isEditable}
+                  // InputProps={{
+                  //   style: {
+                   
+                      
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   <img src="src\assets\Images\login\envelope.png" alt="" className="w-[25px] text-blue-800" />
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }} 
+                  />
+            
+            </div>
+            <div className=" flex gap-[15px] justify-center">
+            <TextField
+                 id="Country" 
+                 label="User address line 1" 
+                 variant="standard"
+                 required
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                 value={useraddressline1}
+                 onChange={(e) => setUseraddressline1(e.target.value)}
+                 disabled={!isEditable}
+                  // InputProps={{
+                  //   style: {
+                   
+                      
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }} 
+                  />
+                  
+            </div>
+            <div className=" flex gap-[15px] justify-center">
+            <TextField
+                 id="Country" 
+                 label="User address line 2" 
+                 variant="standard"
+                 required
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                 value={useraddressline2}
+                 onChange={(e) => setUseraddressline2(e.target.value)}
+                 disabled={!isEditable}
+                  // InputProps={{
+                  //   style: {
+                   
+                      
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }} 
+                  />
+                  
+            </div>
+            {showRegistr ?(
+                       <div className="flex justify-end">
+                       <button className="primary-btn" onClick={handleEditClick}>Edit</button>
+                     </div>
+            
+            ):(
+              <div className="flex justify-between ">
+              <div className="">
+              <button className="primary-btn"onClick={handleCancel}>Cancel</button>
+            </div>
+              <div className="">
+                       <button className="primary-btn"onClick={handleSaveClick} >Save</button>
+                     </div>
+                     </div>
+            )}
+            <div className="flex justify-between"> 
+              <div className="">
+            
+               {message && <p className="text-red-500  w-[320px]">{message}</p>}
+              </div>
+            
+            
+            </div>
+            
+            
+            
+            {errorMessage && <p className="text-red-500  w-[320px]">{errorMessage}</p>}
+            
+            
+            
+              </div>
               
-            //   height: "50px",
-            //   borderRadius: "10px",
-            // }}
-            name="gender"
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value="Male">Male</MenuItem>
-            <MenuItem value="Female">Female</MenuItem>
-          </Select>
-        </FormControl>
-</div>
-<div className=" flex gap-[15px] justify-center">
-<TextField
-     id="Pincode" 
-     label="Pincode" 
-     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-     value={pincode}
-     disabled={!isEditable}
-     onChange={handlePincodeChange}
-     onBlur={fetchLocationDetails}
-     variant="standard"
-     required
-      // InputProps={{
-      //   style: {
-       
-      //     height: "50px",
-      //     borderRadius: "10px",
-      //   },
-      //   endAdornment: (
-      //     <div
-            
-      //     >
-      //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
-
-      //     </div>
-      //   ),
-      //   autoComplete: "off",
-      // }}
-       />
-      
-      <FormControl variant="standard" required className="w-full mb-4">
-          <InputLabel id="City">City</InputLabel>
-          <Select
-         className="w-full  rounded-[10px]   placeholder:text-[#CCCCCC]"
-         value={selectedCity}
-         onChange={(e) => setSelectedCity(e.target.value)}
-            labelId="City"
-            label="City"
-            disabled={!isEditable}
-            // style={{
-              
-            //   height: "50px",
-            //   borderRadius: "10px",
-            // }}
-            name="UserType"
-          >
-            <MenuItem value="">
-              {/* <em>None</em> */}
-            </MenuItem>
-            {locationDetails.map((location) => (
-              <MenuItem key={location.location_id} value={location.location}>
-                {location.location}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-</div>
-<div className=" flex gap-[15px] justify-center">
-       <FormControl variant="standard" required className="w-full mb-4">
-          <InputLabel id="District" className="bg-[#FFFFFF] placeholder:text-[#CCCCCC]">District</InputLabel>
-          <Select
-         className="w-full  rounded-[10px]  placeholder:text-[#CCCCCC]"
-
-            labelId="District"
-            label="District"
-            disabled={!isEditable}
-            value={selectedDistrict}
-            onChange={(e) => setSelectedDistrict(e.target.value)}
+              )}            
+            </div>
+          </div>
+        </div>
         
+        <div className=" flex ml-4 items-center gap-[10px] ">
           
+          <div className=" border-l-[1px] border-gray-500 h-[50px]"/>
+          <div>
+          <button onClick={() => setIsPopupVisible(true)} className="flex w-full items-center space-x-2 text-green-600 hover:text-green-700">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            <span className="text-sm font-medium ">Change password</span>
+          </button>
+          </div>
+          {isPopupVisible && (
+
+<div className="flex absolute right-[350px] items-center justify-center  w-[30%]">
+      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold text-gray-800">Change password</h2>
+          <button  onClick={() => setIsPopupVisible(false)} className="text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        {/* <p className="text-sm text-gray-600 mb-6">
+          Adding the password will sign you out of all your sessions. You will need to log in again on all your devices.
+        </p> */}
+        <form>
+          <div className="mb-4">
+          
+            <div className="relative flex flex-col gap-[10px]">
+            <TextField
+     id="Password" 
+     label="Old Password" 
+     type={showPassword ? "text" : "password"}
+     variant="outlined"
+     required
+     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+
+
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
+     InputProps={{
+        style: {
+       
+          fontSize: '14px', 
+          height: "50px",
+          borderRadius: "10px",
+        },
+        endAdornment:showPassword !== undefined && (
+          <div
+          onClick={togglePasswordVisibility}
+          className=" text-[#a7a3ff] cursor-pointer"  
           >
-            <MenuItem value="">
-              {/* <em>None</em> */}
-            </MenuItem>
-            {uniqueDistricts.map((district, index) => (
-              <MenuItem key={index} value={district}>
-                {district}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+                  {showPassword ? <FaEye/> : <FaEyeSlash />}
+
+          </div>
+        ),
+        autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
+      }} />
+            <TextField
+     id="Password" 
+     label="New Password" 
+     type={showPassword ? "text" : "password"}
+     variant="outlined"
+     required
+     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+
+
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
+     InputProps={{
+        style: {
+       
+          fontSize: '14px', 
+          height: "50px",
+          borderRadius: "10px",
+        },
+        endAdornment:showPassword !== undefined && (
+          <div
+          onClick={togglePasswordVisibility}
+
+          className=" text-[#a7a3ff] cursor-pointer"  
+          >
+                  {showPassword ? <FaEye/> : <FaEyeSlash />}
+
+          </div>
+        ),
+        autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
+      }} />
        <TextField
-     id="State" 
-     label="State" 
-     value={state}
-     disabled={!isEditable}
-     onChange={(e) => setState(e.target.value)}
-
-     variant="standard"
-    
-
-     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
-     required
-      // InputProps={{
-      //   style: {
-       
-      //     height: "50px",
-      //     borderRadius: "10px",
-      //   },
-      //   endAdornment: (
-      //     <div
-            
-      //     >
-      //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
-
-      //     </div>
-      //   ),
-      //   autoComplete: "off",
-      // }}
-       />
-</div>
-
-<div className=" flex gap-[15px] justify-center">
-<TextField
-     id="Country" 
-     label="Country" 
-     variant="standard"
+     id="Confirm Password" 
+     label="Confirm Password" 
+     variant="outlined"
+     type={showPassword ? "text" : "password"}
      required
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
-     value={country}
-     onChange={(e) => setCountry(e.target.value)}
-     disabled={!isEditable}
-      // InputProps={{
-      //   style: {
-       
-          
-      //     height: "50px",
-      //     borderRadius: "10px",
-      //   },
-      //   endAdornment: (
-      //     <div
-            
-      //     >
-      //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+   
+     InputLabelProps={{
+      style: {
+        color: '#666666', // Reduced label color
+        fontSize: '14px', // Reduced label font size
+      },
+    }}
+     InputProps={{
+        style: {
+          fontSize: '14px',
+          height: "50px",
+          borderRadius: "10px",
+        },
+        endAdornment:showPassword !== undefined && (
+          <div
+          onClick={togglePasswordVisibility}
+          className=" text-[#a7a3ff] cursor-pointer"  
+          >
+                  {showPassword ? <FaEye/> : <FaEyeSlash />}
 
-      //     </div>
-      //   ),
-      //   autoComplete: "off",
-      // }} 
-      />
-      
-</div>
-                <div className=" flex gap-[15px] justify-end items-end">
-<TextField
-     id="Mobile" 
-     label="Mobile" 
-     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF] placeholder:text-[#CCCCCC]"
+          </div>
+        ),
+        autoComplete: "off",
+      }} 
+      sx={{
+        // Disable autofill background
+        '& input:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+          WebkitTextFillColor: '#000', // Text color when autofilled
+        },
+      }} />
+            </div>
+          </div>
+         
+          <div className="flex justify-end space-x-4">
+            <button type="button" className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full">
+              Cancel
+            </button>
+            <button type="submit" className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-red-700 rounded-full">
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-     variant="standard"
-     value={userphonenumber}
-     onChange={handleMobileChange}
-     disabled={!isEditable} 
-      // InputProps={{
-      //   style: {
-       
-          
-      //     height: "50px",
-      //     borderRadius: "10px",
-      //   },
-      //   endAdornment: (
-      //     <div
-            
-      //     >
-      //   <img src="src\assets\Images\signup\iphone.png" alt="" className="w-[18px] text-blue-800" />
-
-      //     </div>
-      //   ),
-      //   autoComplete: "off",
-      // }} 
-      />
-      <p>or</p>
-       <TextField
-     id="Email" 
-     label="Email" 
-     variant="standard"
-     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
-     value={useremail}
-     onChange={handleEmailChange}
-     disabled={!isEditable}
-      // InputProps={{
-      //   style: {
-       
-          
-      //     height: "50px",
-      //     borderRadius: "10px",
-      //   },
-      //   endAdornment: (
-      //     <div
-            
-      //     >
-      //   <img src="src\assets\Images\login\envelope.png" alt="" className="w-[25px] text-blue-800" />
-
-      //     </div>
-      //   ),
-      //   autoComplete: "off",
-      // }} 
-      />
-
-</div>
-<div className=" flex gap-[15px] justify-center">
-<TextField
-     id="Country" 
-     label="User address line 1" 
-     variant="standard"
-     required
-     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
-     value={useraddressline1}
-     onChange={(e) => setUseraddressline1(e.target.value)}
-     disabled={!isEditable}
-      // InputProps={{
-      //   style: {
-       
-          
-      //     height: "50px",
-      //     borderRadius: "10px",
-      //   },
-      //   endAdornment: (
-      //     <div
-            
-      //     >
-      //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
-
-      //     </div>
-      //   ),
-      //   autoComplete: "off",
-      // }} 
-      />
-      
-</div>
-<div className=" flex gap-[15px] justify-center">
-<TextField
-     id="Country" 
-     label="User address line 2" 
-     variant="standard"
-     required
-     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
-     value={useraddressline2}
-     onChange={(e) => setUseraddressline2(e.target.value)}
-     disabled={!isEditable}
-      // InputProps={{
-      //   style: {
-       
-          
-      //     height: "50px",
-      //     borderRadius: "10px",
-      //   },
-      //   endAdornment: (
-      //     <div
-            
-      //     >
-      //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
-
-      //     </div>
-      //   ),
-      //   autoComplete: "off",
-      // }} 
-      />
-      
-</div>
-{showRegistr ?(
-           <div className="flex justify-end">
-           <button className="primary-btn" onClick={handleEditClick}>Edit</button>
-         </div>
-
-):(
-  <div className="flex justify-between ">
-  <div className="">
-  <button className="primary-btn"onClick={handleCancel}>Cancel</button>
-</div>
-  <div className="">
-           <button className="primary-btn"onClick={handleSaveClick} >Save</button>
-         </div>
-         </div>
-)}
-<div className="flex justify-between"> 
-  <div className="">
-
-   {message && <p className="text-red-500  w-[320px]">{message}</p>}
+              )}
+        </div>
+      </div>
   </div>
 
-
 </div>
-
-
-
-{errorMessage && <p className="text-red-500  w-[320px]">{errorMessage}</p>}
-
-
-
-  </div>
-
 
 
       

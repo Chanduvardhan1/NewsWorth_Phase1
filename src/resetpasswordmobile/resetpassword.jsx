@@ -114,7 +114,36 @@ useEffect(() => {
   };
 
  
-
+  const handleForgotPassword = async () => {
+    setResendAvailable(false);
+    setResendTime(10 * 60);
+    try {
+      const response = await fetch(`${URL}/forgotpassword`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          Forogot_option: 'Mobile',
+          email_or_mobile: email,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      console.log('Response:', data);
+  
+      if (data.response === 'success' ) {
+        setResendAvailable(false);
+      } 
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
  
   const handleLoginMethodChange = (method) => {
     setLoginMethod(method);
@@ -145,7 +174,7 @@ useEffect(() => {
    
 <div className="flex flex-col gap-[15px] pt-[20px]"> 
 <div>
-    <h1 className=" flex text-[30px] font-extrabold justify-center items-center blue-color ">Rest Password</h1>
+    <h1 className=" flex text-[25px] font-extrabold justify-center items-center blue-color ">Rest Password</h1>
 </div>
 <div className="  bg-white rounded-[28px] shadow-lg p-7 pb-5 border-solid border-[1px] ">
 <div className="flex flex-col  gap-[10px]">
@@ -190,7 +219,7 @@ useEffect(() => {
         {resendAvailable ? "" : ` (${formatTime(resendTime)})`}
       </span>
       <button
-       
+       onClick={handleForgotPassword}
         disabled={!resendAvailable}
         className={`${resendAvailable ? 'primary-btn' : 'bg-gray-300 text-gray-500 cursor-not-allowed p-[5px] px-4 rounded-[50px]'}`}
       >

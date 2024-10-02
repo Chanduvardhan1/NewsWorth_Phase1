@@ -1014,8 +1014,8 @@ useEffect(() => {
  <button className="primary-btn" onClick={showdropdwon}>Sign Up</button>
 </div>
     ):(
-      <div className="flex flex-col gap-[10px] text-[14px] ">
-<div className=" flex gap-[5px] justify-center">
+      <div className="flex flex-col gap-[15px] text-[14px] shadow-xl rounded-2xl p-5 py-7 border-[1px] border-gray-100 ">
+<div className=" flex gap-[10px] justify-center">
 <FormControl variant="outlined" required className="w-full mb-4 text-[14px]">
   <InputLabel id="user-category-label"
       style={{ color: '#666666', fontSize: '14px' }} // Change label color and font size
@@ -1071,8 +1071,8 @@ useEffect(() => {
 
 </div>
 {selectedCategory === 1 && selectedUserType &&(
-  <div className="flex flex-col gap-[10px]">
-<div className=" flex gap-[5px] justify-center">
+  <div className="flex flex-col gap-[15px]">
+<div className=" flex gap-[10px] justify-center">
 <TextField
      id="Organization Name" 
      label="Organization Name" 
@@ -1155,7 +1155,7 @@ useEffect(() => {
         },
       }}  />
 </div>
-<div className=" flex gap-[5px] justify-center">
+<div className=" flex gap-[10px] justify-center">
 <TextField
      id="GST Number" 
      label="GST Number" 
@@ -1224,7 +1224,7 @@ useEffect(() => {
         autoComplete: "off",
       }} />  */}
 </div>
-<div className=" flex gap-[5px] justify-center">
+<div className=" flex gap-[10px] justify-center">
 <TextField
      id="Pincode" 
      label="Pincode" 
@@ -1296,7 +1296,7 @@ useEffect(() => {
 </div>
 {pincodeMessage && <div className=" text-red-500">{pincodeMessage}</div>} {/* Display error message */}
 
-<div className=" flex gap-[5px] justify-center">
+<div className=" flex gap-[10px] justify-center">
     
         <TextField
      id="District" 
@@ -1383,7 +1383,7 @@ useEffect(() => {
         },
       }} />
 </div>
-<div className=" flex gap-[5px] justify-center">
+<div className=" flex gap-[10px] justify-center">
 <TextField
      id="Country" 
      value={country}
@@ -1426,7 +1426,7 @@ useEffect(() => {
       }} />
      
 </div>
-<div className=" flex gap-[5px] justify-center">
+<div className=" flex gap-[10px] justify-center">
                   <TextField
                     id="firstName"
                     label="First Name"
@@ -1602,7 +1602,7 @@ useEffect(() => {
         </FormControl>
 </div>  */}
 
-                <div className=" flex gap-[5px] justify-center items-center">
+                <div className=" flex gap-[10px] justify-center items-center">
 <TextField
      id="Mobile" 
      label="Mobile" 
@@ -1722,7 +1722,7 @@ useEffect(() => {
   </div>
 
 </div>
-<div className=" flex gap-[5px] justify-center">
+<div className=" flex gap-[10px] justify-center">
   {showMobileOTP && (
 
   <TextField
@@ -1814,7 +1814,7 @@ useEffect(() => {
   </div>
 )}
 {showPassword1 &&(
-  <div className=" flex gap-[5px] justify-center">
+  <div className=" flex gap-[10px] justify-center">
 <TextField
      id="Password" 
      label="Password" 
@@ -1932,8 +1932,8 @@ useEffect(() => {
 </div>
 )}
 {selectedCategory === 2 && selectedUserType &&(
-  <div className="flex flex-col gap-[10px]">
-    <div className=" flex gap-[5px] justify-center">
+  <div className="flex flex-col gap-[15px]">
+    <div className=" flex gap-[10px] justify-center">
                   <TextField
                     id="firstName"
                     label="First Name"
@@ -2035,7 +2035,7 @@ useEffect(() => {
                     }} 
                   />
                 </div>
-                <div className=" flex gap-[5px] justify-center">
+                <div className=" flex gap-[10px] justify-center">
 <TextField
       type="date"
       id="Date of Birth" 
@@ -2103,7 +2103,7 @@ useEffect(() => {
           </Select>
         </FormControl>
 </div>
-<div className=" flex gap-[5px] justify-center">
+<div className=" flex gap-[10px] justify-center">
 <TextField
      id="Country" 
      label="Country" 
@@ -2145,7 +2145,7 @@ useEffect(() => {
       }} />
       
 </div>
-                <div className=" flex gap-[5px] justify-center items-center">
+                <div className=" flex gap-[10px] justify-center items-center">
 <TextField
      id="Mobile" 
      label="Mobile" 
@@ -2272,7 +2272,7 @@ useEffect(() => {
 
 </div>
  
-  <div className=" flex gap-[5px] justify-center">
+  <div className=" flex gap-[10px] justify-center">
   {showMobileOTP && (
 
   <TextField
@@ -2365,7 +2365,7 @@ useEffect(() => {
   </div>
 )}
 {showPassword1 &&(
-  <div className=" flex gap-[5px] justify-center">
+  <div className=" flex gap-[10px] justify-center">
 <TextField
      id="Password" 
      label="Password" 

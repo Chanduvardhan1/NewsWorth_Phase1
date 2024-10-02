@@ -195,7 +195,7 @@ const { login } =  useContext(AuthContext);
     }`}
   />
     </div>
-                         <div className="flex flex-col gap-[10px] pt-[10px]">
+                         <div className="flex flex-col gap-[20px] pt-[10px]">
              
                             {/* <FormControl variant="outlined" required>
                                <InputLabel id="gender-label">Login Option</InputLabel>
@@ -280,6 +280,13 @@ const { login } =  useContext(AuthContext);
                                   ),
                                   autoComplete: "off",
                                }}
+                               sx={{
+                                // Disable autofill background
+                                '& input:-webkit-autofill': {
+                                  WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+                                  WebkitTextFillColor: '#000', // Text color when autofilled
+                                },
+                              }}
                             />
                             )}
                             {userType === "Mobile" && (
@@ -310,7 +317,15 @@ const { login } =  useContext(AuthContext);
                                   ),
                                   autoComplete: "off",
                                }}
+                               sx={{
+                                // Disable autofill background
+                                '& input:-webkit-autofill': {
+                                  WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+                                  WebkitTextFillColor: '#000', // Text color when autofilled
+                                },
+                              }}
                             />
+                            
                             )}
                             <TextField
                                id="password" 
@@ -343,6 +358,13 @@ const { login } =  useContext(AuthContext);
                                   ),
                                   autoComplete: "off",
                                }}
+                               sx={{
+                                // Disable autofill background
+                                '& input:-webkit-autofill': {
+                                  WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+                                  WebkitTextFillColor: '#000', // Text color when autofilled
+                                },
+                              }}
                             />
                          </div>
                          <div className="flex justify-end items-end text-blue-500">
@@ -406,6 +428,13 @@ const { login } =  useContext(AuthContext);
                             ),
                             autoComplete: "off",
                          }}
+                         sx={{
+                          // Disable autofill background
+                          '& input:-webkit-autofill': {
+                            WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+                            WebkitTextFillColor: '#000', // Text color when autofilled
+                          },
+                        }}
                       />
                    </div>
                    )}
@@ -438,6 +467,13 @@ const { login } =  useContext(AuthContext);
                             ),
                             autoComplete: "off",
                          }}
+                         sx={{
+                          // Disable autofill background
+                          '& input:-webkit-autofill': {
+                            WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+                            WebkitTextFillColor: '#000', // Text color when autofilled
+                          },
+                        }}
                       />
                    </div>
                    )}
@@ -470,6 +506,13 @@ const { login } =  useContext(AuthContext);
                             ),
                             autoComplete: "off",
                          }}
+                         sx={{
+                          // Disable autofill background
+                          '& input:-webkit-autofill': {
+                            WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+                            WebkitTextFillColor: '#000', // Text color when autofilled
+                          },
+                        }}
                       />
                    </div>
                    )}
