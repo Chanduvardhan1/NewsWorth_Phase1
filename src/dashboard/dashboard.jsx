@@ -658,7 +658,7 @@ const toggleOptions = (content_id) => {
 <div className="flex w-full items-center p-4">
       {/* Audio Tab */}
       <div
-        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-[#ce003d] text-white' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-gradient-to-r from-blue-400 to-red-300 text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Audio')}
       >
         <img src={Auido} alt="Audio Icon" className="w-[25px] h-[25px]" />
@@ -667,7 +667,7 @@ const toggleOptions = (content_id) => {
 
       {/* Videos Tab */}
       <div
-        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-[#ce003d] text-white' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-gradient-to-r from-blue-400 to-red-300 text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Videos')}
       >
         <img src={video} alt="Video Icon" className="w-[25px] h-[25px]" />
@@ -676,7 +676,7 @@ const toggleOptions = (content_id) => {
 
       {/* Images Tab */}
       <div
-        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-[#ce003d] text-white' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-gradient-to-r from-blue-400 to-red-300 text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Images')}
       >
         <img src={camera} alt="Image Icon" className="w-[25px] h-[25px]" />
@@ -715,7 +715,7 @@ const toggleOptions = (content_id) => {
 
 
   {activeTab ==='Videos' &&(
-    <div onClick={handleVideoClick} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
+    <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
      {videoData
     .filter((videoItem) => videoItem.content_type === "Video") // Filter to show only videos
     .map((videoItem) => {
@@ -750,7 +750,7 @@ const toggleOptions = (content_id) => {
       <img src={video} alt="" className="w-[25px] h-[25px]" />
 
       {/* Price Info */}
-      <div className="text-lg">
+      <div className="text-lg" onClick={handleVideoClick}>
         <p className="font-bold text-blue-600">
           Price {videoItem.price}{' '}
           <span className="text-sm text-gray-500">
@@ -792,7 +792,7 @@ const toggleOptions = (content_id) => {
     </div>
 
             {/* Description */}
-            <div className="flex justify-between px-4">
+            <div onClick={handleVideoClick} className="flex justify-between px-4">
               <p className="text-blue-500 font-semibold line-clamp-2 w-[60%] h-12">
                 {videoItem.content_description}
               </p>
@@ -804,7 +804,7 @@ const toggleOptions = (content_id) => {
             </div>
 
             {/* Article Text */}
-            <div className="px-4 py-4">
+            <div onClick={handleVideoClick} className="px-4 py-4">
               <p className="text-gray-500 line-clamp-2">
                 {videoItem.content_description}
               </p>

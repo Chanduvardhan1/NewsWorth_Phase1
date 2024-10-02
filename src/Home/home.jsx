@@ -5,21 +5,36 @@ import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/image.png'
 import { useNavigate } from "react-router-dom";
 import Home1 from "./home1";
+import { URL } from "../url";
 
 const Home = () => {
   const navigate = useNavigate();
+  const [visitorsCount, setVisitorsCount] = useState(0); // Initialize state
 
   const handleContactUs= () => {
     navigate('/contactus')
   };
-  const [visitCount, setVisitCount] = useState(0);
+  const fetchVisitorsCount = async () => {
+    try {
+      const response = await fetch(`${URL}/visitors_count`, {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+        },
+      });
+      const data = await response.json();
+      if (data.response === 'success') {
+        setVisitorsCount(data.visitors_count); // Update state with the visitors count
+      }
+    } catch (error) {
+      console.error('Error fetching visitors count:', error);
+    }
+  };
 
   useEffect(() => {
+    fetchVisitorsCount();
+  }, []); 
 
-    setVisitCount(prevCount => prevCount + 1);
-
- 
-  }, []);
   return (
     <>
    <Navbar/>
@@ -74,7 +89,7 @@ const Home = () => {
 
    <div className="flex justify-end pr-[65px] gap-1 ">
     <p onClick={handleContactUs} className=" cursor-pointer text-[14px] blue-color hover:red-color">Contact Us</p>|
-    <p className='text-[14px]'>{visitCount} Visited</p>|
+    <p className='text-[14px]'>{visitorsCount} Visited</p>|
     <p className='text-[14px]'>©2024, Circle Of Minds Innovation Pvt Ltd.</p>
 
    </div>

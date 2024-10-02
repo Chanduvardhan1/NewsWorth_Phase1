@@ -6,31 +6,38 @@ import Slider from "react-slick";
 const testimonialData = [
   {
     id: 1,
+    title: `Unfiltered stories`,
+
     text: `Unfiltered stories, unmatched quality.`,
     textColor: "text-blue-500",
   },
   {
     id: 2,
+    title: `Certify`,
     text: "Certify, protect, and monetize your content on NewsWorth.",
     textColor: "text-green-500",
   },
   {
     id: 3,
+    title: `NewsWorth Eye`,
     text: "Capture content using the NewsWorth Eye mobile app, with cloud storage.",
     textColor: "text-yellow-500",
   },
   {
     id: 4,
+    title: `NewsWorth Wall`,
     text: "Access the NewsWorth Wall web portal, featuring a content marketplace.",
     textColor: "text-purple-500",
   },
   {
     id: 5,
+    title: `pricing`,
     text: "Set your own pricing for your content.",
     textColor: "text-pink-500",
   },
   {
     id: 6,
+    title: `NewsWorth`,
     text: "Certify, protect, and monetize your content on NewsWorth.",
     textColor: "text-gray-500",
   },
@@ -87,15 +94,26 @@ const home1 = () => {
       <div className="mx-auto">
         <div className="grid grid-cols-1 max-w-[600px] mx-auto gap-6">
           <Slider {...settings}>
-            {testimonialData.map(({ id, text, textColor }) => {
+            {testimonialData.map(({ id, text, textColor ,title}) => {
               return (
                 <div
                   key={id}
                   className="order-2 sm:order-1 space-y-8"
                   data-aos="fade-up"
                 >
-                  <div className="p-5 bg-white"> {/* Neutral background */}
-                    <p className={`xl:w-[550px] 2xl:w-[559px] font-bold text-[20px] ${textColor}`}>
+                 
+                  <div className="p-5 bg-white flex justify-center items-center flex-col"> {/* Neutral background */}
+                  <div className="pb-2 flex justify-center items-center flex-col">
+                    <h1 className={`xl:w-[550px] 2xl:w-[559px] font-semibold text-[25px]  flex justify-center items-center flex-col`}>
+                      {title}
+                    </h1>
+                    </div>
+                    <div className="py-5 flex justify-center items-center flex-col">
+                    <h1 className={`xl:w-[550px] 2xl:w-[559px] font-bold text-[20px] flex justify-center items-center flex-col  `}>
+                      {title}
+                    </h1>
+                    </div>
+                    <p className={`xl:w-[550px] 2xl:w-[559px]  text-[16px] flex justify-center items-center flex-col `}>
                       {text}
                     </p>
                   </div>
