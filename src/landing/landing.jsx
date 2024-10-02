@@ -3,7 +3,7 @@ import logo from '../../src/assets/Images/home/NewsWorth.png'
 import ball from '../../src/assets/Images/landing/bell.png'
 import defaultPhoto from '../../src/assets/Images/landing/pic.jpg'
 import { useNavigate, useLocation } from "react-router-dom";
-import card from '../../src/assets/Images/dashboard/add-to-cart.png'
+import card from '../../src/assets/Images/dashboard/shopping-cart.png'
 import { URL } from "../url";
 
 const landing = () => {

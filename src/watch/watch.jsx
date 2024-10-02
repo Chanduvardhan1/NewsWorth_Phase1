@@ -12,10 +12,10 @@ import moreImg from '../../src/assets/Images/dashboard/more.png';
 import likeImg from '../../src/assets/Images/dashboard/like.png';
 import NewsWorth from '../../src/assets/Images/home/NewsWorth.png';
 import pic from '../../src/assets/Images/landing/pic.jpg';
-import Auido from '../../src/assets/Images/dashboard/voice-assistant.png'
-import video from '../../src/assets/Images/dashboard/video-camera.png'
-import camera from '../../src/assets/Images/dashboard/photo-device.png'
-import card from '../../src/assets/Images/dashboard/add-to-cart.png'
+import Auido from '../../src/assets/Images/dashboard/voice-control.png'
+import video from  '../../src/assets/Images/dashboard/camera.png';
+import camera from '../../src/assets/Images/dashboard/camera-c.png';
+import card from '../../src/assets/Images/dashboard/shopping-cart.png';
 
 
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
@@ -382,7 +382,7 @@ const watch = () => {
    <div className="flex w-full items-center p-4">
       {/* Audio Tab */}
       <div
-        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-[#ce003d] text-white' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-gradient-to-r from-blue-400 to-red-300 text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Audio')}
       >
         <img src={Auido} alt="Audio Icon" className="w-[25px] h-[25px]" />
@@ -391,7 +391,7 @@ const watch = () => {
 
       {/* Videos Tab */}
       <div
-        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-[#ce003d] text-white' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-gradient-to-r from-blue-400 to-red-300 text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Videos')}
       >
         <img src={video} alt="Video Icon" className="w-[25px] h-[25px]" />
@@ -400,7 +400,7 @@ const watch = () => {
 
       {/* Images Tab */}
       <div
-        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-[#ce003d] text-white' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-gradient-to-r from-blue-400 to-red-300 text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Images')}
       >
         <img src={camera} alt="Image Icon" className="w-[25px] h-[25px]" />

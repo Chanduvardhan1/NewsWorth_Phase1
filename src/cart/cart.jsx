@@ -220,7 +220,7 @@ const [shoppingItems,setShoppingItems] =useState([]);
 </div>
 <div className=" mt-5 p-2 px-5 bg-[#0f2b9fd9] flex justify-center">
 
-<button className="text-white font-bold">Proceed to Checkout</button>
+<button className="text-white font-bold">Buy</button>
 </div>
 </div>
 </div>

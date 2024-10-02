@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/image.png'
+import info from '../../src/assets/Images/dashboard/info.png'
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +9,7 @@ import { URL } from "../url";
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import dayjs from 'dayjs';
 
 const signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -84,7 +86,74 @@ const [isEditable, setIsEditable] = useState(true);
 const [showMobileOTP, setShowMobileOTP] = useState(false);
   const [showEmailOTP, setShowEmailOTP] = useState(false);
 //   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const [error, setError] = useState(false);
 
+const handleDateChange = (e) => {
+  const selectedDate = new Date(e.target.value);
+  const currentDate = new Date();
+  
+  // Calculate the age
+  const age = currentDate.getFullYear() - selectedDate.getFullYear();
+  const monthDifference = currentDate.getMonth() - selectedDate.getMonth();
+
+  // Adjust if the user hasn't had their birthday this year yet
+  if (monthDifference < 0 || (monthDifference === 0 && currentDate.getDate() < selectedDate.getDate())) {
+    age--;
+  }
+
+  // Check if the age is under 18
+  if (age < 18) {
+    setError(true);
+  } else {
+    setError(false);
+    setDob(e.target.value);
+  }
+};
+
+// Set maximum date to 18 years ago
+const maxDate = dayjs().subtract(18, 'year').format('YYYY-MM-DD');
+
+
+const handleMobileChange = (e) => {
+  const value = e.target.value.replace(/\D/g, "").slice(0, 10);
+
+
+  // Regex to validate a 10-digit mobile number
+  const mobileRegex = /^[0-9]{10}$/;
+
+  // Update the mobile value
+  setMobile(value);
+
+  // Show an error if the entered value is not valid
+  if (value && !mobileRegex.test(value)) {
+    setError("Mobile number is not valid.");
+  } else if (value.length < 10){
+    setError("Mobile number must be exactly 10 digits.");
+
+  }
+
+  
+    else {
+    setError(""); // Clear error if the number is valid
+  }
+};
+
+const handleEmailChange = (e) => {
+  const value = e.target.value.toLowerCase();
+
+
+  // Regex to validate an email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  setEmail(value);
+
+  // Show an error if the entered email is not valid
+  if (value && !emailRegex.test(value)) {
+    setError("Email is not valid.");
+  } else {
+    setError(""); // Clear error if the email is valid
+  }
+};
 useEffect(() => {
     let timer;
     if (resendTime1 > 0) {
@@ -133,12 +202,12 @@ useEffect(() => {
     const nameRegex = /^[A-Za-z\s]+$/; // Only alphabetic characters and spaces
     return nameRegex.test(userName);
   };
-  const handleMobileChange = (e) => {
-    const inputValue = e.target.value;
-    if (/^\d*$/.test(inputValue)) {
-      setMobile(inputValue);
-    }
-  };
+  // const handleMobileChange = (e) => {
+  //   const inputValue = e.target.value;
+  //   if (/^\d*$/.test(inputValue)) {
+  //     setMobile(inputValue);
+  //   }
+  // };
 
 //   const handleSendOTP = async () => {
 //     let hasError = false;
@@ -333,10 +402,10 @@ useEffect(() => {
 //     }
 //   };
 
-const handleEmailChange = (e) => {
-  const value = e.target.value.toLowerCase(); // Convert input to lowercase
-  setEmail(value);
-};
+// const handleEmailChange = (e) => {
+//   const value = e.target.value.toLowerCase(); // Convert input to lowercase
+//   setEmail(value);
+// };
 
  
   const handleLoginMethodChange = (method) => {
@@ -413,7 +482,7 @@ const sendOtp = async () => {
  
   setResendAvailable1(false);
   setResendTime1(5 * 60);
-  setOtpButtonEnabled(false);
+  // setOtpButtonEnabled(false);
   const data = {
     first_name: firstName,
     mobile: mobile,
@@ -1611,6 +1680,8 @@ useEffect(() => {
      variant="outlined"
      value={mobile}
      onChange={handleMobileChange} 
+     error={Boolean(error)} // Apply error styling when there's an error
+     helperText={error} //
      InputLabelProps={{
       style: {
         color: '#666666', // Reduced label color
@@ -1641,7 +1712,12 @@ useEffect(() => {
           WebkitTextFillColor: '#000', // Text color when autofilled
         },
       }}  />
-      <p>or</p>
+      <div className="relative group">
+  <img src={info} alt="" className="w-8 h-4" />
+  <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-10">
+  Please enter either an email or a mobile number, or both.
+  </span>
+</div>
        <TextField
      id="Email" 
      label="Email" 
@@ -1650,6 +1726,8 @@ useEffect(() => {
      disabled={!isEditable}
      value={email}
      onChange={handleEmailChange} 
+     error={Boolean(error)} // Apply error styling when there's an error
+     helperText={error}
      InputLabelProps={{
       style: {
         color: '#666666', // Reduced label color
@@ -1933,7 +2011,7 @@ useEffect(() => {
 )}
 {selectedCategory === 2 && selectedUserType &&(
   <div className="flex flex-col gap-[15px]">
-    <div className=" flex gap-[10px] justify-center">
+    <div className=" flex gap-[10px] justify-center ">
                   <TextField
                     id="firstName"
                     label="First Name"
@@ -2035,49 +2113,51 @@ useEffect(() => {
                     }} 
                   />
                 </div>
-                <div className=" flex gap-[10px] justify-center">
-<TextField
-      type="date"
-      id="Date of Birth" 
-      label="Date of Birth" 
-      focused
-      disabled={!isEditable}
-      value={dob}
-      onChange={(e) => setDob(e.target.value)} 
-     variant="outlined"
-     className="w-full  px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+                <div className=" flex gap-[10px] justify-center items-center">
+                <TextField
+        type="date"
+        id="Date of Birth" 
+        label="Date of Birth" 
+        focused
+        disabled={!isEditable}
+        value={dob}
+        onChange={handleDateChange}
+        variant="outlined"
+        className="w-full  px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+        required
+        InputLabelProps={{
+          style: {
+            color: '#666666', 
+            fontSize: '14px',
+          },
+        }}
+        InputProps={{
+          style: {
+            fontSize: '14px',
+            height: "50px",
+            borderRadius: "10px",
+          },
+          autoComplete: "off",
+        }}
+        sx={{
+          '& input:-webkit-autofill': {
+            WebkitBoxShadow: '0 0 0 1000px white inset', 
+            WebkitTextFillColor: '#000',
+          },
+        }}
+        inputProps={{
+          max: maxDate, // Disable selecting dates beyond today minus 18 years
+        }}
+        error={error}
+        helperText={error ? "You must be 18 years or older" : ""}
+      />
+      <div className="relative group">
+  <img src={info} alt="" className="w-8 h-4" />
+  <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-10">
+    You must be 18 years old
+  </span>
+</div>
 
-     required
-     InputLabelProps={{
-      style: {
-        color: '#666666', // Reduced label color
-        fontSize: '14px', // Reduced label font size
-      },
-    }} 
-      InputProps={{
-        style: {
-       
-          fontSize: '14px',
-          height: "50px",
-          borderRadius: "10px",
-        },
-        endAdornment: (
-          <div
-            
-          >
-        {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
-
-          </div>
-        ),
-        autoComplete: "off",
-      }} 
-      sx={{
-        // Disable autofill background
-        '& input:-webkit-autofill': {
-          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
-          WebkitTextFillColor: '#000', // Text color when autofilled
-        },
-      }} />
        <FormControl variant="outlined" required className="w-full mb-4">
           <InputLabel id="gender-label">Gender</InputLabel>
           <Select
@@ -2100,6 +2180,8 @@ useEffect(() => {
             <MenuItem value="Female">Female</MenuItem>
             <MenuItem value="Male">Male</MenuItem>
             <MenuItem value="I prefer not to say">I prefer not to say</MenuItem>
+            <MenuItem value="Other">Other</MenuItem>
+
           </Select>
         </FormControl>
 </div>
@@ -2154,7 +2236,8 @@ useEffect(() => {
      variant="outlined"
      value={mobile}
      onChange={handleMobileChange} 
-      
+     error={Boolean(error)} // Apply error styling when there's an error
+     helperText={error} //
      InputLabelProps={{
       style: {
         color: '#666666', // Reduced label color
@@ -2185,7 +2268,12 @@ useEffect(() => {
           WebkitTextFillColor: '#000', // Text color when autofilled
         },
       }} />
-      <p>or</p>
+            <div className="relative group">
+  <img src={info} alt="" className="w-8 h-4" />
+  <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-10">
+  Please enter either an email or a mobile number, or both.
+  </span>
+</div>
        <TextField
      id="Email" 
      label="Email" 
@@ -2193,7 +2281,9 @@ useEffect(() => {
      className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
  disabled={!isEditable}
      value={email}
-     onChange={handleEmailChange} 
+     onChange={handleEmailChange}
+     error={Boolean(error)} // Apply error styling when there's an error
+     helperText={error} 
      InputLabelProps={{
       style: {
         color: '#666666', // Reduced label color
@@ -2462,7 +2552,7 @@ useEffect(() => {
     <label htmlFor="termsCheckbox" className="ml-2 text-sm text-gray-700">
       I agree with the{" "}
       <a href="#" className="text-blue-600 underline">
-        terms and conditions
+        Terms and conditions
       </a>
     </label>
   </div>
@@ -2470,15 +2560,16 @@ useEffect(() => {
 
 
 {showRegistr ?(
-           <div className="flex justify-end">
-           <button className="p-[5px] px-4 rounded-[50px] text-white font-bold  cursor-not-allowed bg-gray-500">Register</button>
+           <div className="flex  w-full items-center px-[120px]">
+           <button className="w-full  items-center p-2 inline-block text-white  cursor-not-allowed bg-gray-500 rounded-full">Register</button>
          </div>
 
 ):(
-  <div className="flex justify-end ">
-           <button className="primary-btn" onClick={handleRegister}>Register</button>
+  <div className="flex w-full items-center px-[120px]">
+           <button className="w-full  items-center p-2 bg-gradient-to-r from-blue-400 to-red-300  inline-block text-white rounded-full" onClick={handleRegister}>Register</button>
          </div>
 )}
+
   </div>
 )}
 

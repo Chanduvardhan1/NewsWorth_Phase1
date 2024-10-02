@@ -27,10 +27,10 @@ import videoSrc from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ 
 import videoSrc1 from '../../src/assets/Images/home/10_30 PM _ 12th September 2024 _ ETV News _ News Headlines _ ETV Andhra Pradesh.mp4';
 import videoSrc2 from '../../src/assets/Images/home/CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation.mp4';
 import videoSrc3 from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4';
-import card from '../../src/assets/Images/dashboard/add-to-cart.png'
-import Auido from '../../src/assets/Images/dashboard/voice-assistant.png'
-import video from '../../src/assets/Images/dashboard/video-camera.png'
-import camera from '../../src/assets/Images/dashboard/photo-device.png'
+import card from '../../src/assets/Images/dashboard/shopping-cart.png'
+import Auido from '../../src/assets/Images/dashboard/voice-control.png'
+import video from '../../src/assets/Images/dashboard/camera.png'
+import camera from  '../../src/assets/Images/dashboard/camera-c.png';
 import check from '../../src/assets/Images/dashboard/check.png'
 import channelIcon from '../../src/assets/Images/landing/pic.jpg';
 
@@ -536,8 +536,8 @@ const toggleOptions = (content_id) => {
       if (response.ok && data.response === 'success') {
         // Set the content and show the notification
         setCartContent(contentLink);
-        navigate('/cart'); 
-        // setShowCartNotification(true);
+        // navigate('/cart'); 
+        setShowCartNotification(true);
         setfinalprice(finalprice)
         
         // Optionally, navigate to the cart
@@ -772,7 +772,7 @@ const toggleOptions = (content_id) => {
         <img
           src={moreImg}
           alt="More options"
-          className="w-[25px] h-[25px] cursor-pointer"
+          className="w-[15px] h-[15px] cursor-pointer"
           onClick={() => toggleOptions(videoItem.content_id)} // Pass content_id to toggle options
 
         />
@@ -784,7 +784,7 @@ const toggleOptions = (content_id) => {
               onClick={() => handleDownload(videoItem.content_link)}
               className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 p-2"
             >
-              Download
+              Delete
             </button>
           </div>
         )}

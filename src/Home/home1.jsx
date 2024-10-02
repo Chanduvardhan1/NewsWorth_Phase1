@@ -104,9 +104,9 @@ const home1 = () => {
                  
                   <div className="p-5 bg-white flex justify-center items-center flex-col"> {/* Neutral background */}
                   <div className="pb-2 flex justify-center items-center flex-col">
-                    <h1 className={`xl:w-[550px] 2xl:w-[559px] font-semibold text-[25px]  flex justify-center items-center flex-col`}>
+                    {/* <h1 className={`xl:w-[550px] 2xl:w-[559px] font-semibold text-[25px]  flex justify-center items-center flex-col`}>
                       {title}
-                    </h1>
+                    </h1> */}
                     </div>
                     <div className="py-5 flex justify-center items-center flex-col">
                     <h1 className={`xl:w-[550px] 2xl:w-[559px] font-bold text-[20px] flex justify-center items-center flex-col  `}>
