@@ -71,7 +71,51 @@ const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal 
 const [userType1, setUserType1] = useState("Email");
 const [loginMethod, setLoginMethod] = useState('email');
 const userId = location.state?.user_id || localStorage.getItem("userId");
+const [newPassword, setNewPassword] = useState('');
+const [confirmPassword, setConfirmPassword] = useState('');
+const [responseMessage, setResponseMessage] = useState('');
+const [oldPassword, setOldPassword] = useState(localStorage.getItem('password'));
 
+const handleChangePassword = async () => {
+  const requestBody = {
+    user_id: userId,
+    old_password: oldPassword,
+    new_password: newPassword,
+    confirm_password: confirmPassword,
+  };
+
+  try {
+    const response = await fetch(`${URL}/ChangeUserPassword`, {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      setResponseMessage('Password changed successfully!');
+      setOldPassword(newPassword);
+
+      localStorage.setItem('oldPassword', newPassword);
+
+      navigate(0); 
+    } else {
+      setResponseMessage(`Error: ${data.message || 'Failed to change password'}`);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    setResponseMessage('An error occurred while changing password.');
+  }
+};
+const handleChangePasswordCancel =()=>
+{
+  setNewPassword('');
+  setConfirmPassword('');
+}
 // Fetch profile image from the server
 const fetchProfileImage = async () => {
   try {
@@ -501,6 +545,7 @@ const closeModal = () => {
   />
     </div>
     <div className="border-[1px] w-[50%] border-gray-100"/>
+    {userType1 === 'Email' && (
     <div className="flex w-full items-start mt-5 py-5">
         <div className="space-y-1  ">
           <div>
@@ -509,14 +554,14 @@ const closeModal = () => {
       
           </div>
          
-          <div className="space-y-1">
-            <div className="flex items-center space-x-2">
+          <div className="">
+          <div className="flex items-center ">
               <p className="font-semibold text-gray-800">  {useremail ? 'Verified email' : userphonenumber ? 'Verified mobile' : 'No contact verified'}</p>
               <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
             </div>
-            <div className="flex items-center justify-center gap-[50px]">
+            <div className="flex items-center mb-5 gap-[50px]">
               <p className=" text-gray-500 font-semibold">{useremail ? useremail : userphonenumber ? userphonenumber : 'No contact information available'}</p>
               <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -639,6 +684,105 @@ const closeModal = () => {
                       </Select>
                     </FormControl>
             </div>
+           
+            
+           
+            {showRegistr ?(
+                       <div className="flex justify-end">
+                       <button className="primary-btn" onClick={handleEditClick}>Edit</button>
+                     </div>
+            
+            ):(
+              <div className="flex justify-between ">
+              <div className="">
+              <button className="primary-btn"onClick={handleCancel}>Cancel</button>
+            </div>
+              <div className="">
+                       <button className="primary-btn"onClick={handleSaveClick} >Save</button>
+                     </div>
+                     </div>
+            )}
+            <div className="flex justify-between"> 
+              <div className="">
+            
+               {message && <p className="text-red-500  w-[320px]">{message}</p>}
+              </div>
+            
+            
+            </div>
+            
+            
+            
+            {errorMessage && <p className="text-red-500  w-[320px]">{errorMessage}</p>}
+            
+            
+            
+              </div>
+              
+              )}            
+            </div>
+            <div className="flex items-center space-x-2">
+              <p className="font-semibold text-gray-800">Gender</p>
+              
+            </div>
+            <div className="flex mb-5 gap-[50px]">
+              <p className=" text-gray-500 font-semibold">{gender}</p>
+                         
+            </div>
+            <div className="flex items-center mt-5">
+              <p className="font-semibold text-gray-800">Data of Birth</p>
+              
+            </div>
+            <div className="flex gap-[50px]">
+              <p className=" text-gray-500 font-semibold">{dateofbirth}</p>
+                    
+            </div>
+ 
+
+          </div>
+        </div>
+       
+
+       
+      </div>
+    )}
+    {userType1 === 'Mobile' && (
+    <div className="flex w-full items-start mt-5 py-5">
+        <div className="space-y-1  ">
+         
+          <div className="space-y-1">
+           
+            <div className="flex items-center mt-5">
+              <p className="font-semibold text-gray-800">Address Line 1</p>
+              
+            </div>
+            <div className="flex gap-[50px]">
+              <p className=" text-gray-500 font-semibold">{pincode},{selectedCity},{selectedDistrict},{state},{country}</p>
+                    
+            </div>
+            <div className="flex items-center mt-5">
+              <p className="font-semibold text-gray-800">Address Line 2</p>
+              
+            </div>
+            <div className="flex gap-[50px]">
+              <p className=" text-gray-500 font-semibold">{useraddressline1},{useraddressline2}</p>
+              <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+              </button>
+              {showPopup && (
+               
+                <div className="flex flex-col gap-[10px] absolute bg-white p-5 shadow-2xl rounded-xl top-[75px] right-[400px]">
+                    <div className="flex justify-end items-center mb-4">
+          {/* <h2 className="text-xl font-semibold text-gray-800">Change password</h2> */}
+          <button  onClick={handlePopupToggle} className="text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      
             <div className=" flex gap-[15px] justify-center">
             <TextField
                  id="Pincode" 
@@ -934,179 +1078,163 @@ const closeModal = () => {
             
               </div>
               
-              )}            
+              )}  
             </div>
+
           </div>
         </div>
-        
-        <div className=" flex ml-4 items-center gap-[10px] ">
-          
-          <div className=" border-l-[1px] border-gray-500 h-[50px]"/>
-          <div>
-          <button onClick={() => setIsPopupVisible(true)} className="flex w-full items-center space-x-2 text-green-600 hover:text-green-700">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-            <span className="text-sm font-medium ">Change password</span>
-          </button>
-          </div>
-          {isPopupVisible && (
-
-<div className="flex absolute right-[350px] items-center justify-center  w-[30%]">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-gray-800">Change password</h2>
-          <button  onClick={() => setIsPopupVisible(false)} className="text-gray-500 hover:text-gray-700">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        {/* <p className="text-sm text-gray-600 mb-6">
-          Adding the password will sign you out of all your sessions. You will need to log in again on all your devices.
-        </p> */}
-        <form>
-          <div className="mb-4">
-          
-            <div className="relative flex flex-col gap-[10px]">
-            <TextField
-     id="Password" 
-     label="Old Password" 
-     type={showPassword ? "text" : "password"}
-     variant="outlined"
-     required
-     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
-
-     InputLabelProps={{
-      style: {
-        color: '#666666', // Reduced label color
-        fontSize: '14px', // Reduced label font size
-      },
-    }}
-     InputProps={{
-        style: {
        
-          fontSize: '14px', 
-          height: "50px",
-          borderRadius: "10px",
-        },
-        endAdornment:showPassword !== undefined && (
-          <div
-          onClick={togglePasswordVisibility}
-          className=" text-[#a7a3ff] cursor-pointer"  
-          >
-                  {showPassword ? <FaEye/> : <FaEyeSlash />}
 
-          </div>
-        ),
-        autoComplete: "off",
-      }} 
-      sx={{
-        // Disable autofill background
-        '& input:-webkit-autofill': {
-          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
-          WebkitTextFillColor: '#000', // Text color when autofilled
-        },
-      }} />
-            <TextField
-     id="Password" 
-     label="New Password" 
-     type={showPassword ? "text" : "password"}
-     variant="outlined"
-     required
-     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-
-
-     InputLabelProps={{
-      style: {
-        color: '#666666', // Reduced label color
-        fontSize: '14px', // Reduced label font size
-      },
-    }}
-     InputProps={{
-        style: {
        
-          fontSize: '14px', 
-          height: "50px",
-          borderRadius: "10px",
-        },
-        endAdornment:showPassword !== undefined && (
-          <div
-          onClick={togglePasswordVisibility}
+      </div>
+    )}
+      {userType1 === 'User Id' && (
+      <div className="w-full max-w-md mt-5 py-5 items-start ">
+   <div className="flex justify-between items-center mb-4">
+     <h2 className="text-xl font-semibold text-gray-800">Change password</h2>
+ 
+   </div>
 
-          className=" text-[#a7a3ff] cursor-pointer"  
-          >
-                  {showPassword ? <FaEye/> : <FaEyeSlash />}
-
-          </div>
-        ),
-        autoComplete: "off",
-      }} 
-      sx={{
-        // Disable autofill background
-        '& input:-webkit-autofill': {
-          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
-          WebkitTextFillColor: '#000', // Text color when autofilled
-        },
-      }} />
+   <form>
+     <div className="mb-4">
+     
+       <div className="relative flex flex-col gap-[10px]">
        <TextField
-     id="Confirm Password" 
-     label="Confirm Password" 
-     variant="outlined"
-     type={showPassword ? "text" : "password"}
-     required
-     className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+id="Password" 
+label="Old Password" 
+type={showPassword ? "text" : "password"}
+variant="outlined"
+required
+className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+value={oldPassword}
 
-   
-     InputLabelProps={{
-      style: {
-        color: '#666666', // Reduced label color
-        fontSize: '14px', // Reduced label font size
-      },
-    }}
-     InputProps={{
-        style: {
-          fontSize: '14px',
-          height: "50px",
-          borderRadius: "10px",
-        },
-        endAdornment:showPassword !== undefined && (
-          <div
-          onClick={togglePasswordVisibility}
-          className=" text-[#a7a3ff] cursor-pointer"  
-          >
-                  {showPassword ? <FaEye/> : <FaEyeSlash />}
+InputLabelProps={{
+ style: {
+   color: '#666666', // Reduced label color
+   fontSize: '14px', // Reduced label font size
+ },
+}}
+InputProps={{
+   style: {
+  
+     fontSize: '14px', 
+     height: "50px",
+     borderRadius: "10px",
+   },
+   endAdornment:showPassword !== undefined && (
+     <div
+     onClick={togglePasswordVisibility}
+     className=" text-[#a7a3ff] cursor-pointer"  
+     >
+             {showPassword ? <FaEye/> : <FaEyeSlash />}
 
-          </div>
-        ),
-        autoComplete: "off",
-      }} 
-      sx={{
-        // Disable autofill background
-        '& input:-webkit-autofill': {
-          WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
-          WebkitTextFillColor: '#000', // Text color when autofilled
-        },
-      }} />
-            </div>
-          </div>
-         
-          <div className="flex justify-end space-x-4">
-            <button type="button" className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full">
-              Cancel
-            </button>
-            <button type="submit" className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-red-700 rounded-full">
-              Save
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+     </div>
+   ),
+   autoComplete: "off",
+ }} 
+ sx={{
+   // Disable autofill background
+   '& input:-webkit-autofill': {
+     WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+     WebkitTextFillColor: '#000', // Text color when autofilled
+   },
+ }} />
+       <TextField
+id="Password" 
+label="New Password" 
+type={showPassword ? "text" : "password"}
+variant="outlined"
+required
+className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
-              )}
-        </div>
-      </div>
+value={newPassword}
+onChange={(e) => setNewPassword(e.target.value)}
+InputLabelProps={{
+ style: {
+   color: '#666666', // Reduced label color
+   fontSize: '14px', // Reduced label font size
+ },
+}}
+InputProps={{
+   style: {
+  
+     fontSize: '14px', 
+     height: "50px",
+     borderRadius: "10px",
+   },
+   endAdornment:showPassword !== undefined && (
+     <div
+     onClick={togglePasswordVisibility}
+
+     className=" text-[#a7a3ff] cursor-pointer"  
+     >
+             {showPassword ? <FaEye/> : <FaEyeSlash />}
+
+     </div>
+   ),
+   autoComplete: "off",
+ }} 
+ sx={{
+   // Disable autofill background
+   '& input:-webkit-autofill': {
+     WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+     WebkitTextFillColor: '#000', // Text color when autofilled
+   },
+ }} />
+  <TextField
+id="Confirm Password" 
+label="Confirm Password" 
+variant="outlined"
+type={showPassword ? "text" : "password"}
+required
+className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+
+value={confirmPassword}
+onChange={(e) => setConfirmPassword(e.target.value)}
+InputLabelProps={{
+ style: {
+   color: '#666666', // Reduced label color
+   fontSize: '14px', // Reduced label font size
+ },
+}}
+InputProps={{
+   style: {
+     fontSize: '14px',
+     height: "50px",
+     borderRadius: "10px",
+   },
+   endAdornment:showPassword !== undefined && (
+     <div
+     onClick={togglePasswordVisibility}
+     className=" text-[#a7a3ff] cursor-pointer"  
+     >
+             {showPassword ? <FaEye/> : <FaEyeSlash />}
+
+     </div>
+   ),
+   autoComplete: "off",
+ }} 
+ sx={{
+   // Disable autofill background
+   '& input:-webkit-autofill': {
+     WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+     WebkitTextFillColor: '#000', // Text color when autofilled
+   },
+ }} />
+       </div>
+     </div>
+    
+     <div className="flex justify-end space-x-4">
+       <button onClick={handleChangePasswordCancel}  type="button" className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full">
+         Cancel
+       </button>
+       <button onClick={handleChangePassword} type="submit" className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-red-700 rounded-full">
+         Save
+       </button>
+     </div>
+   </form>
+ </div>
+      )}
   </div>
 
 </div>

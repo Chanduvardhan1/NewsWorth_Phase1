@@ -665,7 +665,7 @@ useEffect(() => {
         </div>
       </div>
    
-<div className="flex w-full items-center p-4">
+<div className="flex w-full items-center pr-[20px]">
       {/* Audio Tab */}
     
 

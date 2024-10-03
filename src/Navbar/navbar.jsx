@@ -1,6 +1,6 @@
 import React , { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../../src/assets/Images/home/newsworthlogo.png"
+import logo from "../../src/assets/Images/dashboard/NEWS WORTH FINAL.png"
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
@@ -30,7 +30,7 @@ const navbar = () => {
   return (
     <div className=" flex justify-between p-5 px-[5%]">
 <div>
-<img  src={logo} alt="NewsWorth" width={100} height={100} className="transition-transform duration-300 ease-in-out  cursor-pointer " onClick={handlehome}/>
+<img  src={logo} alt="NewsWorth" width={100} height={100} className="transition-transform duration-300 ease-in-out  cursor-pointer object-cover" onClick={handlehome}/>
 </div>
 <div className="flex text-[16px] gap-[45px]  font-bold justify-center items-center cursor-pointer ">
 

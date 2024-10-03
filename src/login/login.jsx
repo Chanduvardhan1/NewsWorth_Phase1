@@ -108,6 +108,7 @@ const { login } =  useContext(AuthContext);
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("userId", userId);
         localStorage.setItem("userName", userName);
+        localStorage.setItem('password', password);
         login(accessToken);
         navigate('/dashboard', { state: { user_id: userId,user_name:userName } });
       } else if (data.detail === "Incorrect username or password") {

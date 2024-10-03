@@ -1,5 +1,6 @@
 import React, { useState, useEffect ,useRef} from "react";
-import logo from '../../src/assets/Images/home/NewsWorth.png'
+import logo from "../../src/assets/Images/dashboard/NEWS WORTH FINAL.png"
+
 import ball from '../../src/assets/Images/landing/bell.png'
 import defaultPhoto from '../../src/assets/Images/landing/pic.jpg'
 import { useNavigate, useLocation } from "react-router-dom";
@@ -117,10 +118,10 @@ const landing = () => {
 <div className=" w-full flex justify-between p-[5px] shadow-md ">
     <div className="flex justify-center items-center">
         <div>
-        <img src={logo} alt="" onClick={handleNavigation} className=" cursor-pointer" />
+        <img src={logo} alt="" onClick={handleNavigation} className=" cursor-pointer w-[250px] h-[60px]" />
         </div>
         <div>
-        <h1 className="text-[25px] font-bold cursor-pointer text-[#0f2b9fd9] " onClick={handleNavigation}>News<span className="text-[25px] font-bold cursor-pointer text-[#ce003d]" >Worth</span></h1>
+        {/* <h1 className="text-[25px] font-bold cursor-pointer text-[#0f2b9fd9] " onClick={handleNavigation}>News<span className="text-[25px] font-bold cursor-pointer text-[#ce003d]" >Worth</span></h1> */}
 
         </div>
     </div>
