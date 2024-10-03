@@ -354,9 +354,10 @@ const watch = () => {
   }, [])
 
   const buttonLabels = [
-    "Social", "Political", "Social", "Political", "Social", "Political",
-    "Social", "Political", "Social", "Political", "Social", "Political",
-    "Social", "Political", "Social", "Political", "Social", "Political",
+    "Social", "Political", "Movies", "India", "Cricket", "Web Stories",
+    "Lifestyle", "Viral", "World", "Videos", "Educational", "Wildlife",
+    // "Fashion", 
+    // "Business", "Health", "Entertaianment", "GEneral News", 
   ];
 
   // Function to go to the previous set of buttons
@@ -463,15 +464,37 @@ const watch = () => {
   {/* Price Info Section */}
   <div className="w-[20%] flex flex-col items-end">
     <div className="flex items-center mb-2">
-      <img src={Auido} alt="" className="w-8 h-8" />
-      <p className="ml-2">MP3. 335 AUC</p>
+      <img src={video} alt="" className="w-8 h-8" />
+      <p className="ml-2">mp4. 335 AUC</p>
     </div>
-    <div className="text-lg">
-      <p className="font-bold text-blue-600">
+    <div className=" text-[14px]">
+      <p className="font-bold mb-2 text-blue-600 text-[14px]">
         Price ₹ 300.00 
-        <span className="text-sm text-gray-500">
+        <span className="text-[14px] text-gray-500">
           <span className="line-through">₹ 369</span> at Discount 23%
         </span>
+      </p>
+      <p className="font-bold text-[14px] mb-2 text-blue-600">
+      Latitude: <span className=" text-gray-500 text-[14px]">13.00691</span> 
+      </p>
+      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      Longitude: <span className=" text-gray-500 text-[14px]">77.7405177</span>
+      </p>
+      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      Altitude: <span className=" text-gray-500 text-[14px]">1099.0</span> 
+      </p>
+      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      Incident Time: <span className=" text-gray-500 text-[14px]">2024-09-24T14:02:08</span> 
+      </p>
+      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      File Size: <span className=" text-gray-500 text-[14px]">3100682.0</span> 
+      </p>
+      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      Aging Bucket: <span className=" text-gray-500 text-[14px]">2-10 days</span> 
+      </p>
+     
+      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      Purchased Flag: <span className=" text-gray-500 text-[14px]">False</span> 
       </p>
     </div>
     <div className="mt-2">

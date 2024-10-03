@@ -1501,6 +1501,13 @@ useEffect(() => {
       }} />
      
 </div>
+<div className=" flex  items-center gap-[5px] text-[#666666] font-bold ">
+  <div className="w-[100px] h-[3px] rounded-2xl bg-[#666666]"></div>
+  <p className="w-[200px]"> Point of Contact</p>
+ 
+  <div className="w-full h-[3px] rounded-2xl bg-[#666666]"></div>
+
+  </div>
 <div className=" flex gap-[10px] justify-center">
                   <TextField
                     id="firstName"
@@ -1718,12 +1725,12 @@ useEffect(() => {
           WebkitTextFillColor: '#000', // Text color when autofilled
         },
       }}  />
-      <div className="relative group">
+      {/* <div className="relative group">
   <img src={info} alt="" className="w-8 h-4" />
   <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-10">
   Please enter either an email or a mobile number, or both.
   </span>
-</div>
+</div> */}
        <TextField
      id="Email" 
      label="Email" 

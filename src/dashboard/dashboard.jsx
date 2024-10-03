@@ -396,8 +396,30 @@ const cardData = [
     const [showCartNotification, setShowCartNotification] = useState(false); // For showing the cart notification
 const [finalprice,setfinalprice] = useState(null);
 const [openOptionsId, setOpenOptionsId] = useState(null);
+const userId = location.state?.user_id || localStorage.getItem("userId");
 
+const downloadContent = async (contentId) => {
+  try {
+    const response = await fetch(`${URL}/download-content?content_id=${contentId}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZHUgdmFyZGhhbiBrIiwiZXhwIjoyNTM0MDIzMDA3OTl9.RmiiO7yJ6Z0fh3MMqpU89Iyr5VNIm1lGQgdKJeaujn0',
+      },
+      body: '' // No body needed as per your cURL
+    });
 
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Content downloaded:', data);
+      // Handle the downloaded content here
+    } else {
+      console.error('Error downloading content:', response.status);
+    }
+  } catch (error) {
+    console.error('Network error:', error);
+  }
+};
 const toggleOptions = (content_id) => {
   setOpenOptionsId(openOptionsId === content_id ? null : content_id);
 };
@@ -479,7 +501,7 @@ useEffect(() => {
 
   
         const response = await fetch(
-          `${URL}/landing page?user_id=59`,
+          `${URL}/landing page?user_id=${userId}`,
           {
             method: "POST",
             headers: {
@@ -503,7 +525,7 @@ useEffect(() => {
     };
 
     fetchData();
-  }, [user_id],isAuthenticated, authToken, navigate);
+  }, [userId],isAuthenticated, authToken, navigate);
 
   const handleAddToCart = async (contentId, contentLink,finalprice) => {
     try {
@@ -515,7 +537,7 @@ useEffect(() => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user_id: 59,
+          user_id: userId,
           content_id: contentId,
         }),
       });
@@ -741,7 +763,7 @@ useEffect(() => {
       {/* Price Info */}
       <div className="text-lg" onClick={handleVideoClick}>
         <p className="font-bold text-blue-600">
-          Price {videoItem.price}{' '}
+        ₹ {videoItem.price}{' '}
           <span className="text-sm text-gray-500">
             <span className="line-through text-sm text-gray-500">{videoItem.final_price}</span> at Discount {videoItem.discount}
           </span>
@@ -768,9 +790,15 @@ useEffect(() => {
 
         {/* Dropdown Options */}
         {openOptionsId === videoItem.content_id && ( // Only show options if this card is selected
-        <div className="absolute top-12 right-0 bg-gray-300 shadow-lg rounded-md p-2 w-32 z-10 clip-path-custom">
+        <div className="absolute top-[20px] right-[24px] bg-gray-100 shadow-lg rounded-md p-2 w-32 z-10 clip-path-custom">
         <button
-          onClick={() => handleDownload(videoItem.content_link)}
+          onClick={() => downloadContent(videoItem.content_id)}
+          className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 p-2"
+        >
+          Download
+        </button>
+        <button
+          onClick={() => downloadContent(videoItem.content_id)}
           className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 p-2"
         >
           Delete
@@ -837,7 +865,7 @@ useEffect(() => {
          {/* Price Info */}
          <div className="text-lg" onClick={handleImagesClick}>
            <p className="font-bold text-blue-600">
-             Price {imageItem.price}{' '}
+           ₹ {imageItem.price}{' '}
              <span className="text-sm text-gray-500">
                <span className="line-through text-sm text-gray-500">{imageItem.final_price}</span> at Discount {imageItem.discount}%
              </span>
@@ -908,7 +936,7 @@ useEffect(() => {
          <img src={item.audioIcon} alt="" className="w-[25px] h-[25px]" />
          <div className="text-lg">
            <p className="font-bold text-blue-600">
-             Price {item.price} <span className="text-sm text-gray-500"><span className="line-through text-sm text-gray-500">{item.discountPrice}</span> at Discount {item.discount}%</span>
+           ₹ {item.price} <span className="text-sm text-gray-500"><span className="line-through text-sm text-gray-500">{item.discountPrice}</span> at Discount {item.discount}%</span>
            </p>
          </div>
          <img onClick={toggleSidebar}  src={item.rightIcon} alt="" className="w-[25px] h-[25px] cursor-pointer" />

@@ -73,6 +73,7 @@ import Image4 from '../../src/assets/Images/dashboard/news1.webp';
     const [videoData, setVideoData] = useState([]);
     const [imageData, setImageData] = useState([]);
 const [shoppingItems,setShoppingItems] =useState([]);
+const userId = location.state?.user_id || localStorage.getItem("userId");
 
     const handledashboard = () => {
       navigate(`/dashboard`);
@@ -84,7 +85,7 @@ const [shoppingItems,setShoppingItems] =useState([]);
         // Function to fetch cart data
         const fetchCartData = async () => {
           try {
-            const response = await fetch(`${URL}/view_cart?user_id=59`, {
+            const response = await fetch(`${URL}/view_cart?user_id=${userId}`, {
               method: 'POST',
               headers: {
                 Accept: "application/json",
@@ -152,7 +153,7 @@ const [shoppingItems,setShoppingItems] =useState([]);
 <div className="bg-white shadow-md rounded-lg p-6 mt-8 w-[70%]"> 
       <div className="border-b mb-4">
         <h2 className="text-2xl font-semibold blue-color">Shopping Bag</h2>
-        <p className=" underline text-blue-500 cursor-pointer" onClick={handledashboard}>Add to more Carts</p>
+        <p className=" underline text-blue-500 cursor-pointer" onClick={handledashboard}>Add more to Cart</p>
         <div className="flex justify-between mt-2 px-2">
           <h2 className="text-[14px] font-semibold text-gray-500">Item</h2>
           <h2 className="text-[14px] font-semibold text-gray-500">Price</h2>
@@ -187,7 +188,7 @@ const [shoppingItems,setShoppingItems] =useState([]);
             </div>
 
             <div className="flex items-center space-x-12">
-              <p className="text-lg font-semibold text-gray-700">₹ {item.final_price} {item.currency}</p> {/* Adjust for price display */}
+              <p className="text-lg font-semibold text-gray-700">₹ {item.final_price}</p> {/* Adjust for price display */}
             </div>
           </div>
           <div className="flex justify-end items-center mt-2 border-b">
