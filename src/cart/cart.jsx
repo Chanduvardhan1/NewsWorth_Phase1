@@ -153,7 +153,7 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
 <div className="bg-white shadow-md rounded-lg p-6 mt-8 w-[70%]"> 
       <div className="border-b mb-4">
         <h2 className="text-2xl font-semibold blue-color">Shopping Bag</h2>
-        <p className=" underline text-blue-500 cursor-pointer" onClick={handledashboard}>Add more to Cart</p>
+        <p className=" underline text-blue-500 cursor-pointer" onClick={handledashboard}>Add more items to Cart</p>
         <div className="flex justify-between mt-2 px-2">
           <h2 className="text-[14px] font-semibold text-gray-500">Item</h2>
           <h2 className="text-[14px] font-semibold text-gray-500">Price</h2>
