@@ -34,11 +34,11 @@ const navbar = () => {
 </div>
 <div className="flex text-[16px] gap-[45px]  font-bold justify-center items-center cursor-pointer ">
 
-<div className="p-2 px-4 bg-red-100 rounded-full shadow-sm">
+<div className="p-2 px-4 bg-blue-300 rounded-full shadow-sm">
 <NavLink
 to="/"
           onClick={() => handleNavigation('/')}
-          className={` transition-transform duration-300 ease-in-out transform hover:scale-105 text-blue-500 hover:text-red-500 ${
+          className={` transition-transform duration-300 ease-in-out transform hover:scale-105 text-white hover:text-red-500 ${
             activePage === '/' ? 'font-extrabold' : 'font-normal'
           }`}
         >
@@ -49,11 +49,11 @@ to="/"
     <h1 onClick={handleContactUs} className="underline hover:text-blue-400">Contact Us</h1>
 </div> */}
 
-<div className="p-2 px-4 bg-red-100 rounded-full shadow-sm">
+<div className="p-2 px-4 bg-blue-300 rounded-full shadow-sm">
         <NavLink
           to="/signup"
           onClick={() => handleNavigation('signup')}
-          className={` transition-transform duration-300 ease-in-out transform hover:scale-105 text-blue-500 hover:text-red-500 ${
+          className={` transition-transform duration-300 ease-in-out transform hover:scale-105 text-white hover:text-red-500 ${
             activePage === 'signup' ? 'font-extrabold' : 'font-normal'
           }`}
         >
@@ -61,11 +61,11 @@ to="/"
         </NavLink>
       </div>
 
-      <div className="p-2 px-4 bg-red-100 rounded-full shadow-sm">
+      <div className="p-2 px-4 bg-blue-300 rounded-full shadow-sm">
         <NavLink
           to="/login"
           onClick={() => handleNavigation('login')}
-          className={` transition-transform duration-300 ease-in-out transform hover:scale-105 text-blue-500 hover:text-red-600 ${
+          className={` transition-transform duration-300 ease-in-out transform hover:scale-105 text-white hover:text-red-600 ${
             activePage === 'login' ? 'font-extrabold' : 'font-normal'
           }`}
         >

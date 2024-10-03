@@ -56,6 +56,12 @@
     }
   }
   
+  @layer utilities {
+    .clip-path-custom {
+      -webkit-clip-path: polygon(0% 0%, 80% 0, 81% 10%, 95% 18%, 81% 28%, 81% 100%, 0 100%);
+      clip-path: polygon(0% 0%, 80% 0, 81% 10%, 95% 18%, 81% 28%, 81% 100%, 0 100%);
+    }
+  }
   
   @keyframes slide-left {
     0% {

@@ -4,106 +4,239 @@ import Navbar from "../Navbar/navbar";
 import { useNavigate } from "react-router-dom";
 import Landing from "../landing/landing";
 import { useParams } from 'react-router-dom';
+import videoSrc from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4';
+import videoSrc6 from '../../src/assets/Images/home/10_30 PM _ 12th September 2024 _ ETV News _ News Headlines _ ETV Andhra Pradesh.mp4';
+import videoSrc7 from '../../src/assets/Images/home/CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation.mp4';
 import shareImg from '../../src/assets/Images/dashboard/share.png';
 import moreImg from '../../src/assets/Images/dashboard/more.png';
 import likeImg from '../../src/assets/Images/dashboard/like.png';
 import NewsWorth from '../../src/assets/Images/home/NewsWorth.png';
 import pic from '../../src/assets/Images/landing/pic.jpg';
+import Auido from '../../src/assets/Images/dashboard/voice-control.png'
+import video from  '../../src/assets/Images/dashboard/camera.png';
+import camera from '../../src/assets/Images/dashboard/camera-c.png';
+import card from '../../src/assets/Images/dashboard/shopping-cart.png';
 import src from '../../src/assets/Images/dashboard/crickit.webp';
 
-import news1 from '../../src/assets/Images/dashboard/news1.webp';
-
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-const videos = [
+const videos1 = [
     {
        id: 1,
-       src:src,
-
-      title: "Cricketers' practice in Anantapur.",
+       src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
+      title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
       channel: "iDream Trending",
       views: "1.8M views",
       uploadDate: "1 month ago",
-      moreIconSrc: moreImg,
+      moreIconSrc: "src/assets/Images/dashboard/more.png",
     },
     {
         id: 2,
-        src:src,
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: moreImg,
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
       },
       {
         id: 3,
-        src:src,
-
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: moreImg,
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
       },
       {
         id: 4,
-        src:src,
-
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: moreImg,
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
       },
       {
         id: 5,
-        src:src,
-
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: moreImg,
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
       },
       {
         id: 6,
-        src:src,
-
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: moreImg,
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
       },
       {
         id: 7,
-        src:src,
-
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: moreImg,
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
       },
       {
         id: 8,
-        src:src,
-
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: moreImg,
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
       },
       {
         id: 9,
-        src:"src/assets/Images/dashboard/crickit.webp",
+        src:"src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4",
         title: "YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024",
         channel: "iDream Trending",
         views: "1.8M views",
         uploadDate: "1 month ago",
-        moreIconSrc: moreImg,
+        moreIconSrc: "src/assets/Images/dashboard/more.png",
       },
     // Add more video objects as needed
+  ];
+  const videoData = [
+    {
+      id: 1,
+      videoSrc: videoSrc, // video file or URL
+      thumbnail: 'your-thumbnail-1.jpg', // thumbnail URL if needed
+      title: 'YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024',
+      channelIcon: pic, // channel icon image
+      views: '9.2M views',
+      duration: '2:29',
+      postedTime: '18 hours ago',
+      channelName: 'SakshiTV'
+    },
+    {
+      id: 2,
+      videoSrc: videoSrc, // video file or URL
+
+      thumbnail: 'your-thumbnail-2.jpg',
+      title: '10:30 PM | 12th September 2024 | ETV News | News Headlines | ETV Andhra Pradesh',
+      channelIcon: pic,
+      views: '280 views',
+      duration: '1:31',
+      postedTime: '2 days ago',
+      channelName: 'ETV Andhra Pradesh'
+    },
+    {
+        id: 3,
+        videoSrc: videoSrc, // video file or URL
+  
+        thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
+
+        title: 'CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation',
+        channelIcon: pic,
+        views: '1.5M views',
+        duration: '1:22',
+        postedTime: '2 days ago',
+        channelName: 'XYZ Productions'
+      },
+      {
+        id: 4,
+        videoSrc: videoSrc, // video file or URL
+  
+        thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
+        title: 'Some Other Trailer | Actor | Actress',
+        channelIcon: pic,
+        views: '1.5M views',
+        duration: '3:10',
+        postedTime: '2 days ago',
+        channelName: 'XYZ Productions'
+      },
+      {
+        id: 5,
+        videoSrc: videoSrc, // video file or URL
+
+        thumbnail: 'your-thumbnail-1.jpg', // thumbnail URL if needed
+        title: 'YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024',
+        channelIcon: pic,
+        views: '9.2M views',
+        duration: '2:29',
+        postedTime: '18 hours ago',
+        channelName: 'SakshiTV'
+      },
+      {
+        id: 6,
+        videoSrc: videoSrc6, // video file or URL
+  
+        thumbnail: 'your-thumbnail-2.jpg',
+        title: '10:30 PM | 12th September 2024 | ETV News | News Headlines | ETV Andhra Pradesh',
+
+        channelIcon: pic,
+              views: '280 views',
+        duration: '1:31',
+        postedTime: '2 days ago',
+        channelName: 'ETV Andhra Pradesh'
+      },
+      {
+          id: 7,
+          videoSrc:videoSrc7, // video file or URL
+    
+          thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
+  
+          title: 'CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation',
+          channelIcon: pic,
+          views: '1.5M views',
+          duration: '1:22',
+          postedTime: '2 days ago',
+          channelName: 'XYZ Productions'
+        },
+        {
+          id: 8,
+          videoSrc: videoSrc, // video file or URL
+    
+          thumbnail: 'src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4',
+          title: 'Some Other Trailer | Actor | Actress',
+          channelIcon: pic,
+          views: '1.5M views',
+          duration: '3:10',
+          postedTime: '2 days ago',
+          channelName: 'XYZ Productions'
+        },
+   
+    // Add more video objects here
+  ];
+  const videos = [
+    {
+      id: 1,
+      videoSrc: src, // Replace with actual video path or URL
+      duration: '03:24',
+      title: 'Best News and Best Source, And the Best ...',
+    },
+    {
+      id: 2,
+      videoSrc: src,
+      duration: '03:24',
+      title: 'Best News and Best Source, And the Best ...',
+    },
+    {
+      id: 3,
+      videoSrc: src, // Replace with actual video path or URL
+      duration: '03:24',
+      title: 'Best News and Best Source, And the Best ...',
+    },
+    {
+      id: 4,
+      videoSrc: src,
+      duration: '03:24',
+      title: 'Best News and Best Source, And the Best ...',
+    },
+    {
+      id: 5,
+      videoSrc: src, // Replace with actual video path or URL
+      duration: '03:24',
+      title: 'Best News and Best Source, And the Best ...',
+    },
+    // Add more videos here...
   ];
 const watchimages = () => {
   const navigate = useNavigate();
@@ -195,204 +328,180 @@ const watchimages = () => {
     setActiveReplyId(null);
     setReplyText('');
   };
+  const [activeTab, setActiveTab] = useState('Images'); // Default to Audio
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [buttonsPerPage, setButtonsPerPage] = useState(6); // Default number of visible buttons
+
+  // Number of buttons visible at once
+  const updateButtonsPerPage = () => {
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth >= 1024) {
+      setButtonsPerPage(13); // Large screens: show 6 buttons
+    } else if (screenWidth >= 768) {
+      setButtonsPerPage(4); // Medium screens: show 4 buttons
+    } else {
+      setButtonsPerPage(2); // Small screens: show 2 buttons
+    }
+  };
+
+  useEffect(() => {
+    updateButtonsPerPage(); // Set initial value based on the current screen size
+    window.addEventListener("resize", updateButtonsPerPage); // Update on screen resize
+
+    // Cleanup listener on component unmount
+    return () => window.removeEventListener("resize", updateButtonsPerPage);
+  }, [])
+
+  const buttonLabels = [
+    "Social", "Political", "Social", "Political", "Social", "Political",
+    "Social", "Political", "Social", "Political", "Social", "Political",
+    "Social", "Political", "Social", "Political", "Social", "Political",
+  ];
+
+  // Function to go to the previous set of buttons
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1); // Move one button to the left
+    }
+  };
+
+  // Function to go to the next set of buttons
+  const handleNext = () => {
+    if (currentIndex + buttonsPerPage < buttonLabels.length) {
+      setCurrentIndex(currentIndex + 1); // Move one button to the right
+    }
+  };
+
+  // Slice the button array to show only a subset based on the currentIndex
+  const visibleButtons = buttonLabels.slice(currentIndex, currentIndex + buttonsPerPage);
 
   return (
     <>
    <Landing/>
-   <div className="relative p-[20px] ">
-  
-   <div className="xl:flex xl:flex-row md:flex md:flex-col justify-center">
-    <div className="p-[10px] lg:w-[100%] xl:w-[100%]">
-    <div className="text-[18px] font-bold p-[5px] ">
-
-<h1 >The assets of Congress candidate Vinesh Phogat are as follows...</h1>
-</div>
-        <div className="w-[100%]">
-       <img src={news1} alt=""  className="w-[100%] h-auto"  />
-        </div>
-        <div className="text-[18px] font-bold p-[5px] ">
-
-            <p className=" text-gray-500 text-sm my-[8px]">The Congress candidate for Julana, Vinesh Phogat, has mentioned in her affidavit that she owns a Volvo XC 60 (₹35 lakhs), a Hyundai Creta, and an Innova car. She has taken a loan of ₹13 lakhs for the Innova and is paying EMIs. She owns a plot worth ₹2 crore in Sonipat. She also has ₹1.95 lakhs in cash. According to her IT returns, she earned ₹13,85,000 in the last financial year. Her husband, Somveer, owns a Mahindra Scorpio.</p>
-        </div>
-        <div className="flex flex-row justify-between p-[5px]">
-        <div className="flex gap-[10px] items-center">
-            <div className="mx-[5px]">
-                <img src={NewsWorth} alt="" className="w-[25px] h-[25px] " />
-            </div>
-            <div>
-            <div className="flex gap-[10px]">
-                <h1>NewsWorth Arts</h1>
-                   <p>?</p>
-            </div>
-            <p className="text-[12px] text-gray-300">136K subscribers</p>
-            </div>
-        </div>
-        <div className="flex justify-center items-center">
-        <div className="flex flex-row gap-[5px] bg-gray-300 rounded-[28px] p-[4px] px-[10px] items-center">
-                <img src={likeImg} alt="" className="w-[20px] h-[20px]" />
-                <p>83k</p>
-                <p>|</p>
-                <img src={likeImg} className="w-[20px] h-[20px] rotate-180" alt="" />
-            </div>
-            <div className="flex gap-[5px] ml-[8px]  bg-gray-300 rounded-[28px] p-[4px] px-[10px] items-center "> 
-                <div >
-                    <img src={shareImg} alt="" className="w-[20px] h-[20px]" />
-                </div>
-                <p>shere</p>
-            </div>
-            <div className="flex gap-[5px] ml-[8px]  bg-gray-300 rounded-[50px] p-[5px] items-center "> 
-                <div >
-                    <img src={moreImg} alt="" className="w-[25px] h-[20px]" />
-                </div>
-            </div>
-            </div>
-            </div>
-
-            <div className="flex flex-col">
-                <div>
-                    <h1>1111 <span className="font-bold">Comments</span></h1>
-                </div>
-              
-           
-
-            <div className=" p-[5px]" >
-                
-<div>
-
-                        <img src={pic} alt=""  className="w-[50px] h-[50px]"/>
-</div>
-                
-                    
-                    <div className="flex flex-col ">
-                        <div className="ml-[8px] pb-[5px]">
-                    <TextField
-     id="GST Number" 
-     label="Add a Comment..." 
-     onClick={() => setIsExpanded(true)}
-     onChange={handleCommentChange}
-     variant="standard"
-    className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
- />
- </div>
- {isExpanded && (
-        <div className="flex justify-between">
-          <img src={pic} alt="User" className="w-[30px] h-[30px]" />
-          <div className="flex gap-[10px]">
-            <button className="primary-btn" onClick={() => setIsExpanded(false)}>Cancel</button>
-            <button className="primary-btn" onClick={handleSubmit}>Submit</button>
-          </div>
-        </div>
-      )}
-                    </div>
-                </div>
-                </div>
-                {commentsList.map((commentItem, index) => (
-        <div key={index} className="flex relative justify-between p-4 border-b">
-          <div className="flex">
-            <div>
-              <img src={pic} alt="User" className="w-[50px] h-[50px]" />
-            </div>
-            <div>
-              <div className="flex p-[4px] font-bold">
-                <p>{commentItem.username}</p>
-                <p className="ml-4">{commentItem.timeAgo}</p>
-              </div>
-              <div className="flex-wrap box-content whitespace-pre-wrap w-full p-[4px] font-light">
-                {commentItem.content}
-              </div>
-              <div className="flex p-[4px] items-center">
-                <img src={likeImg} alt="like" className="w-[20px] h-[20px]" />
-                <p className="mx-[8px]">{commentItem.likes}k</p>
-                <img src={likeImg} alt="dislike" className="w-[20px] h-[20px] rotate-180 ml-[10px]" />
-                <p className="ml-[20px] cursor-pointer" onClick={() => handleReplyClick(commentItem.id)}>Reply</p>
-
-              </div>
-
-              <div className="text-blue-700">
-                {commentItem.replies.length > 0 && (
-                  <p className="hover:rounded-[28px] hover:bg-sky-200 p-[5px] cursor-pointer">
-                    {commentItem.replies.length} replies
-                  </p>
-                )}
-              </div>
-              
-
-              {activeReplyId === commentItem.id && (
-                <div className="ml-[8px] pb-[5px]">
-                  <TextField
-                    id="reply-input"
-                    label="Reply"
-                    variant="standard"
-                    onChange={(e) => setReplyText(e.target.value)}
-                    value={replyText}
-                    className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF] placeholder:text-[#CCCCCC]"
-                  />
-                  <div className="flex justify-between">
-                    <img
-                      src={pic}
-                      alt=""
-                      className="w-[30px] h-[30px]"
-                    />
-                    <div className="flex gap-[10px]">
-                      <button className="primary-btn" onClick={handleCancelReply}>
-                        Cancel
-                      </button>
-                      <button className="primary-btn" onClick={() => handleReplySubmit(commentItem.id)}>
-                        Reply
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-          <div>
-            <img src={moreImg} alt="more" className="w-[20px] h-[20px]" />
-          </div>
-        </div>
-      ))}
-    </div>
-    <div className=" mt-8">
-    {videos.map((video) => (
-    <div key={video.id} className="flex shadow-md rounded-[10px] overflow-hidden mt-4 max-w-[600px]">
-  {/* Thumbnail Section */}
-  <div className= " w-[40%] h-auto object-cover">
-   
-<img src={video.src} alt="" srcset="" className="w-full max-h-full h-auto object-cover" />
-  </div>
-  <div className="flex flex-col w-[60%] p-[15px]">
-     
-        <div className="flex flex-col gap-[8px] mb-[15px]">
-          
-          <div className="flex justify-between">
-            <div>
-              <h1 className="font-bold text-[14px]">{video.title}</h1>
-              <p className="text-sm text-gray-700 line-clamp-2 md:line-clamp-1">
-                Cricketers practiced at the RDT Stadium in Anantapur. Players arrived at the stadium from their hotels in special buses and sweated it out in the nets...
-              </p>
-            </div>
-            <div>
-              <img src={video.moreIconSrc} alt="More" className="w-[30px] h-[20px]" />
-            </div>
-          </div>
-   
-          <div className="flex flex-col text-[12px] text-gray-500">
-
-            <p className="font-semibold">{video.channel}</p>
-            <div className="flex">
-              <p>{video.views}</p>
-              <span className="px-1">•</span>
-              <p>{video.uploadDate}</p>
-            </div>
-          </div>
-        </div>
+   <div className="flex w-full items-center p-4">
+      {/* Audio Tab */}
     
+
+      {/* Videos Tab */}
+      <div
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        onClick={() => setActiveTab('Videos')}
+      >
+        <img src={video} alt="Video Icon" className="w-[25px] h-[25px]" />
+        <h1 className="text-[18px]">Videos</h1>
+      </div>
+
+      {/* Images Tab */}
+      <div
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        onClick={() => setActiveTab('Images')}
+      >
+        <img src={camera} alt="Image Icon" className="w-[25px] h-[25px]" />
+        <h1 className="text-[18px]">Images</h1>
+      </div>
+      <div
+        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        onClick={() => setActiveTab('Audio')}
+      >
+        <img src={Auido} alt="Audio Icon" className="w-[25px] h-[25px]" />
+        <h1 className="text-[18px]">Audio</h1>
+      </div>
     </div>
+
+    <div className="flex  items-center my-4 ">
+   
+
+      {/* Buttons container */}
+      <div className="flex space-x-3 mx-3">
+        {visibleButtons.map((label, index) => (
+          <button key={index} className="bg-gray-400 text-white py-1 px-4 rounded">
+            {label}
+          </button>
+        ))}
+      </div>
+   {/* Less than button */}
+   <button 
+        className="p-2 text-gray-600" 
+        onClick={handlePrevious}
+        disabled={currentIndex === 0}
+      >
+        &lt;
+      </button>
+      {/* Greater than button */}
+      <button 
+        className="p-2 text-gray-600" 
+        onClick={handleNext}
+        disabled={currentIndex + buttonsPerPage >= buttonLabels.length}
+      >
+        &gt;
+      </button>
+    </div>
+    <div className="flex flex-row justify-between items-start px-4 py-2 gap-4">
+  {/* Text Section */}
+  <div className="w-[20%]">
+    <p className="text-blue-500 font-bold mb-[10px]">
+      Best News and Best Source, And the Best
+    </p>
+    <p className="text-gray-700">
+      Best News and Best Source Best News and Best Source Best News and Best Source Best News and Best Source Best News and Best Source Best News and Best Source
+    </p>
+    <div className="text-sm text-gray-500 mt-2">
+      <p className="text-pink-500 font-bold text-[12px]">2 days and 20 hours ago</p>
+      <p className="text-[12px]">Bangalore, Karnataka, India</p>
+      <p className="font-semibold text-blue-500 text-[12px]">Creator Ram M Reddy</p>
+    </div>
+  </div>
+
+  {/* Video Section */}
+  <div className="w-[60%]">
+    <img src={src}  className="w-full"/>
+   
+  </div>
+
+  {/* Price Info Section */}
+  <div className="w-[20%] flex flex-col items-end">
+    <div className="flex items-center mb-2">
+      <img src={Auido} alt="" className="w-8 h-8" />
+      <p className="ml-2">MP3. 335 AUC</p>
+    </div>
+    <div className="text-lg">
+      <p className="font-bold text-blue-600">
+        Price ₹ 300.00 
+        <span className="text-sm text-gray-500">
+          <span className="line-through">₹ 369</span> at Discount 23%
+        </span>
+      </p>
+    </div>
+    <div className="mt-2">
+      <img src={card} alt="" className="w-8 h-8" />
+    </div>
+  </div>
 </div>
-  ))}
+<div className="grid grid-cols-5 gap-4 px-4 p-2">
+      {videos.map((video) => {
+        const videoRef = React.createRef();
+        return (
+          <div key={video.id}>
+            <div className="relative group">
+          <img src={video.videoSrc} alt=""
+          className="w-full h-25 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
+ />
+             
+              
+              {/* Video Duration Overlay */}
+              {/* <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
+                {video.duration}
+              </div> */}
+            </div>
+            <div>
+              <p className="text-center">{video.title}</p>
+            </div>
+          </div>
+        );
+      })}
     </div>
-   </div>
-   </div>
+
     </>
   
   );

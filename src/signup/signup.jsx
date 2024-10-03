@@ -87,6 +87,8 @@ const [showMobileOTP, setShowMobileOTP] = useState(false);
   const [showEmailOTP, setShowEmailOTP] = useState(false);
 //   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const [error, setError] = useState(false);
+const [error1, setError1] = useState(false);
+const [error2, setError2] = useState(false);
 
 const handleDateChange = (e) => {
   const selectedDate = new Date(e.target.value);
@@ -126,15 +128,15 @@ const handleMobileChange = (e) => {
 
   // Show an error if the entered value is not valid
   if (value && !mobileRegex.test(value)) {
-    setError("Mobile number is not valid.");
+    setError1("Mobile number is not valid.");
   } else if (value.length < 10){
-    setError("Mobile number must be exactly 10 digits.");
+    setError1("Mobile number must be exactly 10 digits.");
 
   }
 
   
     else {
-    setError(""); // Clear error if the number is valid
+    setError1(""); // Clear error if the number is valid
   }
 };
 
@@ -149,9 +151,9 @@ const handleEmailChange = (e) => {
 
   // Show an error if the entered email is not valid
   if (value && !emailRegex.test(value)) {
-    setError("Email is not valid.");
+    setError2("Email is not valid.");
   } else {
-    setError(""); // Clear error if the email is valid
+    setError2(""); // Clear error if the email is valid
   }
 };
 useEffect(() => {
@@ -522,7 +524,11 @@ const sendOtp = async () => {
       setHideOtpButtons(true);
       setShowPassword1(true);
       setIsEditable(false);
-    } else if (result.response === 'success') {
+    } else if(result.response === 'success' && result.response_message ==="Mobile is already registered. Please log in or use a different mobile number." && result.data === "logged_in") {
+      setSuccess(result.response_message);
+    } else if(result.response === 'fail' && result.response_message ==="Email is already registered. Please log in or use a different email." && result.data === "logged_in") {
+      setSuccess(result.response_message);
+    }  else if (result.response === 'success') {
       setSuccess(result.response_message);
       setMessage('');
       setSuccess(result.response_message);
@@ -1680,8 +1686,8 @@ useEffect(() => {
      variant="outlined"
      value={mobile}
      onChange={handleMobileChange} 
-     error={Boolean(error)} // Apply error styling when there's an error
-     helperText={error} //
+     error={Boolean(error1)} // Apply error styling when there's an error
+     helperText={error1} //
      InputLabelProps={{
       style: {
         color: '#666666', // Reduced label color
@@ -1726,8 +1732,8 @@ useEffect(() => {
      disabled={!isEditable}
      value={email}
      onChange={handleEmailChange} 
-     error={Boolean(error)} // Apply error styling when there's an error
-     helperText={error}
+     error={Boolean(error2)} // Apply error styling when there's an error
+     helperText={error2}
      InputLabelProps={{
       style: {
         color: '#666666', // Reduced label color
@@ -1770,17 +1776,17 @@ useEffect(() => {
   <div className="flex gap-[10px]">
   {showreset && (
     showreset1 ? (
-    <button className="primary-btn" onClick={handleRest1}>Save</button>
+    <button className="primary-btn text-[12px] font-semibold " onClick={handleRest1}>Save</button>
 
   ):(
-    <button className="primary-btn" onClick={handleRest}>Edit Details</button>
+    <button className="primary-btn text-[12px] font-semibold " onClick={handleRest}>Edit Details</button>
   
   )
     )}
    {!hideOtpButtons && (
   !showOtpField1 ? (
     <div className="flex justify-end">
-      <button               className={`primary-btn ${!otpButtonEnabled ? 'cursor-not-allowed opacity-50' : ''}`}onClick={sendOtp} disabled={!otpButtonEnabled}>Send OTP</button>
+      <button               className={`primary-btn text-[12px] font-semibold  ${!otpButtonEnabled ? 'cursor-not-allowed opacity-50' : ''}`}onClick={sendOtp} disabled={!otpButtonEnabled}>Send OTP</button>
     </div>
   ) : (
     <div className="flex justify-end space-x-4 items-center">
@@ -1790,7 +1796,7 @@ useEffect(() => {
       <button
         onClick={sendOtp}
         disabled={!resendAvailable1}
-        className={`p-[5px] px-4 rounded-[50px] ${resendAvailable1 ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+        className={`p-[5px] px-4 rounded-[50px] text-[12px] font-semibold  ${resendAvailable1 ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
       >
         {resendAvailable1 ? "Resend OTP" : "Resend OTP"}
       </button>
@@ -2010,8 +2016,8 @@ useEffect(() => {
 </div>
 )}
 {selectedCategory === 2 && selectedUserType &&(
-  <div className="flex flex-col gap-[15px]">
-    <div className=" flex gap-[10px] justify-center ">
+  <div className="flex flex-col gap-[20px]">
+    <div className=" flex gap-[15px] justify-center ">
                   <TextField
                     id="firstName"
                     label="First Name"
@@ -2113,7 +2119,7 @@ useEffect(() => {
                     }} 
                   />
                 </div>
-                <div className=" flex gap-[10px] justify-center items-center">
+                <div className=" flex gap-[15px] justify-center items-center">
                 <TextField
         type="date"
         id="Date of Birth" 
@@ -2151,12 +2157,12 @@ useEffect(() => {
         error={error}
         helperText={error ? "You must be 18 years or older" : ""}
       />
-      <div className="relative group">
+      {/* <div className="relative group">
   <img src={info} alt="" className="w-8 h-4" />
   <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-10">
     You must be 18 years old
   </span>
-</div>
+</div> */}
 
        <FormControl variant="outlined" required className="w-full mb-4">
           <InputLabel id="gender-label">Gender</InputLabel>
@@ -2179,13 +2185,13 @@ useEffect(() => {
             </MenuItem>
             <MenuItem value="Female">Female</MenuItem>
             <MenuItem value="Male">Male</MenuItem>
-            <MenuItem value="I prefer not to say">I prefer not to say</MenuItem>
             <MenuItem value="Other">Other</MenuItem>
+            <MenuItem value="I prefer not to say">Prefer not to say</MenuItem>
 
           </Select>
         </FormControl>
 </div>
-<div className=" flex gap-[10px] justify-center">
+{/* <div className=" flex gap-[10px] justify-center">
 <TextField
      id="Country" 
      label="Country" 
@@ -2214,7 +2220,7 @@ useEffect(() => {
           >
         {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
 
-          </div>
+          {/* </div>
         ),
         autoComplete: "off",
       }} 
@@ -2226,8 +2232,8 @@ useEffect(() => {
         },
       }} />
       
-</div>
-                <div className=" flex gap-[10px] justify-center items-center">
+</div> */}
+                <div className=" flex gap-[15px] justify-center items-center">
 <TextField
      id="Mobile" 
      label="Mobile" 
@@ -2236,8 +2242,8 @@ useEffect(() => {
      variant="outlined"
      value={mobile}
      onChange={handleMobileChange} 
-     error={Boolean(error)} // Apply error styling when there's an error
-     helperText={error} //
+     error={Boolean(error1)} // Apply error styling when there's an error
+     helperText={error1} //
      InputLabelProps={{
       style: {
         color: '#666666', // Reduced label color
@@ -2268,12 +2274,12 @@ useEffect(() => {
           WebkitTextFillColor: '#000', // Text color when autofilled
         },
       }} />
-            <div className="relative group">
+            {/* <div className="relative group">
   <img src={info} alt="" className="w-8 h-4" />
   <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-10">
   Please enter either an email or a mobile number, or both.
   </span>
-</div>
+</div> */}
        <TextField
      id="Email" 
      label="Email" 
@@ -2282,8 +2288,8 @@ useEffect(() => {
  disabled={!isEditable}
      value={email}
      onChange={handleEmailChange}
-     error={Boolean(error)} // Apply error styling when there's an error
-     helperText={error} 
+     error={Boolean(error2)} // Apply error styling when there's an error
+     helperText={error2} 
      InputLabelProps={{
       style: {
         color: '#666666', // Reduced label color
@@ -2326,10 +2332,10 @@ useEffect(() => {
   <div className="flex gap-[10px]">
     {showreset && (
     showreset1 ? (
-    <button className="primary-btn" onClick={handleRest1}>Save</button>
+    <button className="primary-btn text-[12px] font-semibold " onClick={handleRest1}>Save</button>
 
   ):(
-    <button className="primary-btn" onClick={handleRest}>Edit Details</button>
+    <button className="primary-btn text-[12px] font-semibold " onClick={handleRest}>Edit Details</button>
   
   )
     )}
@@ -2339,7 +2345,7 @@ useEffect(() => {
     {!hideOtpButtons && (
   !showOtpField1 ? (
     <div className="flex justify-end">
-      <button               className={`primary-btn ${!otpButtonEnabled ? 'cursor-not-allowed opacity-50' : ''}`} onClick={sendOtp}        
+      <button               className={`primary-btn text-[12px] font-semibold  ${!otpButtonEnabled ? 'cursor-not-allowed opacity-50' : ''}`} onClick={sendOtp}        
              disabled={!otpButtonEnabled}  >Send OTP</button>
     </div>
   ) : (
@@ -2350,7 +2356,7 @@ useEffect(() => {
       <button
         onClick={sendOtp}
         disabled={!resendAvailable1}
-        className={`p-[5px] px-4 rounded-[50px] ${resendAvailable1 ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+        className={`p-[5px] px-4 rounded-[50px] text-[12px] font-semibold  ${resendAvailable1 ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
       >
         {resendAvailable1 ? "Resend OTP" : "Resend OTP"}
       </button>
@@ -2362,7 +2368,7 @@ useEffect(() => {
 
 </div>
  
-  <div className=" flex gap-[10px] justify-center">
+  <div className=" flex gap-[15px] justify-center">
   {showMobileOTP && (
 
   <TextField
@@ -2455,7 +2461,7 @@ useEffect(() => {
   </div>
 )}
 {showPassword1 &&(
-  <div className=" flex gap-[10px] justify-center">
+  <div className=" flex gap-[15px] justify-center">
 <TextField
      id="Password" 
      label="Password" 
@@ -2546,12 +2552,12 @@ useEffect(() => {
       type="checkbox"
       id="termsCheckbox"
       onChange={handleCheckboxChange}
-      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+      className="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
       required
     />
-    <label htmlFor="termsCheckbox" className="ml-2 text-sm text-gray-700">
+    <label htmlFor="termsCheckbox" className="ml-2 text-[12px] text-gray-700">
       I agree with the{" "}
-      <a href="#" className="text-blue-600 underline">
+      <a href="#" className="text-blue-600 underline text-[12px]">
         Terms and conditions
       </a>
     </label>
@@ -2561,12 +2567,12 @@ useEffect(() => {
 
 {showRegistr ?(
            <div className="flex  w-full items-center px-[120px]">
-           <button className="w-full  items-center p-2 inline-block text-white  cursor-not-allowed bg-gray-500 rounded-full">Register</button>
+           <button className="w-full  items-center p-2 inline-block text-white font-bold cursor-not-allowed bg-gray-300 rounded-full">Register</button>
          </div>
 
 ):(
   <div className="flex w-full items-center px-[120px]">
-           <button className="w-full  items-center p-2 bg-gradient-to-r from-blue-400 to-red-300  inline-block text-white rounded-full" onClick={handleRegister}>Register</button>
+           <button className="w-full  items-center p-2 font-bold bg-blue-600  inline-block text-white rounded-full" onClick={handleRegister}>Register</button>
          </div>
 )}
 

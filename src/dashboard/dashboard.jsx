@@ -402,31 +402,19 @@ const toggleOptions = (content_id) => {
   setOpenOptionsId(openOptionsId === content_id ? null : content_id);
 };
 
-    useEffect(() => {
-      const audio = audioRef.current;
-  
-      // Set audio duration when metadata is loaded
-      const onLoadedMetadata = () => {
-        setDuration(audio.duration);
-      };
-  
-      // Update current time while audio is playing
-      const onTimeUpdate = () => {
-        setCurrentTime(audio.currentTime);
-        if (progressRef.current) {
-          progressRef.current.value = (audio.currentTime / audio.duration) * 100;
-        }
-      };
-  
-      audio.addEventListener('loadedmetadata', onLoadedMetadata);
-      audio.addEventListener('timeupdate', onTimeUpdate);
-  
-      return () => {
-        audio.removeEventListener('loadedmetadata', onLoadedMetadata);
-        audio.removeEventListener('timeupdate', onTimeUpdate);
-      };
-    }, []);
-  
+useEffect(() => {
+  const audioElement = audioRef.current;
+
+  if (audioElement) {
+    // Ensure the element exists before attaching the listener
+    audioElement.addEventListener('play', handlePlay);
+
+    return () => {
+      // Clean up the event listener when the component unmounts
+      audioElement.removeEventListener('play', handlePlay);
+    };
+  }
+}, []);
     const togglePlayPause = () => {
       const audio = audioRef.current;
       if (isPlaying) {
@@ -550,7 +538,7 @@ const toggleOptions = (content_id) => {
     }
   };
 
-  const [activeTab, setActiveTab] = useState('Audio'); // Default to Audio
+  const [activeTab, setActiveTab] = useState('Videos'); // Default to Audio
   const [currentIndex, setCurrentIndex] = useState(0);
   const [buttonsPerPage, setButtonsPerPage] = useState(6); // Default number of visible buttons
 
@@ -657,17 +645,11 @@ const toggleOptions = (content_id) => {
    
 <div className="flex w-full items-center p-4">
       {/* Audio Tab */}
-      <div
-        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-gradient-to-r from-blue-400 to-red-300 text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
-        onClick={() => setActiveTab('Audio')}
-      >
-        <img src={Auido} alt="Audio Icon" className="w-[25px] h-[25px]" />
-        <h1 className="text-[18px]">Audio</h1>
-      </div>
+    
 
       {/* Videos Tab */}
       <div
-        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-gradient-to-r from-blue-400 to-red-300 text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Videos')}
       >
         <img src={video} alt="Video Icon" className="w-[25px] h-[25px]" />
@@ -676,11 +658,18 @@ const toggleOptions = (content_id) => {
 
       {/* Images Tab */}
       <div
-        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-gradient-to-r from-blue-400 to-red-300 text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Images')}
       >
         <img src={camera} alt="Image Icon" className="w-[25px] h-[25px]" />
         <h1 className="text-[18px]">Images</h1>
+      </div>
+      <div
+        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        onClick={() => setActiveTab('Audio')}
+      >
+        <img src={Auido} alt="Audio Icon" className="w-[25px] h-[25px]" />
+        <h1 className="text-[18px]">Audio</h1>
       </div>
     </div>
 
@@ -779,14 +768,14 @@ const toggleOptions = (content_id) => {
 
         {/* Dropdown Options */}
         {openOptionsId === videoItem.content_id && ( // Only show options if this card is selected
-          <div className="absolute top-12 right-0 bg-white shadow-lg rounded-md p-2 w-32 z-10">
-            <button
-              onClick={() => handleDownload(videoItem.content_link)}
-              className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 p-2"
-            >
-              Delete
-            </button>
-          </div>
+        <div className="absolute top-12 right-0 bg-gray-300 shadow-lg rounded-md p-2 w-32 z-10 clip-path-custom">
+        <button
+          onClick={() => handleDownload(videoItem.content_link)}
+          className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 p-2"
+        >
+          Delete
+        </button>
+      </div>
         )}
       </div>
     </div>
@@ -816,7 +805,7 @@ const toggleOptions = (content_id) => {
   )}
   
 {activeTab ==='Images' && (
- <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+ <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
   {imageData
     .filter((imageItem) => imageItem.content_type === "Image") // Filter to show only images
     .map((imageItem) => {
@@ -830,14 +819,14 @@ const toggleOptions = (content_id) => {
            className="w-full h-60 object-cover group-hover:opacity-50 opacity-90 transition-opacity duration-300"
 
          />
-  <div className="absolute top-2 right-2 ">
-   <img src={expanding} className="w-[20px] h-[20px] text-white group-hover:text-black transition-all duration-300 transform group-hover:scale-125"
+  <div onClick={handleImagesClick} className="absolute top-2 right-2 ">
+   <img onClick={handleImagesClick} src={expanding} className="w-[20px] h-[20px] text-white group-hover:text-black transition-all duration-300 transform group-hover:scale-125"
  alt="" />
   </div>
          {/* Image Duration Overlay or Other Overlay Info */}
-         <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
+         {/* <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
            {imageItem.overlayText || 'Overlay Text'}
-         </div>
+         </div> */}
        </div>
 
        {/* Image Info */}
@@ -846,7 +835,7 @@ const toggleOptions = (content_id) => {
          <img src={camera}   alt="" className="w-[25px] h-[25px] cursor-pointer" />
 
          {/* Price Info */}
-         <div className="text-lg">
+         <div className="text-lg" onClick={handleImagesClick}>
            <p className="font-bold text-blue-600">
              Price {imageItem.price}{' '}
              <span className="text-sm text-gray-500">
@@ -860,7 +849,7 @@ const toggleOptions = (content_id) => {
        </div>
 
        {/* Description */}
-       <div className="flex justify-between px-4">
+       <div className="flex justify-between px-4" onClick={handleImagesClick}>
        <p className="text-blue-600 font-semibold line-clamp-2 w-[60%] h-12">
            {imageItem.content_description}
          </p>

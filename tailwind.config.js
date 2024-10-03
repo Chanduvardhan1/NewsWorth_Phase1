@@ -10,6 +10,9 @@ export default {
       fontFamily:{
         Poppins:["Poppins","sans-serif"]
       },
+      clipPath: {
+        'custom': 'polygon(0% 0%, 80% 0, 81% 10%, 95% 18%, 81% 28%, 81% 100%, 0 100%)',
+      },
       // keyframes: {
       //   fadeIn: {
       //     '0%': { opacity: '0' },

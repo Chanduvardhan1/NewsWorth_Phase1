@@ -328,7 +328,7 @@ const watch = () => {
     setActiveReplyId(null);
     setReplyText('');
   };
-  const [activeTab, setActiveTab] = useState('Audio'); // Default to Audio
+  const [activeTab, setActiveTab] = useState('Videos'); // Default to Audio
   const [currentIndex, setCurrentIndex] = useState(0);
   const [buttonsPerPage, setButtonsPerPage] = useState(6); // Default number of visible buttons
 
@@ -381,17 +381,11 @@ const watch = () => {
    <Landing/>
    <div className="flex w-full items-center p-4">
       {/* Audio Tab */}
-      <div
-        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-gradient-to-r from-blue-400 to-red-300 text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
-        onClick={() => setActiveTab('Audio')}
-      >
-        <img src={Auido} alt="Audio Icon" className="w-[25px] h-[25px]" />
-        <h1 className="text-[18px]">Audio</h1>
-      </div>
+    
 
       {/* Videos Tab */}
       <div
-        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-gradient-to-r from-blue-400 to-red-300 text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Videos')}
       >
         <img src={video} alt="Video Icon" className="w-[25px] h-[25px]" />
@@ -400,11 +394,18 @@ const watch = () => {
 
       {/* Images Tab */}
       <div
-        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-gradient-to-r from-blue-400 to-red-300 text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Images')}
       >
         <img src={camera} alt="Image Icon" className="w-[25px] h-[25px]" />
         <h1 className="text-[18px]">Images</h1>
+      </div>
+      <div
+        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        onClick={() => setActiveTab('Audio')}
+      >
+        <img src={Auido} alt="Audio Icon" className="w-[25px] h-[25px]" />
+        <h1 className="text-[18px]">Audio</h1>
       </div>
     </div>
 
