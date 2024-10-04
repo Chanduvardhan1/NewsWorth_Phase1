@@ -16,6 +16,7 @@ import Auido from '../../src/assets/Images/dashboard/voice-control.png'
 import video from  '../../src/assets/Images/dashboard/camera.png';
 import camera from '../../src/assets/Images/dashboard/camera-c.png';
 import card from '../../src/assets/Images/dashboard/shopping-cart.png';
+import { useLocation } from 'react-router-dom';
 
 
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
@@ -241,7 +242,9 @@ const videos1 = [
 const watch = () => {
   const navigate = useNavigate();
   const videoRef = useRef(null);
- 
+  const location = useLocation();
+  const { videoItem } = location.state; // Extract video data from the state
+
   
   // Function to play the video on hover
   const handleMouseEnter = () => {
@@ -456,7 +459,7 @@ const watch = () => {
 
   {/* Video Section */}
   <div className="w-[60%]">
-    <video src={videoSrc} controls className="w-full">
+    <video src={videoItem.content_link} controls className="w-full">
       Your browser does not support the video tag.
     </video>
   </div>

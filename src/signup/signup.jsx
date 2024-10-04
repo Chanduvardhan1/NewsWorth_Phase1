@@ -2565,7 +2565,7 @@ useEffect(() => {
     <label htmlFor="termsCheckbox" className="ml-2 text-[12px] text-gray-700">
       I agree with the{" "}
       <a href="#" className="text-blue-600 underline text-[12px]">
-        Terms and conditions
+        Terms and Conditions
       </a>
     </label>
   </div>

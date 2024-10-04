@@ -412,7 +412,15 @@ const downloadContent = async (contentId) => {
     if (response.ok) {
       const data = await response.json();
       console.log('Content downloaded:', data);
-      // Handle the downloaded content here
+
+      // Create a downloadable link and trigger the download
+      const downloadLink = document.createElement('a');
+      downloadLink.href = data.url;
+      downloadLink.download = ''; // Add this attribute to force download
+      document.body.appendChild(downloadLink); // Append link to body
+      downloadLink.click(); // Programmatically click the link to trigger download
+      document.body.removeChild(downloadLink); // Remove the link after download
+
     } else {
       console.error('Error downloading content:', response.status);
     }
@@ -423,7 +431,34 @@ const downloadContent = async (contentId) => {
 const toggleOptions = (content_id) => {
   setOpenOptionsId(openOptionsId === content_id ? null : content_id);
 };
+const deleteContent = async (contentId) => {
+  try {
+    const response = await fetch(`${URL}/delete content`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZHUgdmFyZGhhbiBrIiwiZXhwIjoyNTM0MDIzMDA3OTl9.Uqe5qVekl9obUIApZciKKbWhADPSFzTFmG_y2itIjp0',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        content_id: contentId
+      })
+    });
 
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Content deleted successfully:', data);
+      // Handle success (e.g., show a success message or update UI)
+    } else {
+      console.error('Error deleting content:', response.status);
+      // Handle error response (e.g., show an error message)
+    }
+  } catch (error) {
+    console.error('Network error:', error);
+    // Handle network error (e.g., show a network error message)
+  }
+};
 useEffect(() => {
   const audioElement = audioRef.current;
 
@@ -459,8 +494,8 @@ useEffect(() => {
       const seconds = Math.floor(time % 60).toString().padStart(2, '0');
       return `${minutes}:${seconds}`;
     };
-    const handleVideoClick = () => {
-      navigate(`/watch`);
+    const handleVideoClick = (videoItem) => {
+      navigate("/watch", { state: { videoItem } })
     };
     const handleImagesClick = () => {
       navigate(`/Watchimages`);
@@ -746,8 +781,8 @@ useEffect(() => {
                 // onClick={handleVideoClick}
                 src={videoItem.content_link}
               ></video>
-  <div onClick={handleVideoClick} className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-   <img src={play} onClick={handleVideoClick} alt=""  className="w-[20px] h-[20px] text-white group-hover:text-black transition-colors duration-300"
+  <div onClick={() =>handleVideoClick(videoItem)} className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+   <img src={play} onClick={() => handleVideoClick(videoItem)} alt=""  className="w-[20px] h-[20px] text-white group-hover:text-black transition-colors duration-300"
  />
   </div>
               {/* <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
@@ -761,7 +796,7 @@ useEffect(() => {
       <img src={video} alt="" className="w-[25px] h-[25px]" />
 
       {/* Price Info */}
-      <div className="text-lg" onClick={handleVideoClick}>
+      <div className="text-lg" onClick={() => handleVideoClick(videoItem)}>
         <p className="font-bold text-blue-600">
         ₹ {videoItem.price}{' '}
           <span className="text-sm text-gray-500">
@@ -798,7 +833,7 @@ useEffect(() => {
           Download
         </button>
         <button
-          onClick={() => downloadContent(videoItem.content_id)}
+          onClick={() => deleteContent(videoItem.content_id)}
           className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 p-2"
         >
           Delete
@@ -809,7 +844,7 @@ useEffect(() => {
     </div>
 
             {/* Description */}
-            <div onClick={handleVideoClick} className="flex justify-between px-4">
+            <div onClick={() => handleVideoClick(videoItem)} className="flex justify-between px-4">
               <p className="text-blue-500 font-semibold line-clamp-2 w-[60%] h-12">
                 {videoItem.content_description}
               </p>
@@ -821,7 +856,7 @@ useEffect(() => {
             </div>
 
             {/* Article Text */}
-            <div onClick={handleVideoClick} className="px-4 py-4">
+            <div onClick={() => handleVideoClick(videoItem.content_link)} className="px-4 py-4">
               <p className="text-gray-500 line-clamp-2">
                 {videoItem.content_description}
               </p>

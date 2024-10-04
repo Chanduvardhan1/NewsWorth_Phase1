@@ -43,7 +43,7 @@ const filters = () => {
           Images
         </p>
         <p
-          // onClick={() => handleNavigation("/audio")}
+          onClick={() => handleNavigation("/audio")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
             activePage === "/audio" ? "font-bold" : ""
           }`}

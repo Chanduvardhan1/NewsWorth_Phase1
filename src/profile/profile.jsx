@@ -431,7 +431,7 @@ const closeModal = () => {
     <div className="">
 
     <div className="flex p-4 pl-[60px] justify-between items-center ">
-      <h1 className="blue-color font-semibold text-[25px]">My Profile</h1>
+      <h1 className="blue-color  text-[25px]">My Profile</h1>
       <img src={logout1} alt="" onClick={handleBackToLogin} className="w-[25px] h-[25px] cursor-pointer" />
     </div>
     <div className=" flex flex-row w-full  gap-[20px] ">
@@ -495,7 +495,7 @@ const closeModal = () => {
       </div>
     </div>
     
-    <h2 class="text-center text-xl font-semibold mt-4">Profile photo</h2>
+    <h2 class="text-center text-xl  mt-4">Profile photo</h2>
     
     <div class="mt-4 flex justify-between">
       <button class="bg-gray-700 px-4 py-2 rounded text-sm text-white hover:bg-gray-600"  onClick={handleIconClick}>Add photo</button>
@@ -510,8 +510,8 @@ const closeModal = () => {
       )}
     </div>
   <div>
-    <h1 className=" font-semibold text-[18px]">{data1.first_name} {data1.middle_name} {data1.last_name} </h1>
-    <p className=" font-semibold text-[14px]">User ID: {userId}</p>
+    <h1 className="  text-[18px]">{data1.first_name} {data1.middle_name} {data1.last_name} </h1>
+    <p className="  text-[14px]">User ID: {userId}</p>
   </div>
 </div>
 
@@ -549,20 +549,20 @@ const closeModal = () => {
     <div className="flex w-full items-start mt-5 py-5">
         <div className="space-y-1  ">
           <div>
-          <h2 className=" font-semibold text-gray-800">Name</h2>
-          <p className=" text-gray-500 mb-5 font-semibold">{data1.first_name} {data1.middle_name} {data1.last_name} </p>
+          <h2 className="  text-gray-800">Name</h2>
+          <p className=" text-gray-500 mb-5 ">{data1.first_name} {data1.middle_name} {data1.last_name} </p>
       
           </div>
          
           <div className="">
           <div className="flex items-center ">
-              <p className="font-semibold text-gray-800">  {useremail ? 'Verified email' : userphonenumber ? 'Verified mobile' : 'No contact verified'}</p>
+              <p className=" text-gray-800">  {useremail ? 'Verified email' : userphonenumber ? 'Verified mobile' : 'No contact verified'}</p>
               <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
             </div>
             <div className="flex items-center mb-5 gap-[50px]">
-              <p className=" text-gray-500 font-semibold">{useremail ? useremail : userphonenumber ? userphonenumber : 'No contact information available'}</p>
+              <p className=" text-gray-500 ">{useremail ? useremail : userphonenumber ? userphonenumber : 'No contact information available'}</p>
               <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
@@ -572,7 +572,7 @@ const closeModal = () => {
                
                 <div className="flex flex-col gap-[10px] absolute bg-white p-5 shadow-2xl rounded-xl top-[75px] right-[400px]">
                     <div className="flex justify-end items-center mb-4">
-          {/* <h2 className="text-xl font-semibold text-gray-800">Change password</h2> */}
+          {/* <h2 className="text-xl  text-gray-800">Change password</h2> */}
           <button  onClick={handlePopupToggle} className="text-gray-500 hover:text-gray-700">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -685,7 +685,64 @@ const closeModal = () => {
                     </FormControl>
             </div>
            
+            <div className=" flex gap-[15px] justify-end items-end">
+            <TextField
+                 id="Mobile" 
+                 label="Mobile" 
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF] placeholder:text-[#CCCCCC]"
             
+                 variant="standard"
+                 value={userphonenumber}
+                 onChange={handleMobileChange}
+                 disabled={!isEditable} 
+                  // InputProps={{
+                  //   style: {
+                   
+                      
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   <img src="src\assets\Images\signup\iphone.png" alt="" className="w-[18px] text-blue-800" />
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }} 
+                  />
+                  <p>or</p>
+                   <TextField
+                 id="Email" 
+                 label="Email" 
+                 variant="standard"
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                 value={useremail}
+                 onChange={handleEmailChange}
+                 disabled={!isEditable}
+                  // InputProps={{
+                  //   style: {
+                   
+                      
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   <img src="src\assets\Images\login\envelope.png" alt="" className="w-[25px] text-blue-800" />
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }} 
+                  />
+            
+            </div>
            
             {showRegistr ?(
                        <div className="flex justify-end">
@@ -722,19 +779,19 @@ const closeModal = () => {
               )}            
             </div>
             <div className="flex items-center space-x-2">
-              <p className="font-semibold text-gray-800">Gender</p>
+              <p className=" text-gray-800">Gender</p>
               
             </div>
             <div className="flex mb-5 gap-[50px]">
-              <p className=" text-gray-500 font-semibold">{gender}</p>
+              <p className=" text-gray-500 ">{gender}</p>
                          
             </div>
             <div className="flex items-center mt-5">
-              <p className="font-semibold text-gray-800">Data of Birth</p>
+              <p className=" text-gray-800">Data of Birth</p>
               
             </div>
             <div className="flex gap-[50px]">
-              <p className=" text-gray-500 font-semibold">{dateofbirth}</p>
+              <p className=" text-gray-500 ">{dateofbirth}</p>
                     
             </div>
  
@@ -748,24 +805,24 @@ const closeModal = () => {
     )}
     {userType1 === 'Mobile' && (
     <div className="flex w-full items-start mt-5 py-5">
-        <div className="space-y-1  ">
+        <div className="  ">
          
-          <div className="space-y-1">
+          <div className="">
            
             <div className="flex items-center mt-5">
-              <p className="font-semibold text-gray-800">Address Line 1</p>
+              <p className=" text-gray-800">Address Line 1</p>
               
             </div>
-            <div className="flex gap-[50px]">
-              <p className=" text-gray-500 font-semibold">{pincode},{selectedCity},{selectedDistrict},{state},{country}</p>
+            <div className="flex mb-5 gap-[50px]">
+              <p className=" text-gray-500 ">{pincode},{selectedCity},{selectedDistrict},{state},{country}</p>
                     
             </div>
             <div className="flex items-center mt-5">
-              <p className="font-semibold text-gray-800">Address Line 2</p>
+              <p className=" text-gray-800">Address Line 2</p>
               
             </div>
             <div className="flex gap-[50px]">
-              <p className=" text-gray-500 font-semibold">{useraddressline1},{useraddressline2}</p>
+              <p className=" text-gray-500 ">{useraddressline1},{useraddressline2}</p>
               <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
@@ -775,7 +832,7 @@ const closeModal = () => {
                
                 <div className="flex flex-col gap-[10px] absolute bg-white p-5 shadow-2xl rounded-xl top-[75px] right-[400px]">
                     <div className="flex justify-end items-center mb-4">
-          {/* <h2 className="text-xl font-semibold text-gray-800">Change password</h2> */}
+          {/* <h2 className="text-xl  text-gray-800">Change password</h2> */}
           <button  onClick={handlePopupToggle} className="text-gray-500 hover:text-gray-700">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -926,64 +983,7 @@ const closeModal = () => {
                   />
                   
             </div>
-                            <div className=" flex gap-[15px] justify-end items-end">
-            <TextField
-                 id="Mobile" 
-                 label="Mobile" 
-                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF] placeholder:text-[#CCCCCC]"
-            
-                 variant="standard"
-                 value={userphonenumber}
-                 onChange={handleMobileChange}
-                 disabled={!isEditable} 
-                  // InputProps={{
-                  //   style: {
-                   
-                      
-                  //     height: "50px",
-                  //     borderRadius: "10px",
-                  //   },
-                  //   endAdornment: (
-                  //     <div
-                        
-                  //     >
-                  //   <img src="src\assets\Images\signup\iphone.png" alt="" className="w-[18px] text-blue-800" />
-            
-                  //     </div>
-                  //   ),
-                  //   autoComplete: "off",
-                  // }} 
-                  />
-                  <p>or</p>
-                   <TextField
-                 id="Email" 
-                 label="Email" 
-                 variant="standard"
-                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
-            
-                 value={useremail}
-                 onChange={handleEmailChange}
-                 disabled={!isEditable}
-                  // InputProps={{
-                  //   style: {
-                   
-                      
-                  //     height: "50px",
-                  //     borderRadius: "10px",
-                  //   },
-                  //   endAdornment: (
-                  //     <div
-                        
-                  //     >
-                  //   <img src="src\assets\Images\login\envelope.png" alt="" className="w-[25px] text-blue-800" />
-            
-                  //     </div>
-                  //   ),
-                  //   autoComplete: "off",
-                  // }} 
-                  />
-            
-            </div>
+              
             <div className=" flex gap-[15px] justify-center">
             <TextField
                  id="Country" 
@@ -1091,7 +1091,7 @@ const closeModal = () => {
       {userType1 === 'User Id' && (
       <div className="w-full max-w-md mt-5 py-5 items-start ">
    <div className="flex justify-between items-center mb-4">
-     <h2 className="text-xl font-semibold text-gray-800">Change password</h2>
+     <h2 className="text-xl  text-gray-800">Change password</h2>
  
    </div>
 
