@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect ,useContext} from "react";
 import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
 import Landing from "../landing/landing";
@@ -12,10 +12,22 @@ import defaultPhoto from '../../src/assets/Images/landing/pic.jpg'
 import camer from '../../src/assets/Images/home/add-photo.png'
 import logout1 from '../../src/assets/Images/dashboard/power-off.png'
 import x from '../../src/assets/Images/dashboard/cross-button.png'
-import check from '../../src/assets/Images/dashboard/check.png'
+import check from '../../src/assets/Images/dashboard/check.png';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { AuthContext } from "../Authcontext/AuthContext";
+import play from '../../src/assets/Images/dashboard/play-button (1).png';
+import card from '../../src/assets/Images/dashboard/shopping-cart.png';
+import Auido from '../../src/assets/Images/dashboard/voice-control.png';
+import video from '../../src/assets/Images/dashboard/camera.png';
+import camera from  '../../src/assets/Images/dashboard/camera-c.png';
+import expanding from '../../src/assets/Images/dashboard/maximize.png'
+
+// import check from '../../src/assets/Images/dashboard/check.png';
+import moreImg from '../../src/assets/Images/dashboard/more.png';
 
 const signup = () => {
+  const { isAuthenticated, authToken } = useContext(AuthContext);
+
   const [data1, setdata1] = useState('');
   const [showRegistr, setShowRegistr] = useState(true);
 
@@ -24,6 +36,7 @@ const signup = () => {
 
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
+  const [openOptionsId, setOpenOptionsId] = useState(null);
 
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -75,6 +88,9 @@ const [newPassword, setNewPassword] = useState('');
 const [confirmPassword, setConfirmPassword] = useState('');
 const [responseMessage, setResponseMessage] = useState('');
 const [oldPassword, setOldPassword] = useState(localStorage.getItem('password'));
+const [videoData, setVideoData] = useState([]);
+const [imageData, setImageData] = useState([]);
+const [activeTab, setActiveTab] = useState('Videos'); // Default to Audio
 
 const handleChangePassword = async () => {
   const requestBody = {
@@ -122,7 +138,7 @@ const fetchProfileImage = async () => {
     const response = await fetch(`${URL}/view-image?user_id=${userId}`, {
       method: 'GET',
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZHUgdmFyZGhhbiBrIiwiZXhwIjoyNTM0MDIzMDA3OTl9.CRxkCosImYs7S4rSYKl8ISvNqTadNTVx7aeKcs_aV0E',
+        Authorization: `Bearer ${authToken}`,
         'accept': 'application/json',
       },
     });
@@ -157,7 +173,7 @@ const uploadImage = async (file) => {
     const response = await fetch(`${URL}/upload-image?user_id=${userId}`, {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZHUgdmFyZGhhbiBrIiwiZXhwIjoyNTM0MDIzMDA3OTl9.CRxkCosImYs7S4rSYKl8ISvNqTadNTVx7aeKcs_aV0E',
+        Authorization: `Bearer ${authToken}`,
       },
       body: formData,
     });
@@ -198,7 +214,7 @@ const deleteImage = async () => {
     const response = await fetch(`${URL}/remove-image?user_id=${userid}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZGhhbiBrIiwiZXhwIjoyNTM0MDIzMDA3OTl9.CRxkCosImYs7S4rSYKl8ISvNqTadNTVx7aeKcs_aV0E',
+        Authorization: `Bearer ${authToken}`,
         'accept': 'application/json',
       },
     });
@@ -220,7 +236,7 @@ const fetchUserProfile = async () => {
       method: 'POST',
       headers: {
         'accept': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZHUgdmFyZGhhbiBrIiwiZXhwIjoyMDQwNzI0NDk4fQ.RnK47QiAmU0Xmt7hv10c8KrWpLz6Uj9Vvtmt4A0G0_M',
+        Authorization: `Bearer ${authToken}`,
       },
       body: ''
     });
@@ -421,6 +437,47 @@ const togglePasswordVisibility = () => {
 const closeModal = () => {
   setIsModalOpen(false);
 };
+
+const uploadContent = async () => {
+  try {
+    const response = await fetch(`${URL}/uploaded_content?user_id=${1}`, {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: '', // Add payload here if necessary
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    if (data.response === 'success') {
+      setVideoData(data.response_message); 
+      setImageData(data.response_message); // Assuming response_message contains video data
+    }
+    setLoading(false);  // Set loading to false after data is fetched
+    console.log('Response Data:', data);
+  } catch (error) {
+    console.error('Error:', error);
+    setLoading(false);  // Set loading to false in case of an error
+  }
+};
+
+
+
+useEffect(() => {
+  uploadContent();
+}, []);
+
+const toggleOptions = (content_id) => {
+  setOpenOptionsId(openOptionsId === content_id ? null : content_id);
+};
+const toggleSidebar = () => {
+  setIsOpen(!isOpen);
+};
   return (
     <>
    <Landing/>
@@ -537,10 +594,17 @@ const closeModal = () => {
       Change Password
       </div>
       <div
-    className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
-      userType1 === 'Email' ? 'left-0 bg-blue-500' : 
-      userType1 === 'Mobile' ? 'left-1/3 bg-blue-500' : 
-      'left-2/3 bg-blue-500'
+        className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'Content' ? '' : ''}`}
+        onClick={() => setUserType1('Content')}
+      >
+      Content
+      </div>
+      <div
+    className={`absolute bottom-0 h-[2px] w-1/4 transition-all duration-300 ${
+      userType1 === 'Email' ? 'left-0 bg-blue-500' :
+      userType1 === 'Mobile' ? 'left-1/4 bg-blue-500' :
+      userType1 === 'User Id' ? 'left-2/4 bg-blue-500' :
+      userType1 === 'Content' ? 'left-3/4 bg-blue-500' : ''
     }`}
   />
     </div>
@@ -1234,6 +1298,224 @@ InputProps={{
      </div>
    </form>
  </div>
+      )}
+       {userType1 === 'Content' && (
+      <div className="p-5 ">
+        <div className="flex w-full items-center pr-[20px] mb-2">
+        {/* Audio Tab */}
+      
+  
+        {/* Videos Tab */}
+        <div
+          className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+          onClick={() => setActiveTab('Videos')}
+        >
+          <img src={video} alt="Video Icon" className="w-[25px] h-[25px]" />
+          <h1 className="text-[18px]">Videos</h1>
+        </div>
+  
+        {/* Images Tab */}
+        <div
+          className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+          onClick={() => setActiveTab('Images')}
+        >
+          <img src={camera} alt="Image Icon" className="w-[25px] h-[25px]" />
+          <h1 className="text-[18px]">Images</h1>
+        </div>
+        <div
+          className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+          onClick={() => setActiveTab('Audio')}
+        >
+          <img src={Auido} alt="Audio Icon" className="w-[25px] h-[25px]" />
+          <h1 className="text-[18px]">Audio</h1>
+        </div>
+      </div>
+      {activeTab ==='Videos' &&(
+     <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-2 gap-6 mb-6 cursor-pointer">
+     {loading ? (
+       <p>Loading...</p> // Show loading message or spinner
+     ) : videoData.length === 0 ? (
+       <p>No videos available.</p> // Show message when no video data is available
+     ) : (
+       videoData
+         .filter((videoItem) => videoItem.content_type === 'Video') // Filter for videos
+         .map((videoItem) => {
+           const videoRef = React.createRef();
+           return (
+             <div
+               key={videoItem.content_id}
+               className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white"
+             >
+               {/* Video Section */}
+               <div className="relative group">
+                 <video
+                   ref={videoRef}
+                   onMouseEnter={() => handleMouseEnter(videoRef)}
+                   onMouseLeave={() => handleMouseLeave(videoRef)}
+                   className="w-full h-60 object-cover group-hover:opacity-50 opacity-90 transition-opacity duration-300"
+                   muted
+                   loop
+                   src={videoItem.content_link}
+                 ></video>
+                 <div
+                   onClick={() => handleVideoClick(videoItem)}
+                   className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                 >
+                   <img
+                     src={play}
+                     onClick={() => handleVideoClick(videoItem)}
+                     alt=""
+                     className="w-[20px] h-[20px] text-white group-hover:text-black transition-colors duration-300"
+                   />
+                 </div>
+               </div>
+ 
+               {/* Video Info */}
+               <div className="p-4 flex justify-between items-center relative">
+                 <img src={video} alt="" className="w-[25px] h-[25px]" />
+                 <div className="text-lg" onClick={() => handleVideoClick(videoItem)}>
+                   <p className="font-bold text-blue-600">
+                     ₹ {videoItem.price}{' '}
+                     <span className="text-sm text-gray-500">
+                       <span className="line-through text-sm text-gray-500">
+                         {videoItem.final_price}
+                       </span>{' '}
+                       at Discount {videoItem.discount}
+                     </span>
+                   </p>
+                 </div>
+ 
+                 <div className="flex items-center space-x-4">
+                   <img
+                     onClick={() =>
+                       handleAddToCart(
+                         videoItem.content_id,
+                         videoItem.content_link,
+                         videoItem.final_price
+                       )
+                     }
+                     src={card}
+                     alt="Add to Cart"
+                     className="w-[25px] h-[25px] cursor-pointer"
+                   />
+                   <img
+                     src={moreImg}
+                     alt="More options"
+                     className="w-[15px] h-[15px] cursor-pointer"
+                     onClick={() => toggleOptions(videoItem.content_id)}
+                   />
+ 
+                   {openOptionsId === videoItem.content_id && (
+                     <div className="absolute top-[20px] right-[24px] bg-gray-100 shadow-lg rounded-md p-2 w-32 z-10 clip-path-custom">
+                       <button
+                         onClick={() => downloadContent(videoItem.content_id)}
+                         className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 p-2"
+                       >
+                         Download
+                       </button>
+                       <button
+                         onClick={() => deleteContent(videoItem.content_id)}
+                         className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 p-2"
+                       >
+                         Delete
+                       </button>
+                     </div>
+                   )}
+                 </div>
+               </div>
+ 
+               {/* Description */}
+               <div className="flex justify-between px-4">
+                 <p className="text-blue-500 font-semibold line-clamp-2 w-[60%] h-12">
+                   {videoItem.content_description}
+                 </p>
+                 <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
+                   <p className="text-[12px] line-clamp-1 text-[#ce003d]">
+                     {videoItem.age_in_days}
+                   </p>
+                   <p className="text-[12px] line-clamp-1">{videoItem.gps_location}</p>
+                   <p className="text-[12px] text-blue-500">{videoItem.uploaded_by}</p>
+                 </div>
+               </div>
+               <div onClick={() => handleVideoClick(videoItem)} className="px-4 py-4">
+              <p className="text-gray-500 line-clamp-2">
+                {videoItem.content_description}
+              </p>
+            </div>
+             </div>
+           );
+         })
+     )}
+   </div>
+     )}
+     {activeTab ==='Images' && (
+ <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 mb-6 cursor-pointer">
+  {imageData
+    .filter((imageItem) => imageItem.content_type === "Image") // Filter to show only images
+    .map((imageItem) => {
+   return (
+     <div key={imageItem.id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">
+       {/* Image Section */}
+       <div className="relative group">
+         <img
+           src={imageItem.content_link}
+           alt={imageItem.title}
+           className="w-full h-60 object-cover group-hover:opacity-50 opacity-90 transition-opacity duration-300"
+           onClick={() => handleImagesClick(imageItem)}
+         />
+  <div onClick={() => handleImagesClick(imageItem)} className="absolute top-2 right-2 ">
+   <img onClick={() => handleImagesClick(imageItem)} src={expanding} className="w-[20px] h-[20px] text-white group-hover:text-black transition-all duration-300 transform group-hover:scale-125"
+ alt="" />
+  </div>
+         {/* Image Duration Overlay or Other Overlay Info */}
+         {/* <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
+           {imageItem.overlayText || 'Overlay Text'}
+         </div> */}
+       </div>
+
+       {/* Image Info */}
+       <div className="p-4 flex justify-between items-center">
+         {/* Left Icon */}
+         <img src={camera}   alt="" className="w-[25px] h-[25px] cursor-pointer" />
+
+         {/* Price Info */}
+         <div className="text-lg" onClick={() => handleImagesClick(imageItem)}>
+           <p className="font-bold text-blue-600">
+           ₹ {imageItem.price}{' '}
+             <span className="text-sm text-gray-500">
+               <span className="line-through text-sm text-gray-500">{imageItem.final_price}</span> at Discount {imageItem.discount}%
+             </span>
+           </p>
+         </div>
+
+         {/* Right Icon */}
+         <img src={card} alt="" onClick={toggleSidebar} className="w-[25px] h-[25px] cursor-pointer" />
+       </div>
+
+       {/* Description */}
+       <div className="flex justify-between px-4" onClick={() => handleImagesClick(imageItem)}>
+       <p className="text-blue-600 font-semibold line-clamp-2 w-[60%] h-12">
+           {imageItem.content_description}
+         </p>
+         <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
+           <p className="text-[12px] line-clamp-1 text-[#ce003d]">{imageItem.age_in_days}</p>
+           <p className="text-[12px] line-clamp-1">{imageItem.gps_location}</p>
+           <p className="text-[12px]  text-blue-600">{imageItem.uploaded_by}</p>
+         </div>
+       </div>
+
+       {/* Article Text */}
+       <div className="px-4 py-4">
+         <p className="text-gray-600 line-clamp-2">
+           {imageItem.content_description}
+         </p>
+       </div>
+     </div>
+   );
+ })}
+</div>
+)}
+   </div>
       )}
   </div>
 

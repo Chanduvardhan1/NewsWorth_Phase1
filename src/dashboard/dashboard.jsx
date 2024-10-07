@@ -41,8 +41,62 @@ import Image4 from '../../src/assets/Images/dashboard/news1.webp';
 import lessthan from '../../src/assets/Images/dashboard/less-than-symbol.png';
 import play from '../../src/assets/Images/dashboard/play-button (1).png';
 import expanding from '../../src/assets/Images/dashboard/maximize.png'
+import imgSrc1 from '../../src/assets/Images/dashboard/HYD.webp';
 
+import { FaPlay,FaArrowDown,FaHeart } from "react-icons/fa";
+import { HiEllipsisVertical } from "react-icons/hi2";
 
+const cardData = [
+  {
+    id: 1,
+    imgSrc:imgSrc1,
+    trackTime: '00:17',
+    trackName: 'Hi-Tech Cybernetic Device',
+    artist: 'Art of Sound',
+    category: 'Futuristic Sounds',
+    price: 3,
+    trackBPM: 120,
+    cardIcon: card,
+  },
+  {
+      id: 2,
+    imgSrc:imgSrc1,
+    trackTime: '00:17',
+    trackName: 'Hi-Tech Cybernetic Device',
+    artist: 'Art of Sound',
+    category: 'Futuristic Sounds',
+    price: 3,
+    trackBPM: 120,
+    cardIcon: card,
+    },
+    {
+      id: 3,
+      imgSrc:imgSrc1,
+      trackTime: '00:17',
+      trackName: 'Hi-Tech Cybernetic Device',
+      artist: 'Art of Sound',
+      category: 'Futuristic Sounds',
+      price: 3,
+      trackBPM: 120,
+      cardIcon: card,
+    },
+    {
+      id: 4,
+      imgSrc:imgSrc1,
+      trackTime: '00:17',
+      trackName: 'Hi-Tech Cybernetic Device',
+      artist: 'Art of Sound',
+      category: 'Futuristic Sounds',
+      price: 3,
+      trackBPM: 120,
+      cardIcon: card,
+    },
+ 
+  
+    
+  
+  // Add more data objects here if needed
+];
 // const testimonialData = [
 //     {
 //       id: 1,
@@ -60,65 +114,65 @@ import expanding from '../../src/assets/Images/dashboard/maximize.png'
 //       text1: "Excellence is our standard the growth and well-being of our team members is our priority. We embrace innovation, encourage open debate, and strive for big dreams while fostering teamwork to achieve success.",
 //     },
 //   ];
-const cardData = [
-    {
-      id: 1,
-      userName: 'World Trade Center',
-      timeAgo: '2 hours ago',
-      location: 'Hyderabad',
-      description: 'Officials in Ranga Reddy district are planning to establish a World Trade Center in the upcoming Future City on the outskirts of Hyderabad. Representatives from the World Trade Centers Association have expressed interest in setting up a center in Hyderabad, similar to the one in the United States. Authorities are considering three locations for this purpose and estimate that around 70 acres of land will be required.',
-      imgSrc: imgSrc,
-      likeImg: likeImg,
-      chatImg: chatImg,
-      bookmarkImg: bookmarkImg,
-      shareImg: shareImg,
-      moreImg:moreImg,
-    },
-    {
-        id: 2,
-        userName: 'High Court',
-        timeAgo: '4 hours ago',
-        location: 'Hyderabad',
-        description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested that the Hyderabad Metropolitan Development Authority (HMDA) be added as a respondent, arguing that it is responsible for the protection of Hussain Sagar. The court stated that it will hear arguments tomorrow, with the Chief Justice bench scheduled to listen to the case.',
-        imgSrc: imgSrc,
-        likeImg: likeImg,
-        chatImg: chatImg,
-        bookmarkImg: bookmarkImg,
-        shareImg: shareImg,
-        moreImg:moreImg,
-      },
-      {
-        id: 3,
-        userName: '1,528 hectares..!',
-        timeAgo: '1 hours ago',
-        location: 'Anakapalli',
-        description: 'Due to heavy rains in Anakapalli district, paddy crops spread across 1,528 hectares belonging to 4,420 farmers have been submerged, according to District Agriculture Officer Mohan Rao. After the water recedes from the fields, he advised farmers to apply 20 kg of urea and 20 kg of potash fertilizers per acre of paddy fields. To prevent pests, he suggested spraying Gram Carbon disulfide powder mixed with water at the rate of one liter per field.',
-        imgSrc: imgSrc,
-        likeImg: likeImg,
-        chatImg: chatImg,
-        bookmarkImg: bookmarkImg,
-        shareImg: shareImg,
-        moreImg:moreImg,
-      },
-      {
-        id: 4,
-        userName: 'flood-affected.',
-        timeAgo: '2 hours ago',
-        location: 'Krishna',
-        description: 'In flood-affected colonies of Vijayawada, thieves are targeting locked houses, stealing cash, gold, and gas cylinders from safes. In Luna Center, thieves took 10 tolas of gold and ₹1.5 lakh in cash, while in Bombay Colony, 3 tolas of gold were stolen. Similar thefts occurred in Singh Nagar and other areas, according to the distressed victims. Many have returned from safer places only to find their belongings looted, leaving them in tears.',
-        imgSrc: imgSrc,
-        likeImg: likeImg,
-        chatImg: chatImg,
-        bookmarkImg: bookmarkImg,
-        shareImg: shareImg,
-        moreImg:moreImg,
-      },
+// const cardData = [
+//     {
+//       id: 1,
+//       userName: 'World Trade Center',
+//       timeAgo: '2 hours ago',
+//       location: 'Hyderabad',
+//       description: 'Officials in Ranga Reddy district are planning to establish a World Trade Center in the upcoming Future City on the outskirts of Hyderabad. Representatives from the World Trade Centers Association have expressed interest in setting up a center in Hyderabad, similar to the one in the United States. Authorities are considering three locations for this purpose and estimate that around 70 acres of land will be required.',
+//       imgSrc: imgSrc,
+//       likeImg: likeImg,
+//       chatImg: chatImg,
+//       bookmarkImg: bookmarkImg,
+//       shareImg: shareImg,
+//       moreImg:moreImg,
+//     },
+//     {
+//         id: 2,
+//         userName: 'High Court',
+//         timeAgo: '4 hours ago',
+//         location: 'Hyderabad',
+//         description: 'A hearing took place in the High Court regarding the immersion of Ganesh idols in Hussain Sagar. The petitioner requested the implementation of previous High Court orders that prohibited immersions in Hussain Sagar. The petitioner also requested that the Hyderabad Metropolitan Development Authority (HMDA) be added as a respondent, arguing that it is responsible for the protection of Hussain Sagar. The court stated that it will hear arguments tomorrow, with the Chief Justice bench scheduled to listen to the case.',
+//         imgSrc: imgSrc,
+//         likeImg: likeImg,
+//         chatImg: chatImg,
+//         bookmarkImg: bookmarkImg,
+//         shareImg: shareImg,
+//         moreImg:moreImg,
+//       },
+//       {
+//         id: 3,
+//         userName: '1,528 hectares..!',
+//         timeAgo: '1 hours ago',
+//         location: 'Anakapalli',
+//         description: 'Due to heavy rains in Anakapalli district, paddy crops spread across 1,528 hectares belonging to 4,420 farmers have been submerged, according to District Agriculture Officer Mohan Rao. After the water recedes from the fields, he advised farmers to apply 20 kg of urea and 20 kg of potash fertilizers per acre of paddy fields. To prevent pests, he suggested spraying Gram Carbon disulfide powder mixed with water at the rate of one liter per field.',
+//         imgSrc: imgSrc,
+//         likeImg: likeImg,
+//         chatImg: chatImg,
+//         bookmarkImg: bookmarkImg,
+//         shareImg: shareImg,
+//         moreImg:moreImg,
+//       },
+//       {
+//         id: 4,
+//         userName: 'flood-affected.',
+//         timeAgo: '2 hours ago',
+//         location: 'Krishna',
+//         description: 'In flood-affected colonies of Vijayawada, thieves are targeting locked houses, stealing cash, gold, and gas cylinders from safes. In Luna Center, thieves took 10 tolas of gold and ₹1.5 lakh in cash, while in Bombay Colony, 3 tolas of gold were stolen. Similar thefts occurred in Singh Nagar and other areas, according to the distressed victims. Many have returned from safer places only to find their belongings looted, leaving them in tears.',
+//         imgSrc: imgSrc,
+//         likeImg: likeImg,
+//         chatImg: chatImg,
+//         bookmarkImg: bookmarkImg,
+//         shareImg: shareImg,
+//         moreImg:moreImg,
+//       },
    
     
       
     
-    // Add more data objects here if needed
-  ];
+//     // Add more data objects here if needed
+//   ];
   const cardData2 = [
     {
       id: 1,
@@ -404,7 +458,8 @@ const downloadContent = async (contentId) => {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZHUgdmFyZGhhbiBrIiwiZXhwIjoyNTM0MDIzMDA3OTl9.RmiiO7yJ6Z0fh3MMqpU89Iyr5VNIm1lGQgdKJeaujn0',
+        Authorization: `Bearer ${authToken}`,
+
       },
       body: '' // No body needed as per your cURL
     });
@@ -437,7 +492,7 @@ const deleteContent = async (contentId) => {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZHUgdmFyZGhhbiBrIiwiZXhwIjoyNTM0MDIzMDA3OTl9.Uqe5qVekl9obUIApZciKKbWhADPSFzTFmG_y2itIjp0',
+        Authorization: `Bearer ${authToken}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -495,10 +550,10 @@ useEffect(() => {
       return `${minutes}:${seconds}`;
     };
     const handleVideoClick = (videoItem) => {
-      navigate("/watch", { state: { videoItem } })
+      navigate("/watch", { state: {  videoData: videoItem } })
     };
-    const handleImagesClick = () => {
-      navigate(`/Watchimages`);
+    const handleImagesClick = (imageItem) => {
+      navigate(`/Watchimages`,{ state: {  imageData: imageItem } });
     };
     const handlecart = () => {
       navigate(`/cart`);
@@ -761,6 +816,7 @@ useEffect(() => {
 
 
   {activeTab ==='Videos' &&(
+    
     <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
      {videoData
     .filter((videoItem) => videoItem.content_type === "Video") // Filter to show only videos
@@ -856,7 +912,7 @@ useEffect(() => {
             </div>
 
             {/* Article Text */}
-            <div onClick={() => handleVideoClick(videoItem.content_link)} className="px-4 py-4">
+            <div onClick={() => handleVideoClick(videoItem)} className="px-4 py-4">
               <p className="text-gray-500 line-clamp-2">
                 {videoItem.content_description}
               </p>
@@ -880,10 +936,10 @@ useEffect(() => {
            src={imageItem.content_link}
            alt={imageItem.title}
            className="w-full h-60 object-cover group-hover:opacity-50 opacity-90 transition-opacity duration-300"
-
+           onClick={() => handleImagesClick(imageItem)}
          />
-  <div onClick={handleImagesClick} className="absolute top-2 right-2 ">
-   <img onClick={handleImagesClick} src={expanding} className="w-[20px] h-[20px] text-white group-hover:text-black transition-all duration-300 transform group-hover:scale-125"
+  <div onClick={() => handleImagesClick(imageItem)} className="absolute top-2 right-2 ">
+   <img onClick={() => handleImagesClick(imageItem)} src={expanding} className="w-[20px] h-[20px] text-white group-hover:text-black transition-all duration-300 transform group-hover:scale-125"
  alt="" />
   </div>
          {/* Image Duration Overlay or Other Overlay Info */}
@@ -898,7 +954,7 @@ useEffect(() => {
          <img src={camera}   alt="" className="w-[25px] h-[25px] cursor-pointer" />
 
          {/* Price Info */}
-         <div className="text-lg" onClick={handleImagesClick}>
+         <div className="text-lg" onClick={() => handleImagesClick(imageItem)}>
            <p className="font-bold text-blue-600">
            ₹ {imageItem.price}{' '}
              <span className="text-sm text-gray-500">
@@ -912,7 +968,7 @@ useEffect(() => {
        </div>
 
        {/* Description */}
-       <div className="flex justify-between px-4" onClick={handleImagesClick}>
+       <div className="flex justify-between px-4" onClick={() => handleImagesClick(imageItem)}>
        <p className="text-blue-600 font-semibold line-clamp-2 w-[60%] h-12">
            {imageItem.content_description}
          </p>
@@ -936,81 +992,72 @@ useEffect(() => {
 )}
    {activeTab ==='Audio' && (
    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
-   {videoData1.map((item) => (
-     <div key={item.id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">
-       {/* Video Section */}
-       <div className="relative group">
-     
-<img src={item.videoSrc} alt=""  className="w-full h-60  group-hover:opacity-100 opacity-90 transition-opacity duration-300"
-/>
-         {/* Duration Overlay */}
-         {/* <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">03:24</div> */}
-       </div>
+{cardData.map((card) => (
+      <div key={card.id}  className="w-full max-w-sm bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="flex flex-col p-4">
+          <div className="flex items-center gap-2">
+          <div className="relative ">
+            <img
+              src={card.imgSrc}
+              alt="Album cover"
+              layout="fill"
+            
+              className="w-16 h-12 rounded-md object-cover"
+            />
+              </div>
+            <div className="">
+              <FaPlay className="w-4 h-4 text-black" />
+            </div>
+            <div className="w-[60%] bg-gray-200 rounded-full h-1.5">
+            <div className="bg-blue-500 h-1.5 rounded-full w-1/3  "></div>
+          </div>
+          <span className="text-sm text-gray-500">{card.trackTime}</span>
 
-       {/* Description */}
-       <div className="flex justify-between px-4">
-         <p className="text-blue-500 font-semibold line-clamp-2 w-[60%] h-12">
-           {item.description}
-         </p>
-         <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
-           <p className="text-[12px] line-clamp-1 text-[#ce003d]">{item.timeAgo}</p>
-           <p className="text-[12px] line-clamp-1">{item.location}</p>
-           <p className="text-[12px]  text-blue-500">{item.author}</p>
-         </div>
-       </div>
+          </div>
+          <div className="flex justify-end gap-[5px] mb-2 items-center space-x-2">
+            <div className="flex justify-center items-center">
+              <p>Tracks 1 BPM <span>--</span></p>
+            </div>
+            <FaArrowDown className="w-6 h-6 text-gray-400" />
+            <div className="w-[2px] bg-gray-500 h-[35px]"/>
+            <HiEllipsisVertical className="w-6 h-6 text-gray-400" />
+            <div className="w-[2px] bg-gray-500 h-[35px]"/>
+            <FaHeart className="w-6 h-6 text-gray-400" />
 
-       {/* Article Text */}
-       <div className="px-4 py-4">
-         <p className="text-gray-500 line-clamp-2">
-           {item.articleText}
-         </p>
-       </div>
+          </div>
 
-       {/* Price Info */}
-       <div className="px-4 flex justify-between items-center">
-         <img src={item.audioIcon} alt="" className="w-[25px] h-[25px]" />
-         <div className="text-lg">
-           <p className="font-bold text-blue-600">
-           ₹ {item.price} <span className="text-sm text-gray-500"><span className="line-through text-sm text-gray-500">{item.discountPrice}</span> at Discount {item.discount}%</span>
-           </p>
-         </div>
-         <img onClick={toggleSidebar}  src={item.rightIcon} alt="" className="w-[25px] h-[25px] cursor-pointer" />
-       </div>
+          <div className="flex-grow mb-3">
+            <h2 className="text-lg font-semibold">{card.trackName}</h2>
+            <p className="text-sm text-gray-600"> {card.artist} {card.category}</p>
+          </div>
+          <div className="w-[100%] bg-gray-500 h-[2px]"/>
 
-       <div className="px-4 p-2 w-full flex items-center">
-         {/* Time Display */}
-         <span className="text-xs text-pink-500">{formatTime(currentTime)}</span>
+        </div>
+        <div className="px-4 pb-4">
+         
+          <div className="flex justify-between items-center">
+            <div className="flex flex-col items-start">
+            <span className="text-lg font-bold">₹{card.price}</span>
 
-         {/* Progress Bar */}
-         <div className="relative flex-grow mx-2">
-           <input
-             ref={progressRef}
-             type="range"
-             defaultValue="0"
-             max="100"
-             className="w-full h-1 bg-blue-500 rounded-full"
-             onChange={handleProgressChange}
-           />
-         </div>
+              {/* <div className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+                 <span className="text-sm text-gray-500 ml-1">(53)</span>
+                 <span className="text-sm text-gray-500 ml-1">2.8k</span>
 
-         {/* Play/Pause Button */}
-         <button onClick={togglePlayPause} className="text-blue-500">
-           {isPlaying ? (
-             <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-               <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-             </svg>
-           ) : (
-             <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-               <path d="M5 3v18l15-9L5 3z" />
-             </svg>
-           )}
-         </button>
-
-         {/* Audio Element */}
-         <audio ref={audioRef} src="your-audio-file.mp3" preload="metadata"></audio>
-       </div>
-     </div>
-   ))}
+              </div> */}
+            </div>
+            {/* <button className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+              Buy
+            </button> */}
+            <img src={card.cardIcon} className="w-6 h-6 text-gray-400" />
+          </div>
+        </div>
+      </div>
+))}
  </div>
    )}
 {showCartNotification && (

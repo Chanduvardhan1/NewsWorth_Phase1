@@ -108,7 +108,10 @@ const handleDateChange = (e) => {
     setError(true);
   } else {
     setError(false);
-    setDob(e.target.value);
+
+    // Format the selected date as "DD-MMM-YYYY"
+    const formattedDate = dayjs(selectedDate).format('DD-MMM-YYYY');
+    setDob(formattedDate); // Set the formatted date in the state
   }
 };
 
@@ -2133,7 +2136,7 @@ useEffect(() => {
         label="Date of Birth" 
         focused
         disabled={!isEditable}
-        value={dob}
+        value={dayjs(dob).format('YYYY-MM-DD')} 
         onChange={handleDateChange}
         variant="outlined"
         className="w-full  px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
