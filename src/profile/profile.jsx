@@ -574,7 +574,7 @@ const toggleSidebar = () => {
 
 <div className="w-full p-5">
   <div className=" shadow-xl rounded-2xl p-5">
-  <div className="relative items-start justify-start flex w-[50%] font-bold">
+  <div className="relative items-start justify-start flex w-[70%] font-bold">
       <div
         className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'email' ? '' : ''}`}
         onClick={() => setUserType1('Email')}
@@ -608,7 +608,7 @@ const toggleSidebar = () => {
     }`}
   />
     </div>
-    <div className="border-[1px] w-[50%] border-gray-100"/>
+    <div className="border-[1px] w-[70%] border-gray-100"/>
     {userType1 === 'Email' && (
     <div className="flex w-full items-start mt-5 py-5">
         <div className="space-y-1  ">

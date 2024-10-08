@@ -451,6 +451,7 @@ const cardData = [
 const [finalprice,setfinalprice] = useState(null);
 const [openOptionsId, setOpenOptionsId] = useState(null);
 const userId = location.state?.user_id || localStorage.getItem("userId");
+const [openOptionsId1, setOpenOptionsId1] = useState(null);
 
 const downloadContent = async (contentId) => {
   try {
@@ -485,6 +486,9 @@ const downloadContent = async (contentId) => {
 };
 const toggleOptions = (content_id) => {
   setOpenOptionsId(openOptionsId === content_id ? null : content_id);
+};
+const toggleimage = (content_id) => {
+  setOpenOptionsId1(openOptionsId1 === content_id ? null : content_id);
 };
 const deleteContent = async (contentId) => {
   try {
@@ -761,7 +765,7 @@ useEffect(() => {
 
       {/* Videos Tab */}
       <div
-        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-[#e70c0ce0] text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Videos')}
       >
         <img src={video} alt="Video Icon" className="w-[25px] h-[25px]" />
@@ -770,14 +774,14 @@ useEffect(() => {
 
       {/* Images Tab */}
       <div
-        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-[#e70c0ce0] text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Images')}
       >
         <img src={camera} alt="Image Icon" className="w-[25px] h-[25px]" />
         <h1 className="text-[18px]">Images</h1>
       </div>
       <div
-        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-[#e70c0ce0] text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Audio')}
       >
         <img src={Auido} alt="Audio Icon" className="w-[25px] h-[25px]" />
@@ -816,7 +820,7 @@ useEffect(() => {
 
 
   {activeTab ==='Videos' &&(
-    
+
     <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
      {videoData
     .filter((videoItem) => videoItem.content_type === "Video") // Filter to show only videos
@@ -888,12 +892,12 @@ useEffect(() => {
         >
           Download
         </button>
-        <button
+        {/* <button
           onClick={() => deleteContent(videoItem.content_id)}
           className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 p-2"
         >
           Delete
-        </button>
+        </button> */}
       </div>
         )}
       </div>
@@ -947,25 +951,51 @@ useEffect(() => {
            {imageItem.overlayText || 'Overlay Text'}
          </div> */}
        </div>
+       <div className="p-4 flex justify-between items-center relative">
+      {/* Left Icon */}
+        {/* Left Icon */}
+        <img src={camera}   alt="" className="w-[25px] h-[25px] cursor-pointer" />
 
+{/* Price Info */}
+<div className="text-lg" onClick={() => handleImagesClick(imageItem)}>
+  <p className="font-bold text-blue-600">
+  ₹ {imageItem.price}{' '}
+    <span className="text-sm text-gray-500">
+      <span className="line-through text-sm text-gray-500">{imageItem.final_price}</span> at Discount {imageItem.discount}%
+    </span>
+  </p>
+</div>
+
+      {/* Right Icons */}
+      <div className="flex items-center space-x-4">
+      <img src={card} alt="" onClick={toggleSidebar} className="w-[25px] h-[25px] cursor-pointer" />
+
+        
+        {/* Three Dots Icon */}
+        <img
+          src={moreImg}
+          alt="More options"
+          className="w-[15px] h-[15px] cursor-pointer"
+          onClick={() => toggleOptions(imageItem.content_id)} // Pass content_id to toggle options
+
+        />
+
+        {/* Dropdown Options */}
+        {openOptionsId === imageItem.content_id && ( // Only show options if this card is selected
+        <div className="absolute top-[20px] right-[24px] bg-gray-100 shadow-lg rounded-md p-2 w-32 z-10 clip-path-custom">
+        <button
+          onClick={() => downloadContent(imageItem.content_id)}
+          className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 p-2"
+        >
+          Download
+        </button>
+       
+      </div>
+        )}
+      </div>
+    </div>
        {/* Image Info */}
-       <div className="p-4 flex justify-between items-center">
-         {/* Left Icon */}
-         <img src={camera}   alt="" className="w-[25px] h-[25px] cursor-pointer" />
-
-         {/* Price Info */}
-         <div className="text-lg" onClick={() => handleImagesClick(imageItem)}>
-           <p className="font-bold text-blue-600">
-           ₹ {imageItem.price}{' '}
-             <span className="text-sm text-gray-500">
-               <span className="line-through text-sm text-gray-500">{imageItem.final_price}</span> at Discount {imageItem.discount}%
-             </span>
-           </p>
-         </div>
-
-         {/* Right Icon */}
-         <img src={card} alt="" onClick={toggleSidebar} className="w-[25px] h-[25px] cursor-pointer" />
-       </div>
+     
 
        {/* Description */}
        <div className="flex justify-between px-4" onClick={() => handleImagesClick(imageItem)}>
@@ -1062,7 +1092,7 @@ useEffect(() => {
    )}
 {showCartNotification && (
   <div
-    className="fixed right-0 top-0 transition-transform duration-500 transform translate-x-0 shadow-xl p-4 bg-white lg:w-[50%]"
+    className="fixed right-0 top-0 transition-transform duration-500 transform translate-x-0 shadow-xl p-4 bg-white lg:w-[25%]"
     style={{ transform: showCartNotification ? 'translateX(0)' : 'translateX(100%)' }} // Sliding effect
   >
     <div className="flex items-center gap-[5px]">

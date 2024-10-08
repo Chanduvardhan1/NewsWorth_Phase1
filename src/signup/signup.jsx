@@ -9,7 +9,10 @@ import { URL } from "../url";
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,6 +27,7 @@ const signup = () => {
   const [showRegistrationSuccess, setShowRegistrationSuccess] = useState(true);
   const [showRegistr, setShowRegistr] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [selectedDate, setSelectedDate] = React.useState(dayjs());
 
 
   const navigate = useNavigate();
@@ -2136,7 +2140,7 @@ useEffect(() => {
         label="Date of Birth" 
         focused
         disabled={!isEditable}
-        value={dayjs(dob).format('YYYY-MM-DD')} 
+        value={dob} 
         onChange={handleDateChange}
         variant="outlined"
         className="w-full  px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
