@@ -1,8 +1,10 @@
-import React, { useState, useEffect ,useRef} from "react";
+import React, { useState, useEffect ,useRef,useContext} from "react";
 
 import Navbar from "../Navbar/navbar";
 import { useNavigate } from "react-router-dom";
 import Landing from "../landing/landing";
+import { AuthContext } from "../Authcontext/AuthContext";
+
 import { useParams } from 'react-router-dom';
 import videoSrc from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4';
 import videoSrc6 from '../../src/assets/Images/home/10_30 PM _ 12th September 2024 _ ETV News _ News Headlines _ ETV Andhra Pradesh.mp4';
@@ -17,6 +19,7 @@ import video from  '../../src/assets/Images/dashboard/camera.png';
 import camera from '../../src/assets/Images/dashboard/camera-c.png';
 import card from '../../src/assets/Images/dashboard/shopping-cart.png';
 import { useLocation } from 'react-router-dom';
+import { URL } from "../url";
 
 
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
@@ -243,6 +246,10 @@ const watch = () => {
   const navigate = useNavigate();
   const videoRef = useRef(null);
   const location = useLocation();
+  const [finalprice,setfinalprice] = useState(null);
+  const { isAuthenticated, authToken } = useContext(AuthContext);
+  const userId = location.state?.user_id || localStorage.getItem("userId");
+
   const { videoData } = location.state; // Extract video data from state
  // Extract video data from the state
   useEffect(() => {
@@ -384,6 +391,37 @@ const watch = () => {
   // Slice the button array to show only a subset based on the currentIndex
   const visibleButtons = buttonLabels.slice(currentIndex, currentIndex + buttonsPerPage);
 
+  const handleAddToCart = async (contentId, contentLink,finalprice) => {
+    try {
+      const response = await fetch(`${URL}/add_to_cart`, {
+        method: 'POST',
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          content_id: contentId,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok && data.response === 'success') {
+        // Set the content and navigate to the cart
+        navigate('/cart');
+      } else if (data.response === 'fail' && data.response_message === 'Content already added to cart.') {
+        // Handle the case when the content is already in the cart
+        console.error('Content already added to cart');
+        alert('This content is already in your cart.');
+      } else {
+        console.error('Error adding to cart:', data);
+      }
+    } catch (error) {
+      console.error('Request failed:', error);
+    }
+  };
+
   return (
     <>
    <Landing/>
@@ -506,7 +544,7 @@ const watch = () => {
       </p>
     </div>
     <div className="mt-2">
-      <img src={card} alt="" className="w-8 h-8" />
+      <img src={card} alt="" className="w-8 h-8 cursor-pointer"   onClick={() => handleAddToCart(videoData.content_id, videoData.content_link, videoData.final_price)} />
     </div>
   </div>
 </div>

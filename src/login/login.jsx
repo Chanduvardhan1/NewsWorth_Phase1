@@ -49,7 +49,7 @@ const { login } =  useContext(AuthContext);
    
   const handleLogin = async () => {
     if (!email) {
-      setErrorMessage("Please enter your email");
+      setErrorMessage("Please enter your " + userType.toLowerCase());
       return;
     }
     if (!password) {
@@ -76,13 +76,15 @@ const { login } =  useContext(AuthContext);
   
       const tokenData = await tokenResponse.json();
       if (!tokenResponse.ok) {
-        if (tokenData.detail === "Incorrect username or password" || 
-            tokenData.detail === "Incorrect email/phone number/User ID or password") {
-          setErrorMessage("Incorrect email or password. Please try again.");
+        // Show specific error messages for incorrect credentials
+        if (tokenData.detail === "Incorrect username or password") {
+          setErrorMessage(`Incorrect ${userType.toLowerCase()} or password. Please try again.`);
+        } else if (tokenData.detail === "Incorrect email/phone number/User ID or password") {
+          setErrorMessage(`Incorrect ${userType.toLowerCase()} or password. Please try again.`);
         } else {
           setErrorMessage("Failed to retrieve access token. Please try again.");
         }
-        return; 
+        return;
       }
       const accessToken = tokenData.access_token;
   
@@ -172,19 +174,28 @@ const { login } =  useContext(AuthContext);
                       <div className="relative flex justify-between w-full font-bold">
       <div
         className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'email' ? '' : ''}`}
-        onClick={() => setUserType('Email')}
+        onClick={() => {
+          setUserType('Email');
+          setEmail(''); // Reset the email input field
+        }}
       >
         Email
       </div>
       <div
         className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'mobile' ? '' : ''}`}
-        onClick={() => setUserType('Mobile')}
+        onClick={() => {
+          setUserType('Mobile');
+          setEmail(''); // Reset the mobile input field
+        }}
       >
         Mobile
       </div>
       <div
         className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'gmail' ? '' : ''}`}
-        onClick={() => setUserType('User Id')}
+        onClick={() => {
+          setUserType('User Id');
+          setEmail(''); // Reset the User ID input field
+        }}
       >
         User ID
       </div>
@@ -259,7 +270,12 @@ const { login } =  useContext(AuthContext);
                                label="User ID"
                                required
                                value={email}
-                               onChange={(e) => setEmail(e.target.value)}
+                               onChange={(e) => {
+                                // Allow only numbers
+                                if (/^\d*$/.test(e.target.value)) {
+                                  setEmail(e.target.value);
+                                }
+                              }}
                                variant="outlined"
                                InputLabelProps={{
                                 style: {
@@ -296,7 +312,12 @@ const { login } =  useContext(AuthContext);
                                label="Mobile"
                                required
                                value={email}
-                               onChange={(e) => setEmail(e.target.value)}
+                               onChange={(e) => {
+                                // Allow only numbers and limit to 10 digits
+                                if (/^\d{0,10}$/.test(e.target.value)) {
+                                  setEmail(e.target.value);
+                                }
+                              }}
                                variant="outlined"
                                InputLabelProps={{
                                 style: {

@@ -244,7 +244,31 @@ const watchimages = () => {
   const videoRef = useRef(null);
   const location = useLocation();
   const { imageData } = location.state; 
- 
+  const imageContainerRef = useRef(null);
+
+  // Function to trigger fullscreen
+  const handleExpandClick = () => {
+    if (imageContainerRef.current) {
+      if (imageContainerRef.current.requestFullscreen) {
+        imageContainerRef.current.requestFullscreen();
+      } else if (imageContainerRef.current.webkitRequestFullscreen) { // for Safari
+        imageContainerRef.current.webkitRequestFullscreen();
+      } else if (imageContainerRef.current.msRequestFullscreen) { // for IE11
+        imageContainerRef.current.msRequestFullscreen();
+      }
+    }
+  };
+
+  // Function to exit fullscreen mode
+  const handleExitFullScreen = () => {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) { // for Safari
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { // for IE11
+      document.msExitFullscreen();
+    }
+  };
   
   // Function to play the video on hover
   const handleMouseEnter = () => {
@@ -456,10 +480,27 @@ const watchimages = () => {
   </div>
 
   {/* Video Section */}
-  <div className="w-[60%]">
-    <img src={imageData.content_link}   className="w-full h-[400px] object-cover"/>
-   
-  </div>
+  <div className="relative w-[60%]">
+      <div
+        ref={imageContainerRef}
+        className="w-full h-[400px] cursor-pointer"
+        onClick={handleExpandClick}
+      >
+        <img
+          src={imageData.content_link}
+          className="w-full h-full object-cover"
+          alt="expandable"
+        />
+      </div>
+      <div className="absolute top-2 right-2">
+        <button
+          className="p-2 bg-black text-white rounded-md"
+          onClick={handleExitFullScreen}
+        >
+          Exit Fullscreen
+        </button>
+      </div>
+    </div>
 
   {/* Price Info Section */}
   <div className="w-[20%] flex flex-col items-end">

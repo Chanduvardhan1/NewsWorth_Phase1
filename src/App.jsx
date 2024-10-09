@@ -25,6 +25,7 @@ import PrivateRoute from './privateRoute/privateRoute.jsx';
 import Audio from './dashboard/audio.jsx';
 import Cart from './cart/cart.jsx';
 import Search from './search/search.jsx';
+import Myorder from './myorder/myorder.jsx';
 
 function App() {  
   return (
@@ -46,6 +47,7 @@ function App() {
     <Route path="images" element={<PrivateRoute><Images /></PrivateRoute>} />
     <Route path="audio" element={<PrivateRoute><Audio /></PrivateRoute>} />
     <Route path="search" element={<PrivateRoute><Search/></PrivateRoute>} />
+    <Route path="myorder" element={<PrivateRoute><Myorder/></PrivateRoute>} />
 
 
     <Route path="landing" element={<Landing />} />

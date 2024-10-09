@@ -4,7 +4,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Landing from "../landing/landing";
 import { Transition } from "@headlessui/react";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import facebook from "../../src/assets/Images/footer/facebook-app-symbol.png"
 // import Footer from "../footer/footer";
 import { useNavigate } from 'react-router-dom';
@@ -453,6 +454,8 @@ const [openOptionsId, setOpenOptionsId] = useState(null);
 const userId = location.state?.user_id || localStorage.getItem("userId");
 const [openOptionsId1, setOpenOptionsId1] = useState(null);
 
+
+
 const downloadContent = async (contentId) => {
   try {
     const response = await fetch(`${URL}/download-content?content_id=${contentId}`, {
@@ -621,7 +624,7 @@ useEffect(() => {
     fetchData();
   }, [userId],isAuthenticated, authToken, navigate);
 
-  const handleAddToCart = async (contentId, contentLink,finalprice) => {
+  const handleAddToCart = async (contentId, contentLink, finalprice) => {
     try {
       const response = await fetch(`${URL}/add_to_cart`, {
         method: 'POST',
@@ -635,24 +638,35 @@ useEffect(() => {
           content_id: contentId,
         }),
       });
-
+  
       const data = await response.json();
+  
       if (response.ok && data.response === 'success') {
-        // Set the content and show the notification
-        setCartContent(contentLink);
-        // navigate('/cart'); 
+        // Content successfully added to the cart
+        const isVideo = contentLink.includes('.mp4') || contentLink.includes('.webm') || contentLink.includes('.ogg');
+        console.log('Cart Content:', { link: contentLink, isVideo });
+  
+        setCartContent({ link: contentLink, isVideo });
         setShowCartNotification(true);
-        setfinalprice(finalprice)
-        
-        // Optionally, navigate to the cart
-        // setTimeout(() => navigate('/cart'), 3000); // navigate after 3 seconds
+        setfinalprice(finalprice);
+  
+        // Optionally, navigate to the cart after a delay
+        // setTimeout(() => navigate('/cart'), 3000); 
+  
+      } else if (data.response === 'fail' && data.response_message === 'Content already added to cart.') {
+        // Content is already in the cart
+        toast.error('This content is already in your cart.');
       } else {
+        // Handle other errors
         console.error('Error adding to cart:', data);
+        toast.error('Failed to add content to cart.');
       }
     } catch (error) {
       console.error('Request failed:', error);
+      toast.error('An error occurred while adding to the cart.');
     }
   };
+  
 
   const [activeTab, setActiveTab] = useState('Videos'); // Default to Audio
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -709,6 +723,7 @@ useEffect(() => {
     <div>
    <div className=" relative">
     <Landing/>
+    <ToastContainer />
     <div className="p-[20px] bg-white">
    <Filters/>
       {/* Button to toggle the sidebar */}
@@ -968,7 +983,8 @@ useEffect(() => {
 
       {/* Right Icons */}
       <div className="flex items-center space-x-4">
-      <img src={card} alt="" onClick={toggleSidebar} className="w-[25px] h-[25px] cursor-pointer" />
+      <img src={card} alt="" onClick={() => handleAddToCart(imageItem.content_id, imageItem.content_link, imageItem.final_price)}
+ className="w-[25px] h-[25px] cursor-pointer" />
 
         
         {/* Three Dots Icon */}
@@ -976,7 +992,7 @@ useEffect(() => {
           src={moreImg}
           alt="More options"
           className="w-[15px] h-[15px] cursor-pointer"
-          onClick={() => toggleOptions(imageItem.content_id)} // Pass content_id to toggle options
+          onClick={() => toggleOptions(imageItem.content_id)} 
 
         />
 
@@ -1105,7 +1121,31 @@ useEffect(() => {
       </button>
 
       {/* Show the image from content_link */}
-      <video src={cartContent} className=" object-cover w-[100px] h-[100px]"></video>
+      {cartContent.isVideo ? (
+  <video
+    src={cartContent.link}
+    className="object-cover w-[100px] h-[100px]"
+    controls
+    autoPlay
+    muted
+    loop
+    type="video/mp4" // Ensure you specify the correct video type
+    onError={(e) => {
+      console.error('Error loading video:', e);
+      alert('Video failed to load. Please check the video URL or format.');
+    }}
+  >
+    Your browser does not support the video tag.
+  </video>
+) : (
+  <img
+    src={cartContent.link}
+    alt="Cart Content"
+    className="object-cover w-[100px] h-[100px]"
+    onError={(e) => console.error('Error loading image:', e)} // Handle errors
+  />
+)}
+
       {/* <img src={cartContent} alt="Added Content" className="w-[100px] h-[100px]" /> */}
 
       <div className="flex items-center gap-[5px]">

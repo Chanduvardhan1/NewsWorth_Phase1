@@ -92,7 +92,9 @@ const [videoData, setVideoData] = useState([]);
 const [imageData, setImageData] = useState([]);
 const [activeTab, setActiveTab] = useState('Videos'); // Default to Audio
 
-const handleChangePassword = async () => {
+const handleChangePassword = async (event) => {
+  event.preventDefault(); // Prevent page refresh
+
   const requestBody = {
     user_id: userId,
     old_password: oldPassword,
@@ -104,7 +106,9 @@ const handleChangePassword = async () => {
     const response = await fetch(`${URL}/ChangeUserPassword`, {
       method: 'POST',
       headers: {
-        'accept': 'application/json',
+        accept: 'application/json',
+        Authorization: `Bearer ${authToken}`,
+
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(requestBody),
@@ -117,8 +121,7 @@ const handleChangePassword = async () => {
       setOldPassword(newPassword);
 
       localStorage.setItem('oldPassword', newPassword);
-
-      navigate(0); 
+      navigate(0)
     } else {
       setResponseMessage(`Error: ${data.message || 'Failed to change password'}`);
     }

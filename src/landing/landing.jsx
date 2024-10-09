@@ -138,6 +138,9 @@ const landing = () => {
   const handleProfile = () => {
     navigate('/profile'); // Navigate to the selected path
   };
+  const handleorders = () => {
+    navigate('/myorder');
+  };
   const handlecart = () => {
     navigate('/cart'); // Navigate to the selected path
   };
@@ -234,6 +237,9 @@ const landing = () => {
 
           <div className="flex justify-center px-4 py-1 border-[1px] border-blue-500 rounded-full m-2">
             <button className="flex justify-center" onClick={handleProfile}>View Profile</button>
+          </div>
+          <div className="flex justify-center px-4 py-1 border-[1px] border-blue-500 rounded-full m-2">
+            <button className="flex justify-center" onClick={handleorders}>Orders</button>
           </div>
           <div className="border-t border-gray-200"></div>
           <div className=" flex justify-center  ">

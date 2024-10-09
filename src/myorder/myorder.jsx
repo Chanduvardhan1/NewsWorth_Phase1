@@ -56,7 +56,7 @@ import Image4 from '../../src/assets/Images/dashboard/news1.webp';
     // Add more items if necessary
   ];
 
-  const cart = () => {
+  const myorder = () => {
     const [flippedCards, setFlippedCards] = useState({});
     const [cardData1, setCardData1] = useState([]);
     const navigate = useNavigate();
@@ -152,11 +152,11 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
   
 <div className="bg-white shadow-md rounded-lg p-6 mt-8 w-[70%]"> 
       <div className="border-b mb-4">
-        <h2 className="text-2xl font-semibold blue-color">Shopping Bag</h2>
+        <h2 className="text-2xl font-semibold blue-color">My Orders</h2>
         <p className=" underline text-blue-500 cursor-pointer" onClick={handledashboard}>Add more items to Cart</p>
         <div className="flex justify-between mt-2 px-2">
           <h2 className="text-[14px] font-semibold text-gray-500">Item</h2>
-          <h2 className="text-[14px] font-semibold text-gray-500">Price</h2>
+          {/* <h2 className="text-[14px] font-semibold text-gray-500">Price</h2> */}
         </div>
       </div>
 
@@ -166,8 +166,7 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
             <div className="flex items-start">
               <div className="relative w-[40%]">
                 {/* Check if the content is a video or image */}
-  {/* Video */}
-  {item.Video_link && (
+                {item.Video_link && (
                   <video
                     className="media-video w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
                     controls
@@ -185,8 +184,6 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
                 )}
 
 
-
-
                 <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
                   {item.age_in_days}
                 </div>
@@ -201,21 +198,21 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
               </div>
             </div>
 
-            <div className="flex items-center space-x-12">
+            {/* <div className="flex items-center space-x-12">
               <p className="text-lg font-semibold text-gray-700">₹ {item.final_price}</p> {/* Adjust for price display */}
-            </div>
+            {/* </div> */} 
           </div>
-          <div className="flex justify-end items-center mt-2 border-b">
+          {/* <div className="flex justify-end items-center mt-2 border-b">
             <div className="flex space-x-4 mb-2">
               <button className="text-gray-500 text-sm hover:underline"  onClick={() => handleRemoveItem(item.content_id)} >Remove</button>
               <button className="text-gray-500 text-sm hover:underline">Download</button>
             </div>
-          </div>
+          </div> */}
         </div>
       ))}
     </div>
 
-<div className="w-[30%] p-5">
+{/* <div className="w-[30%] p-5">
 <div className="mb-6">
     <h2 className="text-2xl blue-color font-semibold">Order Summary</h2>
 </div>
@@ -238,7 +235,7 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
 <button className="text-white font-bold">Buy</button>
 </div>
 </div>
-</div>
+</div> */}
 </div>
 {/* <div className="grid grid-cols-1 mt-6">
   <div className="w-full max-w-full h-[200px] rounded overflow-hidden shadow-lg bg-white flex">
@@ -295,4 +292,4 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
   );
 };
 
-export default cart;
+export default myorder;

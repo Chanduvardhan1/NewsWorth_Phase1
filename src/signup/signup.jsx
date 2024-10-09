@@ -10,9 +10,11 @@ import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/mater
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -94,34 +96,26 @@ const [error, setError] = useState(false);
 const [error1, setError1] = useState(false);
 const [error2, setError2] = useState(false);
 
+
 const handleDateChange = (e) => {
-  const selectedDate = new Date(e.target.value);
-  const currentDate = new Date();
-  
+  const selectedDate = dayjs(e.target.value);
+  const currentDate = dayjs();
+
   // Calculate the age
-  const age = currentDate.getFullYear() - selectedDate.getFullYear();
-  const monthDifference = currentDate.getMonth() - selectedDate.getMonth();
-
-  // Adjust if the user hasn't had their birthday this year yet
-  if (monthDifference < 0 || (monthDifference === 0 && currentDate.getDate() < selectedDate.getDate())) {
-    age--;
-  }
-
+  const age = currentDate.diff(selectedDate, 'year');
+  
   // Check if the age is under 18
   if (age < 18) {
     setError(true);
   } else {
     setError(false);
-
-    // Format the selected date as "DD-MMM-YYYY"
-    const formattedDate = dayjs(selectedDate).format('DD-MMM-YYYY');
-    setDob(formattedDate); // Set the formatted date in the state
+    // Store the date in the format yyyy-mm-dd for consistency
+    setDob(selectedDate.format('YYYY-MM-DD'));
   }
 };
 
 // Set maximum date to 18 years ago
 const maxDate = dayjs().subtract(18, 'year').format('YYYY-MM-DD');
-
 
 const handleMobileChange = (e) => {
   const value = e.target.value.replace(/\D/g, "").slice(0, 10);
@@ -2134,20 +2128,22 @@ useEffect(() => {
                   />
                 </div>
                 <div className=" flex gap-[15px] justify-center items-center">
-                <TextField
+               
+      {/* <label htmlFor="dob">Date of Birth</label> */}
+      <TextField
         type="date"
-        id="Date of Birth" 
-        label="Date of Birth" 
+        id="Date of Birth"
+        label="Date of Birth"
         focused
         disabled={!isEditable}
-        value={dob} 
+        value={dob ? dayjs(dob).format('YYYY-MM-DD') : ''}
         onChange={handleDateChange}
         variant="outlined"
-        className="w-full  px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+        className="w-full px-7 py-4 rounded-[10px] bg-[#FFFFFF] placeholder:text-[#CCCCCC]"
         required
         InputLabelProps={{
           style: {
-            color: '#666666', 
+            color: '#666666',
             fontSize: '14px',
           },
         }}
@@ -2161,7 +2157,7 @@ useEffect(() => {
         }}
         sx={{
           '& input:-webkit-autofill': {
-            WebkitBoxShadow: '0 0 0 1000px white inset', 
+            WebkitBoxShadow: '0 0 0 1000px white inset',
             WebkitTextFillColor: '#000',
           },
         }}
@@ -2171,6 +2167,7 @@ useEffect(() => {
         error={error}
         helperText={error ? "You must be 18 years or older" : ""}
       />
+   
       {/* <div className="relative group">
   <img src={info} alt="" className="w-8 h-4" />
   <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-10">
