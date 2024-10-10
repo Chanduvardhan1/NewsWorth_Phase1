@@ -73,7 +73,10 @@ import Image4 from '../../src/assets/Images/dashboard/news1.webp';
     const [videoData, setVideoData] = useState([]);
     const [imageData, setImageData] = useState([]);
 const [shoppingItems,setShoppingItems] =useState([]);
+const [shoppingItems2, setShoppingItems2] = useState([]); // Ensure it's initialized as an empty array
+
 const userId = location.state?.user_id || localStorage.getItem("userId");
+const [isLoading, setIsLoading] = useState(true); // Loading state
 
     const handledashboard = () => {
       navigate(`/dashboard`);
@@ -81,34 +84,86 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
     const handleImagesClick = () => {
       navigate(`/Watchimages`);
     };
-    useEffect(() => {
-        // Function to fetch cart data
-        const fetchCartData = async () => {
+    // useEffect(() => {
+    //     // Function to fetch cart data
+    //     const fetchCartData = async () => {
+    //       try {
+    //         const response = await fetch(`${URL}/view_cart?user_id=${userId}`, {
+    //           method: 'POST',
+    //           headers: {
+    //             Accept: "application/json",
+    //             Authorization: `Bearer ${authToken}`,
+    //           },
+    //         });
+    
+    //         const data = await response.json();
+    //         if (data.response === "success") {
+    //           // Assuming the items are stored in data.response_message
+    //           const items = data.response_message.flatMap(cart => cart.items);
+    //           setShoppingItems(items); // Store all items from all carts
+    //         } else {
+    //           console.error('Error in response:', data);
+    //         }
+    //       } catch (error) {
+    //         console.error('Error fetching cart data:', error);
+    //       }
+    //     };
+    
+    //     fetchCartData();
+    //   }, [authToken, URL]);
+      useEffect(() => {
+        const fetchOrderHistory = async () => {
           try {
-            const response = await fetch(`${URL}/view_cart?user_id=${userId}`, {
+            const response = await fetch(`${URL}/order-history?user_id=${userId}`, {
               method: 'POST',
               headers: {
-                Accept: "application/json",
-                Authorization: `Bearer ${authToken}`,
-              },
+                accept: 'application/json',
+                Authorization: `Bearer ${authToken}`,              },
             });
-    
             const data = await response.json();
-            if (data.response === "success") {
-              // Assuming the items are stored in data.response_message
-              const items = data.response_message.flatMap(cart => cart.items);
-              setShoppingItems(items); // Store all items from all carts
-            } else {
-              console.error('Error in response:', data);
-            }
+            // Ensure the response is an array before setting the state
+            setShoppingItems2(Array.isArray(data.response_message) ? data.response_message : []);
           } catch (error) {
-            console.error('Error fetching cart data:', error);
+            console.error('Error fetching order history:', error);
+            setShoppingItems2([]); // Set it as an empty array if there is an error
+          } finally {
+            setIsLoading(false); // Stop loading after data is fetched
           }
         };
     
-        fetchCartData();
-      }, [authToken, URL]);
-
+        fetchOrderHistory();
+      }, []);
+      const downloadContent = async (contentId) => {
+        try {
+          const response = await fetch(`${URL}/download-content?content_id=${contentId}`, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              Authorization: `Bearer ${authToken}`,
+      
+            },
+            body: '' // No body needed as per your cURL
+          });
+      
+          if (response.ok) {
+            const data = await response.json();
+            console.log('Content downloaded:', data);
+      
+            // Create a downloadable link and trigger the download
+            const downloadLink = document.createElement('a');
+            downloadLink.href = data.url;
+            downloadLink.download = ''; // Add this attribute to force download
+            document.body.appendChild(downloadLink); // Append link to body
+            downloadLink.click(); // Programmatically click the link to trigger download
+            document.body.removeChild(downloadLink); // Remove the link after download
+      
+          } else {
+            console.error('Error downloading content:', response.status);
+          }
+        } catch (error) {
+          console.error('Network error:', error);
+        }
+      };
       const handleRemoveItem = async (contentId) => {
         try {
           const response = await fetch(`${URL}/delete_item_in_cart`, { // Replace with your actual endpoint
@@ -150,22 +205,21 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
 
 
   
-<div className="bg-white shadow-md rounded-lg p-6 mt-8 w-[70%]"> 
+<div className="bg-white shadow-md rounded-lg p-6 mt-8 w-[100%]"> 
       <div className="border-b mb-4">
         <h2 className="text-2xl font-semibold blue-color">My Orders</h2>
-        <p className=" underline text-blue-500 cursor-pointer" onClick={handledashboard}>Add more items to Cart</p>
+        {/* <p className=" underline text-blue-500 cursor-pointer" onClick={handledashboard}>Add more items to Cart</p> */}
         <div className="flex justify-between mt-2 px-2">
           <h2 className="text-[14px] font-semibold text-gray-500">Item</h2>
-          {/* <h2 className="text-[14px] font-semibold text-gray-500">Price</h2> */}
+          <h2 className="text-[14px] font-semibold text-gray-500">Price</h2>
         </div>
       </div>
 
-      {shoppingItems.map((item) => (
+      {/* {shoppingItems.map((item) => (
         <div key={item.content_id}>
           <div className="flex items-center justify-between border-b py-4">
             <div className="flex items-start">
               <div className="relative w-[40%]">
-                {/* Check if the content is a video or image */}
                 {item.Video_link && (
                   <video
                     className="media-video w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
@@ -174,7 +228,6 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
                   />
                 )}
 
-                {/* Display Image if available */}
                 {item.Image_link && (
                   <img
                     className="media-image w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
@@ -198,18 +251,96 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
               </div>
             </div>
 
-            {/* <div className="flex items-center space-x-12">
-              <p className="text-lg font-semibold text-gray-700">₹ {item.final_price}</p> {/* Adjust for price display */}
-            {/* </div> */} 
+            <div className="flex items-center space-x-12">
+              <p className="text-lg font-semibold text-gray-700">₹ {item.final_price}</p>
+             </div> 
           </div>
-          {/* <div className="flex justify-end items-center mt-2 border-b">
+           <div className="flex justify-end items-center mt-2 border-b">
             <div className="flex space-x-4 mb-2">
-              <button className="text-gray-500 text-sm hover:underline"  onClick={() => handleRemoveItem(item.content_id)} >Remove</button>
               <button className="text-gray-500 text-sm hover:underline">Download</button>
             </div>
-          </div> */}
+          </div> 
         </div>
-      ))}
+      ))} */}
+     {isLoading ? (
+        // Show skeleton loading cards
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1">
+          {Array(6).fill().map((_, index) => (
+            <div key={index} className="animate-pulse">
+              <div className="bg-gray-200 h-40 w-full rounded mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        // Check if there are no shopping items
+        Array.isArray(shoppingItems2) && shoppingItems2.length === 0 ? (
+          <div className="text-center text-gray-500 py-8">
+            No orders found.
+          </div>
+        ) : (
+          // Render the order items if the array is valid
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1">
+            {shoppingItems2.map((item) => (
+              <div key={item.content_id}>
+                <div className="flex items-center justify-between border-b py-4">
+                  <div className="flex items-start">
+                    <div className="relative w-[40%]">
+                      {/* Check if the content is a video or image */}
+                      {item.Video_link && (
+                        <video
+                          className="media-video w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
+                         
+                          src={item.Video_link}
+                        />
+                      )}
+
+                      {/* Display Image if available */}
+                      {item.Image_link && (
+                        <img
+                          className="media-image w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
+                          src={item.Image_link}
+                          alt="content"
+                        />
+                      )}
+                      <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
+                        {item.age_in_days}
+                      </div>
+                    </div>
+                    <div className="ml-4">
+                      <h3 className="text-lg font-semibold text-gray-700 line-clamp-2 w-[80%]">
+                        {item.content_description || 'No description available'}
+                      </h3>
+                      <p className="text-[12px] line-clamp-1 text-[#ce003d]">
+                        {item.created_date}
+                      </p>
+                      <p className="text-[12px] line-clamp-1">{item.gps_location}</p>
+                      <p className="text-[12px] font-semibold text-blue-500">{item.uploaded_by}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-12">
+                    <p className="text-lg font-semibold text-gray-700">
+                      ₹ {item.final_price}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex justify-end items-center mt-2 border-b">
+                  <div className="flex space-x-4 mb-2">
+                    <button
+                       onClick={() => downloadContent(item.content_id)}
+                     className="text-gray-500 text-sm hover:underline">
+                      Download
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+      )}
     </div>
 
 {/* <div className="w-[30%] p-5">

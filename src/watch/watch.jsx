@@ -425,11 +425,11 @@ const watch = () => {
   return (
     <>
    <Landing/>
-   <div className="flex w-full items-center p-4">
+   {/* <div className="flex w-full items-center p-4">
     
     
 
-      {/* Videos Tab */}
+      
       <div
         className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-[#e70c0ce0] text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Videos')}
@@ -438,7 +438,6 @@ const watch = () => {
         <h1 className="text-[18px]">Videos</h1>
       </div>
 
-      {/* Images Tab */}
       <div
         className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-[#e70c0ce0] text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Images')}
@@ -446,7 +445,6 @@ const watch = () => {
         <img src={camera} alt="Image Icon" className="w-[25px] h-[25px]" />
         <h1 className="text-[18px]">Images</h1>
       </div>
-        {/* Audio Tab */}
       <div
         className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-[#e70c0ce0] text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Audio')}
@@ -459,7 +457,6 @@ const watch = () => {
     <div className="flex  items-center my-4 ">
    
 
-      {/* Buttons container */}
       <div className="flex space-x-3 mx-3">
         {visibleButtons.map((label, index) => (
           <button key={index} className="bg-gray-400 text-white py-1 px-4 rounded">
@@ -467,7 +464,6 @@ const watch = () => {
           </button>
         ))}
       </div>
-   {/* Less than button */}
    <button 
         className="p-2 text-gray-600" 
         onClick={handlePrevious}
@@ -475,7 +471,6 @@ const watch = () => {
       >
         &lt;
       </button>
-      {/* Greater than button */}
       <button 
         className="p-2 text-gray-600" 
         onClick={handleNext}
@@ -483,9 +478,8 @@ const watch = () => {
       >
         &gt;
       </button>
-    </div>
+    </div> */}
     <div className="flex flex-row justify-between items-start px-4 py-2 gap-4">
-  {/* Text Section */}
   <div className="w-[20%]">
     <p className="text-blue-500 font-bold mb-[10px]">
       {videoData.content_title}
@@ -500,7 +494,6 @@ const watch = () => {
     </div>
   </div>
 
-  {/* Video Section */}
   <div className="w-[60%] h-[20%] mx-auto">
     <video ref={videoRef}  src={videoData.content_link} controls autoPlay className="w-full h-[400px] object-cover">
       Your browser does not support the video tag.
@@ -516,8 +509,8 @@ const watch = () => {
     <div className=" text-[14px]">
       <p className="font-bold mb-2 text-blue-600 text-[14px]">
       Price ₹{videoData.price} 
-        <span className="text-[14px] text-gray-500">
-          <span className="line-through">₹{videoData.discount}</span> at Discount {videoData.discount}%
+        <span className="text-[12px] text-gray-500 ml-[2px]">
+          <span className="line-through text-[12px]">₹{videoData.discount}</span> at Discount {videoData.discount}%
         </span>
       </p>
       <p className="font-bold text-[14px] mb-2 text-blue-600">

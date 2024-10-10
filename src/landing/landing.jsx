@@ -42,8 +42,12 @@ const landing = () => {
       const data = await response.json();
       
       
-      navigate('/search', { state: { videoData: data.data , ImageData:data.data} });
-    } catch (error) { 
+      if (data.response === "fail") {
+        navigate('/search', { state: {noDataMessage: data.response_message } });
+      } else {
+        navigate('/search', { state: { videoData: data.response_message, ImageData: data.response_message } });
+      }
+    } catch (error) {
       console.error('Error during search:', error);
     }
   };
@@ -147,7 +151,7 @@ const landing = () => {
   return (
     <div>
    <div className=" relative">
-<div className=" w-full flex justify-between p-[5px] pl-[20px] shadow-md ">
+<div className=" w-full flex justify-between p-[5px] px-[20px] shadow-md ">
     <div className="flex justify-center items-center">
         <div>
         <img src={logo} alt="" onClick={handleNavigation} className=" cursor-pointer w-[250px] h-[60px]" />
@@ -185,7 +189,7 @@ const landing = () => {
           id="default-search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full lg:w-[500px] p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="w-full lg:w-[400px] p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Search"
           required
         />
@@ -210,7 +214,7 @@ const landing = () => {
       )}
         </div>
         <div>
-            <h1 className=" cursor-pointer red-color" >Welcome <span  className=" font-bold cursor-pointer blue-color">{userName}</span> </h1>
+            <h1 className=" cursor-pointer red-color" ><span  className=" font-bold cursor-pointer blue-color">{userName}</span> </h1>
             <p className=" cursor-pointer"   >User ID: {userId}</p>
         </div>
        
@@ -228,23 +232,26 @@ const landing = () => {
                 alt="Profile"
                 className="w-10 h-10 rounded-full mr-2"
               />
-              <div>
+              <div className="flex flex-col items-start">
                 <div className="text-sm font-bold">{userName}</div>
                 <div className="text-xs text-gray-500">Content Creator</div>
               </div>
             </button>
           </div>
+          <div className="border-t border-gray-200"></div>
 
-          <div className="flex justify-center px-4 py-1 border-[1px] border-blue-500 rounded-full m-2">
+          <div className="flex justify-center m-2">
             <button className="flex justify-center" onClick={handleProfile}>View Profile</button>
           </div>
-          <div className="flex justify-center px-4 py-1 border-[1px] border-blue-500 rounded-full m-2">
-            <button className="flex justify-center" onClick={handleorders}>Orders</button>
+          <div className="border-t border-gray-200"></div>
+
+          <div className="flex justify-center m-2">
+            <button className="flex justify-center" onClick={handleorders}>My Orders</button>
           </div>
           <div className="border-t border-gray-200"></div>
           <div className=" flex justify-center  ">
             <button onClick={handleBackToLogin} className="block px-4 py-2 text-sm text-white font-semibold hover:bg-blue-300 bg-red-500 rounded-full p-2 my-2">
-              Sign Out
+              LogOut
             </button>
           </div>
         </div>

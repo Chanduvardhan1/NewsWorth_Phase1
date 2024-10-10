@@ -176,7 +176,8 @@ const { login } =  useContext(AuthContext);
         className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'email' ? '' : ''}`}
         onClick={() => {
           setUserType('Email');
-          setEmail(''); // Reset the email input field
+          setEmail(''); 
+          setPassword('');
         }}
       >
         Email
@@ -185,7 +186,8 @@ const { login } =  useContext(AuthContext);
         className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'mobile' ? '' : ''}`}
         onClick={() => {
           setUserType('Mobile');
-          setEmail(''); // Reset the mobile input field
+          setEmail('');
+          setPassword(''); 
         }}
       >
         Mobile
@@ -194,7 +196,8 @@ const { login } =  useContext(AuthContext);
         className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'gmail' ? '' : ''}`}
         onClick={() => {
           setUserType('User Id');
-          setEmail(''); // Reset the User ID input field
+          setEmail(''); 
+          setPassword('');
         }}
       >
         User ID

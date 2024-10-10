@@ -4,6 +4,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Landing from "../landing/landing";
 import { Transition } from "@headlessui/react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import facebook from "../../src/assets/Images/footer/facebook-app-symbol.png"
 // import Footer from "../footer/footer";
@@ -74,6 +76,8 @@ import Image4 from '../../src/assets/Images/dashboard/news1.webp';
     const [imageData, setImageData] = useState([]);
 const [shoppingItems,setShoppingItems] =useState([]);
 const userId = location.state?.user_id || localStorage.getItem("userId");
+const [cartSummary, setCartSummary] = useState({});
+const [isLoading, setIsLoading] = useState(true);
 
     const handledashboard = () => {
       navigate(`/dashboard`);
@@ -97,12 +101,20 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
             if (data.response === "success") {
               // Assuming the items are stored in data.response_message
               const items = data.response_message.flatMap(cart => cart.items);
-              setShoppingItems(items); // Store all items from all carts
+              setShoppingItems(items);
+              setCartSummary({
+                total_items: data.total_items,
+                total_price: data.total_price,
+                total_discount: data.total_discount,
+                total_final_price: data.total_final_price
+              }); // Store all items from all carts
             } else {
               console.error('Error in response:', data);
             }
-          } catch (error) {
+          }  catch (error) {
             console.error('Error fetching cart data:', error);
+          } finally {
+            setIsLoading(false); // Stop loading after data is fetched
           }
         };
     
@@ -120,7 +132,7 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
             },
             body: JSON.stringify({
               cart_id: contentId,
-              user_id: 59, // or get this from state if it varies
+              user_id: userId, // or get this from state if it varies
             }),
           });
     
@@ -138,10 +150,53 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
           console.error('Error removing item:', error);
         }
       };
+      const buyContent = async (contentId) => {
+        const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZHUgdmFyZGhhbiBrIiwiZXhwIjoyNTM0MDIzMDA3OTl9.opyNUhmEMOM3apDxmG4WeXC_5U4JG0S1YcRG93MmSBk';
+      
+        const data = {
+          user_id: userId,
+          content_id: contentId,
+        };
+      
+        try {
+          const response = await fetch(`${URL}/buy_content`, {
+            method: 'POST',
+            headers: {
+              'accept': 'application/json',
+              'Authorization': token,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+      
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+      
+          const result = await response.json();
+          if (result.response === 'Success') {
+            console.log(result.response_message);  // Optionally display success message
+      
+            // Navigate to My Orders page
+            navigate('/myorder');
+          } else if (result.response === 'fail' && result.response_message === 'Content has already been sold or purchased.') {
+            console.error('Purchase failed:', result.response_message);
+            toast.error(result.response_message);  // Optionally show alert to the user
+          } else if (result.response === 'fail') {
+            toast.error(result.response_message);  // Optionally show alert to the user
+          } else {
+            toast.error('Purchase failed:', result.response_message);
+          }
+        } catch (error) {
+          console.error('Error:', error);  // Handle errors appropriately
+        }
+      };
   return (
     <div>
    <div className=" relative">
     <Landing/>
+    <ToastContainer />
+
     <div className="p-[20px] bg-white">
      
    
@@ -160,59 +215,79 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
         </div>
       </div>
 
-      {shoppingItems.map((item) => (
-        <div key={item.content_id}>
-          <div className="flex items-center justify-between border-b py-4">
-            <div className="flex items-start">
-              <div className="relative w-[40%]">
-                {/* Check if the content is a video or image */}
-  {/* Video */}
-  {item.Video_link && (
-                  <video
-                    className="media-video w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
-                    controls
-                    src={item.Video_link}
-                  />
-                )}
+      {isLoading ? (
+        // Show skeleton loading cards
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1">
+          {Array(6).fill().map((_, index) => (
+            <div key={index} className="animate-pulse">
+              <div className="bg-gray-200 h-40 w-full rounded mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        // Check if there are no shopping items
+        shoppingItems.length === 0 ? (
+          <div className="text-center text-gray-500 py-8">
+            No items in the cart.
+          </div>
+        ) : (
+          // Render the shopping items
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1">
+            {shoppingItems.map((item) => (
+              <div key={item.content_id}>
+                <div className="flex items-center justify-between border-b py-4">
+                  <div className="flex items-start">
+                    <div className="relative w-[40%]">
+                      {/* Video */}
+                      {item.Video_link && (
+                        <video
+                          className="media-video w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
+                          controls
+                          src={item.Video_link}
+                        />
+                      )}
 
-                {/* Display Image if available */}
-                {item.Image_link && (
-                  <img
-                    className="media-image w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
-                    src={item.Image_link}
-                    alt="content"
-                  />
-                )}
+                      {/* Display Image if available */}
+                      {item.Image_link && (
+                        <img
+                          className="media-image w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
+                          src={item.Image_link}
+                          alt="content"
+                        />
+                      )}
 
+                      <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
+                        {item.age_in_days}
+                      </div>
+                    </div>
+                    <div className="ml-4">
+                      <h3 className="text-lg font-semibold text-gray-700 line-clamp-2 w-[80%]">
+                        {item.content_description || 'No description available'}
+                      </h3>
+                      <p className="text-[12px] line-clamp-1 text-[#ce003d]">{item.added_date}</p>
+                      <p className="text-[12px] line-clamp-1">{item.gps_location}</p>
+                      <p className="text-[12px] font-semibold text-blue-500">{item.uploaded_by}</p>
+                    </div>
+                  </div>
 
-
-
-                <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
-                  {item.age_in_days}
+                  <div className="flex items-center space-x-12">
+                    <p className="text-lg font-semibold text-gray-700"> {item.final_price}</p>
+                  </div>
+                </div>
+                <div className="flex justify-end items-center mt-2 border-b">
+                  <div className="flex space-x-4 mb-2">
+                  <button className="text-gray-500 text-sm hover:underline" onClick={() => buyContent(item.content_id)}>Buy</button>
+                    <button className="text-gray-500 text-sm hover:underline" onClick={() => handleRemoveItem(item.content_id)}>Remove</button>
+                  </div>
                 </div>
               </div>
-              <div className="ml-4">
-                <h3 className="text-lg font-semibold text-gray-700 line-clamp-2 w-[80%]">
-                  {item.content_description} 
-                </h3>
-                <p className="text-[12px] line-clamp-1 text-[#ce003d]">{item.added_date}</p> 
-                <p className="text-[12px] line-clamp-1">{item.gps_location}</p>
-                <p className="text-[12px] font-semibold text-blue-500">{item.uploaded_by}</p> 
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-12">
-              <p className="text-lg font-semibold text-gray-700">₹ {item.final_price}</p> {/* Adjust for price display */}
-            </div>
+            ))}
           </div>
-          <div className="flex justify-end items-center mt-2 border-b">
-            <div className="flex space-x-4 mb-2">
-              <button className="text-gray-500 text-sm hover:underline"  onClick={() => handleRemoveItem(item.content_id)} >Remove</button>
-              <button className="text-gray-500 text-sm hover:underline">Download</button>
-            </div>
-          </div>
-        </div>
-      ))}
+        )
+      )}
     </div>
 
 <div className="w-[30%] p-5">
@@ -222,16 +297,17 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
 
 <div class="bg-white shadow-xl rounded-lg p-6">
 <div className="flex justify-between">
-    <p>Subtotal <span>{`(1 items)`}</span></p>
-    <p>₹299.99</p>
+<p>Subtotal <span>{`(${cartSummary.total_items} items)`}</span></p>
+<p>{cartSummary.total_price}</p>
+
 </div>
 <div className="flex justify-between">
-    <p>Estimated Tax</p>
-    <p>₹0.0</p>
+<p>Discount</p>
+        <p>{cartSummary.total_discount}</p>
 </div>
 <div className="flex justify-between">
-    <p>Total</p>
-    <p>₹299.99</p>
+<p>Total</p>
+<p>{cartSummary.total_final_price}</p>
 </div>
 <div className=" mt-5 p-2 px-5 bg-[#0f2b9fd9] flex justify-center">
 

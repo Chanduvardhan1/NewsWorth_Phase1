@@ -3,6 +3,7 @@ import "aos/dist/aos.css";
 import AOS from "aos";
 import Slider from "react-slick";
 import home from '../../src/assets/Images/home/image.png'
+import imgSrc from '../../src/assets/Images/dashboard/HYD.webp';
 
 const testimonialData = [
   {
@@ -15,7 +16,7 @@ const testimonialData = [
   },
   {
     id: 2,
-    image:home,
+    image:imgSrc,
     title: `Certify`,
     text: "Certify, protect, and monetize your content on NewsWorth.",
     textColor: "text-green-500",

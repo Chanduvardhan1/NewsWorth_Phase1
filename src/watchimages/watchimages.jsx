@@ -405,11 +405,8 @@ const watchimages = () => {
   return (
     <>
    <Landing/>
-   <div className="flex w-full items-center p-4">
-      {/* Audio Tab */}
-    
-
-      {/* Videos Tab */}
+   {/* <div className="flex w-full items-center p-4">
+     
       <div
         className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-[#e70c0ce0] text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Videos')}
@@ -418,7 +415,6 @@ const watchimages = () => {
         <h1 className="text-[18px]">Videos</h1>
       </div>
 
-      {/* Images Tab */}
       <div
         className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-[#e70c0ce0] text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
         onClick={() => setActiveTab('Images')}
@@ -438,7 +434,6 @@ const watchimages = () => {
     <div className="flex  items-center my-4 ">
    
 
-      {/* Buttons container */}
       <div className="flex space-x-3 mx-3">
         {visibleButtons.map((label, index) => (
           <button key={index} className="bg-gray-400 text-white py-1 px-4 rounded">
@@ -446,7 +441,6 @@ const watchimages = () => {
           </button>
         ))}
       </div>
-   {/* Less than button */}
    <button 
         className="p-2 text-gray-600" 
         onClick={handlePrevious}
@@ -454,7 +448,6 @@ const watchimages = () => {
       >
         &lt;
       </button>
-      {/* Greater than button */}
       <button 
         className="p-2 text-gray-600" 
         onClick={handleNext}
@@ -462,7 +455,7 @@ const watchimages = () => {
       >
         &gt;
       </button>
-    </div>
+    </div> */}
     <div className="flex flex-row justify-between items-start px-4 py-2 gap-4">
   {/* Text Section */}
   <div className="w-[20%]">
@@ -488,18 +481,18 @@ const watchimages = () => {
       >
         <img
           src={imageData.content_link}
-          className="w-full h-full object-cover"
+          className="w-full h-full"
           alt="expandable"
         />
       </div>
-      <div className="absolute top-2 right-2">
+      {/* <div className="absolute top-2 right-2">
         <button
           className="p-2 bg-black text-white rounded-md"
           onClick={handleExitFullScreen}
         >
           Exit Fullscreen
         </button>
-      </div>
+      </div> */}
     </div>
 
   {/* Price Info Section */}
@@ -511,8 +504,8 @@ const watchimages = () => {
     <div className=" text-[14px]">
       <p className="font-bold mb-2 text-blue-600 text-[14px]">
       Price ₹{imageData.price} 
-        <span className="text-[14px] text-gray-500">
-          <span className="line-through">₹{imageData.discount}</span> at Discount {imageData.discount}%
+        <span className="text-[12px] text-gray-500 ml-[2px]">
+          <span className="line-through text-[12px]">₹{imageData.discount}</span> at Discount {imageData.discount}%
         </span>
       </p>
       <p className="font-bold text-[14px] mb-2 text-blue-600">

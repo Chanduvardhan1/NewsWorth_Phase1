@@ -453,8 +453,51 @@ const [finalprice,setfinalprice] = useState(null);
 const [openOptionsId, setOpenOptionsId] = useState(null);
 const userId = location.state?.user_id || localStorage.getItem("userId");
 const [openOptionsId1, setOpenOptionsId1] = useState(null);
+const [loading, setLoading] = useState(true); // Add loading state
+const [activeTab, setActiveTab] = useState('Videos'); // Default to Audio
+const [currentIndex, setCurrentIndex] = useState(0);
+const [buttonsPerPage, setButtonsPerPage] = useState(6); // Default number of visible buttons
 
 
+useEffect(() => {
+  if (!isAuthenticated) {
+    navigate("/login"); // Redirect to login if not authenticated
+    return;
+  }
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+
+      const response = await fetch(
+        `${URL}/landing page?user_id=${userId}`,
+        {
+          method: "POST",
+          headers: {
+            "accept": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+          body: JSON.stringify({}) // Empty body for a POST request
+        }
+      );
+      const data = await response.json();
+
+      if (data.response === "success") {
+        setVideoData(data.data);
+        setImageData(data.data);
+        setCartCount(data.cart_count);
+      }
+    } catch (error) {
+      console.error("Error fetching data", error);
+    } finally {
+      setLoading(false); // Stop loading once data is fetched
+    }
+  };
+
+  fetchData();
+}, [isAuthenticated, userId, authToken, navigate]); // Fixed dependency array
+
+// Render loading state
 
 const downloadContent = async (contentId) => {
   try {
@@ -588,41 +631,6 @@ useEffect(() => {
       [id]: !prev[id],
     }));
   };
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login"); // Redirect to login if not authenticated
-      return;
-    }
-    const fetchData = async () => {
-      try {
-
-  
-        const response = await fetch(
-          `${URL}/landing page?user_id=${userId}`,
-          {
-            method: "POST",
-            headers: {
-              "accept": "application/json",
-              Authorization: `Bearer ${authToken}`,
-
-            },
-            body: JSON.stringify({}) // Empty body for a POST request
-          }
-        );
-        const data = await response.json();
-
-        if (data.response === "success") {
-          setVideoData(data.data);
-          setImageData(data.data);
-          setCartCount(data.cart_count);
-        }
-      } catch (error) {
-        console.error("Error fetching data", error);
-      }
-    };
-
-    fetchData();
-  }, [userId],isAuthenticated, authToken, navigate);
 
   const handleAddToCart = async (contentId, contentLink, finalprice) => {
     try {
@@ -668,9 +676,6 @@ useEffect(() => {
   };
   
 
-  const [activeTab, setActiveTab] = useState('Videos'); // Default to Audio
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [buttonsPerPage, setButtonsPerPage] = useState(6); // Default number of visible buttons
 
   // Number of buttons visible at once
   const updateButtonsPerPage = () => {
@@ -719,6 +724,7 @@ useEffect(() => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+ 
   return (
     <div>
    <div className=" relative">
@@ -836,115 +842,139 @@ useEffect(() => {
 
   {activeTab ==='Videos' &&(
 
-    <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
-     {videoData
-    .filter((videoItem) => videoItem.content_type === "Video") // Filter to show only videos
-    .map((videoItem) => {
-        const videoRef = React.createRef();
-        return (
-          <div key={videoItem.content_id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">
-            {/* Video Section */}
-            <div className="relative group">
-              <video
-                ref={videoRef}
-                onMouseEnter={() => handleMouseEnter(videoRef)}
-                onMouseLeave={() => handleMouseLeave(videoRef)}
-                className="w-full h-60 object-cover group-hover:opacity-50 opacity-90 transition-opacity duration-300"
-
-                muted
-                loop
-                // onClick={handleVideoClick}
-                src={videoItem.content_link}
-              ></video>
-  <div onClick={() =>handleVideoClick(videoItem)} className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-   <img src={play} onClick={() => handleVideoClick(videoItem)} alt=""  className="w-[20px] h-[20px] text-white group-hover:text-black transition-colors duration-300"
- />
-  </div>
-              {/* <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
-                03:24 
-              </div> */}
-            </div>
-
-            {/* Video Info */}
-            <div className="p-4 flex justify-between items-center relative">
-      {/* Left Icon */}
-      <img src={video} alt="" className="w-[25px] h-[25px]" />
-
-      {/* Price Info */}
-      <div className="text-lg" onClick={() => handleVideoClick(videoItem)}>
-        <p className="font-bold text-blue-600">
-        ₹ {videoItem.price}{' '}
-          <span className="text-sm text-gray-500">
-            <span className="line-through text-sm text-gray-500">{videoItem.final_price}</span> at Discount {videoItem.discount}
-          </span>
-        </p>
-      </div>
-
-      {/* Right Icons */}
-      <div className="flex items-center space-x-4">
-        <img
-          onClick={() => handleAddToCart(videoItem.content_id, videoItem.content_link, videoItem.final_price)}
-          src={card}
-          alt="Add to Cart"
-          className="w-[25px] h-[25px] cursor-pointer"
-        />
-        
-        {/* Three Dots Icon */}
-        <img
-          src={moreImg}
-          alt="More options"
-          className="w-[15px] h-[15px] cursor-pointer"
-          onClick={() => toggleOptions(videoItem.content_id)} // Pass content_id to toggle options
-
-        />
-
-        {/* Dropdown Options */}
-        {openOptionsId === videoItem.content_id && ( // Only show options if this card is selected
-        <div className="absolute top-[20px] right-[24px] bg-gray-100 shadow-lg rounded-md p-2 w-32 z-10 clip-path-custom">
-        <button
-          onClick={() => downloadContent(videoItem.content_id)}
-          className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 p-2"
-        >
-          Download
-        </button>
-        {/* <button
-          onClick={() => deleteContent(videoItem.content_id)}
-          className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 p-2"
-        >
-          Delete
-        </button> */}
-      </div>
-        )}
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
+{loading ? (
+  Array.from({ length: 6 }).map((_, index) => (
+    <div
+      key={index}
+      className="w-full max-w-sm bg-gray-200 animate-pulse rounded-lg shadow-lg"
+    >
+      <div className="w-full h-40 bg-gray-300 rounded-t-lg"></div>
+      <div className="p-4">
+        <div className="w-3/4 h-4 bg-gray-300 rounded mb-2"></div>
+        <div className="w-1/2 h-4 bg-gray-300 rounded mb-4"></div>
+        <div className="flex space-x-2">
+          <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+          <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+          <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+        </div>
       </div>
     </div>
-
-            {/* Description */}
-            <div onClick={() => handleVideoClick(videoItem)} className="flex justify-between px-4">
-              <p className="text-blue-500 font-semibold line-clamp-2 w-[60%] h-12">
-                {videoItem.content_description}
-              </p>
-              <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
-                <p className="text-[12px] line-clamp-1 text-[#ce003d]">{videoItem.age_in_days}</p>
-                <p className="text-[12px] line-clamp-1">{videoItem.gps_location}</p>
-                <p className="text-[12px]  text-blue-500">{videoItem.uploaded_by}</p>
-              </div>
-            </div>
-
-            {/* Article Text */}
-            <div onClick={() => handleVideoClick(videoItem)} className="px-4 py-4">
-              <p className="text-gray-500 line-clamp-2">
-                {videoItem.content_description}
-              </p>
+  ))
+) : (
+  videoData
+    .filter((videoItem) => videoItem.content_type === "Video")
+    .map((videoItem) => {
+      const videoRef = React.createRef();
+      return (
+        <div key={videoItem.content_id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">
+          {/* Video Section */}
+          <div className="relative group">
+            <video
+              ref={videoRef}
+              onMouseEnter={() => handleMouseEnter(videoRef)}
+              onMouseLeave={() => handleMouseLeave(videoRef)}
+              className="w-full h-60 object-cover group-hover:opacity-50 opacity-90 transition-opacity duration-300"
+              muted
+              loop
+              src={videoItem.content_link}
+            ></video>
+            <div
+              onClick={() => handleVideoClick(videoItem)}
+              className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            >
+              <img
+                src={play}
+                alt="Play"
+                className="w-[20px] h-[20px] text-white group-hover:text-black transition-colors duration-300"
+              />
             </div>
           </div>
-        );
-      })}
-    </div>
+
+          {/* Video Info */}
+          <div className="p-4 flex justify-between items-center relative">
+            <img src={video} alt="" className="w-[25px] h-[25px]" />
+            <div className="text-lg" onClick={() => handleVideoClick(videoItem)}>
+              <p className="font-bold text-blue-600">
+                ₹ {videoItem.price}{' '}
+                <span className="text-sm text-gray-500">
+                  <span className="line-through text-sm text-gray-500">{videoItem.final_price}</span> at Discount {videoItem.discount}
+                </span>
+              </p>
+            </div>
+            <div className="flex items-center space-x-4">
+              <img
+                onClick={() => handleAddToCart(videoItem.content_id, videoItem.content_link, videoItem.final_price)}
+                src={card}
+                alt="Add to Cart"
+                className="w-[25px] h-[25px] cursor-pointer"
+              />
+              {/* <img
+                src={moreImg}
+                alt="More options"
+                className="w-[15px] h-[15px] cursor-pointer"
+                onClick={() => toggleOptions(videoItem.content_id)}
+              /> */}
+              {/* {openOptionsId === videoItem.content_id && (
+                <div className="absolute top-[20px] right-[24px] bg-gray-100 shadow-lg rounded-md p-2 w-32 z-10 clip-path-custom">
+                  <button
+                    onClick={() => downloadContent(videoItem.content_id)}
+                    className="block w-full text-left text-sm text-gray-700 hover:bg-gray-100 p-2"
+                  >
+                    Download
+                  </button>
+                </div>
+              )} */}
+            </div>
+          </div>
+
+          {/* Description */}
+          <div onClick={() => handleVideoClick(videoItem)} className="flex justify-between px-4">
+            <p className="text-blue-500 font-semibold line-clamp-2 w-[60%] h-12">
+              {videoItem.content_description}
+            </p>
+            <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
+              <p className="text-[12px] line-clamp-1 text-[#ce003d]">{videoItem.age_in_days}</p>
+              <p className="text-[12px] line-clamp-1">{videoItem.gps_location}</p>
+              <p className="text-[12px] text-blue-500">{videoItem.uploaded_by}</p>
+            </div>
+          </div>
+
+          {/* Article Text */}
+          <div onClick={() => handleVideoClick(videoItem)} className="px-4 py-4">
+            <p className="text-gray-500 line-clamp-2">
+              {videoItem.content_description}
+            </p>
+          </div>
+        </div>
+      );
+    })
+)}
+</div>
   )}
   
 {activeTab ==='Images' && (
  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
-  {imageData
+  {loading ? (
+          Array.from({ length: 6 }).map((_, index) => (
+            <div
+              key={index}
+              className="w-full max-w-sm bg-gray-200 animate-pulse rounded-lg shadow-lg"
+            >
+              <div className="w-full h-40 bg-gray-300 rounded-t-lg"></div>
+              <div className="p-4">
+                <div className="w-3/4 h-4 bg-gray-300 rounded mb-2"></div>
+                <div className="w-1/2 h-4 bg-gray-300 rounded mb-4"></div>
+                <div className="flex space-x-2">
+                  <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+                  <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+                  <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+imageData
     .filter((imageItem) => imageItem.content_type === "Image") // Filter to show only images
     .map((imageItem) => {
    return (
@@ -954,7 +984,7 @@ useEffect(() => {
          <img
            src={imageItem.content_link}
            alt={imageItem.title}
-           className="w-full h-60 object-cover group-hover:opacity-50 opacity-90 transition-opacity duration-300"
+           className="w-full h-60  group-hover:opacity-50 opacity-90 transition-opacity duration-300"
            onClick={() => handleImagesClick(imageItem)}
          />
   <div onClick={() => handleImagesClick(imageItem)} className="absolute top-2 right-2 ">
@@ -988,16 +1018,16 @@ useEffect(() => {
 
         
         {/* Three Dots Icon */}
-        <img
+        {/* <img
           src={moreImg}
           alt="More options"
           className="w-[15px] h-[15px] cursor-pointer"
           onClick={() => toggleOptions(imageItem.content_id)} 
 
-        />
+        /> */}
 
         {/* Dropdown Options */}
-        {openOptionsId === imageItem.content_id && ( // Only show options if this card is selected
+        {/* {openOptionsId === imageItem.content_id && ( // Only show options if this card is selected
         <div className="absolute top-[20px] right-[24px] bg-gray-100 shadow-lg rounded-md p-2 w-32 z-10 clip-path-custom">
         <button
           onClick={() => downloadContent(imageItem.content_id)}
@@ -1007,7 +1037,7 @@ useEffect(() => {
         </button>
        
       </div>
-        )}
+        )} */}
       </div>
     </div>
        {/* Image Info */}
@@ -1032,8 +1062,9 @@ useEffect(() => {
          </p>
        </div>
      </div>
-   );
- })}
+  );
+})
+)}
 </div>
 )}
    {activeTab ==='Audio' && (

@@ -119,9 +119,10 @@ const handleChangePassword = async (event) => {
     if (response.ok) {
       setResponseMessage('Password changed successfully!');
       setOldPassword(newPassword);
-
-      localStorage.setItem('oldPassword', newPassword);
-      navigate(0)
+      localStorage.setItem('password', newPassword); // Update the password in local storage
+      setNewPassword(''); // Clear new password input
+      setConfirmPassword('');
+      
     } else {
       setResponseMessage(`Error: ${data.message || 'Failed to change password'}`);
     }
@@ -1305,34 +1306,35 @@ InputProps={{
        {userType1 === 'Content' && (
       <div className="p-5 ">
         <div className="flex w-full items-center pr-[20px] mb-2">
-        {/* Audio Tab */}
-      
-  
-        {/* Videos Tab */}
-        <div
-          className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
-          onClick={() => setActiveTab('Videos')}
-        >
-          <img src={video} alt="Video Icon" className="w-[25px] h-[25px]" />
-          <h1 className="text-[18px]">Videos</h1>
-        </div>
-  
-        {/* Images Tab */}
-        <div
-          className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
-          onClick={() => setActiveTab('Images')}
-        >
-          <img src={camera} alt="Image Icon" className="w-[25px] h-[25px]" />
-          <h1 className="text-[18px]">Images</h1>
-        </div>
-        <div
-          className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-[#ebcee0] text-[#ce003d] inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
-          onClick={() => setActiveTab('Audio')}
-        >
-          <img src={Auido} alt="Audio Icon" className="w-[25px] h-[25px]" />
-          <h1 className="text-[18px]">Audio</h1>
-        </div>
+      {/* Audio Tab */}
+    
+
+      {/* Videos Tab */}
+      <div
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Videos' ? 'bg-[#e70c0ce0] text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        onClick={() => setActiveTab('Videos')}
+      >
+        <img src={video} alt="Video Icon" className="w-[25px] h-[25px]" />
+        <h1 className="text-[18px]">Videos</h1>
       </div>
+
+      {/* Images Tab */}
+      <div
+        className={`flex w-full justify-center items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Images' ? 'bg-[#e70c0ce0] text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        onClick={() => setActiveTab('Images')}
+      >
+        <img src={camera} alt="Image Icon" className="w-[25px] h-[25px]" />
+        <h1 className="text-[18px]">Images</h1>
+      </div>
+      <div
+        className={`flex w-full justify-center  items-center space-x-2 cursor-pointer shadow-xl ${activeTab === 'Audio' ? 'bg-[#e70c0ce0] text-white inline-block' : 'bg-white text-[#ce003d]'} p-2 rounded`}
+        onClick={() => setActiveTab('Audio')}
+      >
+        <img src={Auido} alt="Audio Icon" className="w-[25px] h-[25px]" />
+        <h1 className="text-[18px]">Audio</h1>
+      </div>
+    </div>
+    
       {activeTab ==='Videos' &&(
      <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-2 gap-6 mb-6 cursor-pointer">
      {loading ? (
@@ -1358,7 +1360,7 @@ InputProps={{
                    className="w-full h-60 object-cover group-hover:opacity-50 opacity-90 transition-opacity duration-300"
                    muted
                    loop
-                   src={videoItem.content_link}
+                   src={videoItem.Video_link}
                  ></video>
                  <div
                    onClick={() => handleVideoClick(videoItem)}
@@ -1461,7 +1463,7 @@ InputProps={{
        {/* Image Section */}
        <div className="relative group">
          <img
-           src={imageItem.content_link}
+           src={imageItem.Image_link}
            alt={imageItem.title}
            className="w-full h-60 object-cover group-hover:opacity-50 opacity-90 transition-opacity duration-300"
            onClick={() => handleImagesClick(imageItem)}
