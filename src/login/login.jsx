@@ -107,10 +107,18 @@ const { login } =  useContext(AuthContext);
       if (data.response === 'success') {
         const userId = data.data[0].user_id; // Get the user_id from the response
         const userName = data.data[0].user_name;
+        const categoryname= data.data[0].category_name;
+        console.log('Category Name from API:', categoryname); // Debug line
+
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("userId", userId);
         localStorage.setItem("userName", userName);
         localStorage.setItem('password', password);
+        localStorage.setItem('categoryName', categoryname); // Setting value
+        const storedCategoryName = localStorage.getItem('categoryName'); // Retrieving value
+        console.log('Updated Category Name:', storedCategoryName); // Verify
+        
+  
         login(accessToken);
         navigate('/dashboard', { state: { user_id: userId,user_name:userName } });
       } else if (data.detail === "Incorrect username or password") {

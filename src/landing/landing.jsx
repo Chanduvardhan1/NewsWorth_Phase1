@@ -106,6 +106,7 @@ const landing = () => {
         if (data.response === 'success') {
           localStorage.removeItem('authToken');
           localStorage.removeItem('user_id');
+          localStorage.removeItem("categoryName");
           navigate("/login");// Redirect to login page
         } else {
           console.error('Logout failed:', data.response_message);
@@ -154,7 +155,7 @@ const landing = () => {
 <div className=" w-full flex justify-between p-[5px] px-[20px] shadow-md ">
     <div className="flex justify-center items-center">
         <div>
-        <img src={logo} alt="" onClick={handleNavigation} className=" cursor-pointer w-[250px] h-[60px]" />
+        <img src={logo} alt="" onClick={handleNavigation} className=" cursor-pointer w-[150px] h-[50px]" />
         </div>
         <div>
         {/* <h1 className="text-[25px] font-bold cursor-pointer text-[#0f2b9fd9] " onClick={handleNavigation}>News<span className="text-[25px] font-bold cursor-pointer text-[#ce003d]" >Worth</span></h1> */}

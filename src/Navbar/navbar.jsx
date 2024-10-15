@@ -30,7 +30,7 @@ const navbar = () => {
   return (
     <div className=" flex justify-between p-5 px-[5%]">
 <div>
-<img  src={logo} alt="NewsWorth" width={100} height={100} className="transition-transform duration-300 ease-in-out  cursor-pointer object-cover" onClick={handlehome}/>
+<img  src={logo} alt="NewsWorth" width={150} height={50} className="transition-transform duration-300 ease-in-out  cursor-pointer object-cover" onClick={handlehome}/>
 </div>
 <div className="flex text-[16px] gap-[45px]  font-bold justify-center items-center cursor-pointer ">
 

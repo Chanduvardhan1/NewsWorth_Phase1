@@ -249,9 +249,19 @@ const watch = () => {
   const [finalprice,setfinalprice] = useState(null);
   const { isAuthenticated, authToken } = useContext(AuthContext);
   const userId = location.state?.user_id || localStorage.getItem("userId");
+  const [videoData1, setVideoData1] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState(null); // Store the selected video
 
-  const { videoData } = location.state; // Extract video data from state
- // Extract video data from the state
+  const { videoData } = location.state; 
+  
+  const handleVideoClick = (video) => {
+    setSelectedVideo(video); // Set the selected video in state
+    if (videoRef.current) {
+      videoRef.current.load(); // Reload the video element
+      videoRef.current.play(); // Autoplay the video
+    }
+  };
+  
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.play(); // Automatically play the video
@@ -421,7 +431,40 @@ const watch = () => {
       console.error('Request failed:', error);
     }
   };
-
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login"); // Redirect to login if not authenticated
+      return;
+    }
+  
+    const fetchData = async () => {
+      try {
+    
+  
+        const response = await fetch(
+          `${URL}/landing page?user_id=${userId}`,
+          {
+            method: "POST",
+            headers: {
+              "accept": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
+            body: JSON.stringify({}) // Empty body for a POST request
+          }
+        );
+        const data = await response.json();
+  
+        if (data.response === "success") {
+          setVideoData1(data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data", error);
+      } 
+    };
+  
+    fetchData();
+  }, [isAuthenticated, userId, authToken, navigate]); // Fixed dependency array
+  
   return (
     <>
    <Landing/>
@@ -479,6 +522,71 @@ const watch = () => {
         &gt;
       </button>
     </div> */}
+     {selectedVideo ? ( 
+ <div className="flex flex-row justify-between items-start px-4 py-2 gap-4">
+  <div className="w-[20%]">
+    <p className="text-blue-500 font-bold mb-[10px]">
+      {selectedVideo.content_title}
+    </p>
+    <p className="text-gray-700">
+    {selectedVideo.content_description}
+    </p>
+    <div className="text-sm text-gray-500 mt-2">
+      <p className="text-pink-500 font-bold text-[12px]">{selectedVideo.uploaded_time}</p>
+      <p className="text-[12px]">{selectedVideo.gps_location}</p>
+      <p className="font-semibold text-blue-500 text-[12px]">Creator {selectedVideo.uploaded_by}</p>
+    </div>
+  </div>
+
+  <div className="w-[60%] h-[20%] mx-auto">
+    <video ref={videoRef}  src={selectedVideo.content_link} controls autoPlay className="w-full h-[400px] object-cover">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  {/* Price Info Section */}
+  <div className="w-[20%] flex flex-col items-end">
+    <div className="flex items-center mb-2">
+      <img src={video} alt="" className="w-8 h-8" />
+      <p className="ml-2">{selectedVideo.file_type}</p>
+    </div>
+    <div className=" text-[14px]">
+      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      Price ₹{selectedVideo.price} 
+        <span className="text-[12px] text-gray-500 ml-[2px]">
+          <span className="line-through text-[12px]">₹{selectedVideo.discount}</span> at Discount {selectedVideo.discount}%
+        </span>
+      </p>
+      <p className="font-bold text-[14px] mb-2 text-blue-600">
+      Latitude: <span className=" text-gray-500 text-[14px]">{selectedVideo.latitude}</span> 
+      </p>
+      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      Longitude: <span className=" text-gray-500 text-[14px]">{selectedVideo.longitude}</span>
+      </p>
+      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      Altitude: <span className=" text-gray-500 text-[14px]">{selectedVideo.altitude}</span> 
+      </p>
+      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      Incident Time: <span className=" text-gray-500 text-[14px]">{selectedVideo.incident_time}</span> 
+      </p>
+      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      File Size: <span className=" text-gray-500 text-[14px]">{selectedVideo.file_size}</span> 
+      </p>
+      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      Aging Bucket: <span className=" text-gray-500 text-[14px]">{selectedVideo.aging_bucket}</span> 
+      </p>
+     
+      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      Purchased Flag: <span className=" text-gray-500 text-[14px]">   {selectedVideo.purchased_flag ? "True" : "False"}</span> 
+      </p>
+    </div>
+    <div className="mt-2">
+      <img src={card} alt="" className="w-8 h-8 cursor-pointer"   onClick={() => handleAddToCart(selectedVideo.content_id, selectedVideo.content_link, selectedVideo.final_price)} />
+    </div>
+  </div>
+</div>
+
+     ):(
     <div className="flex flex-row justify-between items-start px-4 py-2 gap-4">
   <div className="w-[20%]">
     <p className="text-blue-500 font-bold mb-[10px]">
@@ -541,29 +649,36 @@ const watch = () => {
     </div>
   </div>
 </div>
+     )}
+
 <div className="grid grid-cols-5 gap-4 px-4 p-2">
-      {videos.map((video) => {
+      {videoData1.filter((video) => video.content_type === "Video")
+    .map((video) => {
         const videoRef = React.createRef();
         return (
-          <div key={video.id}>
-            <div className="relative group">
+          <div key={video.content_id}>
+            <div
+            onClick={() => handleVideoClick(video)}
+             className="relative group">
               <video
                 ref={videoRef}
-                onMouseEnter={() => handleMouseEnter(videoRef)}
-                onMouseLeave={() => handleMouseLeave(videoRef)}
-                className="w-full h-30 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
+                // onMouseEnter={() => handleMouseEnter(videoRef)}
+                // onMouseLeave={() => handleMouseLeave(videoRef)}
+                className="w-full h-[150px] object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
                 muted
                 loop
-                src={video.videoSrc}
+                src={video.content_link}
+                onClick={() => handleVideoClick(video)}
+
               ></video>
               
               {/* Video Duration Overlay */}
-              <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
+              {/* <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
                 {video.duration}
-              </div>
+              </div> */}
             </div>
             <div>
-              <p className="text-center">{video.title}</p>
+              <p className="text-center line-clamp-2 h-12">{video.content_description}</p>
             </div>
           </div>
         );

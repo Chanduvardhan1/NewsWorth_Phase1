@@ -91,6 +91,23 @@ const [oldPassword, setOldPassword] = useState(localStorage.getItem('password'))
 const [videoData, setVideoData] = useState([]);
 const [imageData, setImageData] = useState([]);
 const [activeTab, setActiveTab] = useState('Videos'); // Default to Audio
+const [message1, setMessage1] = useState('');
+const [orgname, setorgname] = useState('');
+const [orgnumber, setorgnumber] = useState('');
+const [gstnumber, setgstnumber] = useState('');
+
+
+// localStorage.setItem('categoryName', 'Newsworth Creator');
+// console.log(localStorage.getItem('categoryName')); // Should log: Newsworth Creator
+
+const [categoryName, setCategoryName] = useState('Unknown');
+
+useEffect(() => {
+  const storedCategoryName = localStorage.getItem('categoryName') || 'Unknown';
+  console.log('Retrieved Category Name:', storedCategoryName); // Debugging
+
+  setCategoryName(storedCategoryName); // Update state with the latest value
+}, []); // Runs once on component mount
 
 const handleChangePassword = async (event) => {
   event.preventDefault(); // Prevent page refresh
@@ -262,7 +279,10 @@ const fetchUserProfile = async () => {
       setSelectedDistrict(data.response_message.district_name); // Ensure empty value if null
       setState(data.response_message.state_name);
       setSelectedCity(data.response_message.location_name);
+      setorgname(data.response_message.org_name)
 
+      setorgnumber(data.response_message.org_number)     
+      setgstnumber(data.response_message.gst_number)
       setUseraddressline1(data.response_message.user_address_line_1);
       setUseraddressline2(data.response_message.user_address_line_2);
     } else {
@@ -305,7 +325,7 @@ const handleSaveClick = async () => {
 
     const data = await response.json();
     if (data.response === 'success') {
-      toast.success(data.response_message);
+      setMessage1(data.response_message);
 
       // Handle success, maybe show a success message or reset the isEditable flag
       setShowRegistr(true)
@@ -406,6 +426,8 @@ const handleBackToLogin = () => {
       if (data.response === 'success') {
         localStorage.removeItem('authToken');
         localStorage.removeItem('user_id');
+        localStorage.removeItem("categoryName");
+
         navigate("/login");// Redirect to login page
       } else {
         console.error('Logout failed:', data.response_message);
@@ -597,28 +619,58 @@ const toggleSidebar = () => {
       >
       Change Password
       </div>
+      {categoryName === "Newsworth Creator" && (
+
       <div
         className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'Content' ? '' : ''}`}
         onClick={() => setUserType1('Content')}
       >
       Content
       </div>
+      )}
+          {categoryName === "Newsworth Buyer" && (
+
+<div
+className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
+  userType1 === 'Email' ? 'left-0 bg-blue-500' :
+  userType1 === 'Mobile' ? 'left-1/3 bg-blue-500' :
+  userType1 === 'User Id' ? 'left-2/3 bg-blue-500' :''
+
+ 
+}`}
+/>
+        )}
+            {categoryName === "Newsworth Creator" && (
+
       <div
     className={`absolute bottom-0 h-[2px] w-1/4 transition-all duration-300 ${
       userType1 === 'Email' ? 'left-0 bg-blue-500' :
       userType1 === 'Mobile' ? 'left-1/4 bg-blue-500' :
       userType1 === 'User Id' ? 'left-2/4 bg-blue-500' :
+
       userType1 === 'Content' ? 'left-3/4 bg-blue-500' : ''
+     
     }`}
   />
+            )}
     </div>
     <div className="border-[1px] w-[70%] border-gray-100"/>
     {userType1 === 'Email' && (
     <div className="flex w-full items-start mt-5 py-5">
+          {categoryName === "Newsworth Creator" && (
+
         <div className="space-y-1  ">
           <div>
           <h2 className="  text-gray-800">Name</h2>
-          <p className=" text-gray-500 mb-5 ">{data1.first_name} {data1.middle_name} {data1.last_name} </p>
+          <div className="flex gap-[50px] mb-5 items-center">
+          <p className=" text-gray-500  ">{data1.first_name} {data1.middle_name} {data1.last_name} </p>
+
+          <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+              </button>
+          </div>
       
           </div>
          
@@ -684,15 +736,7 @@ const toggleSidebar = () => {
                                 value={lastname}
                                 onChange={(e) => setLastname(e.target.value)}
                                 disabled={!isEditable}
-                                // InputProps={{
-                                //   style: {
-                                    
-                                //     height: "50px",
-                                //     border: "none",
-                                //     borderRadius: "10px",
-                                //   },
-                                //   autoComplete: "off",
-                                // }}
+                            
                                 name="last_name"
                               />
                             </div>
@@ -709,23 +753,7 @@ const toggleSidebar = () => {
                  className="w-full  px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
             
                  required
-                  // InputProps={{
-                  //   style: {
-                   
-                    
-                  //     height: "50px",
-                  //     borderRadius: "10px",
-                  //   },
-                  //   endAdornment: (
-                  //     <div
-                        
-                  //     >
-                  //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
-            
-                  //     </div>
-                  //   ),
-                  //   autoComplete: "off",
-                  // }}
+             
                    />
                    <FormControl variant="standard" required className="w-full mb-4">
                       <InputLabel id="gender-label">Gender</InputLabel>
@@ -737,11 +765,7 @@ const toggleSidebar = () => {
                         label="Gender"
                         className="w-full  rounded-[10px]   placeholder:text-[#CCCCCC]"
             
-                        // style={{
-                          
-                        //   height: "50px",
-                        //   borderRadius: "10px",
-                        // }}
+                     
                         name="gender"
                       >
                         <MenuItem value="">
@@ -763,23 +787,7 @@ const toggleSidebar = () => {
                  value={userphonenumber}
                  onChange={handleMobileChange}
                  disabled={!isEditable} 
-                  // InputProps={{
-                  //   style: {
-                   
-                      
-                  //     height: "50px",
-                  //     borderRadius: "10px",
-                  //   },
-                  //   endAdornment: (
-                  //     <div
-                        
-                  //     >
-                  //   <img src="src\assets\Images\signup\iphone.png" alt="" className="w-[18px] text-blue-800" />
-            
-                  //     </div>
-                  //   ),
-                  //   autoComplete: "off",
-                  // }} 
+               
                   />
                   <p>or</p>
                    <TextField
@@ -791,23 +799,7 @@ const toggleSidebar = () => {
                  value={useremail}
                  onChange={handleEmailChange}
                  disabled={!isEditable}
-                  // InputProps={{
-                  //   style: {
-                   
-                      
-                  //     height: "50px",
-                  //     borderRadius: "10px",
-                  //   },
-                  //   endAdornment: (
-                  //     <div
-                        
-                  //     >
-                  //   <img src="src\assets\Images\login\envelope.png" alt="" className="w-[25px] text-blue-800" />
-            
-                  //     </div>
-                  //   ),
-                  //   autoComplete: "off",
-                  // }} 
+              
                   />
             
             </div>
@@ -829,7 +821,8 @@ const toggleSidebar = () => {
             )}
             <div className="flex justify-between"> 
               <div className="">
-            
+              {message1 && <p className="text-green-500  w-[320px]">{message1}</p>}
+
                {message && <p className="text-red-500  w-[320px]">{message}</p>}
               </div>
             
@@ -848,11 +841,16 @@ const toggleSidebar = () => {
             </div>
             <div className="flex items-center space-x-2">
               <p className=" text-gray-800">Gender</p>
-              
             </div>
             <div className="flex mb-5 gap-[50px]">
               <p className=" text-gray-500 ">{gender}</p>
-                         
+
+<button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+  </svg>
+</button>
+     
             </div>
             <div className="flex items-center mt-5">
               <p className=" text-gray-800">Data of Birth</p>
@@ -860,23 +858,215 @@ const toggleSidebar = () => {
             </div>
             <div className="flex gap-[50px]">
               <p className=" text-gray-500 ">{dateofbirth}</p>
-                    
+              <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+  </svg>
+</button>   
             </div>
  
 
           </div>
         </div>
-       
+)}
+    {categoryName === "Newsworth Buyer" && (
 
-       
+        <div className="space-y-1  ">
+          <div>
+          <h2 className="  text-gray-800">Name</h2>
+          <div className="flex gap-[50px] mb-5 items-center">
+          <p className=" text-gray-500  ">{data1.first_name} {data1.middle_name} {data1.last_name} </p>
+
+          <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+              </button>
+          </div>
+      
+          </div>
+         
+          <div className="">
+          <div className="flex items-center ">
+              <p className=" text-gray-800">  {useremail ? 'Verified email' : userphonenumber ? 'Verified mobile' : 'No contact verified'}</p>
+              <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="flex items-center mb-5 gap-[50px]">
+              <p className=" text-gray-500 ">{useremail ? useremail : userphonenumber ? userphonenumber : 'No contact information available'}</p>
+              <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+              </button>
+              {showPopup && (
+               
+                <div className="flex flex-col gap-[10px] absolute bg-white p-5 shadow-2xl rounded-xl top-[75px] right-[400px]">
+                    <div className="flex justify-end items-center mb-4">
+          {/* <h2 className="text-xl  text-gray-800">Change password</h2> */}
+          <button  onClick={handlePopupToggle} className="text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+                <div className=" flex gap-[15px] justify-center">
+                              <TextField
+                                id="firstName"
+                                label="First Name"
+                                variant="standard"
+                                className="w-full mb-4 px-7 py-4  bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                                required
+                                value={firstname}
+                                onChange={(e) => setFirstname(e.target.value)}
+                                disabled={!isEditable}
+            
+            
+                              />
+            
+                              <TextField
+                                id="middleName"
+                                label="Middle Name"
+                                variant="standard"
+                                className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                                value={middlename}
+                                onChange={(e) => setMiddlename(e.target.value)}
+                                disabled={!isEditable}
+                            
+                                
+                              />
+                              <TextField
+                                id="lastName"
+                                label="Last Name"
+                                variant="standard"
+                                required            
+                                className="w-full mb-4 px-7 py-4  bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+                 
+                                value={lastname}
+                                onChange={(e) => setLastname(e.target.value)}
+                                disabled={!isEditable}
+                            
+                                name="last_name"
+                              />
+                            </div>
+                            {/* <div className=" flex gap-[15px] justify-center">
+            <TextField
+                  type="date"
+                  id="Date of Birth" 
+                  label="Date of Birth" 
+                  focused
+                  value={dateofbirth}
+                  onChange={(e) => setDateofbirth(e.target.value)}
+                  disabled={!isEditable}
+                 variant="standard"
+                 className="w-full  px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                 required
+             
+                   />
+                   <FormControl variant="standard" required className="w-full mb-4">
+                      <InputLabel id="gender-label">Gender</InputLabel>
+                      <Select
+                        labelId="gender-label"
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                        disabled={!isEditable}
+                        label="Gender"
+                        className="w-full  rounded-[10px]   placeholder:text-[#CCCCCC]"
+            
+                     
+                        name="gender"
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        <MenuItem value="Male">Male</MenuItem>
+                        <MenuItem value="Female">Female</MenuItem>
+                      </Select>
+                    </FormControl>
+            </div> */}
+           
+            <div className=" flex gap-[15px] justify-end items-end">
+            <TextField
+                 id="Mobile" 
+                 label="Mobile" 
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF] placeholder:text-[#CCCCCC]"
+            
+                 variant="standard"
+                 value={userphonenumber}
+                 onChange={handleMobileChange}
+                 disabled={!isEditable} 
+               
+                  />
+                  <p>or</p>
+                   <TextField
+                 id="Email" 
+                 label="Email" 
+                 variant="standard"
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                 value={useremail}
+                 onChange={handleEmailChange}
+                 disabled={!isEditable}
+              
+                  />
+            
+            </div>
+           
+            {showRegistr ?(
+                       <div className="flex justify-end">
+                       <button className="primary-btn" onClick={handleEditClick}>Edit</button>
+                     </div>
+            
+            ):(
+              <div className="flex justify-between ">
+              <div className="">
+              <button className="primary-btn"onClick={handleCancel}>Cancel</button>
+            </div>
+              <div className="">
+                       <button className="primary-btn"onClick={handleSaveClick} >Save</button>
+                     </div>
+                     </div>
+            )}
+            <div className="flex justify-between"> 
+              <div className="">
+              {message1 && <p className="text-green-500  w-[320px]">{message1}</p>}
+
+               {message && <p className="text-red-500  w-[320px]">{message}</p>}
+              </div>
+            
+            
+            </div>
+            
+            
+            
+            {errorMessage && <p className="text-red-500  w-[320px]">{errorMessage}</p>}
+            
+            
+            
+              </div>
+              
+              )}            
+            </div>
+            
+           
+ 
+
+          </div>
+        </div>
+    )}
       </div>
     )}
     {userType1 === 'Mobile' && (
     <div className="flex w-full items-start mt-5 py-5">
         <div className="  ">
-         
+        {categoryName === "Newsworth Creator" && (
+
           <div className="">
-           
+        
             <div className="flex items-center mt-5">
               <p className=" text-gray-800">Address Line 1</p>
               
@@ -964,6 +1154,8 @@ const toggleSidebar = () => {
                       </Select>
                     </FormControl>
             </div>
+             
+          
             <div className=" flex gap-[15px] justify-center">
                    <FormControl variant="standard" required className="w-full mb-4">
                       <InputLabel id="District" className="bg-[#FFFFFF] placeholder:text-[#CCCCCC]">District</InputLabel>
@@ -1131,7 +1323,8 @@ const toggleSidebar = () => {
             )}
             <div className="flex justify-between"> 
               <div className="">
-            
+              {message1 && <p className="text-green-500  w-[320px]">{message1}</p>}
+
                {message && <p className="text-red-500  w-[320px]">{message}</p>}
               </div>
             
@@ -1150,6 +1343,354 @@ const toggleSidebar = () => {
             </div>
 
           </div>
+        )}
+    {categoryName === "Newsworth Buyer" && (
+
+          <div className="">
+          <div className="flex items-center mt-5">
+              <p className=" text-gray-800">Organization Name</p>
+              
+            </div>
+            <div className="flex mb-5 gap-[50px]">
+              <p className=" text-gray-500 ">{orgname}</p>
+                    
+            </div>
+            <div className="flex items-center mt-5">
+              <p className=" text-gray-800">Oeganization Number</p>
+              
+            </div>
+            <div className="flex mb-5 gap-[50px]">
+              <p className=" text-gray-500 ">{orgnumber}</p>
+                    
+            </div>
+            <div className="flex items-center mt-5">
+              <p className=" text-gray-800">GST Number</p>
+              
+            </div>
+            <div className="flex mb-5 gap-[50px]">
+              <p className=" text-gray-500 ">{gstnumber}</p>
+                    
+            </div>
+            <div className="flex items-center mt-5">
+              <p className=" text-gray-800">Address Line 1</p>
+              
+            </div>
+            <div className="flex mb-5 gap-[50px]">
+              <p className=" text-gray-500 ">{pincode},{selectedCity},{selectedDistrict},{state},{country}</p>
+                    
+            </div>
+            <div className="flex items-center mt-5">
+              <p className=" text-gray-800">Address Line 2</p>
+              
+            </div>
+            <div className="flex gap-[50px]">
+              <p className=" text-gray-500 ">{useraddressline1},{useraddressline2}</p>
+              <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+              </button>
+              {showPopup && (
+               
+                <div className="flex flex-col gap-[10px] absolute bg-white p-5 shadow-2xl rounded-xl top-[75px] right-[400px]">
+                    <div className="flex justify-end items-center mb-4">
+          {/* <h2 className="text-xl  text-gray-800">Change password</h2> */}
+          <button  onClick={handlePopupToggle} className="text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div className=" flex gap-[15px] justify-center">
+            <TextField
+                 id="Organization Name" 
+                 label="Organization Name" 
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+                 value={orgname}
+                 disabled={!isEditable}
+                 onChange={(e) => setorgname(e.target.value)}
+
+                 variant="standard"
+                 required
+              
+                   />
+                     <TextField
+                 id="Organization Name" 
+                 label="Organization Number" 
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+                 value={orgnumber}
+                 disabled={!isEditable}
+                 onChange={(e) => setorgnumber(e.target.value)}
+
+                 variant="standard"
+                 required
+              
+                   />
+                
+            </div>
+            <div className=" flex gap-[15px] justify-center">
+            <TextField
+                 id="Country" 
+                 label="GST Number" 
+                 variant="standard"
+                 required
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                 value={gstnumber}
+                 onChange={(e) => setgstnumber(e.target.value)}
+                 disabled={!isEditable}
+               
+                      
+                
+                  />
+                  
+            </div>
+            <div className=" flex gap-[15px] justify-center">
+            <TextField
+                 id="Pincode" 
+                 label="Pincode" 
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+                 value={pincode}
+                 disabled={!isEditable}
+                 onChange={handlePincodeChange}
+                 onBlur={fetchLocationDetails}
+                 variant="standard"
+                 required
+                  // InputProps={{
+                  //   style: {
+                   
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }}
+                   />
+                  
+                  <FormControl variant="standard" required className="w-full mb-4">
+                      <InputLabel id="City">City</InputLabel>
+                      <Select
+                     className="w-full  rounded-[10px]   placeholder:text-[#CCCCCC]"
+                     value={selectedCity}
+                     onChange={(e) => setSelectedCity(e.target.value)}
+                        labelId="City"
+                        label="City"
+                        disabled={!isEditable}
+                        // style={{
+                          
+                        //   height: "50px",
+                        //   borderRadius: "10px",
+                        // }}
+                        name="UserType"
+                      >
+                        <MenuItem value="">
+                          {/* <em>None</em> */}
+                        </MenuItem>
+                        {locationDetails.map((location) => (
+                          <MenuItem key={location.location_id} value={location.location}>
+                            {location.location}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+            </div>
+             
+          
+            <div className=" flex gap-[15px] justify-center">
+                   <FormControl variant="standard" required className="w-full mb-4">
+                      <InputLabel id="District" className="bg-[#FFFFFF] placeholder:text-[#CCCCCC]">District</InputLabel>
+                      <Select
+                     className="w-full  rounded-[10px]  placeholder:text-[#CCCCCC]"
+            
+                        labelId="District"
+                        label="District"
+                        disabled={!isEditable}
+                        value={selectedDistrict}
+                        onChange={(e) => setSelectedDistrict(e.target.value)}
+                    
+                      
+                      >
+                        <MenuItem value="">
+                          {/* <em>None</em> */}
+                        </MenuItem>
+                        {uniqueDistricts.map((district, index) => (
+                          <MenuItem key={index} value={district}>
+                            {district}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                   <TextField
+                 id="State" 
+                 label="State" 
+                 value={state}
+                 disabled={!isEditable}
+                 onChange={(e) => setState(e.target.value)}
+            
+                 variant="standard"
+                
+            
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                 required
+                  // InputProps={{
+                  //   style: {
+                   
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }}
+                   />
+            </div>
+            
+            <div className=" flex gap-[15px] justify-center">
+            <TextField
+                 id="Country" 
+                 label="Country" 
+                 variant="standard"
+                 required
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                 value={country}
+                 onChange={(e) => setCountry(e.target.value)}
+                 disabled={!isEditable}
+                  // InputProps={{
+                  //   style: {
+                   
+                      
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }} 
+                  />
+                  
+            </div>
+              
+            <div className=" flex gap-[15px] justify-center">
+            <TextField
+                 id="Country" 
+                 label="User address line 1" 
+                 variant="standard"
+                 required
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                 value={useraddressline1}
+                 onChange={(e) => setUseraddressline1(e.target.value)}
+                 disabled={!isEditable}
+                  // InputProps={{
+                  //   style: {
+                   
+                      
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }} 
+                  />
+                  
+            </div>
+            <div className=" flex gap-[15px] justify-center">
+            <TextField
+                 id="Country" 
+                 label="User address line 2" 
+                 variant="standard"
+                 required
+                 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+            
+                 value={useraddressline2}
+                 onChange={(e) => setUseraddressline2(e.target.value)}
+                 disabled={!isEditable}
+                  // InputProps={{
+                  //   style: {
+                   
+                      
+                  //     height: "50px",
+                  //     borderRadius: "10px",
+                  //   },
+                  //   endAdornment: (
+                  //     <div
+                        
+                  //     >
+                  //   {/* <img src="images\home\signup\password.png" alt="" className="w-[25px] text-blue-800" /> */}
+            
+                  //     </div>
+                  //   ),
+                  //   autoComplete: "off",
+                  // }} 
+                  />
+                  
+            </div>
+            {showRegistr ?(
+                       <div className="flex justify-end">
+                       <button className="primary-btn" onClick={handleEditClick}>Edit</button>
+                     </div>
+            
+            ):(
+              <div className="flex justify-between ">
+              <div className="">
+              <button className="primary-btn"onClick={handleCancel}>Cancel</button>
+            </div>
+              <div className="">
+                       <button className="primary-btn"onClick={handleSaveClick} >Save</button>
+                     </div>
+                     </div>
+            )}
+            <div className="flex justify-between"> 
+              <div className="">
+              {message1 && <p className="text-green-500  w-[320px]">{message1}</p>}
+
+               {message && <p className="text-red-500  w-[320px]">{message}</p>}
+              </div>
+            
+            
+            </div>
+            
+            
+            
+            {errorMessage && <p className="text-red-500  w-[320px]">{errorMessage}</p>}
+            
+            
+            
+              </div>
+              
+              )}  
+            </div>
+
+          </div>
+    )}
         </div>
        
 

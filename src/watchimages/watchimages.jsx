@@ -1,4 +1,5 @@
-import React, { useState, useEffect ,useRef} from "react";
+import React, { useState, useEffect ,useRef,useContext} from "react";
+import { AuthContext } from "../Authcontext/AuthContext";
 
 import Navbar from "../Navbar/navbar";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +19,7 @@ import camera from '../../src/assets/Images/dashboard/camera-c.png';
 import card from '../../src/assets/Images/dashboard/shopping-cart.png';
 import src from '../../src/assets/Images/dashboard/crickit.webp';
 import { useLocation } from 'react-router-dom';
+import { URL } from "../url";
 
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 const videos1 = [
@@ -243,9 +245,17 @@ const watchimages = () => {
   const navigate = useNavigate();
   const videoRef = useRef(null);
   const location = useLocation();
+  const { isAuthenticated, authToken } = useContext(AuthContext);
+  const userId = location.state?.user_id || localStorage.getItem("userId");
   const { imageData } = location.state; 
   const imageContainerRef = useRef(null);
+  const [imageData1, setImageData1] = useState([]);
+  const [selectedimage, setSelectedimage] = useState(null); // Store the selected video
 
+  const handleimageClick = (video) => {
+    setSelectedimage(video); // Set the selected video in state
+ 
+  };
   // Function to trigger fullscreen
   const handleExpandClick = () => {
     if (imageContainerRef.current) {
@@ -401,7 +411,40 @@ const watchimages = () => {
 
   // Slice the button array to show only a subset based on the currentIndex
   const visibleButtons = buttonLabels.slice(currentIndex, currentIndex + buttonsPerPage);
-
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login"); // Redirect to login if not authenticated
+      return;
+    }
+  
+    const fetchData = async () => {
+      try {
+    
+  
+        const response = await fetch(
+          `${URL}/landing page?user_id=${userId}`,
+          {
+            method: "POST",
+            headers: {
+              "accept": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
+            body: JSON.stringify({}) // Empty body for a POST request
+          }
+        );
+        const data = await response.json();
+  
+        if (data.response === "success") {
+          setImageData1(data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data", error);
+      } 
+    };
+  
+    fetchData();
+  }, [isAuthenticated, userId, authToken, navigate]); // Fixed dependency array
+  
   return (
     <>
    <Landing/>
@@ -456,94 +499,184 @@ const watchimages = () => {
         &gt;
       </button>
     </div> */}
-    <div className="flex flex-row justify-between items-start px-4 py-2 gap-4">
-  {/* Text Section */}
-  <div className="w-[20%]">
-    <p className="text-blue-500 font-bold mb-[10px]">
-      {imageData.content_title}
-    </p>
-    <p className="text-gray-700">
-    {imageData.content_description}
-    </p>
-    <div className="text-sm text-gray-500 mt-2">
-      <p className="text-pink-500 font-bold text-[12px]">{imageData.uploaded_time}</p>
-      <p className="text-[12px]">{imageData.gps_location}</p>
-      <p className="font-semibold text-blue-500 text-[12px]">Creator {imageData.uploaded_by}</p>
-    </div>
-  </div>
+    {selectedimage ? (
+ <div className="flex flex-row justify-between items-start px-4 py-2 gap-4">
+ {/* Text Section */}
+ <div className="w-[20%]">
+   <p className="text-blue-500 font-bold mb-[10px]">
+     {selectedimage.content_title}
+   </p>
+   <p className="text-gray-700">
+   {selectedimage.content_description}
+   </p>
+   <div className="text-sm text-gray-500 mt-2">
+     <p className="text-pink-500 font-bold text-[12px]">{selectedimage.uploaded_time}</p>
+     <p className="text-[12px]">{selectedimage.gps_location}</p>
+     <p className="font-semibold text-blue-500 text-[12px]">Creator {selectedimage.uploaded_by}</p>
+   </div>
+ </div>
 
-  {/* Video Section */}
-  <div className="relative w-[60%]">
-      <div
-        ref={imageContainerRef}
-        className="w-full h-[400px] cursor-pointer"
-        onClick={handleExpandClick}
-      >
-        <img
-          src={imageData.content_link}
-          className="w-full h-full"
-          alt="expandable"
-        />
-      </div>
-      {/* <div className="absolute top-2 right-2">
-        <button
-          className="p-2 bg-black text-white rounded-md"
-          onClick={handleExitFullScreen}
-        >
-          Exit Fullscreen
-        </button>
-      </div> */}
-    </div>
+ {/* Video Section */}
+ <div className="relative w-[60%]">
+     <div
+       ref={imageContainerRef}
+       className="w-full h-[400px] cursor-pointer"
+       onClick={handleExpandClick}
+     >
+       <img
+         src={selectedimage.content_link}
+         className="w-full h-full"
+         alt="expandable"
+       />
+     </div>
+     {/* <div className="absolute top-2 right-2">
+       <button
+         className="p-2 bg-black text-white rounded-md"
+         onClick={handleExitFullScreen}
+       >
+         Exit Fullscreen
+       </button>
+     </div> */}
+   </div>
 
-  {/* Price Info Section */}
-  <div className="w-[20%] flex flex-col items-end">
-    <div className="flex items-center mb-2">
-      <img src={video} alt="" className="w-8 h-8" />
-      <p className="ml-2">{imageData.file_type}</p>
-    </div>
-    <div className=" text-[14px]">
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
-      Price ₹{imageData.price} 
-        <span className="text-[12px] text-gray-500 ml-[2px]">
-          <span className="line-through text-[12px]">₹{imageData.discount}</span> at Discount {imageData.discount}%
-        </span>
-      </p>
-      <p className="font-bold text-[14px] mb-2 text-blue-600">
-      Latitude: <span className=" text-gray-500 text-[14px]">{imageData.latitude}</span> 
-      </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
-      Longitude: <span className=" text-gray-500 text-[14px]">{imageData.longitude}</span>
-      </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
-      Altitude: <span className=" text-gray-500 text-[14px]">{imageData.altitude}</span> 
-      </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
-      Incident Time: <span className=" text-gray-500 text-[14px]">{imageData.incident_time}</span> 
-      </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
-      File Size: <span className=" text-gray-500 text-[14px]">{imageData.file_size}</span> 
-      </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
-      Aging Bucket: <span className=" text-gray-500 text-[14px]">{imageData.aging_bucket}</span> 
-      </p>
-     
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
-      Purchased Flag: <span className=" text-gray-500 text-[14px]">   {imageData.purchased_flag ? "True" : "False"}</span> 
-      </p>
-    </div>
-    <div className="mt-2">
-      <img src={card} alt="" className="w-8 h-8" />
-    </div>
-  </div>
+ {/* Price Info Section */}
+ <div className="w-[20%] flex flex-col items-end">
+   <div className="flex items-center mb-2">
+     <img src={video} alt="" className="w-8 h-8" />
+     <p className="ml-2">{selectedimage.file_type}</p>
+   </div>
+   <div className=" text-[14px]">
+     <p className="font-bold mb-2 text-blue-600 text-[14px]">
+     Price ₹{selectedimage.price} 
+       <span className="text-[12px] text-gray-500 ml-[2px]">
+         <span className="line-through text-[12px]">₹{selectedimage.discount}</span> at Discount {selectedimage.discount}%
+       </span>
+     </p>
+     <p className="font-bold text-[14px] mb-2 text-blue-600">
+     Latitude: <span className=" text-gray-500 text-[14px]">{selectedimage.latitude}</span> 
+     </p>
+     <p className="font-bold mb-2 text-blue-600 text-[14px]">
+     Longitude: <span className=" text-gray-500 text-[14px]">{selectedimage.longitude}</span>
+     </p>
+     <p className="font-bold mb-2 text-blue-600 text-[14px]">
+     Altitude: <span className=" text-gray-500 text-[14px]">{selectedimage.altitude}</span> 
+     </p>
+     <p className="font-bold mb-2 text-blue-600 text-[14px]">
+     Incident Time: <span className=" text-gray-500 text-[14px]">{selectedimage.incident_time}</span> 
+     </p>
+     <p className="font-bold mb-2 text-blue-600 text-[14px]">
+     File Size: <span className=" text-gray-500 text-[14px]">{selectedimage.file_size}</span> 
+     </p>
+     <p className="font-bold mb-2 text-blue-600 text-[14px]">
+     Aging Bucket: <span className=" text-gray-500 text-[14px]">{selectedimage.aging_bucket}</span> 
+     </p>
+    
+     <p className="font-bold mb-2 text-blue-600 text-[14px]">
+     Purchased Flag: <span className=" text-gray-500 text-[14px]">   {selectedimage.purchased_flag ? "True" : "False"}</span> 
+     </p>
+   </div>
+   <div className="mt-2">
+     <img src={card} alt="" className="w-8 h-8" />
+   </div>
+ </div>
 </div>
+    ):(
+      <div className="flex flex-row justify-between items-start px-4 py-2 gap-4">
+      {/* Text Section */}
+      <div className="w-[20%]">
+        <p className="text-blue-500 font-bold mb-[10px]">
+          {imageData.content_title}
+        </p>
+        <p className="text-gray-700">
+        {imageData.content_description}
+        </p>
+        <div className="text-sm text-gray-500 mt-2">
+          <p className="text-pink-500 font-bold text-[12px]">{imageData.uploaded_time}</p>
+          <p className="text-[12px]">{imageData.gps_location}</p>
+          <p className="font-semibold text-blue-500 text-[12px]">Creator {imageData.uploaded_by}</p>
+        </div>
+      </div>
+    
+      {/* Video Section */}
+      <div className="relative w-[60%]">
+          <div
+            ref={imageContainerRef}
+            className="w-full h-[400px] cursor-pointer"
+            onClick={handleExpandClick}
+          >
+            <img
+              src={imageData.content_link}
+              className="w-full h-full"
+              alt="expandable"
+            />
+          </div>
+          {/* <div className="absolute top-2 right-2">
+            <button
+              className="p-2 bg-black text-white rounded-md"
+              onClick={handleExitFullScreen}
+            >
+              Exit Fullscreen
+            </button>
+          </div> */}
+        </div>
+    
+      {/* Price Info Section */}
+      <div className="w-[20%] flex flex-col items-end">
+        <div className="flex items-center mb-2">
+          <img src={video} alt="" className="w-8 h-8" />
+          <p className="ml-2">{imageData.file_type}</p>
+        </div>
+        <div className=" text-[14px]">
+          <p className="font-bold mb-2 text-blue-600 text-[14px]">
+          Price ₹{imageData.price} 
+            <span className="text-[12px] text-gray-500 ml-[2px]">
+              <span className="line-through text-[12px]">₹{imageData.discount}</span> at Discount {imageData.discount}%
+            </span>
+          </p>
+          <p className="font-bold text-[14px] mb-2 text-blue-600">
+          Latitude: <span className=" text-gray-500 text-[14px]">{imageData.latitude}</span> 
+          </p>
+          <p className="font-bold mb-2 text-blue-600 text-[14px]">
+          Longitude: <span className=" text-gray-500 text-[14px]">{imageData.longitude}</span>
+          </p>
+          <p className="font-bold mb-2 text-blue-600 text-[14px]">
+          Altitude: <span className=" text-gray-500 text-[14px]">{imageData.altitude}</span> 
+          </p>
+          <p className="font-bold mb-2 text-blue-600 text-[14px]">
+          Incident Time: <span className=" text-gray-500 text-[14px]">{imageData.incident_time}</span> 
+          </p>
+          <p className="font-bold mb-2 text-blue-600 text-[14px]">
+          File Size: <span className=" text-gray-500 text-[14px]">{imageData.file_size}</span> 
+          </p>
+          <p className="font-bold mb-2 text-blue-600 text-[14px]">
+          Aging Bucket: <span className=" text-gray-500 text-[14px]">{imageData.aging_bucket}</span> 
+          </p>
+         
+          <p className="font-bold mb-2 text-blue-600 text-[14px]">
+          Purchased Flag: <span className=" text-gray-500 text-[14px]">   {imageData.purchased_flag ? "True" : "False"}</span> 
+          </p>
+        </div>
+        <div className="mt-2">
+          <img src={card} alt="" className="w-8 h-8" />
+        </div>
+      </div>
+    </div>
+    )}
+
+
+   
 <div className="grid grid-cols-5 gap-4 px-4 p-2">
-      {videos.map((video) => {
+      {imageData1.filter((video) => video.content_type === "Image") // Filter to show only images
+    .map((video) => {
         const videoRef = React.createRef();
         return (
-          <div key={video.id}>
-            <div className="relative group">
-          <img src={video.videoSrc} alt=""
-          className="w-full h-25 object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
+          <div key={video.content_id}>
+            <div className="relative group cursor-pointer"
+          onClick={() => handleimageClick(video)}
+>
+          <img src={video.content_link}
+            onClick={() => handleimageClick(video)} alt=""
+          className="w-full h-[150px] object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300 cursor-pointer"
  />
              
               
@@ -553,7 +686,7 @@ const watchimages = () => {
               </div> */}
             </div>
             <div>
-              <p className="text-center">{video.title}</p>
+              <p className="text-center line-clamp-2 h-12">{video.content_description}</p>
             </div>
           </div>
         );
