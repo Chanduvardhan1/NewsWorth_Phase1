@@ -1187,9 +1187,9 @@ imageData
 
     <div className="flex flex-col gap-2 mt-4">
       <h1 className="font-semibold text-2xl">Cart Subtotal: ₹{finalprice}</h1>
-      <div className="bg-yellow-400 rounded-2xl flex justify-center">
+      {/* <div className="bg-yellow-400 rounded-2xl flex justify-center">
         <button className="text-black p-2">  Proceed to Buy ({cartCount} item{cartCount !== 1 ? 's' : ''})</button>
-      </div>
+      </div> */}
       <div className="bg-white border-[1px] border-black rounded-2xl flex justify-center">
         <button className="text-black p-2" onClick={handlecart}>Go to Cart</button>
       </div>

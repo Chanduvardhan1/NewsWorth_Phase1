@@ -244,7 +244,8 @@ const { login } =  useContext(AuthContext);
                          required
                          style={{ height: "50px", borderRadius: "10px" }}
                          value={email}
-                         onChange={(e) => setEmail(e.target.value)}
+                         onChange={(e) => setEmail(e.target.value.toLowerCase())} // Converts input to lowercase
+
                          variant="outlined"
                          InputLabelProps={{
                            style: {

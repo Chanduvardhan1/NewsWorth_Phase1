@@ -18,7 +18,15 @@ const landing = () => {
   const [loading, setLoading] = useState(true); // State to manage loading status
   const [error, setError] = useState(null); // State to handle error
   const [searchQuery, setSearchQuery] = useState('');
+  const [categoryName, setCategoryName] = useState('Unknown');
 
+  useEffect(() => {
+    const storedCategoryName = localStorage.getItem('categoryName') || 'Unknown';
+    console.log('Retrieved Category Name:', storedCategoryName); // Debugging
+  
+    setCategoryName(storedCategoryName); // Update state with the latest value
+  }, []); // Runs once on component mount
+  
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -235,22 +243,22 @@ const landing = () => {
               />
               <div className="flex flex-col items-start">
                 <div className="text-sm font-bold">{userName}</div>
-                <div className="text-xs text-gray-500">Content Creator</div>
+                <div className="text-xs text-gray-500">{categoryName}</div>
               </div>
             </button>
           </div>
           <div className="border-t border-gray-200"></div>
 
-          <div className="flex justify-center m-2">
-            <button className="flex justify-center" onClick={handleProfile}>View Profile</button>
+          <div className="flex justify-start px-4 m-2">
+            <button className="flex justify-start" onClick={handleProfile}>View Profile</button>
           </div>
           <div className="border-t border-gray-200"></div>
 
-          <div className="flex justify-center m-2">
-            <button className="flex justify-center" onClick={handleorders}>My Orders</button>
+          <div className="flex justify-start px-4 m-2">
+            <button className="flex justify-start" onClick={handleorders}>My Orders</button>
           </div>
-          <div className="border-t border-gray-200"></div>
-          <div className=" flex justify-center  ">
+          <div className="border-t border-gray-200 "></div>
+          <div className=" flex justify-start m-2 px-4 ">
             <button onClick={handleBackToLogin} className="block px-4 py-2 text-sm text-white font-semibold hover:bg-blue-300 bg-red-500 rounded-full p-2 my-2">
               LogOut
             </button>

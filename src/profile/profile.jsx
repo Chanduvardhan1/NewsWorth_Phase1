@@ -294,7 +294,7 @@ const fetchUserProfile = async () => {
 };
 const handleSaveClick = async () => {
   const userProfileData = {
-    user_id:userid,
+   
     first_name:firstname,
     middle_name:middlename,
     last_name:lastname,
@@ -309,11 +309,15 @@ const handleSaveClick = async () => {
     pin_code: pincode,
     location_name: selectedCity,
     district_name: selectedDistrict,
-    state_name: state
+    state_name: state,
+    user_address_id: 0,
+    org_name: orgname,
+    org_number: orgnumber,
+    gst_number: gstnumber
   };
 
   try {
-    const response = await fetch(`${URL}/edt_prfl_dtls`, {
+    const response = await fetch(`${URL}/edt_prfl_dtls?user_id=${userId}`, {
       method: 'POST',
       headers: {
         'accept': 'application/json',
@@ -330,6 +334,7 @@ const handleSaveClick = async () => {
       // Handle success, maybe show a success message or reset the isEditable flag
       setShowRegistr(true)
       setIsEditable(false);
+     
     } else {
       // Handle error response
       console.error('Error updating user profile:', data.message);
@@ -464,15 +469,42 @@ const closeModal = () => {
   setIsModalOpen(false);
 };
 
+// const uploadContent = async () => {
+//   try {
+//     const response = await fetch(`${URL}/uploaded_content?user_id=${userId}`, {
+//       method: 'POST',
+//       headers: {
+//         accept: 'application/json',
+//         Authorization: `Bearer ${authToken}`,
+//       },
+//       body: '', // Add payload here if necessary
+//     });
+
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! status: ${response.status}`);
+//     }
+
+//     const data = await response.json();
+//     if (data.response === 'success') {
+//       setVideoData(data.response_message); 
+//       setImageData(data.response_message); // Assuming response_message contains video data
+//     }
+//     setLoading(false);  // Set loading to false after data is fetched
+//     console.log('Response Data:', data);
+//   } catch (error) {
+//     console.error('Error:', error);
+//     setLoading(false);  // Set loading to false in case of an error
+//   }
+// };
+
 const uploadContent = async () => {
   try {
-    const response = await fetch(`${URL}/uploaded_content?user_id=${1}`, {
+    const response = await fetch(`${URL}/uploaded_content?user_id=${userId}`, {
       method: 'POST',
       headers: {
         accept: 'application/json',
         Authorization: `Bearer ${authToken}`,
       },
-      body: '', // Add payload here if necessary
     });
 
     if (!response.ok) {
@@ -480,18 +512,22 @@ const uploadContent = async () => {
     }
 
     const data = await response.json();
-    if (data.response === 'success') {
-      setVideoData(data.response_message); 
+    if (data.response === 'success' && Array.isArray(data.response_message)) {
+      setVideoData(data.response_message);
       setImageData(data.response_message); // Assuming response_message contains video data
+
+    } else {
+      setVideoData([]);
+      setImageData([]); // Handle non-array response
     }
-    setLoading(false);  // Set loading to false after data is fetched
-    console.log('Response Data:', data);
   } catch (error) {
     console.error('Error:', error);
-    setLoading(false);  // Set loading to false in case of an error
+    setVideoData([]);
+    setImageData([]); // Ensure fallback to an empty array on error
+  } finally {
+    setLoading(false); // Ensure loading is false regardless of success or error
   }
 };
-
 
 
 useEffect(() => {
@@ -665,11 +701,11 @@ className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
           <div className="flex gap-[50px] mb-5 items-center">
           <p className=" text-gray-500  ">{data1.first_name} {data1.middle_name} {data1.last_name} </p>
 
-          <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+          {/* <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                 </svg>
-              </button>
+              </button> */}
           </div>
       
           </div>
@@ -683,11 +719,11 @@ className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
             </div>
             <div className="flex items-center mb-5 gap-[50px]">
               <p className=" text-gray-500 ">{useremail ? useremail : userphonenumber ? userphonenumber : 'No contact information available'}</p>
-              <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+              {/* <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                 </svg>
-              </button>
+              </button> */}
               {showPopup && (
                
                 <div className="flex flex-col gap-[10px] absolute bg-white p-5 shadow-2xl rounded-xl top-[75px] right-[400px]">
@@ -845,11 +881,11 @@ className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
             <div className="flex mb-5 gap-[50px]">
               <p className=" text-gray-500 ">{gender}</p>
 
-<button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+{/* <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
   </svg>
-</button>
+</button> */}
      
             </div>
             <div className="flex items-center mt-5">
@@ -877,11 +913,11 @@ className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
           <div className="flex gap-[50px] mb-5 items-center">
           <p className=" text-gray-500  ">{data1.first_name} {data1.middle_name} {data1.last_name} </p>
 
-          <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+          {/* <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                 </svg>
-              </button>
+              </button> */}
           </div>
       
           </div>
@@ -895,11 +931,11 @@ className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
             </div>
             <div className="flex items-center mb-5 gap-[50px]">
               <p className=" text-gray-500 ">{useremail ? useremail : userphonenumber ? userphonenumber : 'No contact information available'}</p>
-              <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+              {/* <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                 </svg>
-              </button>
+              </button> */}
               {showPopup && (
                
                 <div className="flex flex-col gap-[10px] absolute bg-white p-5 shadow-2xl rounded-xl top-[75px] right-[400px]">
@@ -952,7 +988,7 @@ className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
                                 name="last_name"
                               />
                             </div>
-                            {/* <div className=" flex gap-[15px] justify-center">
+                            <div className=" flex gap-[15px] justify-center">
             <TextField
                   type="date"
                   id="Date of Birth" 
@@ -987,7 +1023,7 @@ className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
                         <MenuItem value="Female">Female</MenuItem>
                       </Select>
                     </FormControl>
-            </div> */}
+            </div>
            
             <div className=" flex gap-[15px] justify-end items-end">
             <TextField
@@ -1052,7 +1088,31 @@ className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
               )}            
             </div>
             
-           
+            <div className="flex items-center space-x-2">
+              <p className=" text-gray-800">Gender</p>
+            </div>
+            <div className="flex mb-5 gap-[50px]">
+              <p className=" text-gray-500 ">{gender}</p>
+
+{/* <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+  </svg>
+</button> */}
+     
+            </div>
+            <div className="flex items-center mt-5">
+              <p className=" text-gray-800">Data of Birth</p>
+              
+            </div>
+            <div className="flex gap-[50px]">
+              <p className=" text-gray-500 ">{dateofbirth}</p>
+              <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+  </svg>
+</button>   
+            </div>
  
 
           </div>
@@ -1883,6 +1943,7 @@ InputProps={{
      ) : videoData.length === 0 ? (
        <p>No videos available.</p> // Show message when no video data is available
      ) : (
+      Array.isArray(videoData) &&
        videoData
          .filter((videoItem) => videoItem.content_type === 'Video') // Filter for videos
          .map((videoItem) => {
@@ -1996,7 +2057,9 @@ InputProps={{
      )}
      {activeTab ==='Images' && (
  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 mb-6 cursor-pointer">
-  {imageData
+  {
+    Array.isArray(imageData) &&
+  imageData
     .filter((imageItem) => imageItem.content_type === "Image") // Filter to show only images
     .map((imageItem) => {
    return (

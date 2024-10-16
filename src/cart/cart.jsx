@@ -82,9 +82,7 @@ const [isLoading, setIsLoading] = useState(true);
     const handledashboard = () => {
       navigate(`/dashboard`);
     };
-    const handleImagesClick = () => {
-      navigate(`/Watchimages`);
-    };
+  
     useEffect(() => {
         // Function to fetch cart data
         const fetchCartData = async () => {
@@ -191,6 +189,12 @@ const [isLoading, setIsLoading] = useState(true);
           console.error('Error:', error);  // Handle errors appropriately
         }
       };
+      const handleVideoClick = (item) => {
+        navigate("/watch", { state: {  videoData: item } })
+      };
+      const handleImagesClick = (item) => {
+        navigate(`/Watchimages`,{ state: {  imageData: item } });
+      };
   return (
     <div>
    <div className=" relative">
@@ -244,18 +248,20 @@ const [isLoading, setIsLoading] = useState(true);
                       {/* Video */}
                       {item.Video_link && (
                         <video
-                          className="media-video w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
+                          className="media-video w-[100%] h-[110px] object-cover opacity-90 transition-opacity duration-300"
                           controls
                           src={item.Video_link}
+                          onClick={() => handleVideoClick(item)}
                         />
                       )}
 
                       {/* Display Image if available */}
                       {item.Image_link && (
                         <img
-                          className="media-image w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
+                          className="media-image w-[100%] h-[110px]  opacity-90 transition-opacity duration-300"
                           src={item.Image_link}
                           alt="content"
+                          onClick={() => handleImagesClick(item)}
                         />
                       )}
 

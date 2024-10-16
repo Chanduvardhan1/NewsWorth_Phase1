@@ -81,9 +81,7 @@ const [isLoading, setIsLoading] = useState(true); // Loading state
     const handledashboard = () => {
       navigate(`/dashboard`);
     };
-    const handleImagesClick = () => {
-      navigate(`/Watchimages`);
-    };
+   
     // useEffect(() => {
     //     // Function to fetch cart data
     //     const fetchCartData = async () => {
@@ -193,6 +191,12 @@ const [isLoading, setIsLoading] = useState(true); // Loading state
           console.error('Error removing item:', error);
         }
       };
+      const handleVideoClick = (item) => {
+        navigate("/watch", { state: {  videoData: item } })
+      };
+      const handleImagesClick = (item) => {
+        navigate(`/Watchimages`,{ state: {  imageData: item } });
+      };
   return (
     <div>
    <div className=" relative">
@@ -208,7 +212,7 @@ const [isLoading, setIsLoading] = useState(true); // Loading state
 <div className="bg-white shadow-md rounded-lg p-6 mt-8 w-[100%]"> 
       <div className="border-b mb-4">
         <h2 className="text-2xl font-semibold blue-color">My Orders</h2>
-        {/* <p className=" underline text-blue-500 cursor-pointer" onClick={handledashboard}>Add more items to Cart</p> */}
+        <p className=" underline text-blue-500 cursor-pointer" onClick={handledashboard}>Add more items to Buy</p>
         <div className="flex justify-between mt-2 px-2">
           <h2 className="text-[14px] font-semibold text-gray-500">Item</h2>
           <h2 className="text-[14px] font-semibold text-gray-500">Price</h2>
@@ -292,7 +296,7 @@ const [isLoading, setIsLoading] = useState(true); // Loading state
                       {item.Video_link && (
                         <video
                           className="media-video w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
-                         
+                          onClick={() => handleVideoClick(item)}
                           src={item.Video_link}
                         />
                       )}
@@ -303,6 +307,7 @@ const [isLoading, setIsLoading] = useState(true); // Loading state
                           className="media-image w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
                           src={item.Image_link}
                           alt="content"
+                          onClick={() => handleImagesClick(item)}
                         />
                       )}
                       <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">

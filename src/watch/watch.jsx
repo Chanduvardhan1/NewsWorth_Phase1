@@ -546,41 +546,41 @@ const watch = () => {
 
   {/* Price Info Section */}
   <div className="w-[20%] flex flex-col items-end">
-    <div className="flex items-center mb-2">
+    <div className="flex items-center mb-1">
       <img src={video} alt="" className="w-8 h-8" />
       <p className="ml-2">{selectedVideo.file_type}</p>
     </div>
-    <div className=" text-[14px]">
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+    <div className=" ">
+      <p className="font-bold mb-1 text-blue-600 text-[18px]">
       Price ₹{selectedVideo.price} 
         <span className="text-[12px] text-gray-500 ml-[2px]">
           <span className="line-through text-[12px]">₹{selectedVideo.discount}</span> at Discount {selectedVideo.discount}%
         </span>
       </p>
-      <p className="font-bold text-[14px] mb-2 text-blue-600">
+      <p className=" text-[14px] mb-1 text-gray-500">
       Latitude: <span className=" text-gray-500 text-[14px]">{selectedVideo.latitude}</span> 
       </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      <p className=" mb-1 text-gray-500text-[14px]">
       Longitude: <span className=" text-gray-500 text-[14px]">{selectedVideo.longitude}</span>
       </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      <p className=" mb-1 text-gray-500 text-[14px]">
       Altitude: <span className=" text-gray-500 text-[14px]">{selectedVideo.altitude}</span> 
       </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      <p className=" mb-1 text-gray-500 text-[14px]">
       Incident Time: <span className=" text-gray-500 text-[14px]">{selectedVideo.incident_time}</span> 
       </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      <p className=" mb-1 text-gray-500 text-[14px]">
       File Size: <span className=" text-gray-500 text-[14px]">{selectedVideo.file_size}</span> 
       </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      <p className=" mb-1 text-gray-500 text-[14px]">
       Aging Bucket: <span className=" text-gray-500 text-[14px]">{selectedVideo.aging_bucket}</span> 
       </p>
      
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      <p className="mb-1 text-gray-500 text-[14px]">
       Purchased Flag: <span className=" text-gray-500 text-[14px]">   {selectedVideo.purchased_flag ? "True" : "False"}</span> 
       </p>
     </div>
-    <div className="mt-2">
+    <div className="mt-1">
       <img src={card} alt="" className="w-8 h-8 cursor-pointer"   onClick={() => handleAddToCart(selectedVideo.content_id, selectedVideo.content_link, selectedVideo.final_price)} />
     </div>
   </div>
