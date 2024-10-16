@@ -176,7 +176,10 @@ const [isLoading, setIsLoading] = useState(true);
             console.log(result.response_message);  // Optionally display success message
       
             // Navigate to My Orders page
-            navigate('/myorder');
+            navigate('/profile?tab=my-orders'); // Use query parameters to indicate the tab
+
+
+
           } else if (result.response === 'fail' && result.response_message === 'Content has already been sold or purchased.') {
             console.error('Purchase failed:', result.response_message);
             toast.error(result.response_message);  // Optionally show alert to the user
@@ -249,7 +252,7 @@ const [isLoading, setIsLoading] = useState(true);
                       {item.Video_link && (
                         <video
                           className="media-video w-[100%] h-[110px] object-cover opacity-90 transition-opacity duration-300"
-                          controls
+                          
                           src={item.Video_link}
                           onClick={() => handleVideoClick(item)}
                         />

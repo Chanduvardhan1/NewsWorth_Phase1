@@ -4,7 +4,7 @@ import logo from "../../src/assets/Images/dashboard/NEWS WORTH FINAL.png"
 import ball from '../../src/assets/Images/landing/bell.png'
 import defaultPhoto from '../../src/assets/Images/landing/pic.jpg'
 import { useNavigate, useLocation } from "react-router-dom";
-import card from '../../src/assets/Images/dashboard/shopping-cart.png'
+import card from '../../src/assets/Images/dashboard/cart3.jpeg'
 import { URL } from "../url";
 
 const landing = () => {
@@ -157,6 +157,8 @@ const landing = () => {
   const handlecart = () => {
     navigate('/cart'); // Navigate to the selected path
   };
+  const storedCartCount = localStorage.getItem("cart_count");
+
   return (
     <div>
    <div className=" relative">
@@ -209,7 +211,10 @@ const landing = () => {
       <div>
         <img src={ball} className="w-[20px] h-[20px]" alt="" />
       </div>
-      <div>
+      <div
+      onClick={toggleDropdown}
+       className="flex cursor-pointer justify-center gap-[10px] bg-gray-100 rounded-xl p-1 px-4">
+      <div   onClick={toggleDropdown} >
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -218,7 +223,8 @@ const landing = () => {
         <img
         src={photo} 
           alt="Profile"
-          className=" w-[45px] h-[45px] cursor-pointer rounded-full" onClick={toggleDropdown} 
+          className=" w-[45px] h-[45px] cursor-pointer rounded-full z-10"
+           onClick={toggleDropdown} 
         />
       )}
         </div>
@@ -226,14 +232,17 @@ const landing = () => {
             <h1 className=" cursor-pointer red-color" ><span  className=" font-bold cursor-pointer blue-color">{userName}</span> </h1>
             <p className=" cursor-pointer"   >User ID: {userId}</p>
         </div>
-       
-        <div>
-            <img src={card} onClick={handlecart} alt="" className=" w-[25px] h-[25px] cursor-pointer" />
         </div>
+       <div className="relative w-[40px] h-[35px] cursor-pointer" onClick={handlecart}>
+  <img src={card} alt="" className="w-full h-full object-cover" />
+  <p className="absolute top-1 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black font-bold">
+    {storedCartCount}
+  </p>
+</div>
     </div>
 </div>
 {isDropdownOpen && (
-        <div     ref={dropdownRef} className=" w-[18%] inline-block text-left bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none absolute z-10 right-[0px] top-[70px]">
+        <div     ref={dropdownRef} className=" w-[16%] inline-block text-left bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none absolute z-10 right-[0px] top-[70px]">
           <div>
             <button className="flex items-center w-full px-4 py-2 text-sm font-medium text-gray-700">
               <img
@@ -252,11 +261,11 @@ const landing = () => {
           <div className="flex justify-start px-4 m-2">
             <button className="flex justify-start" onClick={handleProfile}>View Profile</button>
           </div>
-          <div className="border-t border-gray-200"></div>
+          {/* <div className="border-t border-gray-200"></div>
 
           <div className="flex justify-start px-4 m-2">
             <button className="flex justify-start" onClick={handleorders}>My Orders</button>
-          </div>
+          </div> */}
           <div className="border-t border-gray-200 "></div>
           <div className=" flex justify-start m-2 px-4 ">
             <button onClick={handleBackToLogin} className="block px-4 py-2 text-sm text-white font-semibold hover:bg-blue-300 bg-red-500 rounded-full p-2 my-2">

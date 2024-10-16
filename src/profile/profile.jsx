@@ -3,6 +3,8 @@ import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
 import Landing from "../landing/landing";
 import { useNavigate } from "react-router-dom";
+import { useSearchParams } from 'react-router-dom';
+
 import { URL } from "../url";
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { toast, ToastContainer } from "react-toastify";
@@ -99,6 +101,80 @@ const [gstnumber, setgstnumber] = useState('');
 
 // localStorage.setItem('categoryName', 'Newsworth Creator');
 // console.log(localStorage.getItem('categoryName')); // Should log: Newsworth Creator
+
+
+// my orders
+const [shoppingItems2, setShoppingItems2] = useState([]); // Ensure it's initialized as an empty array
+
+const [isLoading, setIsLoading] = useState(true); // Loading state
+const [searchParams] = useSearchParams();
+
+    const handledashboard = () => {
+      navigate(`/dashboard`);
+    };
+   
+   
+    useEffect(() => {
+        const fetchOrderHistory = async () => {
+          try {
+            const response = await fetch(`${URL}/order-history?user_id=${userId}`, {
+              method: 'POST',
+              headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${authToken}`,              },
+            });
+            const data = await response.json();
+            // Ensure the response is an array before setting the state
+            setShoppingItems2(Array.isArray(data.response_message) ? data.response_message : []);
+          } catch (error) {
+            console.error('Error fetching order history:', error);
+            setShoppingItems2([]); // Set it as an empty array if there is an error
+          } finally {
+            setIsLoading(false); // Stop loading after data is fetched
+          }
+        };
+    
+        fetchOrderHistory();
+      }, []);
+      const downloadContent = async (contentId) => {
+        try {
+          const response = await fetch(`${URL}/download-content?content_id=${contentId}`, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              Authorization: `Bearer ${authToken}`,
+      
+            },
+            body: '' // No body needed as per your cURL
+          });
+      
+          if (response.ok) {
+            const data = await response.json();
+            console.log('Content downloaded:', data);
+      
+            // Create a downloadable link and trigger the download
+            const downloadLink = document.createElement('a');
+            downloadLink.href = data.url;
+            downloadLink.download = ''; // Add this attribute to force download
+            document.body.appendChild(downloadLink); // Append link to body
+            downloadLink.click(); // Programmatically click the link to trigger download
+            document.body.removeChild(downloadLink); // Remove the link after download
+      
+          } else {
+            console.error('Error downloading content:', response.status);
+          }
+        } catch (error) {
+          console.error('Network error:', error);
+        }
+      };
+    
+      const handleVideoClick = (item) => {
+        navigate("/watch", { state: {  videoData: item } })
+      };
+      const handleImagesClick = (item) => {
+        navigate(`/Watchimages`,{ state: {  imageData: item } });
+      };
+// my orders
 
 const [categoryName, setCategoryName] = useState('Unknown');
 
@@ -534,6 +610,14 @@ useEffect(() => {
   uploadContent();
 }, []);
 
+useEffect(() => {
+  const queryParams = new URLSearchParams(location.search);
+  const tab = queryParams.get('tab');
+  if (tab) {
+      setUserType1(tab === 'my-orders' ? 'My orders' : tab); // Ensure it matches your tab names
+  }
+}, [location]);
+
 const toggleOptions = (content_id) => {
   setOpenOptionsId(openOptionsId === content_id ? null : content_id);
 };
@@ -551,7 +635,7 @@ const toggleSidebar = () => {
 
     <div className="flex p-4 pl-[60px] justify-between items-center ">
       <h1 className="blue-color  text-[25px]">My Profile</h1>
-      <img src={logout1} alt="" onClick={handleBackToLogin} className="w-[25px] h-[25px] cursor-pointer" />
+      {/* <img src={logout1} alt="" onClick={handleBackToLogin} className="w-[25px] h-[25px] cursor-pointer" /> */}
     </div>
     <div className=" flex flex-row w-full  gap-[20px] ">
 
@@ -636,60 +720,79 @@ const toggleSidebar = () => {
 
 <div className="w-full p-5">
   <div className=" shadow-xl rounded-2xl p-5">
-  <div className="relative items-start justify-start flex w-[70%] font-bold">
-      <div
-        className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'email' ? '' : ''}`}
-        onClick={() => setUserType1('Email')}
-      >
-        Profile
-      </div>
-      <div
-        className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'mobile' ? '' : ''}`}
-        onClick={() => setUserType1('Mobile')}
-      >
-        Address
-      </div>
-      <div
-        className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'gmail' ? '' : ''}`}
-        onClick={() => setUserType1('User Id')}
-      >
-      Change Password
-      </div>
-      {categoryName === "Newsworth Creator" && (
+  <div className="relative items-start justify-start flex w-[100%] font-bold">
+  <div
+    className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2`}
+    onClick={() => setUserType1('Email')}
+  >
+    Profile
+  </div>
 
-      <div
-        className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'Content' ? '' : ''}`}
-        onClick={() => setUserType1('Content')}
-      >
-      Content
-      </div>
-      )}
-          {categoryName === "Newsworth Buyer" && (
+  <div
+    className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2`}
+    onClick={() => setUserType1('Mobile')}
+  >
+    Address
+  </div>
 
-<div
-className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
-  userType1 === 'Email' ? 'left-0 bg-blue-500' :
-  userType1 === 'Mobile' ? 'left-1/3 bg-blue-500' :
-  userType1 === 'User Id' ? 'left-2/3 bg-blue-500' :''
+  <div
+    className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2`}
+    onClick={() => setUserType1('User Id')}
+  >
+    Change Password
+  </div>
 
- 
-}`}
-/>
-        )}
-            {categoryName === "Newsworth Creator" && (
+  {categoryName === 'Newsworth Creator' && (
+    <div
+      className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2`}
+      onClick={() => setUserType1('Content')}
+    >
+      My Content
+    </div>
+  )}
 
-      <div
-    className={`absolute bottom-0 h-[2px] w-1/4 transition-all duration-300 ${
-      userType1 === 'Email' ? 'left-0 bg-blue-500' :
-      userType1 === 'Mobile' ? 'left-1/4 bg-blue-500' :
-      userType1 === 'User Id' ? 'left-2/4 bg-blue-500' :
+  <div
+    className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2`}
+    onClick={() => setUserType1('My orders')}
+  >
+    My Orders
+  </div>
 
-      userType1 === 'Content' ? 'left-3/4 bg-blue-500' : ''
-     
+  {categoryName === 'Newsworth Buyer' && (
+    <div
+    className={`absolute bottom-0 h-[2px] w-1/4 transition-all duration-500 ease-in-out ${
+      userType1 === 'Email' ? 'translate-x-[0%] bg-blue-500' :
+      userType1 === 'Mobile' ? 'translate-x-[100%] bg-blue-500' :
+      userType1 === 'User Id' ? 'translate-x-[200%] bg-blue-500' :
+      userType1 === 'My orders' ? 'translate-x-[300%] bg-blue-500' : ''
     }`}
   />
-            )}
-    </div>
+  )}
+
+  {categoryName === 'Newsworth Creator' && (
+    // <div
+    //   className={`absolute bottom-0 h-[2px] w-1/5 transition-all duration-300 ${
+    //     userType1 === 'Email' ? 'left-0 bg-blue-500' :
+    //     userType1 === 'Mobile' ? 'left-1/5 bg-blue-500' :
+    //     userType1 === 'User Id' ? 'left-2/5 bg-blue-500' :
+    //     userType1 === 'Content' ? 'left-3/5 bg-blue-500' :
+    //     userType1 === 'My orders' ? 'left-4/5 bg-blue-500' : ''
+    //   }`}
+    // />
+    <div
+    className={`absolute bottom-0 h-[2px] w-1/5 transition-all duration-500 ease-in-out ${
+      userType1 === 'Email' ? 'translate-x-[0%] bg-blue-500' :
+      userType1 === 'Mobile' ? 'translate-x-[100%] bg-blue-500' :
+
+      userType1 === 'User Id' ? 'translate-x-[200%] bg-blue-500' :
+      userType1 === 'Content' ? 'translate-x-[300%] bg-blue-500' :
+
+      userType1 === 'My orders' ? 'translate-x-[400%] bg-blue-500' : ''
+    }`}
+  />
+  )}
+</div>
+
     <div className="border-[1px] w-[70%] border-gray-100"/>
     {userType1 === 'Email' && (
     <div className="flex w-full items-start mt-5 py-5">
@@ -2125,6 +2228,97 @@ InputProps={{
 </div>
 )}
    </div>
+      )}
+       {userType1 === 'My orders' && (
+      <div className=" rounded-lg p-6 mt-8 w-[100%]"> 
+      <div className="border-b mb-4">
+        <h2 className="text-2xl font-semibold blue-color">My Orders</h2>
+        <p className=" underline text-blue-500 cursor-pointer" onClick={handledashboard}>Add more items to Buy</p>
+        <div className="flex justify-between mt-2 px-2">
+          <h2 className="text-[14px] font-semibold text-gray-500">Item</h2>
+          <h2 className="text-[14px] font-semibold text-gray-500">Price</h2>
+        </div>
+      </div>
+
+ 
+     {isLoading ? (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1">
+          {Array(6).fill().map((_, index) => (
+            <div key={index} className="animate-pulse">
+              <div className="bg-gray-200 h-40 w-full rounded mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        Array.isArray(shoppingItems2) && shoppingItems2.length === 0 ? (
+          <div className="text-center text-gray-500 py-8">
+            No orders found.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1">
+            {shoppingItems2.map((item) => (
+              <div key={item.content_id}>
+                <div className="flex items-center justify-between border-b py-4">
+                  <div className="flex items-start">
+                    <div className="relative w-[40%]">
+                      {/* Check if the content is a video or image */}
+                      {item.Video_link && (
+                        <video
+                          className="media-video w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
+                          onClick={() => handleVideoClick(item)}
+                          src={item.Video_link}
+                        />
+                      )}
+
+                      {/* Display Image if available */}
+                      {item.Image_link && (
+                        <img
+                          className="media-image w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
+                          src={item.Image_link}
+                          alt="content"
+                          onClick={() => handleImagesClick(item)}
+                        />
+                      )}
+                      <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
+                        {item.age_in_days}
+                      </div>
+                    </div>
+                    <div className="ml-4">
+                      <h3 className="text-lg font-semibold text-gray-700 line-clamp-2 w-[80%]">
+                        {item.content_description || 'No description available'}
+                      </h3>
+                      <p className="text-[12px] line-clamp-1 text-[#ce003d]">
+                        {item.created_date}
+                      </p>
+                      <p className="text-[12px] line-clamp-1">{item.gps_location}</p>
+                      <p className="text-[12px] font-semibold text-blue-500">{item.uploaded_by}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-12">
+                    <p className="text-lg font-semibold text-gray-700">
+                      ₹ {item.final_price}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex justify-end items-center mt-2 border-b">
+                  <div className="flex space-x-4 mb-2">
+                    <button
+                       onClick={() => downloadContent(item.content_id)}
+                     className="text-gray-500 text-sm hover:underline">
+                      Download
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+      )}
+    </div>
       )}
   </div>
 

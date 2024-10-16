@@ -486,6 +486,8 @@ useEffect(() => {
         setVideoData(data.data);
         setImageData(data.data);
         setCartCount(data.cart_count);
+        localStorage.setItem("cart_count", data.cart_count);
+
       }
     } catch (error) {
       console.error("Error fetching data", error);

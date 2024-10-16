@@ -162,35 +162,7 @@ const [isLoading, setIsLoading] = useState(true); // Loading state
           console.error('Network error:', error);
         }
       };
-      const handleRemoveItem = async (contentId) => {
-        try {
-          const response = await fetch(`${URL}/delete_item_in_cart`, { // Replace with your actual endpoint
-            method: 'POST',
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${authToken}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              cart_id: contentId,
-              user_id: 59, // or get this from state if it varies
-            }),
-          });
     
-          const data = await response.json();
-          if (data.response === "success") {
-            // Update shoppingItems by filtering out the removed item
-            setShoppingItems((prevItems) =>
-              prevItems.filter(item => item.content_id !== contentId)
-            );
-            console.log('Item removed successfully:', data);
-          } else {
-            console.error('Error removing item:', data);
-          }
-        } catch (error) {
-          console.error('Error removing item:', error);
-        }
-      };
       const handleVideoClick = (item) => {
         navigate("/watch", { state: {  videoData: item } })
       };
