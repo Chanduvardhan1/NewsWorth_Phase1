@@ -318,7 +318,9 @@ useEffect(() => {
    {activeTab ==='Videos' &&(
      <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
       {videoData
-     .filter((videoItem) => videoItem.content_type === "Video") // Filter to show only videos
+     .filter((videoItem) => videoItem.content_type === "Video"&&
+     !videoItem.purchased_flag && // Exclude purchased videos
+     !videoItem.sold_flag) // Filter to show only videos
      .map((videoItem) => {
          const videoRef = React.createRef();
          return (
@@ -425,7 +427,9 @@ useEffect(() => {
  {activeTab ==='Images' && (
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
    {ImageData
-     .filter((imageItem) => imageItem.content_type === "Image") // Filter to show only images
+     .filter((imageItem) => imageItem.content_type === "Image"&&
+     !imageItem.purchased_flag && // Exclude purchased videos
+     !imageItem.sold_flag) // Filter to show only images
      .map((imageItem) => {
     return (
       <div key={imageItem.id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">

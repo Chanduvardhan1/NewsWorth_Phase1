@@ -459,47 +459,76 @@ const [currentIndex, setCurrentIndex] = useState(0);
 const [buttonsPerPage, setButtonsPerPage] = useState(6); // Default number of visible buttons
 
 
-useEffect(() => {
-  if (!isAuthenticated) {
-    navigate("/login"); // Redirect to login if not authenticated
-    return;
-  }
+// useEffect(() => {
+//   if (!isAuthenticated) {
+//     navigate("/login"); // Redirect to login if not authenticated
+//     return;
+//   }
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
+//   const fetchData = async () => {
+//     try {
+//       setLoading(true);
 
-      const response = await fetch(
-        `${URL}/landing page?user_id=${userId}`,
-        {
-          method: "POST",
-          headers: {
-            "accept": "application/json",
-            Authorization: `Bearer ${authToken}`,
-          },
-          body: JSON.stringify({}) // Empty body for a POST request
-        }
-      );
-      const data = await response.json();
+//       const response = await fetch(
+//         `${URL}/landing page?user_id=${userId}`,
+//         {
+//           method: "POST",
+//           headers: {
+//             "accept": "application/json",
+//             Authorization: `Bearer ${authToken}`,
+//           },
+//           body: JSON.stringify({}) // Empty body for a POST request
+//         }
+//       );
+//       const data = await response.json();
 
-      if (data.response === "success") {
-        setVideoData(data.data);
-        setImageData(data.data);
-        setCartCount(data.cart_count);
-        localStorage.setItem("cart_count", data.cart_count);
+//       if (data.response === "success") {
+//         setVideoData(data.data);
+//         setImageData(data.data);
+//         setCartCount(data.cart_count);
+//         localStorage.setItem("cart_count", data.cart_count);
 
-      }
-    } catch (error) {
-      console.error("Error fetching data", error);
-    } finally {
-      setLoading(false); // Stop loading once data is fetched
-    }
-  };
+//       }
+//     } catch (error) {
+//       console.error("Error fetching data", error);
+//     } finally {
+//       setLoading(false); // Stop loading once data is fetched
+//     }
+//   };
 
-  fetchData();
-}, [isAuthenticated, userId, authToken, navigate]); // Fixed dependency array
+//   fetchData();
+// }, [isAuthenticated, userId, authToken, navigate]); // Fixed dependency array
 
 // Render loading state
+const fetchData = async () => {
+  try {
+    setLoading(true);
+    const response = await fetch(`${URL}/landing page?user_id=${userId}`, {
+      method: "POST",
+      headers: {
+        "accept": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({}) // Empty body for a POST request
+    });
+
+    const data = await response.json();
+
+    if (data.response === "success") {
+      setVideoData(data.data);
+      setImageData(data.data);
+      setCartCount(data.cart_count);
+      localStorage.setItem("cart_count", data.cart_count);
+    }
+  } catch (error) {
+    console.error("Error fetching data", error);
+  } finally {
+    setLoading(false); // Stop loading once data is fetched
+  }
+};
+useEffect(() => {
+  fetchData(); // Fetch data on component mount
+}, []); // Add any dependencies if needed
 
 const downloadContent = async (contentId) => {
   try {
@@ -651,31 +680,45 @@ useEffect(() => {
   
       const data = await response.json();
   
-      if (response.ok && data.response === 'success') {
-        // Content successfully added to the cart
-        const isVideo = contentLink.includes('.mp4') || contentLink.includes('.webm') || contentLink.includes('.ogg');
-        console.log('Cart Content:', { link: contentLink, isVideo });
+      // Debugging: Log the response and status to ensure the API response is correct
+      console.log("Response status:", response.status);
+      console.log("Response data:", data);
   
+      // Validate if the response is successful
+      if (response.ok && data.response === 'success') {
+        const isVideo = contentLink.includes('.mp4') || contentLink.includes('.webm') || contentLink.includes('.ogg');
+  
+        // Update the cart content and state
         setCartContent({ link: contentLink, isVideo });
         setShowCartNotification(true);
         setfinalprice(finalprice);
   
-        // Optionally, navigate to the cart after a delay
-        // setTimeout(() => navigate('/cart'), 3000); 
+        // Fetch the updated cart data
+        await fetchData();
   
-      } else if (data.response === 'fail' && data.response_message === 'Content already added to cart.') {
-        // Content is already in the cart
-        toast.error('This content is already in your cart.');
-      } else {
-        // Handle other errors
-        console.error('Error adding to cart:', data);
-        toast.error('Failed to add content to cart.');
+        return; // Exit early after successful operation
       }
+  
+      // Handle known failure cases (content already in cart)
+      if (data.response_message === 'Content already added to cart.') {
+        toast.error('This content is already in your cart.');
+        return;
+      }
+  
+      // If none of the above conditions match, log and show a generic error
+      console.error('Unexpected response:', data);
+      toast.error('Failed to add content to cart.');
+  
     } catch (error) {
-      console.error('Request failed:', error);
+      // Handle any network or other request-related errors
+      console.error('Request error:', error);
       toast.error('An error occurred while adding to the cart.');
     }
   };
+  
+  
+  
+  
   
 
 
@@ -865,7 +908,9 @@ useEffect(() => {
   ))
 ) : (
   videoData
-    .filter((videoItem) => videoItem.content_type === "Video")
+    .filter((videoItem) => videoItem.content_type === "Video" &&
+    !videoItem.purchased_flag && // Exclude purchased videos
+    !videoItem.sold_flag)
     .map((videoItem) => {
       const videoRef = React.createRef();
       return (
@@ -933,7 +978,7 @@ useEffect(() => {
           {/* Description */}
           <div onClick={() => handleVideoClick(videoItem)} className="flex justify-between px-4">
             <p className="text-blue-500 font-semibold line-clamp-2 w-[60%] h-12">
-              {videoItem.content_description}
+              {videoItem.content_title}
             </p>
             <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
               <p className="text-[12px] line-clamp-1 text-[#ce003d]">{videoItem.age_in_days}</p>
@@ -977,7 +1022,9 @@ useEffect(() => {
           ))
         ) : (
 imageData
-    .filter((imageItem) => imageItem.content_type === "Image") // Filter to show only images
+    .filter((imageItem) => imageItem.content_type === "Image"&&
+    !imageItem.purchased_flag && // Exclude purchased videos
+    !imageItem.sold_flag) // Filter to show only images
     .map((imageItem) => {
    return (
      <div key={imageItem.id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">
@@ -1048,7 +1095,7 @@ imageData
        {/* Description */}
        <div className="flex justify-between px-4" onClick={() => handleImagesClick(imageItem)}>
        <p className="text-blue-600 font-semibold line-clamp-2 w-[60%] h-12">
-           {imageItem.content_description}
+           {imageItem.content_title}
          </p>
          <div className="text-gray-500 flex flex-col justify-end items-end w-[40%]">
            <p className="text-[12px] line-clamp-1 text-[#ce003d]">{imageItem.age_in_days}</p>

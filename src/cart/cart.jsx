@@ -118,7 +118,36 @@ const [isLoading, setIsLoading] = useState(true);
     
         fetchCartData();
       }, [authToken, URL]);
-
+      const fetchData = async () => {
+        try {
+          // setLoading(true);
+          const response = await fetch(`${URL}/landing page?user_id=${userId}`, {
+            method: "POST",
+            headers: {
+              "accept": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
+            body: JSON.stringify({}) // Empty body for a POST request
+          });
+      
+          const data = await response.json();
+      
+          if (data.response === "success") {
+            // setVideoData(data.data);
+            // setImageData(data.data);
+            // setCartCount(data.cart_count);
+            localStorage.setItem("cart_count", data.cart_count);
+            
+          }
+        } catch (error) {
+          console.error("Error fetching data", error);
+        } finally {
+          // setLoading(false); // Stop loading once data is fetched
+        }
+      };
+      useEffect(() => {
+        fetchData(); // Fetch data on component mount
+      }, []); 
       const handleRemoveItem = async (contentId) => {
         try {
           const response = await fetch(`${URL}/delete_item_in_cart`, { // Replace with your actual endpoint
@@ -140,7 +169,9 @@ const [isLoading, setIsLoading] = useState(true);
             setShoppingItems((prevItems) =>
               prevItems.filter(item => item.content_id !== contentId)
             );
-            console.log('Item removed successfully:', data);
+            await fetchData();
+            window.location.reload(); 
+            // console.log('Item removed successfully:', data);
           } else {
             console.error('Error removing item:', data);
           }

@@ -624,6 +624,49 @@ const toggleOptions = (content_id) => {
 const toggleSidebar = () => {
   setIsOpen(!isOpen);
 };
+const handleAddToCart = async (contentId, contentLink, finalprice) => {
+  try {
+    const response = await fetch(`${URL}/add_to_cart`, {
+      method: 'POST',
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${authToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        content_id: contentId,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.response === 'success') {
+      // Content successfully added to the cart
+      const isVideo = contentLink.includes('.mp4') || contentLink.includes('.webm') || contentLink.includes('.ogg');
+      console.log('Cart Content:', { link: contentLink, isVideo });
+
+      setCartContent({ link: contentLink, isVideo });
+      setShowCartNotification(true);
+      // setfinalprice(finalprice);
+
+      // Optionally, navigate to the cart after a delay
+      // setTimeout(() => navigate('/cart'), 3000); 
+
+    } else if (data.response === 'fail' && data.response_message === 'Content already added to cart.') {
+      // Content is already in the cart
+      toast.error('This content is already in your cart.');
+    } else {
+      // Handle other errors
+      console.error('Error adding to cart:', data);
+      toast.error('Failed to add content to cart.');
+    }
+  } catch (error) {
+    console.error('Request failed:', error);
+    toast.error('An error occurred while adding to the cart.');
+  }
+};
+
   return (
     <>
    <Landing/>
@@ -2108,12 +2151,12 @@ InputProps={{
                      alt="Add to Cart"
                      className="w-[25px] h-[25px] cursor-pointer"
                    />
-                   <img
+                   {/* <img
                      src={moreImg}
                      alt="More options"
                      className="w-[15px] h-[15px] cursor-pointer"
                      onClick={() => toggleOptions(videoItem.content_id)}
-                   />
+                   /> */}
  
                    {openOptionsId === videoItem.content_id && (
                      <div className="absolute top-[20px] right-[24px] bg-gray-100 shadow-lg rounded-md p-2 w-32 z-10 clip-path-custom">
@@ -2159,6 +2202,7 @@ InputProps={{
    </div>
      )}
      {activeTab ==='Images' && (
+
  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 mb-6 cursor-pointer">
   {
     Array.isArray(imageData) &&
