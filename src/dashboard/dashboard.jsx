@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import { URL } from "../url";
 import { useLocation } from 'react-router-dom';
 import { AuthContext } from "../Authcontext/AuthContext";
+import { useTimer } from "../timerContext";
+import audio from "../../src/assets/Images/home/breaking-news-in-2029-5994.mp3"
 import icon1 from '../../src/assets/Images/dashboard/musical-note.png';
 import image1 from '../../src/assets/Images/home/breaking-news-in-2029-5994.mp3';
 import cartIcon from '../../src/assets/Images/dashboard/grocery-store.png';
@@ -44,7 +46,7 @@ import play from '../../src/assets/Images/dashboard/play-button (1).png';
 import expanding from '../../src/assets/Images/dashboard/maximize.png'
 import imgSrc1 from '../../src/assets/Images/dashboard/HYD.webp';
 
-import { FaPlay,FaArrowDown,FaHeart } from "react-icons/fa";
+import { FaPlay,FaArrowDown,FaHeart,FaPause } from "react-icons/fa";
 import { HiEllipsisVertical } from "react-icons/hi2";
 
 const cardData = [
@@ -58,6 +60,7 @@ const cardData = [
     price: 3,
     trackBPM: 120,
     cardIcon: card,
+    audioSrc:audio,
   },
   {
       id: 2,
@@ -69,6 +72,7 @@ const cardData = [
     price: 3,
     trackBPM: 120,
     cardIcon: card,
+    audioSrc:audio,
     },
     {
       id: 3,
@@ -80,6 +84,7 @@ const cardData = [
       price: 3,
       trackBPM: 120,
       cardIcon: card,
+      audioSrc:audio,
     },
     {
       id: 4,
@@ -91,6 +96,7 @@ const cardData = [
       price: 3,
       trackBPM: 120,
       cardIcon: card,
+      audioSrc:audio,
     },
  
   
@@ -457,8 +463,8 @@ const [loading, setLoading] = useState(true); // Add loading state
 const [activeTab, setActiveTab] = useState('Videos'); // Default to Audio
 const [currentIndex, setCurrentIndex] = useState(0);
 const [buttonsPerPage, setButtonsPerPage] = useState(6); // Default number of visible buttons
-
-
+const { startTimer } = useTimer(); 
+const [showTimer, setShowTimer] = useState(false);
 // useEffect(() => {
 //   if (!isAuthenticated) {
 //     navigate("/login"); // Redirect to login if not authenticated
@@ -625,11 +631,11 @@ useEffect(() => {
       setCurrentTime(newTime);
     };
   
-    const formatTime = (time) => {
-      const minutes = Math.floor(time / 60);
-      const seconds = Math.floor(time % 60).toString().padStart(2, '0');
-      return `${minutes}:${seconds}`;
-    };
+    // const formatTime = (time) => {
+    //   const minutes = Math.floor(time / 60);
+    //   const seconds = Math.floor(time % 60).toString().padStart(2, '0');
+    //   return `${minutes}:${seconds}`;
+    // };
     const handleVideoClick = (videoItem) => {
       navigate("/watch", { state: {  videoData: videoItem } })
     };
@@ -686,17 +692,20 @@ useEffect(() => {
   
       // Validate if the response is successful
       if (response.ok && data.response === 'success') {
-        const isVideo = contentLink.includes('.mp4') || contentLink.includes('.webm') || contentLink.includes('.ogg');
-  
-        // Update the cart content and state
+        // console.log("Video successfully added to cart.");
+      
+        const isVideo = contentLink?.includes('.mp4') || 
+                        contentLink?.includes('.webm') || 
+                        contentLink?.includes('.ogg');
+
+                      
         setCartContent({ link: contentLink, isVideo });
         setShowCartNotification(true);
         setfinalprice(finalprice);
-  
-        // Fetch the updated cart data
-        await fetchData();
-  
-        return; // Exit early after successful operation
+      
+        await fetchCartItems();
+        startTimer();
+        setShowTimer(true); 
       }
   
       // Handle known failure cases (content already in cart)
@@ -715,8 +724,35 @@ useEffect(() => {
       toast.error('An error occurred while adding to the cart.');
     }
   };
-  
-  
+  const fetchCartItems = async () => {
+    try {
+      const response = await fetch(
+        `${URL}/total_cart_items?user_id=${userId}`,
+        {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            Authorization: `Bearer ${authToken}`,
+
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch cart items');
+      }
+
+      const data = await response.json();
+      setCartCount(data.response_message);
+      localStorage.setItem('totalCartItems',data.response_message );
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  useEffect(() => {
+    fetchCartItems();
+  }, []);
   
   
   
@@ -769,7 +805,73 @@ useEffect(() => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
- 
+  const [isPlaying1, setIsPlaying1] = useState(null); // Track which card is playing
+  const [progress, setProgress] = useState({}); // Store progress for each card
+  const audioRefs = useRef({}); // Store audio elements by card ID
+  const [remainingTime, setRemainingTime] = useState({}); // Store remaining time for each track
+
+  const togglePlay = (cardId) => {
+    const currentAudio = audioRefs.current[cardId];
+
+    // Pause any currently playing audio
+    if (isPlaying1 && isPlaying1 !== cardId) {
+      audioRefs.current[isPlaying1].pause();
+      audioRefs.current[isPlaying1].currentTime = 0; // Reset the previous audio
+      setProgress((prev) => ({ ...prev, [isPlaying1]: 0 })); // Reset progress
+      setRemainingTime((prev) => ({ ...prev, [isPlaying1]: 0 })); // Reset remaining time
+
+    }
+
+    // Toggle play/pause for the selected audio
+    if (isPlaying1 === cardId) {
+      currentAudio.pause();
+      setIsPlaying1(null);
+    } else {
+      currentAudio.play();
+      setIsPlaying1(cardId);
+    }
+  };
+
+  const handleTimeUpdate = (cardId) => {
+    const currentAudio = audioRefs.current[cardId];
+    if (currentAudio) {
+      const currentTime = currentAudio.currentTime;
+      const duration = currentAudio.duration || 0;
+      setProgress((prev) => ({
+        ...prev,
+        [cardId]: (currentTime / duration) * 100,
+      }));
+
+      // Calculate remaining time
+      const remaining = duration - currentTime;
+      setRemainingTime((prev) => ({
+        ...prev,
+        [cardId]: remaining > 0 ? formatTime(remaining) : '00:00',
+      }));
+    }
+  };
+  const formatTime = (timeInSeconds) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  };
+  // Seek audio on click
+  const handleSeek = (cardId, e) => {
+    const currentAudio = audioRefs.current[cardId];
+    const progressBar = e.target;
+    const newTime =
+      (e.clientX - progressBar.getBoundingClientRect().left) /
+      progressBar.offsetWidth;
+    if (currentAudio) {
+      currentAudio.currentTime = newTime * currentAudio.duration;
+    }
+  };
+
+  const updateProgress = (cardId) => {
+    const audio = audioRefs.current[cardId];
+    const progressPercentage = (audio.currentTime / audio.duration) * 100 || 0;
+    setProgress((prev) => ({ ...prev, [cardId]: progressPercentage }));
+  };
   return (
     <div>
    <div className=" relative">
@@ -908,7 +1010,7 @@ useEffect(() => {
   ))
 ) : (
   videoData
-    .filter((videoItem) => videoItem.content_type === "Video" &&
+    .filter((videoItem) => 
     !videoItem.purchased_flag && // Exclude purchased videos
     !videoItem.sold_flag)
     .map((videoItem) => {
@@ -924,7 +1026,7 @@ useEffect(() => {
               className="w-full h-60 object-cover group-hover:opacity-50 opacity-90 transition-opacity duration-300"
               muted
               loop
-              src={videoItem.content_link}
+              src={videoItem.Video_link}
             ></video>
             <div
               onClick={() => handleVideoClick(videoItem)}
@@ -943,7 +1045,7 @@ useEffect(() => {
             <img src={video} alt="" className="w-[25px] h-[25px]" />
             <div className="text-lg" onClick={() => handleVideoClick(videoItem)}>
               <p className="font-bold text-blue-600">
-                ₹ {videoItem.price}{' '}
+                 {videoItem.price}{' '}
                 <span className="text-sm text-gray-500">
                   <span className="line-through text-sm text-gray-500">{videoItem.final_price}</span> at Discount {videoItem.discount}
                 </span>
@@ -951,7 +1053,7 @@ useEffect(() => {
             </div>
             <div className="flex items-center space-x-4">
               <img
-                onClick={() => handleAddToCart(videoItem.content_id, videoItem.content_link, videoItem.final_price)}
+                onClick={() => handleAddToCart(videoItem.content_id, videoItem.Video_link, videoItem.final_price)}
                 src={card}
                 alt="Add to Cart"
                 className="w-[25px] h-[25px] cursor-pointer"
@@ -1022,7 +1124,7 @@ useEffect(() => {
           ))
         ) : (
 imageData
-    .filter((imageItem) => imageItem.content_type === "Image"&&
+    .filter((imageItem) => 
     !imageItem.purchased_flag && // Exclude purchased videos
     !imageItem.sold_flag) // Filter to show only images
     .map((imageItem) => {
@@ -1031,7 +1133,7 @@ imageData
        {/* Image Section */}
        <div className="relative group">
          <img
-           src={imageItem.content_link}
+           src={imageItem.Image_link}
            alt={imageItem.title}
            className="w-full h-60  group-hover:opacity-50 opacity-90 transition-opacity duration-300"
            onClick={() => handleImagesClick(imageItem)}
@@ -1053,7 +1155,7 @@ imageData
 {/* Price Info */}
 <div className="text-lg" onClick={() => handleImagesClick(imageItem)}>
   <p className="font-bold text-blue-600">
-  ₹ {imageItem.price}{' '}
+  {imageItem.price}{' '}
     <span className="text-sm text-gray-500">
       <span className="line-through text-sm text-gray-500">{imageItem.final_price}</span> at Discount {imageItem.discount}%
     </span>
@@ -1062,7 +1164,7 @@ imageData
 
       {/* Right Icons */}
       <div className="flex items-center space-x-4">
-      <img src={card} alt="" onClick={() => handleAddToCart(imageItem.content_id, imageItem.content_link, imageItem.final_price)}
+      <img src={card} alt="" onClick={() => handleAddToCart(imageItem.content_id, imageItem.Image_link, imageItem.final_price)}
  className="w-[25px] h-[25px] cursor-pointer" />
 
         
@@ -1131,13 +1233,26 @@ imageData
               className="w-16 h-12 rounded-md object-cover"
             />
               </div>
-            <div className="">
-              <FaPlay className="w-4 h-4 text-black" />
+            <div onClick={() => togglePlay(card.id)} className="">
+            {isPlaying1 === card.id ? (
+                  <FaPause className="w-4 h-4 text-black" />
+                ) : (
+                  <FaPlay className="w-4 h-4 text-black" />
+                )}
             </div>
-            <div className="w-[60%] bg-gray-200 rounded-full h-1.5">
-            <div className="bg-blue-500 h-1.5 rounded-full w-1/3  "></div>
+            <div
+                className="w-[60%] bg-gray-200 rounded-full h-1.5 cursor-pointer"
+                onClick={(e) => handleSeek(card.id, e)}
+              >
+                <div
+                  className="bg-blue-500 h-1.5 rounded-full"
+                  style={{
+                    width: `${progress[card.id] || 0}%`,
+                  }}
+                ></div>
           </div>
-          <span className="text-sm text-gray-500">{card.trackTime}</span>
+          <span className="text-sm text-gray-500">{remainingTime[card.id] || card.trackTime}</span>
+
 
           </div>
           <div className="flex justify-end gap-[5px] mb-2 items-center space-x-2">
@@ -1182,6 +1297,15 @@ imageData
             <img src={card.cardIcon} className="w-6 h-6 text-gray-400" />
           </div>
         </div>
+        <audio
+            ref={(el) => (audioRefs.current[card.id] = el)}
+            src={card.audioSrc}
+            onTimeUpdate={() => handleTimeUpdate(card.id)} // Update progress on time update
+            onEnded={() => {
+              setIsPlaying(null); // Reset playing state when audio ends
+              setProgress((prev) => ({ ...prev, [card.id]: 0 })); // Reset progress
+            }}
+          />
       </div>
 ))}
  </div>
@@ -1235,7 +1359,7 @@ imageData
     </div>
 
     <div className="flex flex-col gap-2 mt-4">
-      <h1 className="font-semibold text-2xl">Cart Subtotal: ₹{finalprice}</h1>
+      <h1 className="font-semibold text-2xl">Cart Subtotal: {finalprice}</h1>
       {/* <div className="bg-yellow-400 rounded-2xl flex justify-center">
         <button className="text-black p-2">  Proceed to Buy ({cartCount} item{cartCount !== 1 ? 's' : ''})</button>
       </div> */}

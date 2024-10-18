@@ -1,5 +1,6 @@
 import React, { useState, useEffect ,useRef,useContext} from "react";
 import { AuthContext } from "../Authcontext/AuthContext";
+import { useTimer } from "../timerContext";
 
 import Navbar from "../Navbar/navbar";
 import { useNavigate } from "react-router-dom";
@@ -251,6 +252,7 @@ const watchimages = () => {
   const imageContainerRef = useRef(null);
   const [imageData1, setImageData1] = useState([]);
   const [selectedimage, setSelectedimage] = useState(null); // Store the selected video
+  const { startTimer } = useTimer(); 
 
   const handleimageClick = (video) => {
     setSelectedimage(video); // Set the selected video in state
@@ -445,6 +447,37 @@ const watchimages = () => {
     fetchData();
   }, [isAuthenticated, userId, authToken, navigate]); // Fixed dependency array
   
+  const handleAddToCart = async (contentId, contentLink,finalprice) => {
+    try {
+      const response = await fetch(`${URL}/add_to_cart`, {
+        method: 'POST',
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          content_id: contentId,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok && data.response === 'success') {
+        // Set the content and navigate to the cart
+        navigate('/cart');
+        startTimer();
+      } else if (data.response === 'fail' && data.response_message === 'Content already added to cart.') {
+        // Handle the case when the content is already in the cart
+        console.error('Content already added to cart');
+        alert('This content is already in your cart.');
+      } else {
+        console.error('Error adding to cart:', data);
+      }
+    } catch (error) {
+      console.error('Request failed:', error);
+    }
+  };
   return (
     <>
    <Landing/>
@@ -524,7 +557,7 @@ const watchimages = () => {
        onClick={handleExpandClick}
      >
        <img
-         src={selectedimage.content_link}
+         src={selectedimage.Image_link}
          className="w-full h-full"
          alt="expandable"
        />
@@ -576,7 +609,7 @@ const watchimages = () => {
      </p>
    </div>
    <div className="mt-2">
-     <img src={card} alt="" className="w-8 h-8" />
+     <img src={card} alt="" className="w-8 h-8"  onClick={() => handleAddToCart(selectedimage.content_id, selectedimage.Image_link, selectedimage.final_price)}  />
    </div>
  </div>
 </div>
@@ -605,7 +638,7 @@ const watchimages = () => {
             onClick={handleExpandClick}
           >
             <img
-              src={imageData.content_link}
+              src={imageData.Image_link}
               className="w-full h-full"
               alt="expandable"
             />
@@ -657,7 +690,7 @@ const watchimages = () => {
           </p>
         </div>
         <div className="mt-2">
-          <img src={card} alt="" className="w-8 h-8" />
+          <img src={card} alt="" className="w-8 h-8" onClick={() => handleAddToCart(imageData.content_id, imageData.Image_link, imageData.final_price)} />
         </div>
       </div>
     </div>
@@ -666,7 +699,8 @@ const watchimages = () => {
 
    
 <div className="grid grid-cols-5 gap-4 px-4 p-2">
-      {imageData1.filter((video) => video.content_type === "Image") // Filter to show only images
+      {imageData1.filter((video) => !video.purchased_flag && // Exclude purchased videos
+    !video.sold_flag) // Filter to show only images
     .map((video) => {
         const videoRef = React.createRef();
         return (

@@ -78,7 +78,29 @@ const [shoppingItems,setShoppingItems] =useState([]);
 const userId = location.state?.user_id || localStorage.getItem("userId");
 const [cartSummary, setCartSummary] = useState({});
 const [isLoading, setIsLoading] = useState(true);
+const [cartCount, setCartCount] = useState(0); // State for cart count
+ 
+//timer
+const [timeLeft, setTimeLeft] = useState(10 * 60); // 10 minutes in seconds
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    if (timeLeft === 0) {
+      navigate("/dashboard");
+    }
+
+ 
+    return () => clearInterval(timer);
+  }, [timeLeft, navigate]);
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+  };
+  // timer
     const handledashboard = () => {
       navigate(`/dashboard`);
     };
@@ -118,36 +140,35 @@ const [isLoading, setIsLoading] = useState(true);
     
         fetchCartData();
       }, [authToken, URL]);
-      const fetchData = async () => {
+      const fetchCartItems = async () => {
         try {
-          // setLoading(true);
-          const response = await fetch(`${URL}/landing page?user_id=${userId}`, {
-            method: "POST",
-            headers: {
-              "accept": "application/json",
-              Authorization: `Bearer ${authToken}`,
-            },
-            body: JSON.stringify({}) // Empty body for a POST request
-          });
-      
-          const data = await response.json();
-      
-          if (data.response === "success") {
-            // setVideoData(data.data);
-            // setImageData(data.data);
-            // setCartCount(data.cart_count);
-            localStorage.setItem("cart_count", data.cart_count);
-            
+          const response = await fetch(
+            `${URL}/total_cart_items?user_id=${userId}`,
+            {
+              method: 'POST',
+              headers: {
+                'accept': 'application/json',
+                Authorization: `Bearer ${authToken}`,
+    
+              },
+            }
+          );
+    
+          if (!response.ok) {
+            throw new Error('Failed to fetch cart items');
           }
+    
+          const data = await response.json();
+          setCartCount(data.response_message);
+          localStorage.setItem('totalCartItems',data.response_message );
+    
         } catch (error) {
-          console.error("Error fetching data", error);
-        } finally {
-          // setLoading(false); // Stop loading once data is fetched
+          console.error('Error:', error);
         }
       };
       useEffect(() => {
-        fetchData(); // Fetch data on component mount
-      }, []); 
+        fetchCartItems();
+      }, []);
       const handleRemoveItem = async (contentId) => {
         try {
           const response = await fetch(`${URL}/delete_item_in_cart`, { // Replace with your actual endpoint
@@ -169,8 +190,8 @@ const [isLoading, setIsLoading] = useState(true);
             setShoppingItems((prevItems) =>
               prevItems.filter(item => item.content_id !== contentId)
             );
-            await fetchData();
-            window.location.reload(); 
+            await fetchCartItems();
+         
             // console.log('Item removed successfully:', data);
           } else {
             console.error('Error removing item:', data);
@@ -277,8 +298,8 @@ const [isLoading, setIsLoading] = useState(true);
             {shoppingItems.map((item) => (
               <div key={item.content_id}>
                 <div className="flex items-center justify-between border-b py-4">
-                  <div className="flex items-start">
-                    <div className="relative w-[40%]">
+                  <div className="flex items-start w-[100%]">
+                    <div className="relative w-[20%]">
                       {/* Video */}
                       {item.Video_link && (
                         <video
@@ -303,7 +324,7 @@ const [isLoading, setIsLoading] = useState(true);
                         {item.age_in_days}
                       </div>
                     </div>
-                    <div className="ml-4">
+                    <div className="ml-4 w-[80%]">
                       <h3 className="text-lg font-semibold text-gray-700 line-clamp-2 w-[80%]">
                         {item.content_description || 'No description available'}
                       </h3>
@@ -333,6 +354,14 @@ const [isLoading, setIsLoading] = useState(true);
 <div className="w-[30%] p-5">
 <div className="mb-6">
     <h2 className="text-2xl blue-color font-semibold">Order Summary</h2>
+    <p className="text-red-500 font-semibold mt-2">
+          Time Left: {formatTime(timeLeft)}
+        </p>
+        {timeLeft <= 120 && (
+          <p className="text-yellow-600 font-semibold">
+            Hurry up! Only 2 minutes left to complete your order.
+          </p>
+        )}
 </div>
 
 <div class="bg-white shadow-xl rounded-lg p-6">

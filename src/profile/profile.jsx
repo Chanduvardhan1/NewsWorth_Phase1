@@ -2277,7 +2277,7 @@ InputProps={{
       <div className=" rounded-lg p-6 mt-8 w-[100%]"> 
       <div className="border-b mb-4">
         <h2 className="text-2xl font-semibold blue-color">My Orders</h2>
-        <p className=" underline text-blue-500 cursor-pointer" onClick={handledashboard}>Add more items to Buy</p>
+        <p className=" underline text-blue-500 cursor-pointer" onClick={handledashboard}>Go to home</p>
         <div className="flex justify-between mt-2 px-2">
           <h2 className="text-[14px] font-semibold text-gray-500">Item</h2>
           <h2 className="text-[14px] font-semibold text-gray-500">Price</h2>
@@ -2306,12 +2306,12 @@ InputProps={{
             {shoppingItems2.map((item) => (
               <div key={item.content_id}>
                 <div className="flex items-center justify-between border-b py-4">
-                  <div className="flex items-start">
-                    <div className="relative w-[40%]">
+                  <div className="flex items-start w-[100%]">
+                    <div className="relative w-[20%]">
                       {/* Check if the content is a video or image */}
                       {item.Video_link && (
                         <video
-                          className="media-video w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
+                          className="media-video w-[100%] h-[110px] object-cover opacity-90 transition-opacity duration-300"
                           onClick={() => handleVideoClick(item)}
                           src={item.Video_link}
                         />
@@ -2320,7 +2320,7 @@ InputProps={{
                       {/* Display Image if available */}
                       {item.Image_link && (
                         <img
-                          className="media-image w-[150px] h-[150px] object-cover opacity-90 transition-opacity duration-300"
+                          className="media-image w-[100%] h-[110px]  opacity-90 transition-opacity duration-300"
                           src={item.Image_link}
                           alt="content"
                           onClick={() => handleImagesClick(item)}
@@ -2330,7 +2330,7 @@ InputProps={{
                         {item.age_in_days}
                       </div>
                     </div>
-                    <div className="ml-4">
+                    <div className="ml-4 w-[80%]">
                       <h3 className="text-lg font-semibold text-gray-700 line-clamp-2 w-[80%]">
                         {item.content_description || 'No description available'}
                       </h3>
@@ -2342,7 +2342,7 @@ InputProps={{
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-12">
+                  <div className="flex items-center space-x-12 w-[6%]">
                     <p className="text-lg font-semibold text-gray-700">
                       ₹ {item.final_price}
                     </p>

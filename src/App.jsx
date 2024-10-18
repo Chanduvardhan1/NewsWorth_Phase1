@@ -26,10 +26,13 @@ import Audio from './dashboard/audio.jsx';
 import Cart from './cart/cart.jsx';
 import Search from './search/search.jsx';
 import Myorder from './myorder/myorder.jsx';
-
+import { TimerProvider } from './timerContext.jsx';
 function App() {  
   return (
     <>
+       <TimerProvider>
+
+    
              <AuthProvider>
 
       <BrowserRouter>
@@ -64,6 +67,7 @@ function App() {
         {/* <VerificationHandler /> */}
       </BrowserRouter>
       </AuthProvider>
+      </TimerProvider>
     </>
   );
 }

@@ -6,6 +6,7 @@ import defaultPhoto from '../../src/assets/Images/landing/pic.jpg'
 import { useNavigate, useLocation } from "react-router-dom";
 import card from '../../src/assets/Images/dashboard/cart3.jpeg'
 import { URL } from "../url";
+import { useTimer } from "../timerContext";
 
 const landing = () => {
   const location = useLocation();
@@ -19,6 +20,14 @@ const landing = () => {
   const [error, setError] = useState(null); // State to handle error
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryName, setCategoryName] = useState('Unknown');
+  const { timeLeft } = useTimer(); // Access timeLeft from context
+
+  const formatTime = (time) => {
+    if (time === null) return "--:--";
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+  };
 
   useEffect(() => {
     const storedCategoryName = localStorage.getItem('categoryName') || 'Unknown';
@@ -157,7 +166,8 @@ const landing = () => {
   const handlecart = () => {
     navigate('/cart'); // Navigate to the selected path
   };
-  const storedCartCount = localStorage.getItem("cart_count");
+  // const storedCartCount = localStorage.getItem("cart_count");
+  const storedCartCount = localStorage.getItem('totalCartItems');
 
   return (
     <div>
@@ -229,22 +239,28 @@ const landing = () => {
       )}
         </div>
         <div>
-            <h1 className=" cursor-pointer red-color" ><span  className=" font-bold cursor-pointer blue-color">{userName}</span> </h1>
-            <p className=" cursor-pointer"   >User ID: {userId}</p>
+            <h1 className=" cursor-pointer red-color" ><span  className=" text-[14px] font-bold cursor-pointer blue-color">{userName}</span> </h1>
+            <p className=" cursor-pointer text-[14px]"   >User ID: {userId}</p>
         </div>
         </div>
+        <div className=" flex flex-col justify-center items-center">
+
+       
        <div className="relative w-[40px] h-[35px] cursor-pointer" onClick={handlecart}>
   <img src={card} alt="" className="w-full h-full object-cover" />
   <p className="absolute top-1 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black font-bold">
     {storedCartCount}
   </p>
 </div>
+{timeLeft !== null && (
+        <p>Time Left: {formatTime(timeLeft)}</p>
+      )}  </div>
     </div>
 </div>
 {isDropdownOpen && (
-        <div     ref={dropdownRef} className=" w-[16%] inline-block text-left bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none absolute z-10 right-[0px] top-[70px]">
+        <div     ref={dropdownRef} className=" w-[16%] text-[14px] inline-block text-left bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none absolute z-10 right-[0px] top-[70px]">
           <div>
-            <button className="flex items-center w-full px-4 py-2 text-sm font-medium text-gray-700">
+            <button className="flex  items-center w-full px-4 py-2 text-sm font-medium text-gray-700">
               <img
                 src={photo}
                 alt="Profile"

@@ -4,7 +4,8 @@ import Navbar from "../Navbar/navbar";
 import { useNavigate } from "react-router-dom";
 import Landing from "../landing/landing";
 import { AuthContext } from "../Authcontext/AuthContext";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useParams } from 'react-router-dom';
 import videoSrc from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4';
 import videoSrc6 from '../../src/assets/Images/home/10_30 PM _ 12th September 2024 _ ETV News _ News Headlines _ ETV Andhra Pradesh.mp4';
@@ -20,6 +21,7 @@ import camera from '../../src/assets/Images/dashboard/camera-c.png';
 import card from '../../src/assets/Images/dashboard/shopping-cart.png';
 import { useLocation } from 'react-router-dom';
 import { URL } from "../url";
+import { useTimer } from "../timerContext";
 
 
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
@@ -253,7 +255,8 @@ const watch = () => {
   const [selectedVideo, setSelectedVideo] = useState(null); // Store the selected video
 
   const { videoData } = location.state; 
-  
+  const { startTimer } = useTimer(); 
+
   const handleVideoClick = (video) => {
     setSelectedVideo(video); // Set the selected video in state
     if (videoRef.current) {
@@ -419,11 +422,12 @@ const watch = () => {
       const data = await response.json();
       if (response.ok && data.response === 'success') {
         // Set the content and navigate to the cart
+        startTimer();
         navigate('/cart');
       } else if (data.response === 'fail' && data.response_message === 'Content already added to cart.') {
         // Handle the case when the content is already in the cart
-        console.error('Content already added to cart');
-        alert('This content is already in your cart.');
+        // console.error('Content already added to cart');
+        toast.error('This content is already in your cart.');
       } else {
         console.error('Error adding to cart:', data);
       }
@@ -468,6 +472,7 @@ const watch = () => {
   return (
     <>
    <Landing/>
+   <ToastContainer/>
    {/* <div className="flex w-full items-center p-4">
     
     
@@ -539,7 +544,7 @@ const watch = () => {
   </div>
 
   <div className="w-[60%] h-[20%] mx-auto">
-    <video ref={videoRef}  src={selectedVideo.content_link} controls autoPlay className="w-full h-[400px] object-cover">
+    <video ref={videoRef}  src={selectedVideo.Video_link} controls autoPlay className="w-full h-[400px] object-cover">
       Your browser does not support the video tag.
     </video>
   </div>
@@ -552,7 +557,7 @@ const watch = () => {
     </div>
     <div className=" ">
       <p className="font-bold mb-1 text-blue-600 text-[18px]">
-      Price ₹{selectedVideo.price} 
+      Price {selectedVideo.price} 
         <span className="text-[12px] text-gray-500 ml-[2px]">
           <span className="line-through text-[12px]">₹{selectedVideo.discount}</span> at Discount {selectedVideo.discount}%
         </span>
@@ -580,8 +585,8 @@ const watch = () => {
       Purchased Flag: <span className=" text-gray-500 text-[14px]">   {selectedVideo.purchased_flag ? "True" : "False"}</span> 
       </p>
     </div>
-    <div className="mt-1">
-      <img src={card} alt="" className="w-8 h-8 cursor-pointer"   onClick={() => handleAddToCart(selectedVideo.content_id, selectedVideo.content_link, selectedVideo.final_price)} />
+    <div className="mt-1 flex items-end">
+      <img src={card} alt="" className="w-8 h-8 cursor-pointer"   onClick={() => handleAddToCart(selectedVideo.content_id, selectedVideo.Video_link, selectedVideo.final_price)} />
     </div>
   </div>
 </div>
@@ -603,7 +608,7 @@ const watch = () => {
   </div>
 
   <div className="w-[60%] h-[20%] mx-auto">
-    <video ref={videoRef}  src={videoData.content_link} controls autoPlay className="w-full h-[400px] object-cover">
+    <video ref={videoRef}  src={videoData.Video_link} controls autoPlay className="w-full h-[400px] object-cover">
       Your browser does not support the video tag.
     </video>
   </div>
@@ -615,44 +620,45 @@ const watch = () => {
       <p className="ml-2">{videoData.file_type}</p>
     </div>
     <div className=" text-[14px]">
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
-      Price ₹{videoData.price} 
+      <p className="font-bold mb-2 text-blue-600 text-[18px]">
+      Price {videoData.price} 
         <span className="text-[12px] text-gray-500 ml-[2px]">
           <span className="line-through text-[12px]">₹{videoData.discount}</span> at Discount {videoData.discount}%
         </span>
       </p>
-      <p className="font-bold text-[14px] mb-2 text-blue-600">
+      <p className="font-bold text-[14px] mb-2 text-gray-500">
       Latitude: <span className=" text-gray-500 text-[14px]">{videoData.latitude}</span> 
       </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      <p className="font-bold mb-2 text-gray-500 text-[14px]">
       Longitude: <span className=" text-gray-500 text-[14px]">{videoData.longitude}</span>
       </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      <p className="font-bold mb-2 text-gray-500 text-[14px]">
       Altitude: <span className=" text-gray-500 text-[14px]">{videoData.altitude}</span> 
       </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      <p className="font-bold mb-2 text-gray-500 text-[14px]">
       Incident Time: <span className=" text-gray-500 text-[14px]">{videoData.incident_time}</span> 
       </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      <p className="font-bold mb-2 text-gray-500 text-[14px]">
       File Size: <span className=" text-gray-500 text-[14px]">{videoData.file_size}</span> 
       </p>
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      <p className="font-bold mb-2 text-gray-500 text-[14px]">
       Aging Bucket: <span className=" text-gray-500 text-[14px]">{videoData.aging_bucket}</span> 
       </p>
      
-      <p className="font-bold mb-2 text-blue-600 text-[14px]">
+      <p className="font-bold mb-2 text-gray-500 text-[14px]">
       Purchased Flag: <span className=" text-gray-500 text-[14px]">   {videoData.purchased_flag ? "True" : "False"}</span> 
       </p>
     </div>
-    <div className="mt-2">
-      <img src={card} alt="" className="w-8 h-8 cursor-pointer"   onClick={() => handleAddToCart(videoData.content_id, videoData.content_link, videoData.final_price)} />
+    <div className="mt-2 flex items-end">
+      <img src={card} alt="" className="w-8 h-8 cursor-pointer"   onClick={() => handleAddToCart(videoData.content_id, videoData.Video_link, videoData.final_price)} />
     </div>
   </div>
 </div>
      )}
 
 <div className="grid grid-cols-5 gap-4 px-4 p-2">
-      {videoData1.filter((video) => video.content_type === "Video")
+      {videoData1.filter((video) => !video.purchased_flag && // Exclude purchased videos
+    !video.sold_flag)
     .map((video) => {
         const videoRef = React.createRef();
         return (
@@ -667,7 +673,7 @@ const watch = () => {
                 className="w-full h-[150px] object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300"
                 muted
                 loop
-                src={video.content_link}
+                src={video.Video_link}
                 onClick={() => handleVideoClick(video)}
 
               ></video>
