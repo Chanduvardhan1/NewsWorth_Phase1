@@ -557,7 +557,7 @@ const watch = () => {
     </div>
     <div className=" ">
       <p className="font-bold mb-1 text-blue-600 text-[18px]">
-      Price {selectedVideo.price} 
+      Price  ₹{selectedVideo.price} 
         <span className="text-[12px] text-gray-500 ml-[2px]">
           <span className="line-through text-[12px]">₹{selectedVideo.discount}</span> at Discount {selectedVideo.discount}%
         </span>
@@ -621,7 +621,7 @@ const watch = () => {
     </div>
     <div className=" text-[14px]">
       <p className="font-bold mb-2 text-blue-600 text-[18px]">
-      Price {videoData.price} 
+      Price  ₹{videoData.price} 
         <span className="text-[12px] text-gray-500 ml-[2px]">
           <span className="line-through text-[12px]">₹{videoData.discount}</span> at Discount {videoData.discount}%
         </span>

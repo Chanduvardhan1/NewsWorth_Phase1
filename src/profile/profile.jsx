@@ -248,12 +248,12 @@ const fetchProfileImage = async () => {
         setPhoto(defaultPhoto);
       }
     } else {
-      setError('Failed to fetch image');
       setPhoto(defaultPhoto);
+      // setError('Failed to fetch image');
     }
   } catch (error) {
-    setError('Error fetching image: ' + error.message);
     setPhoto(defaultPhoto);
+    // setError('Error fetching image: ' + error.message);
   } finally {
     setLoading(false);
   }
@@ -2052,7 +2052,8 @@ InputProps={{
       )}
        {userType1 === 'Content' && (
       <div className="p-5 ">
-        <div className="flex w-full items-center pr-[20px] mb-2">
+        {loading && (
+          <div className="flex w-full items-center pr-[20px] mb-2">
       {/* Audio Tab */}
     
 
@@ -2081,13 +2082,15 @@ InputProps={{
         <h1 className="text-[18px]">Audio</h1>
       </div>
     </div>
+        )}
+        
     
       {activeTab ==='Videos' &&(
      <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-2 gap-6 mb-6 cursor-pointer">
      {loading ? (
        <p>Loading...</p> // Show loading message or spinner
      ) : videoData.length === 0 ? (
-       <p>No videos available.</p> // Show message when no video data is available
+       <p>No Content available.</p> // Show message when no video data is available
      ) : (
       Array.isArray(videoData) &&
        videoData

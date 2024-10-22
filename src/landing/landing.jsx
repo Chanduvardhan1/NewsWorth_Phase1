@@ -92,7 +92,7 @@ const landing = () => {
         setPhoto(defaultPhoto);
       }
     } catch (error) {
-      setError('Error fetching image: ' + error.message);
+      // setError('Error fetching image: ' + error.message);
       setPhoto(defaultPhoto);
     } finally {
       setLoading(false);

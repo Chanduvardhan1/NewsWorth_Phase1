@@ -319,6 +319,7 @@ useEffect(() => {
      <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
       {videoData
      .filter((videoItem) => videoItem.content_type === "Video"&&
+     !videoItem.cart_flag && 
      !videoItem.purchased_flag && // Exclude purchased videos
      !videoItem.sold_flag) // Filter to show only videos
      .map((videoItem) => {
@@ -428,6 +429,7 @@ useEffect(() => {
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
    {ImageData
      .filter((imageItem) => imageItem.content_type === "Image"&&
+     !imageItem.cart_flag && 
      !imageItem.purchased_flag && // Exclude purchased videos
      !imageItem.sold_flag) // Filter to show only images
      .map((imageItem) => {

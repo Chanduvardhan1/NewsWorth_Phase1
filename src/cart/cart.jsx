@@ -354,14 +354,14 @@ const [timeLeft, setTimeLeft] = useState(10 * 60); // 10 minutes in seconds
 <div className="w-[30%] p-5">
 <div className="mb-6">
     <h2 className="text-2xl blue-color font-semibold">Order Summary</h2>
-    <p className="text-red-500 font-semibold mt-2">
+    {/* <p className="text-red-500 font-semibold mt-2">
           Time Left: {formatTime(timeLeft)}
         </p>
         {timeLeft <= 120 && (
           <p className="text-yellow-600 font-semibold">
             Hurry up! Only 2 minutes left to complete your order.
           </p>
-        )}
+        )} */}
 </div>
 
 <div class="bg-white shadow-xl rounded-lg p-6">
