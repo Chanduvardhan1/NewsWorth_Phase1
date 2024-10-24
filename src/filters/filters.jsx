@@ -93,14 +93,14 @@ const filters = () => {
         >
           Educational
         </p>
-        <p
+        {/* <p
         //   onClick={() => handleNavigation("/wildlife")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
             activePage === "/wildlife" ? "font-bold" : ""
           }`}
         >
           Wildlife
-        </p>
+        </p> */}
         <p
         //   onClick={() => handleNavigation("/fashion")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
@@ -108,6 +108,30 @@ const filters = () => {
           }`}
         >
           Fashion
+        </p>
+        <p
+        //   onClick={() => handleNavigation("/fashion")}
+          className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
+            activePage === "/fashion" ? "font-bold" : ""
+          }`}
+        >
+          Location
+        </p>
+        <p
+        //   onClick={() => handleNavigation("/fashion")}
+          className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
+            activePage === "/fashion" ? "font-bold" : ""
+          }`}
+        >
+          My Content
+        </p>
+        <p
+        //   onClick={() => handleNavigation("/fashion")}
+          className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
+            activePage === "/fashion" ? "font-bold" : ""
+          }`}
+        >
+          Book Mark
         </p>
         </div>
       </div>

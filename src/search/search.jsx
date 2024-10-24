@@ -266,19 +266,21 @@ useEffect(() => {
     <div>
    <div className=" relative">
     <Landing/>
+    <Filters/>
+
   {!videoData && !ImageData ? (
     <div>
       <div className="p-[20px] bg-white">No content found</div>
     </div>
   ):(
     <div className="p-[20px] bg-white">
-    <Filters/>
        {/* Button to toggle the sidebar */}
        
  
        {/* Sidebar */}
      
-    
+       <div className=" fixed z-10 w-full  top-[130px] bg-white">
+
        <div className="flex w-full items-center pr-[30px]">
        {/* Audio Tab */}
      
@@ -308,7 +310,8 @@ useEffect(() => {
          <h1 className="text-[18px]">Audio</h1>
        </div>
      </div>
- 
+     </div>
+     <div className=" relative top-[160px]">
      <div className="flex  items-center my-4 ">
     
  
@@ -318,10 +321,9 @@ useEffect(() => {
    {activeTab ==='Videos' &&(
      <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
       {videoData
-     .filter((videoItem) => videoItem.content_type === "Video"&&
-     !videoItem.cart_flag && 
-     !videoItem.purchased_flag && // Exclude purchased videos
-     !videoItem.sold_flag) // Filter to show only videos
+     .filter((videoItem) =>      videoItem.content_type === "Video"  &&
+     videoItem.sold_flag === false && 
+     videoItem.purchased_flag === false) // Filter to show only videos
      .map((videoItem) => {
          const videoRef = React.createRef();
          return (
@@ -337,7 +339,7 @@ useEffect(() => {
                  muted
                  loop
                  // onClick={handleVideoClick}
-                 src={videoItem.content_link}
+                 src={videoItem.Video_link}
                ></video>
    <div onClick={() =>handleVideoClick(videoItem)} className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
     <img src={play} onClick={() => handleVideoClick(videoItem)} alt=""  className="w-[20px] h-[20px] text-white group-hover:text-black transition-colors duration-300"
@@ -428,17 +430,17 @@ useEffect(() => {
  {activeTab ==='Images' && (
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6 cursor-pointer">
    {ImageData
-     .filter((imageItem) => imageItem.content_type === "Image"&&
-     !imageItem.cart_flag && 
-     !imageItem.purchased_flag && // Exclude purchased videos
-     !imageItem.sold_flag) // Filter to show only images
+     .filter((imageItem) => 
+       imageItem.content_type === "Image"  &&
+     imageItem.sold_flag === false && 
+       imageItem.purchased_flag === false ) // Filter to show only images
      .map((imageItem) => {
     return (
       <div key={imageItem.id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">
         {/* Image Section */}
         <div className="relative group">
           <img
-            src={imageItem.content_link}
+            src={imageItem.Image_link}
             alt={imageItem.title}
             className="w-full h-60 object-cover group-hover:opacity-50 opacity-90 transition-opacity duration-300"
             onClick={() => handleImagesClick(imageItem)}
@@ -535,7 +537,7 @@ useEffect(() => {
  
  
     </div>
-  
+    </div>
   )}
   
  

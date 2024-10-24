@@ -23,7 +23,7 @@ import Auido from '../../src/assets/Images/dashboard/voice-control.png';
 import video from '../../src/assets/Images/dashboard/camera.png';
 import camera from  '../../src/assets/Images/dashboard/camera-c.png';
 import expanding from '../../src/assets/Images/dashboard/maximize.png'
-
+import edit from "../../src/assets/Images/dashboard/image (8).png"
 // import check from '../../src/assets/Images/dashboard/check.png';
 import moreImg from '../../src/assets/Images/dashboard/more.png';
 
@@ -774,7 +774,7 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
   </div>
 </div>
 
-<div className="w-full p-5">
+<div className="w-full px-5">
   <div className=" shadow-xl rounded-2xl p-5">
   <div className="relative items-start justify-start flex w-[100%] font-bold">
   <div
@@ -850,20 +850,26 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
 
     <div className="border-[1px] w-[70%] border-gray-100"/>
     {userType1 === 'Email' && (
-    <div className="flex w-full items-start mt-5 py-5">
+    <div className="w-full items-start mt-5 py-5">
           {categoryName === "Newsworth Creator" && (
 
         <div className="space-y-1  ">
           <div>
+            <div className="flex justify-between ">
+
           <h2 className="  text-gray-800">Name</h2>
-          <div className="flex gap-[50px] mb-5 items-center">
+          <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+              <img src={edit} alt="" className=" w-4 h-4" />
+
+</button>  
+            </div>
+          <div className="flex justify-between mb-5 items-center">
           <p className=" text-gray-500  ">{data1.first_name} {data1.middle_name} {data1.last_name} </p>
 
           {/* <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                </svg>
-              </button> */}
+              <img src={edit} alt="" className=" w-4 h-4" />
+
+</button>    */}
           </div>
       
           </div>
@@ -1052,11 +1058,10 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
             </div>
             <div className="flex justify-between">
               <p className=" text-gray-500 ">{dateofbirth}</p>
-              <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-  </svg>
-</button>   
+              {/* <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+              <img src={edit} alt="" className=" w-4 h-4" />
+
+</button>    */}
             </div>
  
 
@@ -1067,7 +1072,13 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
 
         <div className="  ">
           <div>
+            <div className=" flex justify-between">
           <h2 className="  text-gray-800">Name</h2>
+          <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+              <img src={edit} alt="" className=" w-4 h-4" />
+
+</button>  
+</div>
           <div className="flex gap-[50px] mb-5 items-center">
           <p className=" text-gray-500  ">{data1.first_name} {data1.middle_name} {data1.last_name} </p>
 
@@ -1266,9 +1277,8 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
             <div className="flex justify-between">
               <p className=" text-gray-500 ">{dateofbirth}</p>
               <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-  </svg>
+              <img src={edit} alt="" className=" w-4 h-4" />
+
 </button>   
             </div>
  
@@ -1279,15 +1289,18 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
       </div>
     )}
     {userType1 === 'Mobile' && (
-    <div className="flex w-full items-start mt-5 py-5">
+    <div className=" w-full items-start mt-5 py-5">
         <div className="  ">
         {categoryName === "Newsworth Creator" && (
 
           <div className="">
         
-            <div className="flex items-center mt-5">
+            <div className="flex justify-between items-center mt-5">
               <p className=" text-gray-800">Address Line 1</p>
-              
+              <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+              <img src={edit} alt="" className=" w-4 h-4" />
+
+</button> 
             </div>
             <div className="flex mb-5 gap-[50px]">
               <p className=" text-gray-500 ">{pincode},{selectedCity},{selectedDistrict},{state},{country}</p>
@@ -1299,11 +1312,10 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
             </div>
             <div className="flex justify-between">
               <p className=" text-gray-500 ">{useraddressline1},{useraddressline2}</p>
-              <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                </svg>
-              </button>
+              {/* <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+              <img src={edit} alt="" className=" w-4 h-4" />
+
+              </button> */}
               {showPopup && (
                
                 <div className="flex flex-col gap-[10px] absolute bg-white p-5 shadow-2xl rounded-xl top-[75px] right-[400px]">
@@ -1565,9 +1577,12 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
     {categoryName === "Newsworth Buyer" && (
 
           <div className="">
-          <div className="flex items-center mt-5">
+          <div className="flex justify-between items-center mt-5">
               <p className=" text-gray-800">Organization Name</p>
-              
+              <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+              <img src={edit} alt="" className=" w-4 h-4" />
+
+</button> 
             </div>
             <div className="flex mb-5 gap-[50px]">
               <p className=" text-gray-500 ">{orgname}</p>
@@ -1604,9 +1619,7 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
             <div className="flex justify-between">
               <p className=" text-gray-500 ">{useraddressline1},{useraddressline2}</p>
               <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                </svg>
+              <img src={edit} alt="" className=" w-4 h-4" />
               </button>
               {showPopup && (
                

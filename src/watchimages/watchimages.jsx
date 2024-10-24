@@ -700,8 +700,9 @@ const watchimages = () => {
 
    
 <div className="grid grid-cols-5 gap-4 px-4 p-2">
-      {imageData1.filter((video) => !video.purchased_flag && // Exclude purchased videos
-    !video.sold_flag) // Filter to show only images
+      {imageData1.filter((video) =>   video.content_type === "Image"  &&
+    video.sold_flag === false && 
+    video.purchased_flag === false ) // Filter to show only images
     .map((video) => {
         const videoRef = React.createRef();
         return (
@@ -709,7 +710,7 @@ const watchimages = () => {
             <div className="relative group cursor-pointer"
           onClick={() => handleimageClick(video)}
 >
-          <img src={video.content_link}
+          <img src={video.Image_link}
             onClick={() => handleimageClick(video)} alt=""
           className="w-full h-[150px] object-cover group-hover:opacity-100 opacity-90 transition-opacity duration-300 cursor-pointer"
  />

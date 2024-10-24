@@ -31,6 +31,9 @@ import videoSrc1 from '../../src/assets/Images/home/10_30 PM _ 12th September 20
 import videoSrc2 from '../../src/assets/Images/home/CM Mamata Banerjee Responds to RG Kar Medical College Case_ Appeals for Doctors  Cooperation.mp4';
 import videoSrc3 from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4';
 import card from '../../src/assets/Images/dashboard/shopping-cart.png'
+
+import card1 from '../../src/assets/Images/dashboard/shopping-cart.png'
+
 import Auido from '../../src/assets/Images/dashboard/voice-control.png'
 import video from '../../src/assets/Images/dashboard/camera.png'
 import camera from  '../../src/assets/Images/dashboard/camera-c.png';
@@ -1329,7 +1332,8 @@ imageData
             {/* <button className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
               Buy
             </button> */}
-            <img src={card.cardIcon} className="w-6 h-6 text-gray-400" />
+            <img   onClick={() => handleAddToCart(card.content_id, card.Video_link, card.final_price)}
+                src={card1} className="w-6 h-6 text-gray-400" />
           </div>
         </div>
         <audio

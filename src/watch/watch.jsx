@@ -658,8 +658,10 @@ const watch = () => {
      )}
 
 <div className="grid grid-cols-5 gap-4 px-4 p-2">
-      {videoData1.filter((video) => !video.purchased_flag && // Exclude purchased videos
-    !video.sold_flag)
+      {videoData1.filter((video) =>      
+      video.content_type === "Video"  &&
+      video.sold_flag === false && 
+      video.purchased_flag === false)
     .map((video) => {
         const videoRef = React.createRef();
         return (

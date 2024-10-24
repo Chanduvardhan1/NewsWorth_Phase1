@@ -252,7 +252,7 @@ const landing = () => {
     {storedCartCount}
   </p>
 </div>
-{timeLeft !== null && (
+{timeLeft !== null && storedCartCount > 0 &&(
         <p className="text-red-500 text-[12px]">Time Left: {formatTime(timeLeft)}</p>
       )}  </div>
     </div>
