@@ -30,14 +30,14 @@ const testimonialData = [
     id: 3,
     image:image3,
     title: `NewsWorth Eye`,
-    // text: "Capture content using the NewsWorth Eye mobile app, with cloud storage.",
+    text: "Capture content using the NewsWorth Eye mobile app, with cloud storage.",
     textColor: "text-yellow-500",
   },
   {
     id: 4,
     image:image4,
     title: `NewsWorth Wall`,
-    // text: "Access the NewsWorth Wall web portal, featuring a content marketplace.",
+    text: "Access the NewsWorth Wall web portal, featuring a content marketplace.",
     textColor: "text-purple-500",
   },
   {

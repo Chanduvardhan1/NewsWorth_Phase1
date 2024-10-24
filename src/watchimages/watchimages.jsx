@@ -532,6 +532,7 @@ const watchimages = () => {
         &gt;
       </button>
     </div> */}
+        <div className=" relative top-[65px]">
     {selectedimage ? (
  <div className="flex flex-row justify-between items-start px-4 py-2 gap-4">
  {/* Text Section */}
@@ -726,7 +727,7 @@ const watchimages = () => {
         );
       })}
     </div>
-
+    </div>
     </>
   
   );

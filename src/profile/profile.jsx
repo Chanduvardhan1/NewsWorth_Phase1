@@ -4,7 +4,7 @@ import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
 import Landing from "../landing/landing";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from 'react-router-dom';
-
+import camera1 from "../../src/assets/Images/dashboard/camera (2).png"
 import { URL } from "../url";
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { toast, ToastContainer } from "react-toastify";
@@ -679,7 +679,7 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
    
    
 
-    <div className="">
+    <div className=" relative top-[65px]">
 
     <div className="flex p-4 pl-[60px] justify-between items-center ">
       <h1 className="blue-color  text-[25px]">My Profile</h1>
@@ -702,12 +702,10 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
           className="w-full h-full rounded-[50px]"
         />
         <div 
-          className="absolute bottom-0 right-2 bg-gray-300 p-1 rounded-full cursor-pointer"
+          className="absolute bottom-0 right-0 bg-gray-300 p-2 rounded-full cursor-pointer"
           onClick={openModal}
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-  </svg>
+         <img src={camera1} alt="" className="w-[25px] h-[25px]"/>
         </div>
       </div>
       )}

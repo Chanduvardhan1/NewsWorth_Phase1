@@ -17,7 +17,10 @@ const filters = () => {
 
   return (
     <>
-      <div className="flex space-x-4  mb-6">
+      <div className="w-full py-[10px] fixed bg-white z-10 top-[63px] px-[20px]">
+        <div className="flex space-x-4   mb-6">
+
+      
         <p
           onClick={() => handleNavigation("/dashboard")}
           className={`hover:bg-gray-200 p-2 cursor-pointer rounded-lg transition-transform transform hover:-translate-y-1 hover:scale-105 duration-300 shadow-lg ${
@@ -106,6 +109,7 @@ const filters = () => {
         >
           Fashion
         </p>
+        </div>
       </div>
     </>
   );

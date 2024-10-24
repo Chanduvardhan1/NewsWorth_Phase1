@@ -1,7 +1,7 @@
 import React, { useState, useEffect ,useRef} from "react";
 import logo from "../../src/assets/Images/dashboard/NEWS WORTH FINAL.png"
 
-import ball from '../../src/assets/Images/landing/bell.png'
+import ball from '../../src/assets/Images/landing/notification 1.png'
 import defaultPhoto from '../../src/assets/Images/landing/pic.jpg'
 import { useNavigate, useLocation } from "react-router-dom";
 import card from '../../src/assets/Images/dashboard/cart3.jpeg'
@@ -170,9 +170,9 @@ const landing = () => {
   const storedCartCount = localStorage.getItem('totalCartItems');
 
   return (
-    <div>
+    <div className=" fixed w-full top-0 z-50">
    <div className=" relative">
-<div className=" w-full flex justify-between p-[5px] px-[20px] shadow-md ">
+<div className=" w-full flex justify-between p-[5px] px-[20px] shadow-md bg-white ">
     <div className="flex justify-center items-center">
         <div>
         <img src={logo} alt="" onClick={handleNavigation} className=" cursor-pointer w-[150px] h-[50px]" />
@@ -258,7 +258,7 @@ const landing = () => {
     </div>
 </div>
 {isDropdownOpen && (
-        <div ref={dropdownRef} className=" w-[16%] text-[14px] inline-block text-left bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none absolute z-10 right-[0px] top-[70px]">
+        <div ref={dropdownRef} className=" w-[16%] text-[14px] inline-block text-left bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none absolute z-50 right-[0px] top-[70px]">
           <div>
             <button className="flex  items-center w-full px-4 py-2 text-sm font-medium text-gray-700">
               <img
