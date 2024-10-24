@@ -527,6 +527,7 @@ const watch = () => {
         &gt;
       </button>
     </div> */}
+    <div className=" relative top-[65px]">
      {selectedVideo ? ( 
  <div className="flex flex-row justify-between items-start px-4 py-2 gap-4">
   <div className="w-[20%]">
@@ -690,7 +691,7 @@ const watch = () => {
         );
       })}
     </div>
-
+    </div>
     </>
   
   );

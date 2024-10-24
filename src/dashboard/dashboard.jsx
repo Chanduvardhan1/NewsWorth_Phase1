@@ -49,61 +49,61 @@ import imgSrc1 from '../../src/assets/Images/dashboard/HYD.webp';
 import { FaPlay,FaArrowDown,FaHeart,FaPause } from "react-icons/fa";
 import { HiEllipsisVertical } from "react-icons/hi2";
 
-const cardData = [
-  {
-    id: 1,
-    imgSrc:imgSrc1,
-    trackTime: '00:17',
-    trackName: 'Hi-Tech Cybernetic Device',
-    artist: 'Art of Sound',
-    category: 'Futuristic Sounds',
-    price: 3,
-    trackBPM: 120,
-    cardIcon: card,
-    audioSrc:audio,
-  },
-  {
-      id: 2,
-    imgSrc:imgSrc1,
-    trackTime: '00:17',
-    trackName: 'Hi-Tech Cybernetic Device',
-    artist: 'Art of Sound',
-    category: 'Futuristic Sounds',
-    price: 3,
-    trackBPM: 120,
-    cardIcon: card,
-    audioSrc:audio,
-    },
-    {
-      id: 3,
-      imgSrc:imgSrc1,
-      trackTime: '00:17',
-      trackName: 'Hi-Tech Cybernetic Device',
-      artist: 'Art of Sound',
-      category: 'Futuristic Sounds',
-      price: 3,
-      trackBPM: 120,
-      cardIcon: card,
-      audioSrc:audio,
-    },
-    {
-      id: 4,
-      imgSrc:imgSrc1,
-      trackTime: '00:17',
-      trackName: 'Hi-Tech Cybernetic Device',
-      artist: 'Art of Sound',
-      category: 'Futuristic Sounds',
-      price: 3,
-      trackBPM: 120,
-      cardIcon: card,
-      audioSrc:audio,
-    },
+// const cardData = [
+//   {
+//     id: 1,
+//     imgSrc:imgSrc1,
+//     trackTime: '00:17',
+//     trackName: 'Hi-Tech Cybernetic Device',
+//     artist: 'Art of Sound',
+//     category: 'Futuristic Sounds',
+//     price: 3,
+//     trackBPM: 120,
+//     cardIcon: card,
+//     audioSrc:audio,
+//   },
+//   {
+//       id: 2,
+//     imgSrc:imgSrc1,
+//     trackTime: '00:17',
+//     trackName: 'Hi-Tech Cybernetic Device',
+//     artist: 'Art of Sound',
+//     category: 'Futuristic Sounds',
+//     price: 3,
+//     trackBPM: 120,
+//     cardIcon: card,
+//     audioSrc:audio,
+//     },
+//     {
+//       id: 3,
+//       imgSrc:imgSrc1,
+//       trackTime: '00:17',
+//       trackName: 'Hi-Tech Cybernetic Device',
+//       artist: 'Art of Sound',
+//       category: 'Futuristic Sounds',
+//       price: 3,
+//       trackBPM: 120,
+//       cardIcon: card,
+//       audioSrc:audio,
+//     },
+//     {
+//       id: 4,
+//       imgSrc:imgSrc1,
+//       trackTime: '00:17',
+//       trackName: 'Hi-Tech Cybernetic Device',
+//       artist: 'Art of Sound',
+//       category: 'Futuristic Sounds',
+//       price: 3,
+//       trackBPM: 120,
+//       cardIcon: card,
+//       audioSrc:audio,
+//     },
  
   
     
   
-  // Add more data objects here if needed
-];
+//   // Add more data objects here if needed
+// ];
 // const testimonialData = [
 //     {
 //       id: 1,
@@ -465,6 +465,8 @@ const [currentIndex, setCurrentIndex] = useState(0);
 const [buttonsPerPage, setButtonsPerPage] = useState(6); // Default number of visible buttons
 const { startTimer } = useTimer(); 
 const [showTimer, setShowTimer] = useState(false);
+const [cardData, setCardData] = useState([]);
+
 // useEffect(() => {
 //   if (!isAuthenticated) {
 //     navigate("/login"); // Redirect to login if not authenticated
@@ -523,6 +525,7 @@ const fetchData = async () => {
     if (data.response === "success") {
       setVideoData(data.data);
       setImageData(data.data);
+      setCardData(data.data)
       setCartCount(data.cart_count);
       localStorage.setItem("cart_count", data.cart_count);
     }
@@ -815,11 +818,11 @@ useEffect(() => {
   const audioRefs = useRef({}); // Store audio elements by card ID
   const [remainingTime, setRemainingTime] = useState({}); // Store remaining time for each track
 
-  const togglePlay = (cardId) => {
-    const currentAudio = audioRefs.current[cardId];
+  const togglePlay = (id) => {
+    const currentAudio = audioRefs.current[id];
 
     // Pause any currently playing audio
-    if (isPlaying1 && isPlaying1 !== cardId) {
+    if (isPlaying1 && isPlaying1 !== id) {
       audioRefs.current[isPlaying1].pause();
       audioRefs.current[isPlaying1].currentTime = 0; // Reset the previous audio
       setProgress((prev) => ({ ...prev, [isPlaying1]: 0 })); // Reset progress
@@ -828,30 +831,30 @@ useEffect(() => {
     }
 
     // Toggle play/pause for the selected audio
-    if (isPlaying1 === cardId) {
+    if (isPlaying1 === id) {
       currentAudio.pause();
       setIsPlaying1(null);
     } else {
       currentAudio.play();
-      setIsPlaying1(cardId);
+      setIsPlaying1(id);
     }
   };
 
-  const handleTimeUpdate = (cardId) => {
-    const currentAudio = audioRefs.current[cardId];
+  const handleTimeUpdate = (id) => {
+    const currentAudio = audioRefs.current[id];
     if (currentAudio) {
       const currentTime = currentAudio.currentTime;
       const duration = currentAudio.duration || 0;
       setProgress((prev) => ({
         ...prev,
-        [cardId]: (currentTime / duration) * 100,
+        [id]: (currentTime / duration) * 100,
       }));
 
       // Calculate remaining time
       const remaining = duration - currentTime;
       setRemainingTime((prev) => ({
         ...prev,
-        [cardId]: remaining > 0 ? formatTime(remaining) : '00:00',
+        [id]: remaining > 0 ? formatTime(remaining) : '00:00',
       }));
     }
   };
@@ -861,8 +864,8 @@ useEffect(() => {
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   };
   // Seek audio on click
-  const handleSeek = (cardId, e) => {
-    const currentAudio = audioRefs.current[cardId];
+  const handleSeek = (id, e) => {
+    const currentAudio = audioRefs.current[id];
     const progressBar = e.target;
     const newTime =
       (e.clientX - progressBar.getBoundingClientRect().left) /
@@ -872,18 +875,18 @@ useEffect(() => {
     }
   };
 
-  const updateProgress = (cardId) => {
-    const audio = audioRefs.current[cardId];
+  const updateProgress = (id) => {
+    const audio = audioRefs.current[id];
     const progressPercentage = (audio.currentTime / audio.duration) * 100 || 0;
-    setProgress((prev) => ({ ...prev, [cardId]: progressPercentage }));
+    setProgress((prev) => ({ ...prev, [id]: progressPercentage }));
   };
   return (
     <div>
    <div className=" relative">
     <Landing/>
     <ToastContainer />
-    <div className="p-[20px] bg-white">
    <Filters/>
+    <div className="px-[20px] bg-white relative">
       {/* Button to toggle the sidebar */}
       
 
@@ -931,7 +934,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
-   
+   <div className=" fixed z-10 w-full  top-[130px] bg-white">
 <div className="flex w-full items-center pr-[20px]">
       {/* Audio Tab */}
     
@@ -961,7 +964,8 @@ useEffect(() => {
         <h1 className="text-[18px]">Audio</h1>
       </div>
     </div>
-
+    </div>
+    <div className=" relative top-[160px]">
     <div className="flex  items-center my-4 ">
    
 
@@ -1147,7 +1151,7 @@ imageData
        <img
             src={imageItem.Image_link}
             alt={imageItem.content_title || "Image not available"}
-            className="w-full h-60 object-cover"
+            className="w-full h-60 "
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = "path-to-fallback-image.jpg"; // Add a fallback image
@@ -1239,21 +1243,29 @@ imageData
 )}
    {activeTab ==='Audio' && (
    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
-{cardData.map((card) => (
+{cardData .filter((card) => 
+      card.content_type === "Audio"  &&
+      card.sold_flag === false && 
+      card.purchased_flag === false 
+
+  ) .map((card) => (
       <div key={card.id}  className="w-full max-w-sm bg-white rounded-lg shadow-md overflow-hidden">
         <div className="flex flex-col p-4">
           <div className="flex items-center gap-2">
           <div className="relative ">
-            <img
+            {/* <img
               src={card.imgSrc}
               alt="Album cover"
               layout="fill"
             
               className="w-16 h-12 rounded-md object-cover"
-            />
+            /> */}
+             <div className="w-16 h-12 rounded-md bg-blue-500 text-white flex items-center justify-center text-lg font-bold">
+            {card.uploaded_by.charAt(0)}
+          </div>
               </div>
-            <div onClick={() => togglePlay(card.id)} className="">
-            {isPlaying1 === card.id ? (
+            <div onClick={() => togglePlay(card.content_id)} className="">
+            {isPlaying1 === card.content_id ? (
                   <FaPause className="w-4 h-4 text-black" />
                 ) : (
                   <FaPlay className="w-4 h-4 text-black" />
@@ -1261,20 +1273,24 @@ imageData
             </div>
             <div
                 className="w-[60%] bg-gray-200 rounded-full h-1.5 cursor-pointer"
-                onClick={(e) => handleSeek(card.id, e)}
+                onClick={(e) => handleSeek(card.content_id, e)}
               >
                 <div
                   className="bg-blue-500 h-1.5 rounded-full"
                   style={{
-                    width: `${progress[card.id] || 0}%`,
+                    width: `${progress[card.content_id] || 0}%`,
                   }}
                 ></div>
           </div>
-          <span className="text-sm text-gray-500">{remainingTime[card.id] || card.trackTime}</span>
+          <span className="text-sm text-gray-500">{remainingTime[card.content_id] || '00:00'}</span>
 
 
           </div>
-          <div className="flex justify-end gap-[5px] mb-2 items-center space-x-2">
+          <div>
+          <h2 className="text-lg font-semibold my-1">{card.content_title}</h2>
+
+          </div>
+          {/* <div className="flex justify-end gap-[5px] mb-2 items-center space-x-2">
             <div className="flex justify-center items-center">
               <p>Tracks 1 BPM <span>--</span></p>
             </div>
@@ -1284,11 +1300,11 @@ imageData
             <div className="w-[2px] bg-gray-500 h-[35px]"/>
             <FaHeart className="w-6 h-6 text-gray-400" />
 
-          </div>
+          </div> */}
 
           <div className="flex-grow mb-3">
-            <h2 className="text-lg font-semibold">{card.trackName}</h2>
-            <p className="text-sm text-gray-600"> {card.artist} {card.category}</p>
+            <h2 className="text-sm text-gray-600 font-normal line-clamp-2 mb-1">{card.content_description}</h2>
+            <p className="text-sm "> {card.uploaded_by}</p>
           </div>
           <div className="w-[100%] bg-gray-500 h-[2px]"/>
 
@@ -1317,12 +1333,12 @@ imageData
           </div>
         </div>
         <audio
-            ref={(el) => (audioRefs.current[card.id] = el)}
-            src={card.audioSrc}
-            onTimeUpdate={() => handleTimeUpdate(card.id)} // Update progress on time update
+            ref={(el) => (audioRefs.current[card.content_id] = el)}
+            src={card.Audio_link}
+            onTimeUpdate={() => handleTimeUpdate(card.content_id)} // Update progress on time update
             onEnded={() => {
               setIsPlaying(null); // Reset playing state when audio ends
-              setProgress((prev) => ({ ...prev, [card.id]: 0 })); // Reset progress
+              setProgress((prev) => ({ ...prev, [card.content_id]: 0 })); // Reset progress
             }}
           />
       </div>
@@ -1331,7 +1347,7 @@ imageData
    )}
 {showCartNotification && (
   <div
-    className="fixed right-0 top-0 transition-transform duration-500 transform translate-x-0 shadow-xl p-4 bg-white lg:w-[25%]"
+    className="fixed right-0 top-0 transition-transform duration-500 transform translate-x-0 shadow-xl p-4 bg-white lg:w-[25%] z-50"
     style={{ transform: showCartNotification ? 'translateX(0)' : 'translateX(100%)' }} // Sliding effect
   >
     <div className="flex items-center gap-[5px]">
@@ -1382,7 +1398,7 @@ imageData
       {/* <div className="bg-yellow-400 rounded-2xl flex justify-center">
         <button className="text-black p-2">  Proceed to Buy ({cartCount} item{cartCount !== 1 ? 's' : ''})</button>
       </div> */}
-      <div className="bg-white border-[1px] border-black rounded-2xl flex justify-center">
+      <div onClick={handlecart} className="bg-white border-[1px] border-black rounded-2xl flex justify-center">
         <button className="text-black p-2" onClick={handlecart}>Go to Cart</button>
       </div>
     </div>
@@ -1410,7 +1426,7 @@ imageData
   </div>
 </div> */}
 
-
+</div>
    </div>
    </div>
     </div>

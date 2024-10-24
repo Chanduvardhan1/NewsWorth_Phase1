@@ -6,7 +6,7 @@ import Landing from "../landing/landing";
 import { Transition } from "@headlessui/react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import x from "../../src/assets/Images/dashboard/cross-button.png"
 import facebook from "../../src/assets/Images/footer/facebook-app-symbol.png"
 // import Footer from "../footer/footer";
 import { useNavigate } from 'react-router-dom';
@@ -256,7 +256,7 @@ const [timeLeft, setTimeLeft] = useState(10 * 60); // 10 minutes in seconds
     <Landing/>
     <ToastContainer />
 
-    <div className="p-[20px] bg-white">
+    <div className="p-[20px] bg-white relative top-[65px]">
      
    
 
@@ -436,6 +436,7 @@ const [timeLeft, setTimeLeft] = useState(10 * 60); // 10 minutes in seconds
 
    </div>
    </div>
+   
     </div>
   );
 };
