@@ -108,7 +108,8 @@ const { login } =  useContext(AuthContext);
         const userId = data.data[0].user_id; // Get the user_id from the response
         const userName = data.data[0].user_name;
         const categoryname= data.data[0].category_name;
-        console.log('Category Name from API:', categoryname); // Debug line
+        const usertype= data.data[0].user_type;
+        // console.log('Category Name from API:', categoryname); // Debug line
 
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("userId", userId);
@@ -117,7 +118,9 @@ const { login } =  useContext(AuthContext);
         localStorage.setItem('categoryName', categoryname); // Setting value
         const storedCategoryName = localStorage.getItem('categoryName'); // Retrieving value
         console.log('Updated Category Name:', storedCategoryName); // Verify
-        
+        localStorage.setItem('usertype', usertype); // Setting value
+        const storedusertype = localStorage.getItem('usertype'); // Retrieving value
+        console.log('Updated user_type Name:', storedusertype);
   
         login(accessToken);
         navigate('/dashboard', { state: { user_id: userId,user_name:userName } });

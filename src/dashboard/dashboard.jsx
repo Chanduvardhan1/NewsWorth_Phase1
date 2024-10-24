@@ -669,6 +669,7 @@ useEffect(() => {
     }));
   };
 
+  
   const handleAddToCart = async (contentId, contentLink, finalprice) => {
     try {
       const response = await fetch(`${URL}/add_to_cart`, {
@@ -712,6 +713,9 @@ useEffect(() => {
       // Handle known failure cases (content already in cart)
       if (data.response_message === 'Content already added to cart.') {
         toast.error('This content is already in your cart.');
+        return;
+      }else if (data.response === `fail` && data.response_message === `The content you're trying to add is locked at the moment. Please try again later.`){
+        toast.error(`The content you're trying to add is locked at the moment. Please try again later.`);
         return;
       }
   
@@ -1127,24 +1131,36 @@ useEffect(() => {
         ) : (
 imageData
     .filter((imageItem) => 
-    !imageItem.cart_flag && 
-    !imageItem.purchased_flag && // Exclude purchased videos
-    !imageItem.sold_flag) // Filter to show only images
+      imageItem.content_type === "Image"  &&
+    imageItem.sold_flag === false && 
+      imageItem.purchased_flag === false 
+
+  ) // Filter to show only images
     .map((imageItem) => {
+      // console.log("Image Link:", imageItem.Image_link); 
+      // console.log("Image :",imageItem); // Check the structure of imageItem in the console
+
    return (
-     <div key={imageItem.id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">
+     <div key={imageItem.content_id} className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-white">
        {/* Image Section */}
        <div className="relative group">
-         <img
-           src={imageItem.Image_link}
-           alt={imageItem.title}
-           className="w-full h-60  group-hover:opacity-50 opacity-90 transition-opacity duration-300"
-           onClick={() => handleImagesClick(imageItem)}
-         />
+       <img
+            src={imageItem.Image_link}
+            alt={imageItem.content_title || "Image not available"}
+            className="w-full h-60 object-cover"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "path-to-fallback-image.jpg"; // Add a fallback image
+              console.log(`Error loading image: ${imageItem.Image_link}`);
+            }}
+            onClick={() => handleImagesClick(imageItem)}
+          />
+       
   <div onClick={() => handleImagesClick(imageItem)} className="absolute top-2 right-2 ">
    <img onClick={() => handleImagesClick(imageItem)} src={expanding} className="w-[20px] h-[20px] text-white group-hover:text-black transition-all duration-300 transform group-hover:scale-125"
  alt="" />
   </div>
+  
          {/* Image Duration Overlay or Other Overlay Info */}
          {/* <div className="absolute bottom-0 right-0 bg-black bg-opacity-75 text-white text-xs px-2 py-1 m-1 rounded">
            {imageItem.overlayText || 'Overlay Text'}
