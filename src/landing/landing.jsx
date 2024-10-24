@@ -253,12 +253,12 @@ const landing = () => {
   </p>
 </div>
 {timeLeft !== null && (
-        <p>Time Left: {formatTime(timeLeft)}</p>
+        <p className="text-red-500 text-[12px]">Time Left: {formatTime(timeLeft)}</p>
       )}  </div>
     </div>
 </div>
 {isDropdownOpen && (
-        <div     ref={dropdownRef} className=" w-[16%] text-[14px] inline-block text-left bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none absolute z-10 right-[0px] top-[70px]">
+        <div ref={dropdownRef} className=" w-[16%] text-[14px] inline-block text-left bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none absolute z-10 right-[0px] top-[70px]">
           <div>
             <button className="flex  items-center w-full px-4 py-2 text-sm font-medium text-gray-700">
               <img

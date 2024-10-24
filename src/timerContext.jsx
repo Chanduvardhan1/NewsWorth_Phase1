@@ -9,24 +9,47 @@ export const useTimer = () => useContext(TimerContext);
 
 export const TimerProvider = ({ children }) => {
   const [timeLeft, setTimeLeft] = useState(null); // Store the remaining time
-
   useEffect(() => {
     let timer;
-
+  
     if (timeLeft > 0) {
       // Decrease timer every second
       timer = setInterval(() => {
         setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
       }, 1000);
+  
+      // Show a warning message when timeLeft is 30 seconds
+      if (timeLeft === 60) {
+        toast.warn("Hurry up! Only 1 mint left.");
+
+      }
     } else if (timeLeft === 0) {
       // Handle timer expiration logic (redirect or alert)
       toast.error("Time is up! Redirecting to the dashboard.");
       window.location.href = "/dashboard"; // Redirect to dashboard
     }
-
+  
     // Cleanup the timer
     return () => clearInterval(timer);
   }, [timeLeft]);
+  
+//   useEffect(() => {
+//     let timer;
+
+//     if (timeLeft > 0) {
+//       // Decrease timer every second
+//       timer = setInterval(() => {
+//         setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+//       }, 1000);
+//     } else if (timeLeft === 0) {
+//       // Handle timer expiration logic (redirect or alert)
+//       toast.error("Time is up! Redirecting to the dashboard.");
+//       window.location.href = "/dashboard"; // Redirect to dashboard
+//     }
+
+//     // Cleanup the timer
+//     return () => clearInterval(timer);
+//   }, [timeLeft]);
 
   const startTimer = () => setTimeLeft(10 * 60); // Start 10-minute timer
 

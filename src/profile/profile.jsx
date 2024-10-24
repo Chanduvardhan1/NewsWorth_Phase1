@@ -101,8 +101,22 @@ const [gstnumber, setgstnumber] = useState('');
 
 // localStorage.setItem('categoryName', 'Newsworth Creator');
 // console.log(localStorage.getItem('categoryName')); // Should log: Newsworth Creator
+const [categoryName, setCategoryName] = useState('Unknown');
+const [userName, setUserName] = useState('Unknown');
 
+useEffect(() => {
+  const storedCategoryName = localStorage.getItem('categoryName') || 'Unknown';
+  console.log('Retrieved Category Name:', storedCategoryName); // Debugging
 
+  setCategoryName(storedCategoryName); // Update state with the latest value
+}, []);
+
+useEffect(() => {
+  const storedusertype = localStorage.getItem('usertype') || 'Unknown';
+  console.log('Retrieved UserName Name:', storedusertype); // Debugging
+
+  setUserName(storedusertype); // Update state with the latest value
+}, []);
 // my orders
 const [shoppingItems2, setShoppingItems2] = useState([]); // Ensure it's initialized as an empty array
 
@@ -176,14 +190,6 @@ const [searchParams] = useSearchParams();
       };
 // my orders
 
-const [categoryName, setCategoryName] = useState('Unknown');
-
-useEffect(() => {
-  const storedCategoryName = localStorage.getItem('categoryName') || 'Unknown';
-  console.log('Retrieved Category Name:', storedCategoryName); // Debugging
-
-  setCategoryName(storedCategoryName); // Update state with the latest value
-}, []); // Runs once on component mount
 
 const handleChangePassword = async (event) => {
   event.preventDefault(); // Prevent page refresh
@@ -386,7 +392,6 @@ const handleSaveClick = async () => {
     location_name: selectedCity,
     district_name: selectedDistrict,
     state_name: state,
-    user_address_id: 0,
     org_name: orgname,
     org_number: orgnumber,
     gst_number: gstnumber
@@ -689,12 +694,22 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
       ) : error ? (
         <p>{error}</p>
       ) : (
+        <div className="relative w-full h-full">
         <img
-        src={photo} 
+          src={photo}
           alt="Profile"
           onClick={openModal}
           className="w-full h-full rounded-[50px]"
         />
+        <div 
+          className="absolute bottom-0 right-2 bg-gray-300 p-1 rounded-full cursor-pointer"
+          onClick={openModal}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+  </svg>
+        </div>
+      </div>
       )}
 
       {/* Hidden file input for selecting image */}
@@ -793,7 +808,6 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
       My Content
     </div>
   )}
-
   <div
     className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2`}
     onClick={() => setUserType1('My orders')}
@@ -1038,7 +1052,7 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
               <p className=" text-gray-800">Data of Birth</p>
               
             </div>
-            <div className="flex gap-[50px]">
+            <div className="flex justify-between">
               <p className=" text-gray-500 ">{dateofbirth}</p>
               <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1053,7 +1067,7 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
 )}
     {categoryName === "Newsworth Buyer" && (
 
-        <div className="space-y-1  ">
+        <div className="  ">
           <div>
           <h2 className="  text-gray-800">Name</h2>
           <div className="flex gap-[50px] mb-5 items-center">
@@ -1251,7 +1265,7 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
               <p className=" text-gray-800">Data of Birth</p>
               
             </div>
-            <div className="flex gap-[50px]">
+            <div className="flex justify-between">
               <p className=" text-gray-500 ">{dateofbirth}</p>
               <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1285,7 +1299,7 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
               <p className=" text-gray-800">Address Line 2</p>
               
             </div>
-            <div className="flex gap-[50px]">
+            <div className="flex justify-between">
               <p className=" text-gray-500 ">{useraddressline1},{useraddressline2}</p>
               <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1589,7 +1603,7 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
               <p className=" text-gray-800">Address Line 2</p>
               
             </div>
-            <div className="flex gap-[50px]">
+            <div className="flex justify-between">
               <p className=" text-gray-500 ">{useraddressline1},{useraddressline2}</p>
               <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
