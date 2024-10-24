@@ -1020,9 +1020,9 @@ useEffect(() => {
 ) : (
   videoData
     .filter((videoItem) =>
-    !videoItem.cart_flag && //
-    !videoItem.purchased_flag && // Exclude purchased videos
-    !videoItem.sold_flag)
+      videoItem.content_type === "Video"  &&
+    videoItem.sold_flag === false && 
+    videoItem.purchased_flag === false )
     .map((videoItem) => {
       const videoRef = React.createRef();
       return (
