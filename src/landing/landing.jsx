@@ -62,7 +62,7 @@ const landing = () => {
       if (data.response === "fail") {
         navigate('/search', { state: {noDataMessage: data.response_message } });
       } else {
-        navigate('/search', { state: { videoData: data.response_message, ImageData: data.response_message } });
+        navigate('/search', { state: { videoData: data.response_message, ImageData: data.response_message, cardData: data.response_message } });
       }
     } catch (error) {
       console.error('Error during search:', error);
