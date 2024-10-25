@@ -25,6 +25,7 @@ import shareImg from '../../src/assets/Images/dashboard/share.png';
 import moreImg from '../../src/assets/Images/dashboard/more.png';
 import likeImg from '../../src/assets/Images/dashboard/like.png';
 import Filters from "../filters/filters";
+import x from "../../src/assets/Images/dashboard/cross-button.png"
 
 import videoSrc from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4';
 import videoSrc1 from '../../src/assets/Images/home/10_30 PM _ 12th September 2024 _ ETV News _ News Headlines _ ETV Andhra Pradesh.mp4';
@@ -469,6 +470,8 @@ const [buttonsPerPage, setButtonsPerPage] = useState(6); // Default number of vi
 const { startTimer } = useTimer(); 
 const [showTimer, setShowTimer] = useState(false);
 const [cardData, setCardData] = useState([]);
+const [showPopup1, setShowPopup1] = useState(false);
+const [error, seterror] = useState('');
 
 // useEffect(() => {
 //   if (!isAuthenticated) {
@@ -718,21 +721,30 @@ useEffect(() => {
   
       // Handle known failure cases (content already in cart)
       if (data.response_message === 'Content already added to cart.') {
-        toast.error('This content is already in your cart.');
+        // toast.error('This content is already in your cart.');
+        setShowPopup1(true)
+        seterror(data.response_message)
         return;
       }else if (data.response === `fail` && data.response_message === `The content you're trying to add is locked at the moment. Please try again later.`){
-        toast.error(`The content you're trying to add is locked at the moment. Please try again later.`);
+        setShowPopup1(true)
+        seterror(data.response_message)
+        // toast.error(`The content you're trying to add is locked at the moment. Please try again later.`);
         return;
       }
   
       // If none of the above conditions match, log and show a generic error
       console.error('Unexpected response:', data);
-      toast.error('Failed to add content to cart.');
-  
+      // toast.error('Failed to add content to cart.');
+      setShowPopup1(true)
+      seterror('Failed to add content to cart.')
+      return;
     } catch (error) {
       // Handle any network or other request-related errors
       console.error('Request error:', error);
-      toast.error('An error occurred while adding to the cart.');
+      setShowPopup1(true)
+      seterror('An error occurred while adding to the cart.')
+      return;
+      // toast.error('An error occurred while adding to the cart.');
     }
   };
   const fetchCartItems = async () => {
@@ -1408,7 +1420,23 @@ imageData
     </div>
   </div>
 )}
-
+{showPopup1 && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+        <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+          {/* <div  onClick={() => setShowPopup1(false)} className="flex justify-end items-end">
+          <img  onClick={() => setShowPopup1(false)} src={x} alt="" className="w-[25px] h-[25px]" />
+          </div> */}
+          {/* <h2 className="text-2xl font-semibold mb-4 text-red-600">Hurry up!</h2> */}
+          <p className="text-lg">{error}</p>
+          <button 
+          onClick={() => setShowPopup1(false)}  
+            className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg"
+          >
+            Close
+          </button>
+        </div>
+      </div> 
+      )}
 {/* <div className="flex justify-between shadow-xl p-4 lg:w-[50%]">
   <div className="flex justify-center items-center gap-[5px]">
     <img src={Image1} alt="" className=" w-[100px] h-[100px]" />

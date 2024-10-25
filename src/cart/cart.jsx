@@ -82,6 +82,28 @@ const [cartCount, setCartCount] = useState(0); // State for cart count
  
 //timer
 const [timeLeft, setTimeLeft] = useState(10 * 60); // 10 minutes in seconds
+const [address, setAddress] = useState({});
+
+useEffect(() => {
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords;
+      console.log("Latitude:", latitude, "Longitude:", longitude);
+
+      // const url = https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude};
+
+      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setAddress(data.address);
+        })
+        .catch((error) => console.error("Error fetching address:", error));
+    },
+    (error) => {
+      console.error("Error getting geolocation:", error);
+    }
+  );
+}, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -384,6 +406,14 @@ const [timeLeft, setTimeLeft] = useState(10 * 60); // 10 minutes in seconds
 </div>
 </div>
 </div>
+{/* <div>
+      <p>Location Name: {address.city || address.town || address.village || address.suburb || 'Not available'}</p>
+      <p>Postal Name: {address.city || address.town || address.county || 'Not available'}</p>
+      <p>Pincode: {address.postcode || 'Not available'}</p>
+      <p>District: {address.state_district || 'Not available'}</p>
+      <p>State: {address.state || 'Not available'}</p>
+      <p>Country: {address.country || 'Not available'}</p>
+    </div> */}
 </div>
 {/* <div className="grid grid-cols-1 mt-6">
   <div className="w-full max-w-full h-[200px] rounded overflow-hidden shadow-lg bg-white flex">
