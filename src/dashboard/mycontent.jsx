@@ -26,6 +26,7 @@ import moreImg from '../../src/assets/Images/dashboard/more.png';
 import likeImg from '../../src/assets/Images/dashboard/like.png';
 import Filters from "../filters/filters";
 import x from "../../src/assets/Images/dashboard/cross-button.png"
+import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
 import videoSrc from '../../src/assets/Images/home/YS Jagan Takes Oath as MLA _ AP Assembly Sessions 2024 @SakshiTV.mp4';
 import videoSrc1 from '../../src/assets/Images/home/10_30 PM _ 12th September 2024 _ ETV News _ News Headlines _ ETV Andhra Pradesh.mp4';
@@ -78,6 +79,66 @@ const [showTimer, setShowTimer] = useState(false);
 const [cardData, setCardData] = useState([]);
 const [showPopup1, setShowPopup1] = useState(false);
 const [error, seterror] = useState('');
+const [newPrice, setNewPrice] = useState('');
+const [newdiscount, setNewdiscount] = useState('');
+const [pricingshow, setPricingshow] = useState(false);
+const [selectedContentId, setSelectedContentId] = useState(null);
+
+const [errorprice, seterrorprice] = useState('');
+
+
+// pricing 
+const handlePricingClick = (contentId) => {
+    setSelectedContentId(contentId);
+    setPricingshow(true);
+  };
+  const updateCancel = () => {
+    setNewdiscount('');
+    setNewPrice('');
+  }
+  const handlex = () =>{
+    setPricingshow(false);
+  
+  }
+  
+  
+  const updatePriceAndDiscount = async () => {
+    try {
+      const response = await fetch(`${URL}/update-price-discount`, {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          content_id: selectedContentId,
+          new_price: newPrice,
+          new_discount: newdiscount,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+  
+      if (data.response === "success") {
+        console.log('Price and discount updated:', data);
+        setPricingshow(false); 
+        navigate(0);// Close the modal on success
+      } else if (data.response === "fail") {
+        seterrorprice(data.response_message || 'Failed to update price and discount.');
+      }
+    } catch (error) {
+      console.error('Error updating price and discount:', error);
+      seterrorprice('An unexpected error occurred. Please try again later.');
+    }
+  };
+  
+  // priceing end
 
 
 // Add any dependencies if needed
@@ -559,8 +620,9 @@ useEffect(() => {
                {/* Video Info */}
                <div className="p-4 flex justify-between items-center relative">
                  <img src={video} alt="" className="w-[25px] h-[25px]" />
-                 <div className="text-lg" onClick={() => handleVideoClick(videoItem)}>
-                   <p className="font-bold text-blue-600">
+                 <div className="text-lg">
+                   <p className="font-bold text-blue-600"
+                    onClick={() => handlePricingClick(videoItem.content_id)}>
                      ₹ {videoItem.price}{' '}
                      <span className="text-sm text-gray-500">
                        <span className="line-through text-sm text-gray-500">
@@ -794,6 +856,91 @@ useEffect(() => {
 
  </div>
    )}
+   {pricingshow && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+        <div className="bg-white p-5 rounded-lg shadow-lg text-center">
+              <div  className="flex justify-end items-end">
+          <img  onClick={handlex}  src={x} alt="" className="w-[25px] h-[25px] cursor-pointer" />
+          </div>
+          <h1 className=" text-[18px] font-bold mb-2">Pricing</h1>
+        <div className="relative flex flex-col gap-[10px]">
+   
+       <TextField
+id="newprice" 
+label="New Price" 
+// type={showPassword ? "text" : "password"}
+variant="outlined"
+required
+className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+
+value={newPrice}
+onChange={(e) => setNewPrice(e.target.value)}
+InputLabelProps={{
+ style: {
+   color: '#666666', // Reduced label color
+   fontSize: '14px', // Reduced label font size
+ },
+}}
+InputProps={{
+   style: {
+  
+     fontSize: '14px', 
+     height: "50px",
+     borderRadius: "10px",
+   },
+  
+   autoComplete: "off",
+ }} 
+ sx={{
+   // Disable autofill background
+   '& input:-webkit-autofill': {
+     WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+     WebkitTextFillColor: '#000', // Text color when autofilled
+   },
+ }} />
+  <TextField
+id="New Discount" 
+label="New Discount" 
+variant="outlined"
+// type={showPassword ? "text" : "password"}
+required
+className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+value={newdiscount}
+onChange={(e) => setNewdiscount(e.target.value)}
+InputLabelProps={{
+ style: {
+   color: '#666666', // Reduced label color
+   fontSize: '14px', // Reduced label font size
+ },
+}}
+InputProps={{
+   style: {
+     fontSize: '14px',
+     height: "50px",
+     borderRadius: "10px",
+   },
+  
+   autoComplete: "off",
+ }} 
+ sx={{
+   '& input:-webkit-autofill': {
+     WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+     WebkitTextFillColor: '#000', // Text color when autofilled
+   },
+ }} />
+       </div>
+       <div className="flex justify-end mt-5 space-x-4">
+       <button onClick={updateCancel}  type="button" className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full">
+         Cancel
+       </button>
+       <button onClick={updatePriceAndDiscount} type="submit" className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-red-700 rounded-full">
+         Save
+       </button>
+     </div>
+     {errorprice && <p className=" text-red-500">{errorprice}</p>}
+        </div>
+      </div> 
+      )}
   </div> 
    </div>
    </div>
