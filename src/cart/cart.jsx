@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Landing from "../landing/landing";
 import { Transition } from "@headlessui/react";
 import { toast, ToastContainer } from "react-toastify";
+import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+
 import "react-toastify/dist/ReactToastify.css";
 import x from "../../src/assets/Images/dashboard/cross-button.png"
 import facebook from "../../src/assets/Images/footer/facebook-app-symbol.png"
@@ -83,6 +85,10 @@ const [cartCount, setCartCount] = useState(0); // State for cart count
 //timer
 const [timeLeft, setTimeLeft] = useState(10 * 60); // 10 minutes in seconds
 const [address, setAddress] = useState({});
+
+
+
+
 
 useEffect(() => {
   navigator.geolocation.getCurrentPosition(
@@ -406,6 +412,7 @@ useEffect(() => {
 </div>
 </div>
 </div>
+
 {/* <div>
       <p>Location Name: {address.city || address.town || address.village || address.suburb || 'Not available'}</p>
       <p>Postal Name: {address.city || address.town || address.county || 'Not available'}</p>
