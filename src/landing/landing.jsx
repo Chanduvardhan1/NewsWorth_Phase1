@@ -1,5 +1,5 @@
 import React, { useState, useEffect ,useRef} from "react";
-import logo from "../../src/assets/Images/dashboard/NEWS WORTH FINAL.png"
+import logo from "../../src/assets/Images/dashboard/newlogo.NewsWorth.jpg"
 
 import ball from '../../src/assets/Images/landing/notification 1.png'
 import defaultPhoto from '../../src/assets/Images/landing/pic.jpg'

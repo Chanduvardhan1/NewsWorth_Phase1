@@ -8,6 +8,8 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import facebook from "../../src/assets/Images/footer/facebook-app-symbol.png"
 // import Footer from "../footer/footer";
+import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+
 import { useNavigate } from 'react-router-dom';
 import { URL } from "../url";
 import { useLocation } from 'react-router-dom';
@@ -472,6 +474,9 @@ const [showTimer, setShowTimer] = useState(false);
 const [cardData, setCardData] = useState([]);
 const [showPopup1, setShowPopup1] = useState(false);
 const [error, seterror] = useState('');
+const [newPrice, setNewPrice] = useState('');
+const [newdiscount, setNewdiscount] = useState('');
+const [pricingshow, setPricingshow] = useState(false);
 
 // useEffect(() => {
 //   if (!isAuthenticated) {
@@ -545,6 +550,35 @@ useEffect(() => {
   fetchData(); // Fetch data on component mount
 }, []); // Add any dependencies if needed
 
+// pricing 
+const updatePriceAndDiscount = async () => {
+  try {
+    const response = fetch(`${URL}/update-price-discount`, {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        content_id: 31,
+        new_price: newPrice, // Pass in the new price as a variable
+        new_discount: newdiscount
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('Price and discount updated:', data);
+  } catch (error) {
+    console.error('Error updating price and discount:', error);
+  }
+}
+// priceing end 
 const downloadContent = async (contentId) => {
   try {
     const response = await fetch(`${URL}/download-content?content_id=${contentId}`, {
@@ -1437,6 +1471,89 @@ imageData
         </div>
       </div> 
       )}
+      {pricingshow && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+        <div className="bg-white p-5 rounded-lg shadow-lg text-center">
+              <div  className="flex justify-end items-end">
+          <img   src={x} alt="" className="w-[25px] h-[25px]" />
+          </div>
+          <h1 className=" text-[18px] font-bold mb-2">Pricing</h1>
+        <div className="relative flex flex-col gap-[10px]">
+   
+       <TextField
+id="newprice" 
+label="New Price" 
+// type={showPassword ? "text" : "password"}
+variant="outlined"
+required
+className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+
+InputLabelProps={{
+ style: {
+   color: '#666666', // Reduced label color
+   fontSize: '14px', // Reduced label font size
+ },
+}}
+InputProps={{
+   style: {
+  
+     fontSize: '14px', 
+     height: "50px",
+     borderRadius: "10px",
+   },
+  
+   autoComplete: "off",
+ }} 
+ sx={{
+   // Disable autofill background
+   '& input:-webkit-autofill': {
+     WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+     WebkitTextFillColor: '#000', // Text color when autofilled
+   },
+ }} />
+  <TextField
+id="New Discount" 
+label="New Discount" 
+variant="outlined"
+// type={showPassword ? "text" : "password"}
+required
+className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
+
+
+InputLabelProps={{
+ style: {
+   color: '#666666', // Reduced label color
+   fontSize: '14px', // Reduced label font size
+ },
+}}
+InputProps={{
+   style: {
+     fontSize: '14px',
+     height: "50px",
+     borderRadius: "10px",
+   },
+  
+   autoComplete: "off",
+ }} 
+ sx={{
+   '& input:-webkit-autofill': {
+     WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+     WebkitTextFillColor: '#000', // Text color when autofilled
+   },
+ }} />
+       </div>
+       <div className="flex justify-end mt-5 space-x-4">
+       <button   type="button" className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full">
+         Cancel
+       </button>
+       <button  type="submit" className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-red-700 rounded-full">
+         Save
+       </button>
+     </div>
+        </div>
+      </div> 
+      )}
+      
 {/* <div className="flex justify-between shadow-xl p-4 lg:w-[50%]">
   <div className="flex justify-center items-center gap-[5px]">
     <img src={Image1} alt="" className=" w-[100px] h-[100px]" />

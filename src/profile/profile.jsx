@@ -221,6 +221,7 @@ const handleChangePassword = async (event) => {
       localStorage.setItem('password', newPassword); // Update the password in local storage
       setNewPassword(''); // Clear new password input
       setConfirmPassword('');
+      navigate(0)
       
     } else {
       setResponseMessage(`Error: ${data.message || 'Failed to change password'}`);
@@ -2072,6 +2073,7 @@ InputProps={{
          Save
        </button>
      </div>
+     {responseMessage && <p className="text-green-500  w-[320px]">{responseMessage}</p>}
    </form>
  </div>
       )}

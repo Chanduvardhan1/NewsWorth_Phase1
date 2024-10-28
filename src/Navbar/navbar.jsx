@@ -1,6 +1,6 @@
 import React , { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../../src/assets/Images/dashboard/NEWS WORTH FINAL.png"
+import logo from "../../src/assets/Images/dashboard/newlogo.NewsWorth.jpg"
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
