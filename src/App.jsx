@@ -44,7 +44,7 @@ function App() {
     <Route path="Navbar" element={<Navbar />} />
     <Route path="login" element={<Login />} />
     <Route path="signup" element={<Signup />} />
-    <Route path="Profile" element={<Profile />} />
+    <Route path="Profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
     <Route path="contactus" element={<Contactus />} />
     <Route path="resetpassword" element={<Resetpassword />} />
     <Route path="resetmobile" element={<Resetmobile />} />
@@ -55,13 +55,13 @@ function App() {
     <Route path="mycontent" element={<PrivateRoute><Mycontent/></PrivateRoute>} />
 
 
-    <Route path="landing" element={<Landing />} />
-    <Route path="watch" element={<Watch />} />
-    <Route path="Watchimages" element={<Watchimages />} />
+    <Route path="landing" element={<PrivateRoute><Landing /></PrivateRoute>} />
+    <Route path="watch" element={<PrivateRoute><Watch /></PrivateRoute>} />
+    <Route path="Watchimages" element={<PrivateRoute><Watchimages /></PrivateRoute>} />
 
     <Route path="footer" element={<Footer />} />
     <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-    <Route path="cart" element={<Cart />} />
+    <Route path="cart" element={<PrivateRoute><Cart /></PrivateRoute>} />
 
   </Route>
 </Routes>

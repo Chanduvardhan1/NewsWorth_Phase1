@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useRef} from "react";
+import React, { useState, useEffect ,useRef,useContext} from "react";
 import logo from "../../src/assets/Images/dashboard/newlogo.NewsWorth.jpg"
 
 import ball from '../../src/assets/Images/landing/notification 1.png'
@@ -7,7 +7,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import card from '../../src/assets/Images/dashboard/cart3.jpeg'
 import { URL } from "../url";
 import { useTimer } from "../timerContext";
-
+import { AuthContext } from "../Authcontext/AuthContext";
 const landing = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ const landing = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryName, setCategoryName] = useState('Unknown');
   const { timeLeft } = useTimer(); // Access timeLeft from context
+  const { isAuthenticated, authToken, logout } = useContext(AuthContext);
 
   const formatTime = (time) => {
     if (time === null) return "--:--";
@@ -40,14 +41,13 @@ const landing = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     
-    const token = 'YOUR_AUTHORIZATION_TOKEN_HERE';
   
     try {
       const response = await fetch(`${URL}/search_content?query=${encodeURIComponent(searchQuery)}`, {
         method: 'POST',
         headers: {
           'accept': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${authToken}`,
         },
         body: '',
       });
@@ -70,7 +70,6 @@ const landing = () => {
   };
 
   const fetchProfileImage = async () => {
-    const authToken = localStorage.getItem('authToken') || null;
 
     try {
       const response = await fetch(`${URL}/view-image?user_id=${userId}`, {
@@ -99,6 +98,10 @@ const landing = () => {
     }
   };
   useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login'); // Redirect to login if not authenticated
+      return;
+    }
     fetchProfileImage();
   }, []);
   
@@ -124,6 +127,7 @@ const landing = () => {
           localStorage.removeItem('authToken');
           localStorage.removeItem('user_id');
           localStorage.removeItem("categoryName");
+          logout();
           navigate("/login");// Redirect to login page
         } else {
           console.error('Logout failed:', data.response_message);

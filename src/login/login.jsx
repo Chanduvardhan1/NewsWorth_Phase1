@@ -45,7 +45,122 @@ const { login } =  useContext(AuthContext);
     setUserType(event.target.value);
   };
 
- 
+  // const handleLogin = async () => {
+  //   if (!email) {
+  //     setErrorMessage("Please enter your " + userType.toLowerCase());
+  //     return;
+  //   }
+  //   if (!password) {
+  //     setErrorMessage("Please enter your password");
+  //     return;
+  //   }
+  
+  //   try {
+  //     const platform = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+  //       ? "mobile"
+  //       : "Web";
+  
+  //     // Retrieve user's location
+  //     navigator.geolocation.getCurrentPosition(async (position) => {
+  //       const { latitude, longitude } = position.coords;
+  
+  //       // Store latitude and longitude in localStorage
+  //       localStorage.setItem("latitude", latitude);
+  //       localStorage.setItem("longitude", longitude);
+  
+  //       try {
+  //         // Reverse geocode to get location name
+  //         const geocodeResponse = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=YOUR_VALID_OPENCAGE_API_KEY`);
+          
+  //         if (!geocodeResponse.ok) {
+  //           throw new Error("Failed to fetch location data");
+  //         }
+  
+  //         const geocodeData = await geocodeResponse.json();
+          
+  //         // Extract location name or provide a default if not available
+  //         const locationName = geocodeData.results[0]?.formatted || "Unknown Location";
+  
+  //         // Store location name in localStorage
+  //         localStorage.setItem("locationName", locationName);
+  
+  //         // Request access token
+  //         const tokenResponse = await fetch(`${URL}/token`, {
+  //           method: 'POST',
+  //           headers: {
+  //             'Content-Type': 'application/x-www-form-urlencoded',
+  //             accept: 'application/json',
+  //           },
+  //           body: new URLSearchParams({
+  //             username: email,
+  //             password: password,
+  //           }),
+  //         });
+  
+  //         const tokenData = await tokenResponse.json();
+  //         if (!tokenResponse.ok) {
+  //           if (tokenData.detail === "Incorrect username or password") {
+  //             setErrorMessage(`Incorrect ${userType.toLowerCase()} or password. Please try again.`);
+  //           } else {
+  //             setErrorMessage("Failed to retrieve access token. Please try again.");
+  //           }
+  //           return;
+  //         }
+  
+  //         const accessToken = tokenData.access_token;
+  
+  //         // Perform login request with location data
+  //         const response = await fetch(`${URL}/login`, {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: `Bearer ${accessToken}`,
+  //           },
+  //           body: JSON.stringify({
+  //             login_option: userType,
+  //             email_or_mobile_or_user_id: email,
+  //             password: password,
+  //             platform: platform,
+  //             location: { latitude, longitude, name: locationName }, // Include location name in request
+  //           }),
+  //         });
+  
+  //         const data = await response.json();
+  
+  //         if (data.response === 'success') {
+  //           const userId = data.data[0].user_id;
+  //           const userName = data.data[0].user_name;
+  //           const categoryname = data.data[0].category_name;
+  //           const usertype = data.data[0].user_type;
+  
+  //           localStorage.setItem("accessToken", accessToken);
+  //           localStorage.setItem("userId", userId);
+  //           localStorage.setItem("userName", userName);
+  //           localStorage.setItem("password", password);
+  //           localStorage.setItem("categoryName", categoryname);
+  //           localStorage.setItem("usertype", usertype);
+  
+  //           login(accessToken);
+  //           navigate('/dashboard', { state: { user_id: userId, user_name: userName } });
+  //         } else {
+  //           setErrorMessage(data.response_message);
+  //         }
+  //       } catch (error) {
+  //         console.error('Geocode error:', error);
+  //         setErrorMessage("Failed to retrieve location data. Please try again.");
+  //       }
+  
+  //     }, (error) => {
+  //       console.error('Location error:', error);
+  //       setErrorMessage("Location access denied or unavailable.");
+  //     });
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     setErrorMessage("An error occurred. Please try again.");
+  //   }
+  // };
+  
+  
    
   const handleLogin = async () => {
     if (!email) {
@@ -56,6 +171,7 @@ const { login } =  useContext(AuthContext);
       setErrorMessage("Please enter your password");
       return;
     }
+    
     try {
       const platform = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
       ? "mobile" // If any of the identifiers are found, return 'Mobile'.

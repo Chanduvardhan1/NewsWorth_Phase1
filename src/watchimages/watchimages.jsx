@@ -253,6 +253,8 @@ const watchimages = () => {
   const [imageData1, setImageData1] = useState([]);
   const [selectedimage, setSelectedimage] = useState(null); // Store the selected video
   const { startTimer } = useTimer(); 
+  const [showPopup1, setShowPopup1] = useState(false);
+  const [error, seterror] = useState('');
 
   const handleimageClick = (video) => {
     setSelectedimage(video); // Set the selected video in state
@@ -449,6 +451,11 @@ const watchimages = () => {
   
   const handleAddToCart = async (contentId, contentLink,finalprice) => {
     try {
+      const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+      if (!authToken) {
+        navigate('/login');
+        return;
+      }
       const response = await fetch(`${URL}/add_to_cart`, {
         method: 'POST',
         headers: {
@@ -469,9 +476,16 @@ const watchimages = () => {
         startTimer();
       } else if (data.response === 'fail' && data.response_message === 'Content already added to cart.') {
         // Handle the case when the content is already in the cart
-        console.error('Content already added to cart');
-        alert('This content is already in your cart.');
-      } else {
+        setShowPopup1(true)
+        seterror(data.response_message)
+        // console.error('Content already added to cart');
+        seterror('This content is already in your cart.');
+      } else if (data.response === `fail`){
+        setShowPopup1(true)
+        seterror(data.response_message)
+        // toast.error(`The content you're trying to add is locked at the moment. Please try again later.`);
+        return;
+      }else {
         console.error('Error adding to cart:', data);
       }
     } catch (error) {
@@ -728,6 +742,23 @@ const watchimages = () => {
         );
       })}
     </div>
+    {showPopup1 && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+        <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+          {/* <div  onClick={() => setShowPopup1(false)} className="flex justify-end items-end">
+          <img  onClick={() => setShowPopup1(false)} src={x} alt="" className="w-[25px] h-[25px]" />
+          </div> */}
+          {/* <h2 className="text-2xl font-semibold mb-4 text-red-600">Hurry up!</h2> */}
+          <p className="text-lg">{error}</p>
+          <button 
+          onClick={() => setShowPopup1(false)}  
+            className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg"
+          >
+            Close
+          </button>
+        </div>
+      </div> 
+      )}
     </div>
     </>
   

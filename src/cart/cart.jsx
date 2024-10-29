@@ -81,14 +81,58 @@ const userId = location.state?.user_id || localStorage.getItem("userId");
 const [cartSummary, setCartSummary] = useState({});
 const [isLoading, setIsLoading] = useState(true);
 const [cartCount, setCartCount] = useState(0); // State for cart count
- 
+const [showPopup1, setShowPopup1] = useState(false);
+const [error, seterror] = useState('');
 //timer
 const [timeLeft, setTimeLeft] = useState(10 * 60); // 10 minutes in seconds
 const [address, setAddress] = useState({});
 
+// const [location1, setLocation1] = useState(null);
+//   const [error, setError] = useState(null);
 
+// useEffect(() => {
+//   const getLocation = () => {
+//     if (navigator.geolocation) {
+//       navigator.geolocation.getCurrentPosition(
+//         async (position) => {
+//           const { latitude, longitude } = position.coords;
+//           await fetchLocationDetails(latitude, longitude);
+//         },
+//         (err) => {
+//           setError(err.message);
+//         }
+//       );
+//     } else {
+//       setError("Geolocation is not supported by this browser.");
+//     }
+//   };
 
+//   const fetchLocationDetails = async (latitude, longitude) => {
+//     try {
+//       const response = await fetch(`
+//         https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+//       );
+//       const data = await response.json();
+      
+//       if (data && data.address) {
+//         setLocation1({
+//           name: data.display_name,
+//           city: data.address.city || data.address.town || data.address.village,
+//           district: data.address.district,
+//           state: data.address.state,
+//           country: data.address.country,
+//         });
+//         setError(null);
+//       } else {
+//         setError('No results found');
+//       }
+//     } catch (fetchError) {
+//       setError(fetchError.message);
+//     }
+//   };
 
+//   getLocation();
+// }, []);
 
 useEffect(() => {
   navigator.geolocation.getCurrentPosition(
@@ -132,44 +176,53 @@ useEffect(() => {
     const handledashboard = () => {
       navigate(`/dashboard`);
     };
-  
+    const fetchCartData = async () => {
+      try {
+        const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+        if (!authToken) {
+          console.error("No authentication token found. Please log in again.");
+          return;
+        }
+        const response = await fetch(`${URL}/view_cart?user_id=${userId}`, {
+          method: 'POST',
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+
+        const data = await response.json();
+        if (data.response === "success") {
+          // Assuming the items are stored in data.response_message
+          const items = data.response_message.flatMap(cart => cart.items);
+          setShoppingItems(items);
+          setCartSummary({
+            total_items: data.total_items,
+            total_price: data.total_price,
+            total_discount: data.total_discount,
+            total_final_price: data.total_final_price
+          }); // Store all items from all carts
+        } else {
+          console.error('Error in response:', data);
+        }
+      }  catch (error) {
+        console.error('Error fetching cart data:', error);
+      } finally {
+        setIsLoading(false); // Stop loading after data is fetched
+      }
+    };
     useEffect(() => {
-        // Function to fetch cart data
-        const fetchCartData = async () => {
-          try {
-            const response = await fetch(`${URL}/view_cart?user_id=${userId}`, {
-              method: 'POST',
-              headers: {
-                Accept: "application/json",
-                Authorization: `Bearer ${authToken}`,
-              },
-            });
-    
-            const data = await response.json();
-            if (data.response === "success") {
-              // Assuming the items are stored in data.response_message
-              const items = data.response_message.flatMap(cart => cart.items);
-              setShoppingItems(items);
-              setCartSummary({
-                total_items: data.total_items,
-                total_price: data.total_price,
-                total_discount: data.total_discount,
-                total_final_price: data.total_final_price
-              }); // Store all items from all carts
-            } else {
-              console.error('Error in response:', data);
-            }
-          }  catch (error) {
-            console.error('Error fetching cart data:', error);
-          } finally {
-            setIsLoading(false); // Stop loading after data is fetched
-          }
-        };
     
         fetchCartData();
       }, [authToken, URL]);
       const fetchCartItems = async () => {
         try {
+          const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+          if (!authToken) {
+            console.error("No authentication token found. Please log in again.");
+
+            return;
+          }
           const response = await fetch(
             `${URL}/total_cart_items?user_id=${userId}`,
             {
@@ -199,6 +252,12 @@ useEffect(() => {
       }, []);
       const handleRemoveItem = async (contentId) => {
         try {
+          const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+          if (!authToken) {
+            console.error("No authentication token found. Please log in again.");
+
+            return;
+          }
           const response = await fetch(`${URL}/delete_item_in_cart`, { // Replace with your actual endpoint
             method: 'POST',
             headers: {
@@ -219,7 +278,7 @@ useEffect(() => {
               prevItems.filter(item => item.content_id !== contentId)
             );
             await fetchCartItems();
-         
+            await fetchCartData();
             // console.log('Item removed successfully:', data);
           } else {
             console.error('Error removing item:', data);
@@ -229,19 +288,23 @@ useEffect(() => {
         }
       };
       const buyContent = async (contentId) => {
-        const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZHUgdmFyZGhhbiBrIiwiZXhwIjoyNTM0MDIzMDA3OTl9.opyNUhmEMOM3apDxmG4WeXC_5U4JG0S1YcRG93MmSBk';
-      
+       
         const data = {
           user_id: userId,
-          content_id: contentId,
+          content_ids: contentId,
         };
       
         try {
+          const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+          if (!authToken) {
+            console.error("No authentication token found. Please log in again.");
+            return;
+          }
           const response = await fetch(`${URL}/buy_content`, {
             method: 'POST',
             headers: {
               'accept': 'application/json',
-              'Authorization': token,
+              Authorization: `Bearer ${authToken}`,
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
@@ -257,16 +320,20 @@ useEffect(() => {
       
             // Navigate to My Orders page
             navigate('/profile?tab=my-orders'); // Use query parameters to indicate the tab
-
+            await fetchCartItems();
 
 
           } else if (result.response === 'fail' && result.response_message === 'Content has already been sold or purchased.') {
-            console.error('Purchase failed:', result.response_message);
-            toast.error(result.response_message);  // Optionally show alert to the user
+            setShowPopup1(true)
+            // seterror(data.response_message)
+            // console.error('Purchase failed:', result.response_message);
+            seterror(result.response_message);  // Optionally show alert to the user
           } else if (result.response === 'fail') {
-            toast.error(result.response_message);  // Optionally show alert to the user
+            setShowPopup1(true)
+            seterror(result.response_message);  // Optionally show alert to the user
           } else {
-            toast.error('Purchase failed:', result.response_message);
+            setShowPopup1(true)
+            seterror('Purchase failed:', result.response_message);
           }
         } catch (error) {
           console.error('Error:', error);  // Handle errors appropriately
@@ -368,7 +435,7 @@ useEffect(() => {
                 </div>
                 <div className="flex justify-end items-center mt-2 border-b">
                   <div className="flex space-x-4 mb-2">
-                  <button className="text-gray-500 text-sm hover:underline" onClick={() => buyContent(item.content_id)}>Buy</button>
+                  <button className="text-gray-500 text-sm hover:underline" onClick={() => buyContent([item.content_id])} >Buy</button>
                     <button className="text-gray-500 text-sm hover:underline" onClick={() => handleRemoveItem(item.content_id)}>Remove</button>
                   </div>
                 </div>
@@ -406,13 +473,36 @@ useEffect(() => {
 <p>Total</p>
 <p>{cartSummary.total_final_price}</p>
 </div>
-<div className=" mt-5 p-2 px-5 bg-[#0f2b9fd9] flex justify-center">
+<div
+onClick={() => {
+  const contentIds = shoppingItems.map(item => item.content_id); // Collect all content IDs
+  buyContent(contentIds); // Pass all content IDs
+}} className=" mt-5 p-2 px-5 cursor-pointer bg-[#0f2b9fd9] flex justify-center">
 
-<button className="text-white font-bold">Buy</button>
+<button className="text-white font-bold" onClick={() => {
+                            const contentIds = shoppingItems.map(item => item.content_id); // Collect all content IDs
+                            buyContent(contentIds); // Pass all content IDs
+                        }}>Buy</button>
 </div>
 </div>
 </div>
-
+{showPopup1 && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+        <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+          {/* <div  onClick={() => setShowPopup1(false)} className="flex justify-end items-end">
+          <img  onClick={() => setShowPopup1(false)} src={x} alt="" className="w-[25px] h-[25px]" />
+          </div> */}
+          {/* <h2 className="text-2xl font-semibold mb-4 text-red-600">Hurry up!</h2> */}
+          <p className="text-lg">{error}</p>
+          <button 
+          onClick={() => setShowPopup1(false)}  
+            className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg"
+          >
+            Close
+          </button>
+        </div>
+      </div> 
+      )}
 {/* <div>
       <p>Location Name: {address.city || address.town || address.village || address.suburb || 'Not available'}</p>
       <p>Postal Name: {address.city || address.town || address.county || 'Not available'}</p>
@@ -422,6 +512,21 @@ useEffect(() => {
       <p>Country: {address.country || 'Not available'}</p>
     </div> */}
 </div>
+{/* <div>
+      <h1>Location Details</h1>
+      {error && <p>Error: {error}</p>}
+      {location ? (
+        <div>
+          <p><strong>Name:</strong> {location.name}</p>
+          <p><strong>City:</strong> {location.city}</p>
+          <p><strong>District:</strong> {location.district}</p>
+          <p><strong>State:</strong> {location.state}</p>
+          <p><strong>Country:</strong> {location.country}</p>
+        </div>
+      ) : (
+        <p>Getting location...</p>
+      )}
+    </div> */}
 {/* <div className="grid grid-cols-1 mt-6">
   <div className="w-full max-w-full h-[200px] rounded overflow-hidden shadow-lg bg-white flex">
     <div className="relative w-[40%]">

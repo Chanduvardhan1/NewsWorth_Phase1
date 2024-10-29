@@ -26,6 +26,7 @@ const contactus = () => {
       };
   
       try {
+        
         const response = await fetch(`${URL}/contact_us/`, {
           method: 'POST',
           headers: {

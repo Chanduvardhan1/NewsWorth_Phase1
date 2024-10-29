@@ -104,6 +104,11 @@ const handlePricingClick = (contentId) => {
   
   const updatePriceAndDiscount = async () => {
     try {
+        const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+        if (!authToken) {
+          navigate('/login');
+          return;
+        }
       const response = await fetch(`${URL}/update-price-discount`, {
         method: 'POST',
         headers: {
@@ -144,6 +149,11 @@ const handlePricingClick = (contentId) => {
 // Add any dependencies if needed
 const uploadContent = async () => {
     try {
+        const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+        if (!authToken) {
+          navigate('/login');
+          return;
+        }
       const response = await fetch(`${URL}/uploaded_content?user_id=${userId}`, {
         method: 'POST',
         headers: {
@@ -183,6 +193,11 @@ const uploadContent = async () => {
   }, []);
 const downloadContent = async (contentId) => {
   try {
+    const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+    if (!authToken) {
+      navigate('/login');
+      return;
+    }
     const response = await fetch(`${URL}/download-content?content_id=${contentId}`, {
       method: 'POST',
       headers: {
@@ -220,6 +235,11 @@ const toggleimage = (content_id) => {
 };
 const deleteContent = async (contentId) => {
   try {
+    const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+    if (!authToken) {
+      navigate('/login');
+      return;
+    }
     const response = await fetch(`${URL}/delete content`, {
       method: 'POST',
       headers: {
@@ -317,6 +337,11 @@ useEffect(() => {
   
   const handleAddToCart = async (contentId, contentLink, finalprice) => {
     try {
+        const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+        if (!authToken) {
+          navigate('/login');
+          return;
+        }
       const response = await fetch(`${URL}/add_to_cart`, {
         method: 'POST',
         headers: {
@@ -385,6 +410,11 @@ useEffect(() => {
   };
   const fetchCartItems = async () => {
     try {
+        const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+        if (!authToken) {
+          navigate('/login');
+          return;
+        }
       const response = await fetch(
         `${URL}/total_cart_items?user_id=${userId}`,
         {
@@ -730,8 +760,9 @@ useEffect(() => {
           <div className="p-4 flex justify-between items-center">
             <img src={camera} alt="" className="w-[25px] h-[25px] cursor-pointer" />
 
-            <div className="text-lg" onClick={() => handleImagesClick(imageItem)}>
-              <p className="font-bold text-blue-600">
+            <div className="text-lg" >
+              <p className="font-bold text-blue-600"
+              onClick={() => handlePricingClick(imageItem.content_id)}>
                 ₹ {imageItem.price}{' '}
                 <span className="text-sm text-gray-500">
                   <span className="line-through">{imageItem.final_price}</span> at Discount {imageItem.discount}%
@@ -831,8 +862,8 @@ useEffect(() => {
         </div>
         <div className="px-4 pb-4">
           <div className="flex justify-between items-center">
-            <div className="flex flex-col items-start">
-              <span className="text-lg font-bold">₹{card.price}</span>
+            <div className="flex flex-col items-start" onClick={() => handlePricingClick(card.content_id)}>
+              <span className="text-lg font-bold" >₹{card.price}</span>
             </div>
             <img
               onClick={() => handleAddToCart(card.content_id, card.Video_link, card.final_price)}

@@ -2,6 +2,7 @@ import React, { useState,useEffect ,useContext} from "react";
 import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
 import Landing from "../landing/landing";
+
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from 'react-router-dom';
 import camera1 from "../../src/assets/Images/dashboard/camera (2).png"
@@ -98,7 +99,8 @@ const [orgname, setorgname] = useState('');
 const [orgnumber, setorgnumber] = useState('');
 const [gstnumber, setgstnumber] = useState('');
 
-
+const [showPopup1, setShowPopup1] = useState(false);
+const [error1, seterror1] = useState('');
 // localStorage.setItem('categoryName', 'Newsworth Creator');
 // console.log(localStorage.getItem('categoryName')); // Should log: Newsworth Creator
 const [categoryName, setCategoryName] = useState('Unknown');
@@ -131,6 +133,11 @@ const [searchParams] = useSearchParams();
     useEffect(() => {
         const fetchOrderHistory = async () => {
           try {
+            const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+          if (!authToken) {
+            console.error("No authentication token found. Please log in again.");
+            return;
+          }
             const response = await fetch(`${URL}/order-history?user_id=${userId}`, {
               method: 'POST',
               headers: {
@@ -149,9 +156,14 @@ const [searchParams] = useSearchParams();
         };
     
         fetchOrderHistory();
-      }, []);
+      }, [isAuthenticated]);
       const downloadContent = async (contentId) => {
         try {
+          const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+          if (!authToken) {
+            console.error("No authentication token found. Please log in again.");
+            return;
+          }
           const response = await fetch(`${URL}/download-content?content_id=${contentId}`, {
             method: 'POST',
             headers: {
@@ -202,6 +214,11 @@ const handleChangePassword = async (event) => {
   };
 
   try {
+    const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+          if (!authToken) {
+            console.error("No authentication token found. Please log in again.");
+            return;
+          }
     const response = await fetch(`${URL}/ChangeUserPassword`, {
       method: 'POST',
       headers: {
@@ -239,6 +256,11 @@ const handleChangePasswordCancel =()=>
 // Fetch profile image from the server
 const fetchProfileImage = async () => {
   try {
+    const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+          if (!authToken) {
+            console.error("No authentication token found. Please log in again.");
+            return;
+          }
     const response = await fetch(`${URL}/view-image?user_id=${userId}`, {
       method: 'GET',
       headers: {
@@ -315,6 +337,11 @@ useEffect(() => {
 
 const deleteImage = async () => {
   try {
+    const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+          if (!authToken) {
+            console.error("No authentication token found. Please log in again.");
+            return;
+          }
     const response = await fetch(`${URL}/remove-image?user_id=${userid}`, {
       method: 'DELETE',
       headers: {
@@ -336,6 +363,11 @@ const deleteImage = async () => {
 };
 const fetchUserProfile = async () => {
   try {
+    const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+          if (!authToken) {
+            console.error("No authentication token found. Please log in again.");
+            return;
+          }
     const response = await fetch(`${URL}/get_prfl_dtls?user_id=${userId}`,{
       method: 'POST',
       headers: {
@@ -399,11 +431,17 @@ const handleSaveClick = async () => {
   };
 
   try {
+    const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+          if (!authToken) {
+            console.error("No authentication token found. Please log in again.");
+            return;
+          }
     const response = await fetch(`${URL}/edt_prfl_dtls?user_id=${userId}`, {
       method: 'POST',
       headers: {
         'accept': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjaGFuZHUgdmFyZGhhbiBrIiwiZXhwIjoyMDQwNzI0NDk4fQ.RnK47QiAmU0Xmt7hv10c8KrWpLz6Uj9Vvtmt4A0G0_M',
+        Authorization: `Bearer ${authToken}`,          
+
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(userProfileData),
@@ -460,6 +498,11 @@ const handleEmailChange = (e) => {
 
 const fetchLocationDetails = async () => {
   try {
+    const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+          if (!authToken) {
+            console.error("No authentication token found. Please log in again.");
+            return;
+          }
     const response = await fetch(`${URL}/location_details/`, {
       method: 'POST',
       headers: {
@@ -493,9 +536,13 @@ const fetchLocationDetails = async () => {
   }
 };
 const handleBackToLogin = () => {
+  
   // Retrieve the authentication token from AuthContext or localStorage
-  const authToken = localStorage.getItem('authToken') || null;
-
+  const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+  if (!authToken) {
+    console.error("No authentication token found. Please log in again.");
+    return;
+  }
   fetch(`${URL}/usr_logout/`, {
     method: 'POST',
     headers: {
@@ -581,6 +628,11 @@ const closeModal = () => {
 
 const uploadContent = async () => {
   try {
+    const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+          if (!authToken) {
+            console.error("No authentication token found. Please log in again.");
+            return;
+          }
     const response = await fetch(`${URL}/uploaded_content?user_id=${userId}`, {
       method: 'POST',
       headers: {
@@ -632,6 +684,11 @@ const toggleSidebar = () => {
 };
 const handleAddToCart = async (contentId, contentLink, finalprice) => {
   try {
+    const authToken = localStorage.getItem("authToken"); // Retrieve the auth token from localStorage
+          if (!authToken) {
+            console.error("No authentication token found. Please log in again.");
+            return;
+          }
     const response = await fetch(`${URL}/add_to_cart`, {
       method: 'POST',
       headers: {
@@ -661,15 +718,20 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
 
     } else if (data.response === 'fail' && data.response_message === 'Content already added to cart.') {
       // Content is already in the cart
-      toast.error('This content is already in your cart.');
+      setShowPopup1(true)
+     
+      seterror1('This content is already in your cart.');
     } else {
       // Handle other errors
-      console.error('Error adding to cart:', data);
-      toast.error('Failed to add content to cart.');
+      setShowPopup1(true)
+
+      seterror1('Failed to add content to cart.');
     }
   } catch (error) {
     console.error('Request failed:', error);
-    toast.error('An error occurred while adding to the cart.');
+    setShowPopup1(true)
+
+    seterror1('An error occurred while adding to the cart.');
   }
 };
 
@@ -2393,6 +2455,23 @@ InputProps={{
         )
       )}
     </div>
+      )}
+      {showPopup1 && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+        <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+          {/* <div  onClick={() => setShowPopup1(false)} className="flex justify-end items-end">
+          <img  onClick={() => setShowPopup1(false)} src={x} alt="" className="w-[25px] h-[25px]" />
+          </div> */}
+          {/* <h2 className="text-2xl font-semibold mb-4 text-red-600">Hurry up!</h2> */}
+          <p className="text-lg">{error1}</p>
+          <button 
+          onClick={() => setShowPopup1(false)}  
+            className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg"
+          >
+            Close
+          </button>
+        </div>
+      </div> 
       )}
   </div>
 
