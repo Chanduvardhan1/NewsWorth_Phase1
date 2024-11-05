@@ -23,6 +23,7 @@ const login = () => {
   const [password, setPassword] = useState('');
 const [errorMessage, setErrorMessage] = useState('')
 const { login } =  useContext(AuthContext);
+const [errorMessage1, setErrorMessage1] = useState('')
 
   const handleLoginMethodChange = (method) => {
     setLoginMethod(method);
@@ -274,15 +275,19 @@ const { login } =  useContext(AuthContext);
   
       if (data.response === 'success' && data.response_message === "OTP Sent Successfully, Please reset your password") {
         navigate('/resetpassword', { state: { userId: data.data[0].user_id, email } });
-      } else if (data.response === 'success' && data.response_message === "OTP Succuessfully Sent") {
-        navigate('/resetmobile', { state: { userId: data.data[0].user_id,email  } });
+      } else if (data.response === 'success' && data.response_message === "OTP Successfully Sent") {
+        navigate('/resetmobile', { state: { userId: data.data[0].user_id, email } });
+      } else if (data.response === 'fail' && data.response_message === "Email is incorrect or not registered.") {
+        setErrorMessage1("Email is incorrect or not registered.");
       } else {
-        setErrorMessage(data.response_message);
+        setErrorMessage1(data.response_message);
       }
     } catch (error) {
       console.error('Error:', error);
+      setErrorMessage1("An unexpected error occurred. Please try again.");
     }
   };
+  
   
   
   return (
@@ -670,8 +675,11 @@ const { login } =  useContext(AuthContext);
                    </div>
                    )}
                    <div className="flex justify-end">
+
                       <p className="primary-btn cursor-pointer" onClick={handleForgotPassword}>Send OTP</p>
                    </div>
+                   {errorMessage1 && <p className="text-red-500  flex">{errorMessage1}</p>}
+
                 </div>
              </div>
              )}
