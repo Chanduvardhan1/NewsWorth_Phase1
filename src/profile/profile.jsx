@@ -307,6 +307,7 @@ const uploadImage = async (file) => {
     if (response.ok) {
       // After successfully uploading, fetch the updated image
       fetchProfileImage();
+      navigate(0)
     } else {
       setError('Failed to upload image');
     }
@@ -354,6 +355,7 @@ const deleteImage = async () => {
       // Clear the photo state after successful deletion
       setPhoto('');
       setError(null); // Reset any errors
+      navigate(0)
     } else {
       setError('Failed to delete image');
     }
@@ -823,7 +825,7 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
       <button class="bg-gray-700 px-4 py-2 rounded text-sm text-white hover:bg-gray-600"  onClick={handleIconClick}>Add photo</button>
       {/* <button class="bg-gray-700 px-4 py-2 rounded text-sm text-white hover:bg-gray-600">Add photo</button> */}
       {/* <button class="bg-gray-700 px-4 py-2 rounded text-sm text-white hover:bg-gray-600">Frames</button> */}
-      <button class="bg-red-600 px-4 py-2 rounded text-sm text-white hover:bg-red-500">Delete</button>
+      <button class="bg-red-600 px-4 py-2 rounded text-sm text-white hover:bg-red-500" onClick={deleteImage}>Delete</button>
     </div>
   </div>
 </div>
@@ -1339,10 +1341,10 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
             </div>
             <div className="flex justify-between">
               <p className=" text-gray-500 ">{dateofbirth}</p>
-              <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
+              {/* <button   onClick={handlePopupToggle} className="text-gray-400 hover:text-gray-600">
               <img src={edit} alt="" className=" w-4 h-4" />
 
-</button>   
+</button>    */}
             </div>
  
 

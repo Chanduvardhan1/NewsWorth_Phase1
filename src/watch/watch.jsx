@@ -606,9 +606,20 @@ const watch = () => {
       Purchased Flag: <span className=" text-gray-500 text-[14px]">   {selectedVideo.purchased_flag ? "True" : "False"}</span> 
       </p>
     </div>
+    <div className="w-full flex flex-col justify-center items-center shadow-md bg-white p-2">
+      <div className="w-full flex justify-start items-center">
+      <img src={pic} alt="" className=" rounded-full w-12 h-12 mr-2" />
+      <h1 className=" font-bold">Chanduvardhan</h1>
+      </div>
+      <div className="w-full border-[1px] border-black">
+        <h1 className=" flex justify-center p-2 px-5">Chat with seller</h1>
+      </div>
+    
+    </div>
     <div className="mt-1 flex items-end">
       <img src={card} alt="" className="w-8 h-8 cursor-pointer"   onClick={() => handleAddToCart(selectedVideo.content_id, selectedVideo.Video_link, selectedVideo.final_price)} />
     </div>
+   
   </div>
 </div>
 
@@ -669,6 +680,16 @@ const watch = () => {
       <p className="font-bold mb-2 text-gray-500 text-[14px]">
       Purchased Flag: <span className=" text-gray-500 text-[14px]">   {videoData.purchased_flag ? "True" : "False"}</span> 
       </p>
+    </div>
+    <div className="w-full flex flex-col justify-center items-center shadow-md bg-white p-2">
+      <div className="w-full flex justify-start items-center">
+      <img src={pic} alt="" className=" rounded-full w-12 h-12 mr-2" />
+      <h1 className=" font-bold">Chanduvardhan</h1>
+      </div>
+      <div className="w-full border-[1px] border-black">
+        <h1 className=" flex justify-center p-2 px-5">Chat with seller</h1>
+      </div>
+    
     </div>
     <div className="mt-2 flex items-end">
       <img src={card} alt="" className="w-8 h-8 cursor-pointer"   onClick={() => handleAddToCart(videoData.content_id, videoData.Video_link, videoData.final_price)} />

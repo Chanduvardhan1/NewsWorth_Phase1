@@ -79,8 +79,10 @@ const [showTimer, setShowTimer] = useState(false);
 const [cardData, setCardData] = useState([]);
 const [showPopup1, setShowPopup1] = useState(false);
 const [error, seterror] = useState('');
+const [success, setsuccess] = useState('');
+
 const [newPrice, setNewPrice] = useState('');
-const [newdiscount, setNewdiscount] = useState('');
+const [newdiscount, setNewdiscount] = useState('0');
 const [pricingshow, setPricingshow] = useState(false);
 const [selectedContentId, setSelectedContentId] = useState(null);
 
@@ -131,9 +133,11 @@ const handlePricingClick = (contentId) => {
       const data = await response.json();
   
       if (data.response === "success") {
-        console.log('Price and discount updated:', data);
-        setPricingshow(false); 
-        navigate(0);// Close the modal on success
+        setsuccess('Price and discount updated:', data);
+        setPricingshow(false);
+        setShowPopup1(true);
+
+        // navigate(0);// Close the modal on success
       } else if (data.response === "fail") {
         seterrorprice(data.response_message || 'Failed to update price and discount.');
       }
@@ -142,7 +146,10 @@ const handlePricingClick = (contentId) => {
       seterrorprice('An unexpected error occurred. Please try again later.');
     }
   };
-  
+  const handleclose = ()=>{
+    setShowPopup1(false)
+    navigate(0);
+  }
   // priceing end
 
 
@@ -934,7 +941,7 @@ id="New Discount"
 label="New Discount" 
 variant="outlined"
 // type={showPassword ? "text" : "password"}
-required
+
 className="w-full mb-4 px-7 py-4 rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 value={newdiscount}
 onChange={(e) => setNewdiscount(e.target.value)}
@@ -969,6 +976,25 @@ InputProps={{
        </button>
      </div>
      {errorprice && <p className=" text-red-500">{errorprice}</p>}
+        </div>
+      </div> 
+      )}
+      {showPopup1 && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+        <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+          {/* <div  onClick={() => setShowPopup1(false)} className="flex justify-end items-end">
+          <img  onClick={() => setShowPopup1(false)} src={x} alt="" className="w-[25px] h-[25px]" />
+          </div> */}
+          {/* <h2 className="text-2xl font-semibold mb-4 text-red-600">Hurry up!</h2> */}
+          <p className="text-lg">{error}</p>
+          <p className="text-lg text-green-500">{success}</p>
+
+          <button 
+          onClick={handleclose}  
+            className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg"
+          >
+            Close
+          </button>
         </div>
       </div> 
       )}
