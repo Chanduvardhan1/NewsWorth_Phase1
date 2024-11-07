@@ -456,7 +456,8 @@ const handleSaveClick = async () => {
       // Handle success, maybe show a success message or reset the isEditable flag
       setShowRegistr(true)
       setIsEditable(false);
-     
+      navigate(0)
+
     } else {
       // Handle error response
       console.error('Error updating user profile:', data.message);
