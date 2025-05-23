@@ -96,18 +96,10 @@ const [error2, setError2] = useState(false);
 const handleDateChange = (e) => {
   const selectedDate = dayjs(e.target.value);
   const currentDate = dayjs();
-
-  // Calculate the age
   const age = currentDate.diff(selectedDate, 'year');
-  
-  // Check if the age is under 18
-  if (age < 18) {
-    setError(true);
-  } else {
-    setError(false);
-    // Store the date in the format yyyy-mm-dd for consistency
-    setDob(selectedDate.format('YYYY-MM-DD'));
-  }
+
+  setDob(selectedDate.format('YYYY-MM-DD')); // Always update
+  setError(age < 18);
 };
 
 // Set maximum date to 18 years ago
@@ -489,7 +481,7 @@ const sendOtp = async () => {
   };
 
   try {
-    const response = await fetch(`${URL}/Send OTP`, {
+    const response = await fetch(`${URL}/Send_OTP`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -758,7 +750,7 @@ const handleRegister = async () => {
   // Check if user is above 18 years old
   const birthDate = new Date(dob);
   const today = new Date();
-  const age = today.getFullYear() - birthDate.getFullYear();
+  let age = today.getFullYear() - birthDate.getFullYear();
   const monthDiff = today.getMonth() - birthDate.getMonth();
   const dayDiff = today.getDate() - birthDate.getDate();
 
@@ -1790,7 +1782,7 @@ useEffect(() => {
    {!hideOtpButtons && (
   !showOtpField1 ? (
     <div className="flex justify-end">
-      <button               className={`primary-btn text-[12px] font-semibold  ${!otpButtonEnabled ? 'cursor-not-allowed opacity-50' : ''}`}onClick={sendOtp} disabled={!otpButtonEnabled}>Send OTP</button>
+      <button               className={`primary-btn text-[12px] font-semibold  ${!otpButtonEnabled ? 'cursor-not-allowed opacity-50' : ''}`} onClick={sendOtp} disabled={!otpButtonEnabled}>Send OTP</button>
     </div>
   ) : (
     <div className="flex justify-end space-x-4 items-center">

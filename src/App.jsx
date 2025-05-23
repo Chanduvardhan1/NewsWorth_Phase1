@@ -10,6 +10,7 @@ import Layout from "./pages/Layout.jsx";
 import Navbar from './Navbar/navbar.jsx';
 import Login from './login/login.jsx';
 import Signup from './signup/signup.jsx';
+import About from './about/about.jsx';
 import Profile from '../src/profile/profile.jsx';
 import Contactus from './contactus/contactus.jsx';
 import Resetpassword from './resetpassword/resetpassword.jsx';
@@ -44,6 +45,7 @@ function App() {
     <Route path="Navbar" element={<Navbar />} />
     <Route path="login" element={<Login />} />
     <Route path="signup" element={<Signup />} />
+    <Route path="about" element={<About/>}/>
     <Route path="Profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
     <Route path="contactus" element={<Contactus />} />
     <Route path="resetpassword" element={<Resetpassword />} />
