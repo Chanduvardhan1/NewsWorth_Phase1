@@ -41,6 +41,10 @@ export default {
         'slide-left': 'slide-left 0.8s ease-out forwards',
         'slide-right': 'slide-right 0.8s ease-out forwards',
       },
+      colors: {
+        softTop: '#FFFCFC',
+        softBottom: '#FFF1F1',
+      },
     },
   },
     
