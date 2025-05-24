@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/image.png'
+import Image from'../assets/Images/about/Main_Image.png'
 import info from '../../src/assets/Images/dashboard/info.png'
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -1070,19 +1071,23 @@ useEffect(() => {
     <div className="w-[50%]">
       <div className=" flex flex-col gap-[20px] ">
 
-    <div className="flex justify-center">
+    {/* <div className="flex justify-center">
       <h1 className="blue-color font-bold text-[25px]">Registration</h1>
-    </div>
+    </div> */}
     {!showRegistrationSuccess ?  (
  <div className="flex justify-center">
  <button className="primary-btn" onClick={showdropdwon}>Sign Up</button>
 </div>
     ):(
-      <div className="flex flex-col gap-[15px] text-[14px] shadow-xl rounded-2xl p-5 py-7 border-[1px] border-gray-100 ">
-<div className=" flex gap-[10px] justify-center">
-<FormControl variant="outlined" required className="w-full mb-4 text-[14px]">
+      <div className="flex flex-col gap-[15px] text-[14px] shadow-xl rounded-2xl p-5 py-7 border-[1px] border-gray-100  bg-[#245FB1] mt-24 ">
+        <div className="flex flex-col justify-center items-center gap-2">
+          <h2 className="text-white">Welcome to <span class="text-[#FFF500]">Newsworth</span></h2>
+          <h1 className="text-white text-[25px]">Register NOW!</h1>
+        </div>
+<div className=" flex gap-[10px] justify-center  ">
+<FormControl variant="outlined" required className="w-full mb-4 text-[14px] font-col ">
   <InputLabel id="user-category-label"
-      style={{ color: '#666666', fontSize: '14px' }} // Change label color and font size
+      style={{ color: 'black', fontSize: '14px' }} 
 >User Category</InputLabel>
   <Select
     labelId="user-category-label"
@@ -1106,7 +1111,7 @@ useEffect(() => {
 
 <FormControl variant="outlined" required className="w-full mb-4">
           <InputLabel id="gender-label"
-          style={{ color: '#666666', fontSize: '14px' }} >User Type</InputLabel>
+          style={{ color: 'black', fontSize: '14px' }} >User Type</InputLabel>
           <Select
          className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
@@ -2587,7 +2592,7 @@ useEffect(() => {
   </div>
 
  <div  className="w-[50%] flex justify-end items-center">
-      <img src={home} alt="" width={500}  height={500} className="hover:duration-300 hover:scale-105 "/>
+      <img src={Image} alt="" className=" max-w-[525px]"/>
     </div>
    </main>
 

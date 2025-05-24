@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import logo from "../../src/assets/Images/home/background.png"
 import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/image.png'
+import Image from'../assets/Images/about/Main_Image.png'
 import { useNavigate } from "react-router-dom";
 import Home1 from "./home1";
 import { URL } from "../url";
@@ -81,7 +82,7 @@ const Home = () => {
     </div>
     </div>
     <div  className="w-[50%] flex justify-end items-center">
-      <img src={home} alt="" width={500}  height={500} className="hover:duration-300 hover:scale-105 "/>
+      <img src={Image} alt=""  className=" max-w-[525px]"/>
     </div>
    </main>
    <div className="fixed bottom-0 right-0 ">

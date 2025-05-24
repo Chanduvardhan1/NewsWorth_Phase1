@@ -1,6 +1,7 @@
 import React, { useState,useContext } from "react";
 import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/image.png'
+import Image from'../assets/Images/about/Main_Image.png'
 import { AuthContext } from "../Authcontext/AuthContext.jsx"
 
 
@@ -685,7 +686,7 @@ const [errorMessage1, setErrorMessage1] = useState('')
              )}
           </div>
           <div className="w-full lg:w-[50%] flex justify-center lg:justify-end items-center">
-             <img src={home} alt="" className="w-[300px] lg:w-[500px] h-auto hover:duration-300 hover:scale-105" />
+             <img src={Image} alt="" className=" max-w-[525px]"/>
           </div>
        </main>
     </div>
