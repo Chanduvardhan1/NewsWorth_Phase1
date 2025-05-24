@@ -29,7 +29,7 @@ const navbar = () => {
   };
   return (
     
-    <div className=" flex justify-between p-5 px-[5%]">
+    <div className=" flex justify-between p-5 px-[5%] font-[verdana]">
       {/* <p><Haze/></p> */}
 <div>
 <img  src={logo} alt="NewsWorth" width={150} height={50} className="transition-transform duration-300 ease-in-out  cursor-pointer object-cover" onClick={handlehome}/>
