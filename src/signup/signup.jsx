@@ -4,10 +4,11 @@ import home from '../../src/assets/Images/home/image.png'
 import Image from'../assets/Images/about/Main_Image.png'
 import info from '../../src/assets/Images/dashboard/info.png'
 
+import{Link} from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../url";
-import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { TextField, Select, MenuItem, FormControl, InputLabel,OutlinedInput } from '@mui/material';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -1079,16 +1080,26 @@ useEffect(() => {
  <button className="primary-btn" onClick={showdropdwon}>Sign Up</button>
 </div>
     ):(
-      <div className="flex flex-col gap-[15px] text-[14px] shadow-xl rounded-2xl p-5 py-7 border-[1px] border-gray-100  bg-[#5C8FD0] mt-24 ">
+      <div className="flex flex-col gap-[15px] text-[14px] shadow-xl rounded-2xl p-5 py-7 border-[1px] border-gray-100  bg-[#245FB1]  mt-24 ">
         <div className="flex flex-col justify-center items-center gap-2">
           <h2 className="text-white font-bold">Welcome to <span class="text-[#FFF500]">Newsworth</span></h2>
-          <h1 className="text-white text-[25px] font-bold">Register NOW!</h1>
+          <h1 className="text-white text-[25px] font-bold mb-4">Register NOW!</h1>
         </div>
-<div className=" flex gap-[10px] justify-center  ">
-<FormControl variant="outlined" required className="w-full mb-4 text-[14px] font-col relative">
-  <InputLabel id="user-category-label"
-       className="absolute top-0 left-2 text-black text-[14px] transform-none bg-white px-1 " 
-        style={{ color: 'black', fontSize: '14px' }}
+<div className=" flex gap-[10px] justify-center mb-4 ">
+<FormControl variant="outlined" required className="w-full mb-4 text-[14px] font-col">
+  <InputLabel id="user-category-label" 
+      //  className="absolute top-0 left-2  text-white text-[14px] transform-none  px-1" 
+        style={{
+      color: selectedCategory ? 'white' : 'black', // Color changes based on selection
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for both color and position
+      top: selectedCategory ? '-10px' : '10%', // Moves the label above when selected
+      left: selectedCategory ? '10px' : '12px', // Adjusts the left positioning
+      transform: selectedCategory ? 'translateY(-50%)' : 'translateY(50%)', // Keeps the label centered when floated
+      fontWeight: selectedCategory ? 'semibold' : 'normal', // Bold font weight when selected
+    }}
+    shrink={selectedCategory || false} // Ensures label shrinks when there's a selection
+
 >User Category</InputLabel>
   <Select
     labelId="user-category-label"
@@ -1099,9 +1110,7 @@ useEffect(() => {
     style={{ height: "50px", borderRadius: "10px", fontSize:"14px" }} /* For input box*/
     name="UserCategory"
   >
-    <MenuItem value="">
-      {/* Placeholder for default empty selection */}
-    </MenuItem>
+    
     {categories.map((category) => (
       <MenuItem key={category.category_id} value={category.category_id} >
         {category.category_name} 
@@ -1112,7 +1121,13 @@ useEffect(() => {
 
 <FormControl variant="outlined" required className="w-full mb-4 relative">
           <InputLabel id="gender-label"
-          style={{ color: 'black', fontSize: '14px' }}  className="absolute top-0 left-2 text-black text-[14px] transform-none bg-white px-1 " >User Type</InputLabel>
+          style={{  color: selectedUserType ? 'white' : 'black', // Change label color based on selection
+      fontSize: '14px',
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: selectedUserType ? '-10px' : '10%', // Moves the label above when selected
+      left: selectedUserType ? '10px' : '12px', // Adjusts the left positioning
+      transform: selectedUserType ? 'translateY(-50%)' : 'translateY(50%)', // Keeps it centered when floated
+      fontWeight: selectedUserType ? 'semibold' : 'normal'}} shrink={selectedUserType || false}>User Type</InputLabel>
           <Select
          className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
 
@@ -1128,9 +1143,7 @@ useEffect(() => {
             }}
             name="UserType"
           >
-            <MenuItem value="">
-              {/* <em>None</em> */}
-            </MenuItem>
+           
             {userType.map((type) => (
             <MenuItem key={type.user_type_id} value={type.user_type_id}>
               {type.user_type}
@@ -1141,8 +1154,8 @@ useEffect(() => {
 
 </div>
 {selectedCategory === 1 && selectedUserType &&(
-  <div className="flex flex-col gap-[15px]">
-<div className=" flex gap-[10px] justify-center">
+  <div className="flex flex-col gap-[15px] ">
+<div className=" flex gap-[10px] justify-center mb-4">
 <TextField
      id="Organization Name" 
      label="Organization Name" 
@@ -1156,24 +1169,17 @@ useEffect(() => {
 
      required
      InputLabelProps={{
+      shrink: orgname ? true : false, // Shrinks the label when there is a value
       style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+               color: orgname ? 'white' : 'black', // Change label color based on value
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: orgname ? '-10px' : '10%', // Moves the label above when selected
+      left: orgname ? '10px' : '12px', // Adjusts the left positioning
+      transform: orgname ? 'translateY(-50%)' : 'translateY(50%)', // Keeps it centered when floated
+      fontWeight: orgname ? 'semibold' : 'normal',
+      },
+
     }}
       InputProps={{
         style: {
@@ -1210,24 +1216,16 @@ useEffect(() => {
 
      required
      InputLabelProps={{
-     style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+     shrink: orgnumber ? true : false, // Shrinks the label when there is a value
+    style: {
+      color: orgnumber ? 'white' : 'black', // Change label color based on value
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: orgnumber ? '-10px' : '10%', // Moves the label above when selected
+      left: orgnumber ? '10px' : '12px', // Adjusts the left positioning
+      transform: orgnumber ? 'translateY(-50%)' : 'translateY(50%)', // Keeps it centered when floated
+      fontWeight: orgnumber ? 'semibold' : 'normal', // Adjusts font weight based on value
+    },
     }}
       InputProps={{
         style: {
@@ -1253,7 +1251,7 @@ useEffect(() => {
         },
       }}  />
 </div>
-<div className=" flex gap-[10px] justify-center">
+<div className=" flex gap-[10px] justify-center mb-4">
 <TextField
      id="GST Number" 
      label="GST Number" 
@@ -1267,24 +1265,17 @@ useEffect(() => {
 
      required
      InputLabelProps={{
-      style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+       shrink: gstnumber ? true : false, // Shrinks the label when there is a value
+    style: {
+      color: gstnumber ? 'white' : 'black', // Change label color based on value
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: gstnumber ? '-10px' : '10%', // Moves the label above when selected
+      left: gstnumber ? '10px' : '12px', // Adjusts the left positioning
+      transform: gstnumber ? 'translateY(-50%)' : 'translateY(50%)', // Keeps it centered when floated
+      fontWeight: gstnumber ? 'semibold' : 'normal', // Adjusts font weight based on value
+    },
+                      
     }}
       InputProps={{
         style: {
@@ -1336,7 +1327,7 @@ useEffect(() => {
         autoComplete: "off",
       }} />  */}
 </div>
-<div className=" flex gap-[10px] justify-center">
+<div className=" flex gap-[10px] justify-center mb-4">
 <TextField
      id="Pincode" 
      label="Pincode" 
@@ -1349,24 +1340,16 @@ useEffect(() => {
      variant="outlined"
      required
      InputLabelProps={{
-      style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+      shrink: pincode ? true : false, // Shrinks the label when there is a value
+    style: {
+      color: pincode ? 'white' : 'black', // Change label color based on value
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: pincode ? '-10px' : '10%', // Moves the label above when selected
+      left: pincode ? '10px' : '12px', // Adjusts the left positioning
+      transform: pincode ? 'translateY(-50%)' : 'translateY(50%)', // Keeps it centered when floated
+      fontWeight: pincode ? 'semibold' : 'normal', // Adjusts font weight based on value
+    },
     }}
       InputProps={{
         style: {
@@ -1393,8 +1376,17 @@ useEffect(() => {
       }} />
       
       <FormControl variant="outlined" required className="w-full mb-4 relative ">
-          <InputLabel id="gender-label"  className="absolute top-0 left-2 text-black text-[14px] transform-none bg-white px-1 " 
-        style={{ color: 'black', fontSize: '14px' }}>City</InputLabel>
+          <InputLabel id="gender-label"   
+       shrink={selectedCity ? true : false} // Shrinks the label when there is a value
+    style={{
+      color: selectedCity ? 'white' : 'black', // Change label color based on selection
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: selectedCity ? '-10px' : '10%', // Moves the label above when selected
+      left: selectedCity ? '10px' : '12px', // Adjusts the left positioning
+      transform: selectedCity ? 'translateY(-50%)' : 'translateY(50%)', // Keeps it centered when floated
+      fontWeight: selectedCity ? 'semibold' : 'normal', // Adjusts font weight based on selection
+    }}>City</InputLabel>
           <Select
          className="w-full  rounded-[10px] bg-[#FFFFFF]  placeholder:text-[#CCCCCC]"
          value={selectedCity}
@@ -1421,9 +1413,9 @@ useEffect(() => {
           </Select>
         </FormControl>
 </div>
-{pincodeMessage && <div className=" text-red-500">{pincodeMessage}</div>} {/* Display error message */}
+{pincodeMessage && <div className=" text-white">{pincodeMessage}</div>} {/* Display error message */}
 
-<div className=" flex gap-[10px] justify-center">
+<div className=" flex gap-[10px] justify-center mb-4">
     
         <TextField
      id="District" 
@@ -1439,24 +1431,16 @@ useEffect(() => {
 
      required
      InputLabelProps={{
-       style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+       shrink: selectedDistrict ? true : false, // Shrinks the label when there is a value
+    style: {
+      color: selectedDistrict ? 'white' : 'black', // Change label color based on selection
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: selectedDistrict ? '-10px' : '10%', // Moves the label above when selected
+      left: selectedDistrict ? '10px' : '12px', // Adjusts the left positioning
+      transform: selectedDistrict ? 'translateY(-50%)' : 'translateY(50%)', // Keeps it centered when floated
+      fontWeight: selectedDistrict ? 'semibold' : 'normal', // Adjusts font weight based on selection
+    },
     }}
       InputProps={{
         style: {
@@ -1495,24 +1479,16 @@ useEffect(() => {
 
      required
      InputLabelProps={{
-       style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+       shrink: state ? true : false, // Shrinks the label when there is a value
+    style: {
+      color: state ? 'white' : 'black', // Change label color based on selection
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: state ? '-10px' : '10%', // Moves the label above when selected
+      left: state ? '10px' : '12px', // Adjusts the left positioning
+      transform: state ? 'translateY(-50%)' : 'translateY(50%)', // Keeps it centered when floated
+      fontWeight: state ? 'semibold' : 'normal', // Adjusts font weight based on selection
+    },
     }}
       InputProps={{
         style: {
@@ -1551,24 +1527,17 @@ useEffect(() => {
      variant="outlined"
      required
      InputLabelProps={{
-       style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+     shrink: country ? true : false, // Shrinks the label when there is a value
+    style: {
+      color: country ? 'white' : 'black', // Change label color based on selection
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: country ? '-10px' : '10%', // Moves the label above when selected
+      left: country ? '10px' : '12px', // Adjusts the left positioning
+      transform: country ? 'translateY(-50%)' : 'translateY(50%)', // Keeps it centered when floated
+      fontWeight: country ? 'semibold' : 'normal', // Adjusts font weight based on selection
+    },
+                      
     }}
       InputProps={{
         style: {
@@ -1595,14 +1564,14 @@ useEffect(() => {
       }} />
      
 </div>
-<div className=" flex  items-center gap-[5px] text-white font-bold ">
+<div className=" flex  items-center gap-[5px] text-white font-bold mb-4">
   <div className="w-[550px] h-[3px] rounded-2xl bg-white"></div>
   <p className="w-[350px] "> Point of Contact</p>
  
   <div className="w-full h-[3px] rounded-2xl bg-white"></div>
 
   </div>
-<div className=" flex gap-[10px] justify-center relative">
+<div className=" flex gap-[10px] justify-center relative mb-4">
                   <TextField
                     id="firstName"
                     label="First Name"
@@ -1613,26 +1582,16 @@ useEffect(() => {
                     value={firstName}
                     onChange={handleFirstNameChange}
                     InputLabelProps={{
-                      style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      }
-                      
-                      // shrink: firstName ? true : false,
+                      shrink: firstName ? true : false, // Shrinks the label when there is a value
+    style: {
+      color: firstName ? 'white' : 'black', // Change label color based on selection
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: firstName ? '-10px' : '10%', // Moves the label above when selected
+      left: firstName ? '10px' : '12px', // Adjusts the left positioning
+      transform: firstName ? 'translateY(-50%)' : 'translateY(50%)', // Keeps it centered when floated
+      fontWeight: firstName ? 'semibold' : 'normal', // Adjusts font weight based on selection
+    },
                     }}
                       InputProps={{
                         
@@ -1671,24 +1630,16 @@ useEffect(() => {
                    
                 
                     InputLabelProps={{
-                      style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      }
+                      shrink: middleName ? true : false, // Shrinks the label when there's a value
+    style: {
+      color: middleName ? 'white' : 'black', // Change label color based on selection
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: middleName ? '-10px' : '10%', // Moves the label above when selected
+      left: middleName ? '10px' : '12px', // Adjusts the left positioning
+      transform: middleName ? 'translateY(-50%)' : 'translateY(50%)', // Keeps it centered when floated
+      fontWeight: middleName ? 'semibold' : 'normal', // Adjusts font weight based on selection
+    },
                     }}
                       InputProps={{
                         style: {
@@ -1724,24 +1675,16 @@ useEffect(() => {
                     value={lastName}
                     onChange={handleLastNameChange}
                     InputLabelProps={{
-                     style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      }
+                    shrink: lastName ? true : false, // Shrinks the label when there's a value
+    style: {
+      color: lastName ? 'white' : 'black', // Changes label color based on field value
+      fontSize: '14px', // Label font size
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: lastName ? '-10px' : '10%', // Moves label above when there's a value
+      left: lastName ? '10px' : '12px', // Adjusts left positioning when floating
+      transform: lastName ? 'translateY(-50%)' : 'translateY(50%)', // Keeps label centered when floated
+      fontWeight: lastName ? 'semibold' : 'normal', // Adjusts font weight when selected
+    },
                     }}
                       InputProps={{
                         style: {
@@ -1835,24 +1778,16 @@ useEffect(() => {
      error={Boolean(error1)} // Apply error styling when there's an error
      helperText={error1} //
      InputLabelProps={{
-      style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+       shrink: mobile ? true : false, // Shrinks the label when the mobile number is entered
+    style: {
+      color: mobile ? 'white' : 'black', // Label color changes based on the input
+      fontSize: '14px',
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: mobile ? '-10px' : '10%', // Moves label above when mobile number is entered
+      left: mobile ? '10px' : '12px', // Adjusts left positioning when floating
+      transform: mobile ? 'translateY(-50%)' : 'translateY(50%)', // Keeps label centered when floated
+      fontWeight: mobile ? 'semibold' : 'normal', // Font weight change when selected
+    },
     }} 
       InputProps={{
         style: {
@@ -1895,24 +1830,16 @@ useEffect(() => {
      error={Boolean(error2)} // Apply error styling when there's an error
      helperText={error2}
      InputLabelProps={{
-      style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+      shrink: email ? true : false, // Shrink the label when there's a value in the input
+    style: {
+      color: email ? 'white' : 'black', // Label color changes based on the value of email
+      fontSize: '14px',
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: email ? '-10px' : '10%', // Moves label above when input has value
+      left: email ? '10px' : '12px', // Adjusts the left positioning when floated
+      transform: email ? 'translateY(-50%)' : 'translateY(50%)', // Keeps label centered when floating
+      fontWeight: email ? 'semibold' : 'normal', // Font weight change when floated
+    },
     }} 
       InputProps={{
         style: {
@@ -1941,7 +1868,7 @@ useEffect(() => {
 
 </div>
 
-<div className="flex justify-between"> 
+<div className="flex justify-between mb-4"> 
   <div className="">
   {success && <p className=" text-white  w-[320px]">{success}</p>}
 
@@ -1980,7 +1907,7 @@ useEffect(() => {
   </div>
 
 </div>
-<div className=" flex gap-[10px] justify-center">
+<div className=" flex gap-[10px] justify-center mb-4">
   {showMobileOTP && (
 
   <TextField
@@ -1993,24 +1920,17 @@ useEffect(() => {
        value={mobileOTP}
        onChange={handlemobileOTPChange}
        InputLabelProps={{
-         style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+         shrink: mobileOTP ? true : false, // Shrink label when there's a value
+    style: {
+      color: mobileOTP ? 'white' : 'black', // Change label color based on value
+      fontSize: '14px', // Label font size
+      transition: 'all 0.3s ease', // Smooth transition for label movement
+      top: mobileOTP ? '-10px' : '10%', // Move label above when value is entered
+      left: mobileOTP ? '10px' : '12px', // Adjust left position for floating label
+      transform: mobileOTP ? 'translateY(-50%)' : 'translateY(50%)', // Center label when floating
+      fontWeight: mobileOTP ? 'semibold' : 'normal', // Bold label when floating
+    },
+                      
       }} 
         InputProps={{
           style: {
@@ -2049,24 +1969,16 @@ useEffect(() => {
        value={emailOTP}
      onChange={handleemailOTPChange}
      InputLabelProps={{
-      style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+     shrink: emailOTP ? true : false, // Shrink label when there's a value
+    style: {
+      color: emailOTP ? 'white' : 'black', // Label color based on the value
+      fontSize: '14px', // Label font size
+      transition: 'all 0.3s ease', // Smooth transition for label movement
+      top: emailOTP ? '-10px' : '10%', // Move label above when value is entered
+      left: emailOTP ? '10px' : '12px', // Adjust the left position when floated
+      transform: emailOTP ? 'translateY(-50%)' : 'translateY(50%)', // Center the label when floating
+      fontWeight: emailOTP ? 'semibold' : 'normal', // Bold label when floating
+    },
     }} 
         InputProps={{
           style: {
@@ -2112,24 +2024,17 @@ useEffect(() => {
      value={password}
      onChange={(e) => { setPassword(e.target.value); setErrorMessage(""); }}
      InputLabelProps={{
-       style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+       shrink: password ? true : false, // Shrink label when there's a value
+    style: {
+      color: password ? 'white' : 'black', // Label color changes based on field value
+      fontSize: '14px', // Label font size
+      transition: 'all 0.3s ease', // Smooth transition for label movement
+      top: password ? '-10px' : '10%', // Move label above when value is entered
+      left: password ? '10px' : '12px', // Adjust the left position when floating
+      transform: password ? 'translateY(-50%)' : 'translateY(50%)', // Center label when floating
+      fontWeight: password ? 'semibold' : 'normal', // Font weight for floating label
+    },
+
     }} 
       InputProps={{
         style: {
@@ -2167,24 +2072,16 @@ useEffect(() => {
      value={confirmPassword}
      onChange={(e) => { setConfirmPassword(e.target.value); setErrorMessage(""); }} 
      InputLabelProps={{
-      style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+       shrink: confirmPassword ? true : false, // Shrink label if value is filled
+    style: {
+      color: confirmPassword ? 'white' : 'black', // Label color based on value
+      fontSize: '14px', // Label font size
+      transition: 'all 0.3s ease', // Smooth transition for floating label
+      top: confirmPassword ? '-10px' : '10%', // Move label above when input has value
+      left: confirmPassword ? '10px' : '12px', // Adjust left position for floating label
+      transform: confirmPassword ? 'translateY(-50%)' : 'translateY(50%)', // Center label when floating
+      fontWeight: confirmPassword ? 'semibold' : 'normal', // Font weight for floating label
+    },
     }}  
      InputProps={{
         style: {
@@ -2230,7 +2127,7 @@ useEffect(() => {
       </a>
     </label>
   </div>
-{errorMessage && <p className="text-red-500  w-[320px]">{errorMessage}</p>}
+{errorMessage && <p className="text-white w-[320px]">{errorMessage}</p>}
 
 {showRegistr ?(
            <div className="flex justify-end">
@@ -2239,15 +2136,15 @@ useEffect(() => {
 
 ):(
   <div className="flex justify-end ">
-           <button className="primary-btn" onClick={handleRegister1}>Register</button>
+           <button className="p-[5px] px-4 rounded-[50px] text-[#245FB1] font-bold  bg-white" onClick={handleRegister1}>Register</button>
          </div>
 )}
 
 </div>
 )}
 {selectedCategory === 2 && selectedUserType &&(
-  <div className="flex flex-col gap-[20px]">
-    <div className=" flex gap-[15px] justify-center ">
+  <div className="flex flex-col gap-[20px] mb-4">
+    <div className=" flex gap-[15px] justify-center mb-4">
                   <TextField
                     id="firstName"
                     label="First Name"
@@ -2259,24 +2156,17 @@ useEffect(() => {
                     onChange={(e) => setFirstName(e.target.value)}
                 
                     InputLabelProps={{
-                      style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+                       shrink: firstName ? true : false, // Label will float when input has value
+    style: {
+      color: firstName ? 'white' : 'black', // Floating label color changes to white
+      fontSize: '14px', // Font size for the label
+      transition: 'all 0.3s ease', // Smooth transition for label movement
+      top: firstName ? '-10px' : '10%', // Move label above when input has value
+      left: firstName ? '10px' : '12px', // Adjust left position for floating label
+      transform: firstName ? 'translateY(-50%)' : 'translateY(50%)', // Adjust for floating effect
+      fontWeight: firstName ? 'semibold' : 'normal', // Bold label when floating
+    },
+                      
                     }}  
                     InputProps={{
                       style: {             
@@ -2307,24 +2197,17 @@ useEffect(() => {
                     onChange={(e) => setMiddleName(e.target.value)}
                    
                     InputLabelProps={{
-                     style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+                      shrink: middleName ? true : false, // Label shrinks when there's a value
+    style: {
+      color: middleName ? 'white' : 'black', // Change label color to white when floating
+      fontSize: '14px', // Label font size
+      transition: 'all 0.3s ease', // Smooth transition for the label's position
+      top: middleName ? '-10px' : '10%', // Adjust top position when the label floats
+      left: middleName ? '10px' : '12px', // Adjust left position for floating effect
+      transform: middleName ? 'translateY(-50%)' : 'translateY(50%)', // Smooth transition effect
+      fontWeight: middleName ? 'semibold' : 'normal', // Make label bold when floating
+    },
+
                     }} 
                     InputProps={{
                       style: {
@@ -2353,24 +2236,16 @@ useEffect(() => {
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     InputLabelProps={{
-                      style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+                       shrink: lastName ? true : false, // Label shrinks when there's a value
+    style: {
+      color: lastName ? 'white' : 'black', // Label color changes when floating
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition when the label moves
+      top: lastName ? '-10px' : '10%', // Adjusts the position of the label when it's floating
+      left: lastName ? '10px' : '12px', // Adjusts the label's left position for a floating effect
+      transform: lastName ? 'translateY(-50%)' : 'translateY(50%)', // Smooth label transition
+      fontWeight: lastName ? 'semibold' : 'normal', // Makes the label bold when floating
+    },
                     }} 
                     InputProps={{
                       style: {
@@ -2391,7 +2266,7 @@ useEffect(() => {
                     }} 
                   />
                 </div>
-                <div className=" flex gap-[15px] justify-center items-center">
+                <div className=" flex gap-[15px] justify-center items-center mb-4">
                
       {/* <label htmlFor="dob">Date of Birth</label> */}
       <TextField
@@ -2407,23 +2282,14 @@ useEffect(() => {
         InputLabelProps={{
           shrink: true,
           style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+            color: 'white', // Focused label color (when input is focused)
+      top: '-10px', // Moves label above when focused
+      left: '10px', // Adjusts left position when focused
+      fontWeight: 'semibold', // Bold font when focused
+      fontSize: '14px', // Font size when focused
+      transform: 'translateY(-50%)', // Smooth transition for focus
+          },
+                      
         }}
         InputProps={{
           style: {
@@ -2453,8 +2319,19 @@ useEffect(() => {
   </span>
 </div> */}
 
-       <FormControl variant="outlined" required className="w-full mb-4 relative">
-          <InputLabel id="gender-label" className="absolute top-0 left-2 text-black text-[14px] transform-none bg-white px-1 " style={{ color: 'black', fontSize: '14px' }} >Gender</InputLabel>
+       <FormControl variant="outlined" required className="w-full mb-4 text-[14px] font-col">
+          <InputLabel id="gender-label" 
+          style={{
+      color: gender ? 'white' : 'black', // Color changes based on selection
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for both color and position
+      top: gender ? '-10px' : '10%', // Moves the label above when selected
+      left: gender ? '10px' : '12px', // Adjusts the left positioning
+      transform: gender ? 'translateY(-50%)' : 'translateY(50%)', // Keeps the label centered when floated
+      fontWeight: gender ? 'semibold' : 'normal', // Bold font weight when selected
+    }}
+    shrink={gender || false}
+          >Gender</InputLabel>
           <Select
             labelId="gender-label"
             value={gender}
@@ -2535,23 +2412,15 @@ useEffect(() => {
      helperText={error1} //
      InputLabelProps={{
       style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+      color: mobile ? 'white' : 'black', // Color changes based on selection
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for both color and position
+      top: mobile ? '-10px' : '10%', // Moves the label above when selected
+      left: mobile ? '10px' : '12px', // Adjusts the left positioning
+      transform: mobile ? 'translateY(-50%)' : 'translateY(50%)', // Keeps the label centered when floated
+      fontWeight: mobile ? 'semibold' : 'normal', // Bold font weight when selected
+    },
+    shrink: mobile || false,
     }}
       InputProps={{
         style: {
@@ -2595,23 +2464,15 @@ useEffect(() => {
      helperText={error2} 
      InputLabelProps={{
       style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+      color: email ? 'white' : 'black', // Color changes based on input value
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for both color and position
+      top: email ? '-10px' : '10%', // Moves the label above when selected
+      left: email ? '10px' : '12px', // Adjusts the left positioning when email is filled
+      transform: email ? 'translateY(-50%)' : 'translateY(50%)', // Smooth transition for the label's position
+      fontWeight: email ? 'semibold' : 'normal', // Bold font weight when email has a value
+    },
+    shrink: email || false,
     }}
       InputProps={{
         style: {
@@ -2640,7 +2501,7 @@ useEffect(() => {
 
 </div>
 
-<div className="flex justify-between"> 
+<div className="flex justify-between mb-4"> 
   <div className="">
   {success && <p className=" text-white  w-[320px]">{success}</p>}
 
@@ -2698,24 +2559,16 @@ useEffect(() => {
        value={mobileOTP}
        onChange={handlemobileOTPChange}
        InputLabelProps={{
-        style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+          shrink: mobileOTP ? true : false, // Shrink the label when there is a value in the input
+    style: {
+      color: mobileOTP ? 'white' : 'black', // Label color based on the value of mobileOTP
+      fontSize: '14px',
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: mobileOTP ? '-10px' : '10%', // Moves the label above when there's input
+      left: mobileOTP ? '10px' : '12px', // Adjusts the left positioning when floated
+      transform: mobileOTP ? 'translateY(-50%)' : 'translateY(50%)', // Keeps label centered when floating
+      fontWeight: mobileOTP ? 'semibold' : 'normal', // Font weight change when floated
+    },
       }}
         InputProps={{
           style: {
@@ -2754,24 +2607,17 @@ useEffect(() => {
        value={emailOTP}
      onChange={handleemailOTPChange}
      InputLabelProps={{
-      style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+      shrink: emailOTP ? true : false, // Shrink the label when there's a value
+    style: {
+      color: emailOTP ? 'white' : 'black', // Change label color when there's a value
+      fontSize: '14px', // Reduced label font size
+      transition: 'all 0.3s ease', // Smooth transition for color and position
+      top: emailOTP ? '-10px' : '10%', // Moves label above when value is present
+      left: emailOTP ? '10px' : '12px', // Adjusts left position for floated label
+      transform: emailOTP ? 'translateY(-50%)' : 'translateY(50%)', // Keeps it centered when floated
+      fontWeight: emailOTP ? 'semibold' : 'normal', // Font weight change when label floats
+    },
+                     
     }}
         InputProps={{
           style: {
@@ -2801,7 +2647,7 @@ useEffect(() => {
   </div>
   
 {verify &&(
-    <div className="flex justify-end  ">
+    <div className="flex justify-end  mb-4">
     <button className="bg-white   rounded-xl p-1 text-[#245FB1] text-[12px] font-bold " onClick={verifySignup}>Verify</button>
   </div>
 )}
@@ -2818,24 +2664,17 @@ useEffect(() => {
      value={password}
      onChange={(e) => setPassword(e.target.value)}
      InputLabelProps={{
-      style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+       shrink: password ? true : false, // Shrink label when there's a value
+    style: {
+      color: password ? 'white' : 'black', // Change label color based on value
+      fontSize: '14px', // Label font size
+      transition: 'all 0.3s ease', // Smooth transition when label moves
+      top: password ? '-10px' : '10%', // Move label above when value is entered
+      left: password ? '10px' : '12px', // Adjust left position for floating label
+      transform: password ? 'translateY(-50%)' : 'translateY(50%)', // Keep label centered when floating
+      fontWeight: password ? 'semibold' : 'normal', // Font weight for floating label
+    },
+                      
     }}
      InputProps={{
         style: {
@@ -2874,24 +2713,17 @@ useEffect(() => {
      onChange={(e) => setConfirmPassword(e.target.value)}
      
      InputLabelProps={{
-      style: {
-                        color: 'black', // Reduced label color
-                        fontSize: '14px', // Reduced label font size 
-                         position: 'absolute', // Positioning the label to top left
-                        // top: '10px', // Adjust the top position as per your need
-                        left: '1px', // Adjust the left position as per your need
-                        backgroundColor: 'white', // White background to make it stand out
-                        padding: '0 5px', // Padding around the label for better spacing
-                        transition: 'all 0.3s ease', // Smooth transition when label moves
-                      },
-                      focused:{
-                        color: 'black', // Focused color for label
-                        backgroundColor: '#fff', // White background when focused
-                        top: '-8px', // Adjust top position when focused (closer to input)
-                        left: '1px', // Adjust left position when focused
-                        fontSize: '1px', // Smaller font size when focused
-                        padding:'0 4px',
-                      },
+      shrink: confirmPassword ? true : false, // Shrink label when there's a value
+    style: {
+      color: confirmPassword ? 'white' : 'black', // Change label color based on value
+      fontSize: '14px', // Label font size
+      transition: 'all 0.3s ease', // Smooth transition when label moves
+      top: confirmPassword ? '-10px' : '10%', // Move label above when value is entered
+      left: confirmPassword ? '10px' : '12px', // Adjust left position for floating label
+      transform: confirmPassword ? 'translateY(-50%)' : 'translateY(50%)', // Keep label centered when floating
+      fontWeight: confirmPassword ? 'semibold' : 'normal', // Font weight for floating label
+    },
+
     }}
      InputProps={{
         style: {
@@ -2935,22 +2767,22 @@ useEffect(() => {
       </a>
     </label>
   </div>
-{errorMessage && <p className="text-red-500  w-[320px]">{errorMessage}</p>}
+{errorMessage && <p className="text-white  w-[320px]">{errorMessage}</p>}
 
 
 {showRegistr ?(
-           <div className="flex  justify-end">
-           <button className="p-[5px] px-4 rounded-[50px] text-[#245FB1] font-bold  cursor-not-allowed bg-white">Register</button>
+           <div className="flex w-full items-center px-[120px]">
+           <button className="w-full  items-center p-2 font-bold bg-white  inline-block text-[#245FB1] cursor-not-allowed rounded-full">Register</button>
          </div>
 
 ):(
   <div className="flex w-full items-center px-[120px]">
-           <button className="w-full  items-center p-2 font-bold bg-blue-600  inline-block text-white rounded-full" onClick={handleRegister}>Register</button>
+           <button className="w-full  items-center p-2 font-bold bg-white  inline-block text-[#245FB1] rounded-full" onClick={handleRegister}>Register</button>
          </div>
 )}
-
   </div>
 )}
+<div className="text-white font-bold flex items-center justify-center"><h2>Have an account ? <Link to="/login"><span class="text-[#FFF500] underline decoration-2">Login</span></Link></h2></div>
 
 
       </div>
@@ -2964,7 +2796,6 @@ useEffect(() => {
       <img src={Image} alt="" className=" max-w-[525px]"/>
     </div>
    </main>
-
     </>
   
   );
