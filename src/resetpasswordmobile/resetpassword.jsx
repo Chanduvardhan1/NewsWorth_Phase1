@@ -2,6 +2,8 @@ import React, { useState,useEffect } from "react";
 import logo from "../assets/Images/home/NewsWorth.png"
 import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/image.png'
+import Image from '../assets/Images/about/Main_Image.png';
+
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -173,10 +175,11 @@ useEffect(() => {
      <div className="flex flex-col gap-[10px]  ">
    
 <div className="flex flex-col gap-[15px] pt-[20px]"> 
-<div>
-    <h1 className=" flex text-[25px] font-extrabold justify-center items-center blue-color ">Rest Password</h1>
+
+<div className="  bg-[#245FB1] rounded-[28px] shadow-lg p-7 pb-5 border-solid border-[1px] ">
+  <div>
+    <h1 className=" flex text-[25px] font-extrabold justify-center items-center text-white mt-[-2px] mb-4 ">Reset Password</h1>
 </div>
-<div className="  bg-white rounded-[28px] shadow-lg p-7 pb-5 border-solid border-[1px] ">
 <div className="flex flex-col  gap-[10px]">
   <div>
 <TextField
@@ -184,7 +187,19 @@ useEffect(() => {
                        label="Mobile"
                        required
                        value={email}
-                       variant="outlined"                       
+                       variant="outlined"       
+                       InputLabelProps={{
+    shrink: email ? true : false,
+    style: {
+      color: email ? 'white' : 'black',
+      fontSize: '14px',
+      transition: 'all 0.3s ease',
+      top: email ? '-10px' : '10%',
+      left: email ? '10px' : '12px',
+      transform: email ? 'translateY(-50%)' : 'translateY(50%)',
+      fontWeight: email ? 'semibold' : 'normal',
+    }
+  }}                
                        InputProps={{
                          style: {
                            backgroundSize: "19px 16px",
@@ -215,20 +230,20 @@ useEffect(() => {
                       {!showOtpField1 && (
    
     <div className="flex justify-end items-center space-x-4">
-      <span className={`text-sm ${resendAvailable ? 'text-gray-500' : 'text-red-500'}`}>
+      <span className={`text-sm ${resendAvailable ? 'text-white' : 'text-white'}`}>
         {resendAvailable ? "" : ` (${formatTime(resendTime)})`}
       </span>
       <button
        onClick={handleForgotPassword}
         disabled={!resendAvailable}
-        className={`${resendAvailable ? 'primary-btn' : 'bg-gray-300 text-gray-500 cursor-not-allowed p-[5px] px-4 rounded-[50px]'}`}
+        className={`${resendAvailable ? 'bg-white text-[#245FB1] font-bold  p-[5px] px-4 rounded-[50px]' : 'bg-white text-[#245FB1] font-bold cursor-not-allowed p-[5px] px-4 rounded-[50px]'}`}
       >
         {resendAvailable ? "Resend OTP" : "Resend OTP"}
       </button>
     </div>
   )}
   </div>
-  <div>
+  <div className="mb-4">
                       <TextField
      id="Verification Code" 
      label="Verification Code" 
@@ -236,6 +251,18 @@ useEffect(() => {
      required
      value={otp}
      onChange={handleOtpChange}
+     InputLabelProps={{
+    shrink: otp ? true : false,
+    style: {
+      color: otp ? 'white' : 'black',
+      fontSize: '14px',
+      transition: 'all 0.3s ease',
+      top: otp ? '-10px' : '10%',
+      left: otp ? '10px' : '12px',
+      transform: otp ? 'translateY(-50%)' : 'translateY(50%)',
+      fontWeight: otp ? 'semibold' : 'normal',
+    },
+  }}
 
       InputProps={{
         style: {
@@ -262,7 +289,7 @@ useEffect(() => {
         autoComplete: "off",
       }} />
        </div>
-       <div>
+       <div className="mb-4">
    <TextField
     id="password" 
     label="New Password" 
@@ -271,6 +298,18 @@ useEffect(() => {
     onChange={(e) => setNewPassword(e.target.value)}
     type={showPassword ? "text" : "password"}
     required
+    InputLabelProps={{
+    shrink: newPassword ? true : false,
+    style: {
+      color: newPassword ? 'white' : 'black',
+      fontSize: '14px',
+      transition: 'all 0.3s ease',
+      top: newPassword ? '-10px' : '10%',
+      left: newPassword ? '10px' : '12px',
+      transform: newPassword ? 'translateY(-50%)' : 'translateY(50%)',
+      fontWeight: newPassword ? 'semibold' : 'normal',
+    }
+  }}
      InputProps={{
        style: {
          backgroundSize: "19px 16px",
@@ -295,7 +334,43 @@ useEffect(() => {
          </div>
        ),
        autoComplete: "off",
-     }} />
+     }}
+          sx={{
+                           // Disable autofill background
+                            width: { xs: '100%', lg: '325px' },
+
+    // Outermost box
+    '& .MuiOutlinedInput-root': {
+      backgroundColor: 'white',
+      borderRadius: '10px',
+      height: '50px',
+      paddingRight: '10px', // for icon spacing
+      '& fieldset': {
+        borderColor: 'transparent', // or your custom color
+      },
+      '&:hover fieldset': {
+        borderColor: '#aaa',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#4a90e2',
+        //  borderColor: '#ccc', // Keep the same color on focus
+        // borderWidth: '1px', // Keep the same thickness on focus
+      },
+    },
+
+    // Actual input element
+    '& input': {
+      backgroundColor: 'white',
+      fontSize: '14px',
+      padding: '10px',
+      borderRadius:'10px',
+    },
+                           '& input:-webkit-autofill': {
+                             WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
+                             WebkitTextFillColor: '#000', // Text color when autofilled
+                           },
+                         }}
+      />
      </div>
      <div>
  <TextField
@@ -306,6 +381,18 @@ useEffect(() => {
         onChange={(e) => setConfirmNewPassword(e.target.value)}
     type={showPassword ? "text" : "password"}
     required
+    InputLabelProps={{
+    shrink: confirmNewPassword ? true : false,
+    style: {
+      color: confirmNewPassword ? 'white' : 'black',
+      fontSize: '14px',
+      transition: 'all 0.3s ease',
+      top: confirmNewPassword ? '-10px' : '10%',
+      left: confirmNewPassword ? '10px' : '12px',
+      transform: confirmNewPassword ? 'translateY(-50%)' : 'translateY(50%)',
+      fontWeight: confirmNewPassword ? 'semibold' : 'normal',
+    }
+  }}
      InputProps={{
        style: {
          backgroundSize: "19px 16px",
@@ -323,7 +410,7 @@ useEffect(() => {
        endAdornment:showPassword !== undefined && (
          <div
          onClick={togglePasswordVisibility}
-         className=" text-[#a7a3ff]" 
+         className=" text-[#a7a3ff] cursor-pointer" 
          >
                  {showPassword ? <FaEye/> : <FaEyeSlash />}
 
@@ -332,14 +419,14 @@ useEffect(() => {
        autoComplete: "off",
      }} />
      </div>
-     <div>{showError && <p className="text-red-500 w-[315px] justify-center flex">{showError}</p>}
+     <div>{showError && <p className="text-white w-[315px] justify-center flex">{showError}</p>}
      </div>
   <div>
     <div className=" flex justify-between">
-        <button className="primary-btn" onClick={handleCancel}>
+        <button className="p-[5px] px-4 rounded-[50px] text-[#245FB1] font-bold  bg-white" onClick={handleCancel}>
 Cancel
         </button>
-        <button className="primary-btn" onClick={handleResetPassword} >
+        <button className="p-[5px] px-4 rounded-[50px] text-[#245FB1] font-bold  bg-white " onClick={handleResetPassword} >
 Submit
         </button>
     </div>
@@ -359,7 +446,7 @@ Submit
  </div>
  <div className="w-[50%] flex justify-center items-center">
   
-   <img src={home} alt="" width={500}  height={500}/>
+            <img src={Image} alt="News Image" className="max-w-[525px]" />
 
  </div>
 
