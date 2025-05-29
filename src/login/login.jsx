@@ -298,15 +298,16 @@ const [errorMessage1, setErrorMessage1] = useState('')
        <main className="w-full h-auto lg:h-[500px] flex flex-col lg:flex-row px-4 lg:px-[5%]">
           <div className="w-full lg:w-[50%]">
              {!showforgat && (
-                <div className="pr-0 lg:pr-[10px]">
-                   <div className="flex text-[24px] lg:text-[30px] font-extrabold justify-center items-center pb-5 blue-color">
+                <div className="pr-0 lg:pr-[10px] mt-10">
+                   {/* <div className="flex text-[24px] lg:text-[30px] font-extrabold justify-center items-center pb-5 blue-color">
                       <h1>Login</h1>
-                   </div>
-                   <div className="flex flex-col justify-center items-center">
-                      <div className="flex flex-col gap-[10px] bg-white rounded-[28px] shadow-lg p-5 lg:p-7 pb-5 border-solid border-[1px]">
+                   </div> */}
+                   <div className="flex flex-col justify-center items-center ">
+                      <div className="flex flex-col gap-[10px] bg-[#245FB1] rounded-[28px] shadow-lg p-5 lg:p-7 pb-5 border-solid border-[1px]">
+                        <h1 className=" flex justify-center mt-[-4px] text-[25px] font-bold text-white">Login</h1>
                       <div className="relative flex justify-between w-full font-bold">
       <div
-        className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'email' ? '' : ''}`}
+        className={`cursor-pointer text-white text-[14px] flex-1 text-center py-2 ${loginMethod === 'email' ? '' : ''}`}
         onClick={() => {
           setUserType('Email');
           setEmail(''); 
@@ -316,7 +317,7 @@ const [errorMessage1, setErrorMessage1] = useState('')
         Email
       </div>
       <div
-        className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'mobile' ? '' : ''}`}
+        className={`cursor-pointer text-white text-[14px] flex-1 text-center py-2 ${loginMethod === 'mobile' ? '' : ''}`}
         onClick={() => {
           setUserType('Mobile');
           setEmail('');
@@ -326,7 +327,7 @@ const [errorMessage1, setErrorMessage1] = useState('')
         Mobile
       </div>
       <div
-        className={`cursor-pointer blue-color text-[14px] flex-1 text-center py-2 ${loginMethod === 'gmail' ? '' : ''}`}
+        className={`cursor-pointer text-white text-[14px] flex-1 text-center py-2 ${loginMethod === 'gmail' ? '' : ''}`}
         onClick={() => {
           setUserType('User Id');
           setEmail(''); 
@@ -336,14 +337,14 @@ const [errorMessage1, setErrorMessage1] = useState('')
         User ID
       </div>
       <div
-    className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300 ${
+    className={`absolute bottom-0 h-[2px] w-1/3 transition-all duration-300  ${
       userType === 'Email' ? 'left-0 bg-red-500' : 
-      userType === 'Mobile' ? 'left-1/3 bg-blue-500' : 
-      'left-2/3 bg-green-500'
+      userType === 'Mobile' ? 'left-1/3 bg-red-500' : 
+      'left-2/3 bg-red-500'
     }`}
   />
     </div>
-                         <div className="flex flex-col gap-[20px] pt-[10px]">
+                         <div className="flex flex-col gap-[20px] pt-[10px] mt-3">
              
                             {/* <FormControl variant="outlined" required>
                                <InputLabel id="gender-label">Login Option</InputLabel>
@@ -373,27 +374,61 @@ const [errorMessage1, setErrorMessage1] = useState('')
 
                          variant="outlined"
                          InputLabelProps={{
-                           style: {
-                             color: '#666666', // Reduced label color
-                             fontSize: '14px', // Reduced label font size
-                           },
+                            shrink: email ? true : false, // Label will float when input has value
+      style: {
+        color: email ? 'white' : 'black', // Floating label color changes to white
+        fontSize: '14px',
+        transition: 'all 0.3s ease', // Smooth transition for label movement
+        top: email ? '-10px' : '10%', // Move label above when input has value
+        left: email ? '10px' : '12px', // Adjust left position for floating label
+        transform: email ? 'translateY(-50%)' : 'translateY(50%)', // Adjust for floating effect
+        fontWeight: email ? 'semibold' : 'normal', // Bold label when floating
+      },
                          }}
                          InputProps={{
-                           style: {
-                             fontSize: '14px',
-                             height: "50px",
-                             borderRadius: "10px",
-                           },
-                           className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
+                           autoComplete: "off",
+                          //  style: {
+                          //    fontSize: '14px',
+                          //    height: "50px",
+                          //    borderRadius: "10px",
+                          //  },
+                          //  className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
                            endAdornment: (
                              <div className="text-blue-400">
                                <img src="src/assets/Images/login/envelope.png" alt="" className="w-[25px] text-blue-800" />
                              </div>
                            ),
-                           autoComplete: "off",
                          }}
                          sx={{
                            // Disable autofill background
+                            width: { xs: '100%', lg: '325px' },
+
+    // Outermost box
+    '& .MuiOutlinedInput-root': {
+      backgroundColor: 'white',
+      borderRadius: '10px',
+      height: '50px',
+      paddingRight: '10px', // for icon spacing
+      '& fieldset': {
+        borderColor: 'transparent', // or your custom color
+      },
+      '&:hover fieldset': {
+        borderColor: '#aaa',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#4a90e2',
+        //  borderColor: '#ccc', // Keep the same color on focus
+        // borderWidth: '1px', // Keep the same thickness on focus
+      },
+    },
+
+    // Actual input element
+    '& input': {
+      backgroundColor: 'white',
+      fontSize: '14px',
+      padding: '10px',
+      borderRadius:'10px',
+    },
                            '& input:-webkit-autofill': {
                              WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
                              WebkitTextFillColor: '#000', // Text color when autofilled
@@ -415,10 +450,16 @@ const [errorMessage1, setErrorMessage1] = useState('')
                               }}
                                variant="outlined"
                                InputLabelProps={{
-                                style: {
-                                  color: '#666666', // Reduced label color
-                                  fontSize: '14px', // Reduced label font size
-                                },
+                               shrink: email ? true : false, // Label will float when input has value
+      style: {
+        color: email ? 'white' : 'black', // Floating label color changes to white
+        fontSize: '14px',
+        transition: 'all 0.3s ease', // Smooth transition for label movement
+        top: email ? '-10px' : '10%', // Move label above when input has value
+        left: email ? '10px' : '12px', // Adjust left position for floating label
+        transform: email ? 'translateY(-50%)' : 'translateY(50%)', // Adjust for floating effect
+        fontWeight: email ? 'semibold' : 'normal', // Bold label when floating
+      },
                               }}
                                InputProps={{
                                 style: {
@@ -435,6 +476,33 @@ const [errorMessage1, setErrorMessage1] = useState('')
                                   autoComplete: "off",
                                }}
                                sx={{
+                                 // Disable autofill background
+                            width: { xs: '100%', lg: '325px' },
+
+    // Outermost box
+    '& .MuiOutlinedInput-root': {
+      backgroundColor: 'white',
+      borderRadius: '10px',
+      height: '50px',
+      paddingRight: '10px', // for icon spacing
+      '& fieldset': {
+        borderColor: 'transparent', // or your custom color
+      },
+      '&:hover fieldset': {
+        borderColor: '#aaa',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#4a90e2',
+      },
+    },
+
+    // Actual input element
+    '& input': {
+      backgroundColor: 'white',
+      fontSize: '14px',
+      padding: '10px',
+      borderRadius:'10px',
+    },
                                 // Disable autofill background
                                 '& input:-webkit-autofill': {
                                   WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
@@ -457,10 +525,16 @@ const [errorMessage1, setErrorMessage1] = useState('')
                               }}
                                variant="outlined"
                                InputLabelProps={{
-                                style: {
-                                  color: '#666666', // Reduced label color
-                                  fontSize: '14px', // Reduced label font size
-                                },
+                               shrink: email ? true : false, // Label will float when input has value
+      style: {
+        color: email ? 'white' : 'black', // Floating label color changes to white
+        fontSize: '14px',
+        transition: 'all 0.3s ease', // Smooth transition for label movement
+        top: email ? '-10px' : '10%', // Move label above when input has value
+        left: email ? '10px' : '12px', // Adjust left position for floating label
+        transform: email ? 'translateY(-50%)' : 'translateY(50%)', // Adjust for floating effect
+        fontWeight: email ? 'semibold' : 'normal', // Bold label when floating
+      },
                               }}
                                InputProps={{
                                 style: {
@@ -468,7 +542,7 @@ const [errorMessage1, setErrorMessage1] = useState('')
                                   height: "50px",
                                   borderRadius: "10px",
                                 },
-                                  className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
+                                  // className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
                                   endAdornment: (
                                   <div className="text-blue-400">
                                      <img src="src/assets/Images/signup/iphone.png" alt="" className="w-[20px] text-blue-800" />
@@ -477,6 +551,32 @@ const [errorMessage1, setErrorMessage1] = useState('')
                                   autoComplete: "off",
                                }}
                                sx={{
+                                 width: { xs: '100%', lg: '325px' },
+    // Outermost box
+    '& .MuiOutlinedInput-root': {
+      backgroundColor: 'white',
+      borderRadius: '10px',
+      height: '50px',
+      paddingRight: '10px', // for icon spacing
+      '& fieldset': {
+        borderColor: 'transparent', // or your custom color
+      },
+      '&:hover fieldset': {
+        borderColor: '#aaa',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#4a90e2',
+      },
+    },
+
+    // Actual input element
+    '& input': {
+      backgroundColor: 'white',
+      fontSize: '14px',
+      padding: '10px',
+      borderRadius:'10px',
+    },
+
                                 // Disable autofill background
                                 '& input:-webkit-autofill': {
                                   WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
@@ -495,10 +595,16 @@ const [errorMessage1, setErrorMessage1] = useState('')
                                type={showPassword ? "text" : "password"}
                                required
                                InputLabelProps={{
-                                style: {
-                                  color: '#666666', // Reduced label color
-                                  fontSize: '14px', // Reduced label font size
-                                },
+                                shrink: password ? true : false, // Label shrinks when there's input
+    style: {
+      color: password ? 'white' : 'black', // Floating label color changes to white when input has value
+      fontSize: '14px',
+      transition: 'all 0.3s ease', // Smooth transition for label movement
+      top: password ? '-10px' : '10%', // Move label above when input has value
+      left: password ? '10px' : '12px', // Adjust left position for floating label
+      transform: password ? 'translateY(-50%)' : 'translateY(50%)', // Adjust for floating effect
+      fontWeight: password ? 'semibold' : 'normal', // Bold label when floating
+    },
                               }}
                                InputProps={{
                                 style: {
@@ -506,7 +612,7 @@ const [errorMessage1, setErrorMessage1] = useState('')
                                   height: "50px",
                                   borderRadius: "10px",
                                 },
-                                  className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
+                                  // className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
                                   endAdornment:showPassword !== undefined && (
                                   <div
                                      onClick={togglePasswordVisibility}
@@ -518,6 +624,31 @@ const [errorMessage1, setErrorMessage1] = useState('')
                                   autoComplete: "off",
                                }}
                                sx={{
+                                    width: { xs: '100%', lg: '325px' },
+    // Outermost box
+    '& .MuiOutlinedInput-root': {
+      backgroundColor: 'white',
+      borderRadius: '10px',
+      height: '50px',
+      paddingRight: '10px', // for icon spacing
+      '& fieldset': {
+        borderColor: 'transparent', // or your custom color
+      },
+      '&:hover fieldset': {
+        borderColor: '#aaa',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#4a90e2',
+      },
+    },
+
+    // Actual input element
+    '& input': {
+      backgroundColor: 'white',
+      fontSize: '14px',
+      padding: '10px',
+      borderRadius:'10px',
+    },
                                 // Disable autofill background
                                 '& input:-webkit-autofill': {
                                   WebkitBoxShadow: '0 0 0 1000px white inset', // Change the background color to white or any other color
@@ -527,22 +658,22 @@ const [errorMessage1, setErrorMessage1] = useState('')
                             />
                          </div>
                          <div className="flex justify-end items-end text-blue-500">
-                            <p onClick={showForgat} className="cursor-pointer">Forgot Password?</p>
+                            <p onClick={showForgat} className="cursor-pointer text-[#FFF500] font-semibold">Forgot Password ?</p>
                          </div>
                          <div className="flex justify-center items-center pt-[10px]">
-                            <p>Don't have an account yet? Please <span className="text-blue-500 cursor-pointer" onClick={handleSignup}>Sign Up</span></p>
+                            <p className="text-white">New to Newsworth ? <span className="text-[#FFF500] cursor-pointer font-bold underline decoration-2" onClick={handleSignup}>Sign Up</span></p>
                          </div>
                          <div className="flex justify-center">
-                            <button className="primary-btn" onClick={handleLogin}>Login</button>
+                            <button className="p-[5px] px-4 rounded-[50px] text-[#245FB1] font-bold  bg-white " onClick={handleLogin}>Login</button>
                          </div>
-                         {errorMessage && <p className="text-red-500 w-[315px] justify-center flex">{errorMessage}</p>}
+                         {errorMessage && <p className="text-white w-[315px] justify-center flex">{errorMessage}</p>}
                       </div>
                    </div>
                 </div>
              )}
              {showforgat && (
              <div className="flex w-full h-[500px] justify-center items-center">
-                <div className="flex flex-col justify-center gap-[10px]">
+                <div className="flex flex-col justify-center gap-[10px] bg-[#245FB1] rounded-[28px] p-5 ">
                    <div className="flex gap-[10px]">
                       <img
                          src={forgotPasswordIcon}
@@ -552,14 +683,14 @@ const [errorMessage1, setErrorMessage1] = useState('')
                          className="cursor-pointer"
                          onClick={showForgatback} 
                       />
-                      <p onClick={showForgatback} className="text-[25px] cursor-pointer font-bold red-color">Go Back</p>
+                      <p onClick={showForgatback} className="text-[25px] cursor-pointer font-bold text-[#FFF500]">Go Back</p>
                    </div>
-                   <div className="text-[30px] font-bold text-[#1c3c9ff5]">
+                   {/* <div className="text-[30px] font-bold text-[#1c3c9ff5]">
                       <h1>Forgot Password</h1>
-                   </div>
-                   <p className="font-bold"> Reset using {userType === "Email" && (<span>email</span>)} {userType === "Mobile" && (<span>mobile</span>)}  {userType === "User Id" && (<span>User id</span>)}</p>
+                   </div> */}
+                   <p className="font-bold ml-2 mb-3 text-white"> Reset password using {userType === "Email" && (<span>email</span>)} {userType === "Mobile" && (<span>mobile</span>)}  {userType === "User Id" && (<span>User id</span>)}</p>
                    {userType === "Email"&& (
-                   <div>
+                   <div >
                       <TextField
                          id="email"
                          label="Email"
@@ -568,10 +699,16 @@ const [errorMessage1, setErrorMessage1] = useState('')
                          value={email}
                          onChange={(e) => setEmail(e.target.value)}
                          InputLabelProps={{
-                          style: {
-                            color: '#666666', // Reduced label color
-                            fontSize: '14px', // Reduced label font size
-                          },
+                         shrink: email ? true : false, // Label will float when input has value
+    style: {
+      color: email ? 'white' : 'black', // Floating label color changes to white
+      fontSize: '14px', // Font size for the label
+      transition: 'all 0.3s ease', // Smooth transition for label movement
+      top: email ? '-10px' : '10%', // Move label above when input has value
+      left: email ? '10px' : '12px', // Adjust left position for floating label
+      transform: email ? 'translateY(-50%)' : 'translateY(50%)', // Adjust for floating effect
+      fontWeight: email ? 'semibold' : 'normal', // Bold label when floating
+    },
                         }}
                          InputProps={{
                           style: {
@@ -607,10 +744,16 @@ const [errorMessage1, setErrorMessage1] = useState('')
                          onChange={(e) => setEmail(e.target.value)}
                          variant="outlined"
                          InputLabelProps={{
-                          style: {
-                            color: '#666666', // Reduced label color
-                            fontSize: '14px', // Reduced label font size
-                          },
+                          shrink: email ? true : false, // Label will float when input has value
+    style: {
+      color: email ? 'white' : 'black', // Floating label color changes to white
+      fontSize: '14px', // Font size for the label
+      transition: 'all 0.3s ease', // Smooth transition for label movement
+      top: email ? '-10px' : '10%', // Move label above when input has value
+      left: email ? '10px' : '12px', // Adjust left position for floating label
+      transform: email ? 'translateY(-50%)' : 'translateY(50%)', // Adjust for floating effect
+      fontWeight: email ? 'semibold' : 'normal', // Bold label when floating
+    },
                         }}
                          InputProps={{
                           style: {
@@ -646,10 +789,16 @@ const [errorMessage1, setErrorMessage1] = useState('')
                          value={email}
                          onChange={(e) => setEmail(e.target.value)}
                          InputLabelProps={{
-                          style: {
-                            color: '#666666', // Reduced label color
-                            fontSize: '14px', // Reduced label font size
-                          },
+                         shrink: email ? true : false, // Label will float when input has value
+    style: {
+      color: email ? 'white' : 'black', // Floating label color changes to white
+      fontSize: '14px', // Font size for the label
+      transition: 'all 0.3s ease', // Smooth transition for label movement
+      top: email ? '-10px' : '10%', // Move label above when input has value
+      left: email ? '10px' : '12px', // Adjust left position for floating label
+      transform: email ? 'translateY(-50%)' : 'translateY(50%)', // Adjust for floating effect
+      fontWeight: email ? 'semibold' : 'normal', // Bold label when floating
+    },
                         }}
                          InputProps={{
                           style: {
@@ -675,11 +824,11 @@ const [errorMessage1, setErrorMessage1] = useState('')
                       />
                    </div>
                    )}
-                   <div className="flex justify-end">
+                   <div className="flex justify-center mt-1">
 
-                      <p className="primary-btn cursor-pointer" onClick={handleForgotPassword}>Send OTP</p>
+                      <p className="p-[5px] px-4 rounded-[50px] text-[#245FB1] font-bold  bg-white cursor-pointer" onClick={handleForgotPassword}>Send OTP</p>
                    </div>
-                   {errorMessage1 && <p className="text-red-500  flex">{errorMessage1}</p>}
+                   {errorMessage1 && <p className="text-white  flex">{errorMessage1}</p>}
 
                 </div>
              </div>
