@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/image.png'
 import TextField from '@mui/material/TextField';
+import Image from '../assets/Images/about/Main_Image.png';
+
 import { URL } from "../url";
 
 const contactus = () => {
@@ -71,17 +73,17 @@ const contactus = () => {
    
     <div className="w-[50%] flex flex-col justify-center">
     <div className="pr-[10px]  ">
-      <div  className="flex text-[30px] font-extrabold justify-center items-center pb-5">
+      {/* <div  className="flex text-[30px] font-extrabold justify-center items-center pb-5">
         <h1 className="blue-color ">Get in Touch With Us</h1>
-      </div>
+      </div> */}
     <div className="flex flex-col justify-center items-center ">
-        <div className="flex flex-col gap-[20px]  rounded-[28px] shadow-lg p-7 pb-5 border-solid border-[1px]">
+        <div className="flex flex-col gap-[20px]  rounded-[28px] shadow-lg p-7 pb-5 border-solid border-[1px] bg-[#245FB1]">
+<h1 className=" text-white text-[25px] ml-8 font-bold justify-center items-center ">Get in Touch With Us</h1>
+<div className="flex gap-[5px] mb-2"> 
 
-<div className="flex gap-[5px] "> 
-
-<TextField
-                    id="First Name"
-                    label="First Name"
+<TextField 
+                    id="Name"
+                    label="Name"
                     variant="outlined"
                     type="text"
                   
@@ -91,7 +93,7 @@ const contactus = () => {
                     InputProps={{
                       style: {
                     
-                        width: "160px",
+                        width: "325px",
                         height: "50px",
                        
                         borderRadius: "10px",
@@ -100,9 +102,20 @@ const contactus = () => {
                       },
                       autoComplete: "off",
                     }}
-         
+         InputLabelProps={{
+    shrink: name ? true : false, // Label will float when input has value
+    style: {
+      color: name ? 'white' : 'black', // Floating label color changes to white
+      fontSize: '14px', // Font size for the label
+      transition: 'all 0.3s ease', // Smooth transition for label movement
+      top: name ? '-10px' : '10%', // Move label above when input has value
+      left: name ? '10px' : '12px', // Adjust left position for floating label
+      transform: name ? 'translateY(-50%)' : 'translateY(50%)', // Adjust for floating effect
+      fontWeight: name ? 'semibold' : 'normal', // Bold label when floating
+    },
+  }}
                   />
-                  <TextField
+                  {/* <TextField
                     id="LastName"
                     label="Last Name"
                     variant="outlined"
@@ -123,11 +136,11 @@ const contactus = () => {
                       autoComplete: "off",
                     }}
          
-                  />
+                  /> */}
 
 
   </div>
-  <div>
+  <div className="mb-2">
   <TextField
                           id="email"
                           label="Email"
@@ -137,6 +150,18 @@ const contactus = () => {
                           variant="outlined"
                      
                           required
+                          InputLabelProps={{
+    shrink: emailaddress ? true : false, // Label will float when input has value
+    style: {
+      color: emailaddress ? 'white' : 'black', // Floating label color changes to white
+      fontSize: '14px', // Font size for the label
+      transition: 'all 0.3s ease', // Smooth transition for label movement
+      top: emailaddress ? '-10px' : '10%', // Move label above when input has value
+      left: emailaddress ? '10px' : '12px', // Adjust left position for floating label
+      transform: emailaddress ? 'translateY(-50%)' : 'translateY(50%)', // Adjust for floating effect
+      fontWeight: emailaddress ? 'semibold' : 'normal', // Bold label when floating
+    },
+  }}
                           InputProps={{
                             style: {
                               backgroundSize: "19px 16px",
@@ -163,7 +188,7 @@ const contactus = () => {
                           }}
                         />
   </div>
-  <div>
+  <div className="mb-2">
   <TextField
                           id="Mobile"
                           label="Mobile"
@@ -172,7 +197,18 @@ const contactus = () => {
                           onChange={(e) => setMobileNumber(e.target.value)}
                           variant="outlined"
                           required
-                          
+                          InputLabelProps={{
+    shrink: mobilenumber ? true : false, // Label will float when input has value
+    style: {
+      color: mobilenumber ? 'white' : 'black', // Floating label color changes to white
+      fontSize: '14px', // Font size for the label
+      transition: 'all 0.3s ease', // Smooth transition for label movement
+      top: mobilenumber ? '-10px' : '10%', // Move label above when input has value
+      left: mobilenumber ? '10px' : '12px', // Adjust left position for floating label
+      transform: mobilenumber ? 'translateY(-50%)' : 'translateY(50%)', // Adjust for floating effect
+      fontWeight: mobilenumber ? 'semibold' : 'normal', // Bold label when floating
+    },
+  }}
                           InputProps={{
                             style: {
                               backgroundSize: "19px 16px",
@@ -208,7 +244,18 @@ const contactus = () => {
                         
                           variant="outlined"
                           required
-                          
+                          InputLabelProps={{
+    shrink: message ? true : false, // Label will float when input has value
+    style: {
+      color: message ? 'white' : 'black', // Floating label color changes to white
+      fontSize: '14px', // Font size for the label
+      transition: 'all 0.3s ease', // Smooth transition for label movement
+      top: message ? '-10px' : '10%', // Move label above when input has value
+      left: message ? '10px' : '12px', // Adjust left position for floating label
+      transform: message ? 'translateY(-50%)' : 'translateY(50%)', // Adjust for floating effect
+      fontWeight: message ? 'semibold' : 'normal', // Bold label when floating
+    },
+  }}
                           InputProps={{
                             style: {
                               backgroundSize: "19px 16px",
@@ -236,10 +283,10 @@ const contactus = () => {
   </div>
 
 
-  <div className="flex justify-end ">
-    <button className="primary-btn" onClick={handleContact}>Send</button>
+  <div className="flex justify-center ">
+    <button className="w-28  items-center p-2 font-bold bg-white  inline-block text-[#245FB1]  rounded-full" onClick={handleContact}>Send</button>
   </div>
-  {responseMessage && <div className=" text-red-500">{responseMessage}</div>}
+  {responseMessage && <div className=" text-white">{responseMessage}</div>}
 
   </div>
     </div>
@@ -247,7 +294,7 @@ const contactus = () => {
     </div>
     <div className="w-[50%] flex justify-end items-center">
   
-  <img src={home} alt="" width={500}  height={500}/>
+            <img src={Image} alt="News Image" className="max-w-[525px]" />
 
 </div>
    </main>
