@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import logo from "../../src/assets/Images/home/background.png"
 import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/image.png'
@@ -40,9 +40,18 @@ const Home = () => {
     <>
    <Navbar/>
    <div className="relative ">
-   <main className="h-[500px] w-full overflow-hidden  flex px-[5%]">
-    <div className="w-[50%] flex flex-col  items-center justify-center">
-    <div className="flex flex-col  gap-3">
+   <main className="h-[500px] w-full overflow-hidden flex px-[5%]">
+    <div className="w-[50%] flex flex-col items-center justify-center ">
+            <div className="flex flex-col font-semibold">
+            <p className="text-[#245FB1] text-[30px] ">Newsworth</p>
+            <p className=" text-[30px] mb-4">Engaging enough for the <br/>general public to justify reporting</p>
+            <p className="text-[18px] mb-4">Please register to be a part of the website.</p>
+            </div>
+            <button className=' items-center p-2 w-40 font-bold bg-[#245FB1] text-white rounded-md ml-[-300px]'><Link to="/signup">Register Now</Link></button>
+          </div>
+          
+    {/* <div className="w-[50%] flex flex-col  items-center justify-center">
+    <div className="flex flex-col  gap-3"> */}
       {/* <div className=" text-[32px] font-bold items-start justify-start blue-color">
         <h1>Feature</h1>
       </div> */}
@@ -52,10 +61,10 @@ const Home = () => {
 
 
 
-            <div className="flex flex-col gap-5">
+            {/* <div className="flex flex-col gap-5">
 
     < Home1/>
-    </div>
+    </div> */}
      {/* <div className="flex flex-col gap-5">
   <p className="animate-slide-left opacity-0"> 
     Unfiltered stories, unmatched quality.<span className=" text-orange-500 font-bold"></span>
@@ -79,8 +88,8 @@ const Home = () => {
 
         
       
-    </div>
-    </div>
+    {/* </div>
+    </div> */}
     <div  className="w-[50%] flex justify-end items-center">
       <img src={Image} alt=""  className=" max-w-[525px]"/>
     </div>
@@ -89,7 +98,7 @@ const Home = () => {
 
 
    <div className="flex justify-end pr-[65px] gap-1 ">
-    <p onClick={handleContactUs} className=" cursor-pointer text-[14px] blue-color hover:red-color">Contact Us</p>|
+    <p onClick={handleContactUs} className=" cursor-pointer text-[14px] text-[#245FB1] ">Contact Us</p>|
     <p className='text-[14px]'>{visitorsCount} Visited</p>|
     <p className='text-[14px]'>©2024, Circle Of Minds Innovation Pvt Ltd.</p>
 

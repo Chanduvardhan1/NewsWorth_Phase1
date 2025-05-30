@@ -2130,13 +2130,13 @@ useEffect(() => {
 {errorMessage && <p className="text-white w-[320px]">{errorMessage}</p>}
 
 {showRegistr ?(
-           <div className="flex justify-end">
-           <button className="p-[5px] px-4 rounded-[50px] text-[#245FB1] font-bold  cursor-not-allowed bg-white">Register</button>
+           <div className="flex justify-center">
+           <button className="p-[5px] w-1/2 px-4 rounded-[50px] text-[#245FB1] font-bold  cursor-not-allowed bg-white">Register</button>
          </div>
 
 ):(
-  <div className="flex justify-end ">
-           <button className="p-[5px] px-4 rounded-[50px] text-[#245FB1] font-bold  bg-white" onClick={handleRegister1}>Register</button>
+  <div className="flex justify-center ">
+           <button className="p-[5px] w-1/2 px-4 rounded-[50px] text-[#245FB1] font-bold  bg-white" onClick={handleRegister1}>Register</button>
          </div>
 )}
 
