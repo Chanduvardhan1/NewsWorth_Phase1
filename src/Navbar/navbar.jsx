@@ -34,7 +34,7 @@ const navbar = () => {
 <div>
 <img  src={logo} alt="NewsWorth" width={150} height={50} className="transition-transform duration-300 ease-in-out  cursor-pointer object-cover" onClick={handlehome}/>
 </div>
-<div className="flex text-[16px] gap-[45px]  font-bold justify-center items-center cursor-pointer ">
+<div className="flex text-[16px] gap-[45px]  font-bold justify-center items-center ">
 
 <div className="p-2 px-4 group">
 <NavLink

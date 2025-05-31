@@ -7,6 +7,7 @@ import Image from'../assets/Images/about/Main_Image.png'
 import { useNavigate } from "react-router-dom";
 import Home1 from "./home1";
 import { URL } from "../url";
+import City from '../../src/city/city';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const Home = () => {
 
   return (
     <>
+    {/* <City/> */}
    <Navbar/>
    <div className="relative ">
    <main className="h-[500px] w-full overflow-hidden flex px-[5%]">

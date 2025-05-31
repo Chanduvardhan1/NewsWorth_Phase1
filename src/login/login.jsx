@@ -3,7 +3,7 @@ import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/image.png'
 import Image from'../assets/Images/about/Main_Image.png'
 import { AuthContext } from "../Authcontext/AuthContext.jsx"
-
+import UserIcon from'../assets/Images/login/profile.png'
 
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
@@ -467,10 +467,10 @@ const [errorMessage1, setErrorMessage1] = useState('')
                                   height: "50px",
                                   borderRadius: "10px",
                                 },
-                                  className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
+                                  // className: "w-full lg:w-[325px] h-[50px] bg-white rounded-[10px] gap-[5px]",
                                   endAdornment: (
                                   <div className="text-blue-400">
-                                     <img src="images/home/login/envelope.png" alt="" className="w-[25px] text-blue-800" />
+                                     <img src={UserIcon} alt="user-icon" className="w-[25px] text-blue-800" />
                                   </div>
                                   ),
                                   autoComplete: "off",
