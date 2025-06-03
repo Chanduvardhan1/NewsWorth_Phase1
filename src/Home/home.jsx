@@ -39,7 +39,7 @@ const Home = () => {
 
   return (
     <>
-    {/* <City/> */}
+    <City/>
    <Navbar/>
    <div className="relative ">
    <main className="h-[500px] w-full overflow-hidden flex px-[5%]">

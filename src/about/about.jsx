@@ -2,6 +2,15 @@ import React from 'react';
 import Navbar from "../Navbar/navbar";
 import Image from '../assets/Images/about/Main_Image.png';
 
+const points=[
+  'NewsWorth connects individuals with media companies for real-time news distribution.',
+  'The platform enables faster delivery of news by allowing users to upload photos and videos.',
+  'Uploaded content is available for immediate purchase by media outlets.',
+  'Individuals are empowered to share news, contributing to faster, decentralized reporting.',
+  'Media companies gain access to fresh, relevant, and real-time content.',
+  'Users receive fair compensation for the content they provide.',
+  'The platform supports a mutually beneficial ecosystem for both content creators and media organizations.'
+]
 const About = () => {
   return (
     <>
@@ -17,6 +26,11 @@ const About = () => {
             <p className=" text-[15px] mb-4 text-black text-justify font-medium">At NewsWorth, we connect people with media companies for real-time news distribution. Our platform enables faster delivery of news by allowing people to upload photos, and videos for immediate purchase by media outlets.
 By empowering individuals to share their news, we help media outlets access fresh, relevant content quickly. People are also compensated for their work, ensuring fair payment for the content they provide.</p>
             {/* <p className="text-[15px] font-medium">Please register to be a part of the website.</p> */}
+             {/* <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
+      {points.map((point, index) => (
+        <li key={index}>{point}</li>
+      ))}
+    </ul> */}
             </div>
           </div>
 

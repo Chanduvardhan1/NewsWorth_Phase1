@@ -748,7 +748,7 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
     <div className=" relative top-[65px]">
 
     <div className="flex p-4 pl-[60px] justify-between items-center ">
-      <h1 className="blue-color  text-[25px]">My Profile</h1>
+      <h1 className="text-[#245FB1] font-semibold text-[25px]">My Profile</h1>
       {/* <img src={logout1} alt="" onClick={handleBackToLogin} className="w-[25px] h-[25px] cursor-pointer" /> */}
     </div>
     <div className=" flex flex-row w-full  gap-[20px] ">
@@ -806,7 +806,7 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
           onClick={closeModal}
         >
          <div class="flex items-center justify-center min-h-screen ">
-  <div class="bg-gray-800 text-white rounded-lg p-6 shadow-lg max-w-xs">
+  <div class="bg-[#245FB1] text-white rounded-lg p-6 shadow-lg max-w-xs">
     <div class="relative">
       <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-gray-200">
         <img src={photo} alt="Profile" class="w-full h-full object-cover"/>
@@ -820,10 +820,10 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
       </div>
     </div>
     
-    <h2 class="text-center text-xl  mt-4">Profile photo</h2>
+    <h2 class="text-center text-xl font-semibold mt-4">Profile photo</h2>
     
-    <div class="mt-4 flex justify-between">
-      <button class="bg-gray-700 px-4 py-2 rounded text-sm text-white hover:bg-gray-600"  onClick={handleIconClick}>Add photo</button>
+    <div class="mt-4 flex justify-between gap-2">
+      <button class="bg-white px-4 py-2 rounded text-sm text-[#245FB1] "  onClick={handleIconClick}>Add photo</button>
       {/* <button class="bg-gray-700 px-4 py-2 rounded text-sm text-white hover:bg-gray-600">Add photo</button> */}
       {/* <button class="bg-gray-700 px-4 py-2 rounded text-sm text-white hover:bg-gray-600">Frames</button> */}
       <button class="bg-red-600 px-4 py-2 rounded text-sm text-white hover:bg-red-500" onClick={deleteImage}>Delete</button>
