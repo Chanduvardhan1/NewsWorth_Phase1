@@ -174,7 +174,7 @@ const landing = () => {
   const storedCartCount = localStorage.getItem('totalCartItems');
 
   return (
-    <div className=" fixed w-full top-0 z-50">
+    <div className=" fixed w-full top-14 z-50">
    <div className=" relative">
 <div className=" w-full flex justify-between p-[5px] px-[20px] shadow-md bg-white ">
     <div className="flex justify-center items-center">
@@ -225,9 +225,10 @@ const landing = () => {
       <div>
         <img src={ball} className="w-[20px] h-[20px]" alt="" />
       </div>
+      {/* profile name and icon */}
       <div
       onClick={toggleDropdown}
-       className="flex cursor-pointer justify-center gap-[10px] bg-gray-100 rounded-xl p-1 px-4">
+       className="profile-info flex cursor-pointer justify-center gap-[10px] bg-slate-500 rounded-xl p-1 px-4">
       <div   onClick={toggleDropdown} >
       {loading ? (
         <p>Loading...</p>
@@ -244,7 +245,7 @@ const landing = () => {
         </div>
         <div>
             <h1 className=" cursor-pointer red-color" ><span  className=" text-[14px] font-bold cursor-pointer blue-color">{userName}</span> </h1>
-            <p className=" cursor-pointer text-[14px]"   >User ID: {userId}</p>
+            {/* <p className=" cursor-pointer text-[14px]"   >User ID: {userId}</p> */}
         </div>
         </div>
         <div className=" flex flex-col justify-center items-center">

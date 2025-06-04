@@ -7,6 +7,7 @@ import { Transition } from "@headlessui/react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import facebook from "../../src/assets/Images/footer/facebook-app-symbol.png"
+import CityLogin from '../../src/city/city-login';
 // import Footer from "../footer/footer";
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
@@ -905,7 +906,8 @@ useEffect(() => {
   return (
     <div>
    <div className=" relative">
-    <Landing/>
+    <CityLogin/>
+    {/* <Landing/> */}
     <ToastContainer />
    <Filters/>
     <div className="px-[20px] bg-white relative">

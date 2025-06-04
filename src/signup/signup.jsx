@@ -3,6 +3,7 @@ import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/image.png'
 import Image from'../assets/Images/about/Main_Image.png'
 import info from '../../src/assets/Images/dashboard/info.png'
+import City from '../../src/city/city';
 
 import{Link} from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -1063,6 +1064,7 @@ useEffect(() => {
   };
   return (
     <>
+    <City/>
    <Navbar/>
    <ToastContainer />
    <main className="w-full h-[500px]  flex px-[5%]">

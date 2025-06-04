@@ -105,16 +105,15 @@ const city = () => {
   const { main } = weatherData;
 
   return (
-    <div className='bg-slate-300 flex justify-between h-10 items-center'>
-        <div className="weather flex ">
-            <p className='ml-28'>{<MapPinned/>}</p>
-            <p className='mr-2'>{city}</p>
+    <div className='bg-[#EFF7FF] flex justify-between h-10 items-center'>
+        <div className="weather flex ml-32">
+           <p className='ml-2 mr-2'><Haze/></p>
+            <p>{main.temp}°C  <span  className='mr-2 ml-1'> {city} </span></p>
+            <p>{<MapPinned className='ml-2 mr-2'/>}</p>
             <p>Latitude: {location.latitude}, Longitude: {location.longitude}</p>
-            <p className='ml-2 mr-2'><Haze/></p>
-            <p>{main.temp}°C</p>
         </div>
-        <div className="time flex mr-7">
-            <p>{<Calendar/>}</p>
+        <div className="time flex mr-32">
+            <p>{<Calendar size={22} className='mr-1 '/>}</p>
             <p>{dateWithComma}</p>
         </div>
     </div>
