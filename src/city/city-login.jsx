@@ -27,6 +27,10 @@ const [categoryName, setCategoryName] = useState('Unknown');
  const { isAuthenticated, authToken, logout } = useContext(AuthContext);
 const storedCartCount = localStorage.getItem('totalCartItems');
 
+const handlecart = () => {
+    navigate('/cart'); // Navigate to the selected path
+  };
+
 const handleProfile = () => {
     navigate('/profile'); // Navigate to the selected path
   };
@@ -199,9 +203,9 @@ useEffect(() => {
           <User/>
           <span>{userName}</span>
         </div>
-         <div className="cart">
+         <div className="cart flex  gap-2 cursor-pointer bg-white w-auto h-10 items-center justify-center rounded-md p-2" onClick={handlecart} >
           <ShoppingCart/>
-          <p>{storedCartCount}</p>
+          <p className='bg-[#245FB1] text-white w-5 h-5 rounded-3xl flex items-center justify-center'>{storedCartCount}</p>
         </div>
         <div className='log-out flex w-24 mr-12 h-10 justify-center items-center  '>
           <button onClick={handleBackToLogin} className='flex '><Power size={18} className='mr-2 mt-1'/>LogOut</button>
