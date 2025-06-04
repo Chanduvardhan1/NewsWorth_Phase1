@@ -4,6 +4,7 @@ import home from '../../src/assets/Images/home/image.png'
 import Image from'../assets/Images/about/Main_Image.png'
 import { AuthContext } from "../Authcontext/AuthContext.jsx"
 import UserIcon from'../assets/Images/login/profile.png'
+import City from '../../src/city/city';
 
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
@@ -293,6 +294,7 @@ const [errorMessage1, setErrorMessage1] = useState('')
   
   return (
     <>
+    <City/>
     <Navbar/>
     <div className="relative">
        <main className="w-full h-auto lg:h-[500px] flex flex-col lg:flex-row px-4 lg:px-[5%]">

@@ -1,7 +1,8 @@
 import React from 'react';
 import Navbar from "../Navbar/navbar";
 import Image from '../assets/Images/about/Main_Image.png';
-
+import City from '../../src/city/city';
+import CityLogin from '../../src/city/city-login';
 const points=[
   'NewsWorth connects individuals with media companies for real-time news distribution.',
   'The platform enables faster delivery of news by allowing users to upload photos and videos.',
@@ -14,6 +15,8 @@ const points=[
 const About = () => {
   return (
     <>
+    {/* <CityLogin/> */}
+      <City/>
       <Navbar />
       <div className="relative">
         <main className="h-[500px] w-full overflow-hidden flex px-[5%]">
