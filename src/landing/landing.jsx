@@ -1,5 +1,9 @@
 import React, { useState, useEffect ,useRef,useContext} from "react";
 import logo from "../../src/assets/Images/dashboard/newlogo.NewsWorth.jpg"
+import { Video } from 'lucide-react';
+import { Image } from 'lucide-react';
+import { Volume2 } from 'lucide-react';
+
 
 import ball from '../../src/assets/Images/landing/notification 1.png'
 import defaultPhoto from '../../src/assets/Images/landing/pic.jpg'
@@ -176,8 +180,8 @@ const landing = () => {
   return (
     <div className=" fixed w-full top-14 z-50">
    <div className=" relative">
-<div className=" w-full flex justify-between p-[5px] px-[20px] shadow-md bg-white ">
-    <div className="flex justify-center items-center">
+<div className=" w-full flex justify-between p-[5px] px-[20px]  bg-white ">
+    <div className="flex justify-center items-center ml-28">
         <div>
         <img src={logo} alt="" onClick={handleNavigation} className=" cursor-pointer w-[150px] h-[50px]" />
         </div>
@@ -185,6 +189,11 @@ const landing = () => {
         {/* <h1 className="text-[25px] font-bold cursor-pointer text-[#0f2b9fd9] " onClick={handleNavigation}>News<span className="text-[25px] font-bold cursor-pointer text-[#ce003d]" >Worth</span></h1> */}
 
         </div>
+    </div>
+    <div className="content flex items-center justify-center gap-2 ml-[14cm]">
+          <p className="cursor-pointer flex items-center justify-center gap-2 border border-[#245FB1] w-[100px] h-[40px] rounded-md font-medium text-black bg-gradient-to-r from-[#F6E5CF] to-[#E6DEF7]"><Video size={24}/><span>Videos</span></p>
+          <p className="cursor-pointer flex items-center justify-center gap-2 border border-[#245FB1] w-[100px] h-[40px]  rounded-md font-medium text-black bg-gradient-to-r from-[#F6E5CF] to-[#E6DEF7]"><Image size={22}/><span>Images</span></p>
+          <p className="cursor-pointer flex items-center justify-center gap-2 border border-[#245FB1] w-[100px] h-[40px]  rounded-md font-medium text-black bg-gradient-to-r from-[#F6E5CF] to-[#E6DEF7]"><Volume2 size={22}/><span>Audios</span></p>
     </div>
   
     <div className="flex justify-center items-center gap-5 ">
@@ -214,7 +223,7 @@ const landing = () => {
           id="default-search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full lg:w-[400px] p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="w-full lg:w-[200px] p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Search"
           required
         />
@@ -222,11 +231,11 @@ const landing = () => {
     </div>
     
         </div>
-      <div>
+      {/* <div>
         <img src={ball} className="w-[20px] h-[20px]" alt="" />
-      </div>
+      </div> */}
       {/* profile name and icon */}
-      <div
+      {/* <div
       onClick={toggleDropdown}
        className="profile-info flex cursor-pointer justify-center gap-[10px] bg-slate-500 rounded-xl p-1 px-4">
       <div   onClick={toggleDropdown} >
@@ -245,10 +254,10 @@ const landing = () => {
         </div>
         <div>
             <h1 className=" cursor-pointer red-color" ><span  className=" text-[14px] font-bold cursor-pointer blue-color">{userName}</span> </h1>
-            {/* <p className=" cursor-pointer text-[14px]"   >User ID: {userId}</p> */}
+            <p className=" cursor-pointer text-[14px]"   >User ID: {userId}</p>
         </div>
-        </div>
-        <div className=" flex flex-col justify-center items-center">
+        </div> */}
+        {/* <div className=" flex flex-col justify-center items-center">
 
        
        <div className="relative w-[40px] h-[35px] cursor-pointer" onClick={handlecart}>
@@ -259,10 +268,10 @@ const landing = () => {
 </div>
 {timeLeft !== null && storedCartCount > 0 &&(
         <p className="text-red-500 text-[12px]">Time Left: {formatTime(timeLeft)}</p>
-      )}  </div>
+      )}  </div> */}
     </div>
 </div>
-{isDropdownOpen && (
+{/* {isDropdownOpen && (
         <div ref={dropdownRef} className=" w-[16%] text-[14px] inline-block text-left bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none absolute z-50 right-[0px] top-[70px]">
           <div>
             <button className="flex  items-center w-full px-4 py-2 text-sm font-medium text-gray-700">
@@ -282,11 +291,11 @@ const landing = () => {
           <div className="flex justify-start px-4 m-2">
             <button className="flex justify-start" onClick={handleProfile}>View Profile</button>
           </div>
-          {/* <div className="border-t border-gray-200"></div>
+          <div className="border-t border-gray-200"></div>
 
           <div className="flex justify-start px-4 m-2">
             <button className="flex justify-start" onClick={handleorders}>My Orders</button>
-          </div> */}
+          </div>
           <div className="border-t border-gray-200 "></div>
           <div className=" flex justify-start m-2 px-4 ">
             <button onClick={handleBackToLogin} className="block px-4 py-2 text-sm text-white font-semibold hover:bg-blue-300 bg-red-500 rounded-full p-2 my-2">
@@ -294,7 +303,7 @@ const landing = () => {
             </button>
           </div>
         </div>
-      )}
+      )} */}
 
    </div>
     </div>

@@ -1,7 +1,15 @@
 import { URL } from "../url";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import slugify from 'slugify';
+
 import { NavLink,useLocation } from 'react-router-dom';
+function customSlugifyWithUnderscore(str) {
+  return str
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')  // Replace non-alphanumeric chars with underscore
+    .replace(/^_+|_+$/g, '');      // Trim leading/trailing underscores
+}
 
 function filtersCategory(){
     const [categories, setCategories] = useState([]);
@@ -47,25 +55,32 @@ function filtersCategory(){
   }, []);
   return (
     <>
-      <h1 className="mt-20">Filters</h1>
-       {Array.isArray(categories) &&
-  categories.map((cat, index) => {
-    const name =
-      typeof cat === "string"
-        ? cat
-        : cat.category_name || `Category ${index + 1}`; // <-- use category_name here
-    const path = `/${name.toLowerCase().replace(/\s+/g, "")}`;
+     <div className="fixed top-[116px] left-6 inline-flex w-fit z-50 ml-[110px]">
+  {Array.isArray(categories) &&
+    categories.map((cat, index) => {
+      const name =
+        typeof cat === "string"
+          ? cat
+          : cat.category_name || `Category ${index + 1}`;
+      const path = `/${customSlugifyWithUnderscore(name)}`;
 
-    return (
-      <NavLink
-        key={index}
-        to={path}
-        className="p-2 bg-gray-100 rounded hover:bg-gray-200 shadow-md"
-      >
-        {name}
-      </NavLink>
-    );
-  })}
+      return (
+        <NavLink
+          key={index}
+          to={path}
+          className={({ isActive }) =>
+            `px-2 py-2 text-sm font-medium text-white transition-all duration-200
+            ${isActive ? 'bg-[#CF1B58]' : 'bg-[#2c2c2c] hover:bg-gray-700'}`
+          }
+        >
+          {name}
+        </NavLink>
+      );
+    })}
+</div>
+
+
+       
 
       {/* Debugging: show raw categories JSON */}
       {/* <div className="mt-8 w-full">
