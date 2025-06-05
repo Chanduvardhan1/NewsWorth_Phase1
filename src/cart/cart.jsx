@@ -6,6 +6,8 @@ import Landing from "../landing/landing";
 import { Transition } from "@headlessui/react";
 import { toast, ToastContainer } from "react-toastify";
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import CityLogin from '../../src/city/city-login';
+import FiltersCategory from '../../src/filters/filter-categories'
 
 import "react-toastify/dist/ReactToastify.css";
 import x from "../../src/assets/Images/dashboard/cross-button.png"
@@ -348,7 +350,9 @@ useEffect(() => {
   return (
     <div>
    <div className=" relative">
-    <Landing/>
+    <FiltersCategory/>
+    <CityLogin/>
+    {/* <Landing/> */}
     <ToastContainer />
 
     <div className="p-[20px] bg-white relative top-[65px]">
