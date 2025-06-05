@@ -9,6 +9,8 @@ import { User } from 'lucide-react';
 import { useNavigate, useLocation } from "react-router-dom";
 import { URL } from "../url";
 import { AuthContext } from "../Authcontext/AuthContext";
+import { useTimer } from "../timerContext";
+
 
 function cityLogin(){
   const [location, setLocation] = useState(null);
@@ -26,6 +28,16 @@ const dropdownRef = useRef(null); // Create a ref for the dropdown
 const [categoryName, setCategoryName] = useState('Unknown');
  const { isAuthenticated, authToken, logout } = useContext(AuthContext);
 const storedCartCount = localStorage.getItem('totalCartItems');
+  const { timeLeft } = useTimer(); // Access timeLeft from context
+
+
+
+ const formatTime = (time) => {
+    if (time === null) return "--:--";
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+  };
 
 const handlecart = () => {
     navigate('/cart'); // Navigate to the selected path
@@ -198,14 +210,21 @@ useEffect(() => {
             <p>{dateWithComma}</p>
         </div>
         <div className="items flex gap-6 justify-center items-center">
-          <div className='w-36 h-10 bg-white text-black rounded-md flex items-center justify-center space-x-2  cursor-pointer'
+          <div className='w-36 h-11 bg-white text-black rounded-md flex items-center justify-center space-x-2  cursor-pointer'
         onClick={handleProfile}>
           <User/>
           <span>{userName}</span>
         </div>
-         <div className="cart flex  gap-2 cursor-pointer bg-white w-auto h-10 items-center justify-center rounded-md p-2" onClick={handlecart} >
-          <ShoppingCart/>
+         <div className="cart flex flex-col  cursor-pointer bg-white w-auto h-11 items-center justify-center rounded-md px-2" onClick={handlecart} >
+          <div className='flex gap-2 justify-center items-center '>
+             <ShoppingCart/>
           <p className='bg-[#245FB1] text-white w-5 h-5 rounded-3xl flex items-center justify-center'>{storedCartCount}</p>
+          </div>
+          <div className='flex flex-col'>
+            {timeLeft !== null && storedCartCount > 0 &&(
+        <p className="text-[#245FB1] text-[12px]">Time Left: {formatTime(timeLeft)}</p>
+      )} 
+          </div>
         </div>
         <div className='log-out flex w-24 mr-12 h-10 justify-center items-center  '>
           <button onClick={handleBackToLogin} className='flex '><Power size={18} className='mr-2 mt-1'/>LogOut</button>
