@@ -14,6 +14,8 @@ function customSlugifyWithUnderscore(str) {
 function filtersCategory(){
     const [categories, setCategories] = useState([]);
   const location = useLocation();
+  const authToken = localStorage.getItem('authToken') || null;
+ const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -53,6 +55,39 @@ function filtersCategory(){
   useEffect(() => {
     console.log("FiltersCategory component mounted");
   }, []);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    
+  
+    try {
+      const response = await fetch(`${URL}/search_content?query=${encodeURIComponent(searchQuery)}`, {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'Authorization': `Bearer ${authToken}`,
+        },
+        body: '',
+      });
+  
+      if (!response.ok) {
+        throw new Error('Search request failed');
+      }
+  
+      const data = await response.json();
+      
+      
+      if (data.response === "fail") {
+        navigate('/search', { state: {noDataMessage: data.response_message } });
+      } else {
+        navigate('/search', { state: { videoData: data.response_message, ImageData: data.response_message, cardData: data.response_message } });
+      }
+    } catch (error) {
+      console.error('Error during search:', error);
+    }
+  };  
+
+
   return (
     <>
      <div className="fixed top-[116px] left-6 inline-flex w-fit z-50 ml-[110px]">

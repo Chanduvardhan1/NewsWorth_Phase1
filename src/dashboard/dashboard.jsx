@@ -960,7 +960,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
-   <div className=" fixed z-10 w-full  top-[250px] bg-white">
+   <div className=" fixed z-10 w-full  top-[154px] bg-white">
 <div className="flex w-full items-center pr-[20px]">
       {/* Audio Tab */}
     
@@ -991,7 +991,7 @@ useEffect(() => {
       </div>
     </div>
     </div>
-    <div className=" relative top-[270px]">
+    <div className=" relative top-[200px]">
     <div className="flex  items-center my-4 ">
    
 

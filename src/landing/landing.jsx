@@ -26,6 +26,7 @@ const landing = () => {
   const [categoryName, setCategoryName] = useState('Unknown');
   const { timeLeft } = useTimer(); // Access timeLeft from context
   const { isAuthenticated, authToken, logout } = useContext(AuthContext);
+  const [activeTab, setActiveTab] = useState('Videos'); // Default to Audio
 
   const formatTime = (time) => {
     if (time === null) return "--:--";
@@ -190,16 +191,52 @@ const landing = () => {
 
         </div>
     </div>
-    <div className="content flex items-center justify-center gap-2 ml-[14cm]">
-          <p className="cursor-pointer flex items-center justify-center gap-2 border border-[#245FB1] w-[100px] h-[40px] rounded-md font-medium text-black bg-gradient-to-r from-[#F6E5CF] to-[#E6DEF7]"><Video size={24}/><span>Videos</span></p>
-          <p className="cursor-pointer flex items-center justify-center gap-2 border border-[#245FB1] w-[100px] h-[40px]  rounded-md font-medium text-black bg-gradient-to-r from-[#F6E5CF] to-[#E6DEF7]"><Image size={22}/><span>Images</span></p>
-          <p className="cursor-pointer flex items-center justify-center gap-2 border border-[#245FB1] w-[100px] h-[40px]  rounded-md font-medium text-black bg-gradient-to-r from-[#F6E5CF] to-[#E6DEF7]"><Volume2 size={22}/><span>Audios</span></p>
-    </div>
+    <div className="content flex items-center justify-center gap-2 ml-[16cm]">
+  {/* Videos Tab */}
+  <p
+    className={`cursor-pointer flex items-center justify-center gap-2 border border-[#245FB1] w-[100px] h-[40px] rounded-md font-medium ${
+      activeTab === 'Videos'
+        ? 'text-white bg-[#245FB1]'
+        : 'text-black bg-gradient-to-r from-[#F6E5CF] to-[#E6DEF7]'
+    }`}
+    onClick={() => setActiveTab('Videos')}
+  >
+    <Video size={24} />
+    <span>Videos</span>
+  </p>
+
+  {/* Images Tab */}
+  <p
+    className={`cursor-pointer flex items-center justify-center gap-2 border border-[#245FB1] w-[100px] h-[40px] rounded-md font-medium ${
+      activeTab === 'Images'
+        ? 'text-white bg-[#245FB1]'
+        : 'text-black bg-gradient-to-r from-[#F6E5CF] to-[#E6DEF7]'
+    }`}
+    onClick={() => setActiveTab('Images')}
+  >
+    <Image size={22} />
+    <span>Images</span>
+  </p>
+
+  {/* Audios Tab */}
+  <p
+    className={`cursor-pointer flex items-center justify-center gap-2 border border-[#245FB1] w-[100px] h-[40px] rounded-md font-medium ${
+      activeTab === 'Audio'
+        ? 'text-white bg-[#245FB1]'
+        : 'text-black bg-gradient-to-r from-[#F6E5CF] to-[#E6DEF7]'
+    }`}
+    onClick={() => setActiveTab('Audio')}
+  >
+    <Volume2 size={22} />
+    <span>Audios</span>
+  </p>
+</div>
+
   
     <div className="flex justify-center items-center gap-5 ">
     <div className=" grid-flow-row grid items-center">
         
-    <div className="relative">
+    {/* <div className="relative">
       <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
         <svg
           className="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -228,7 +265,7 @@ const landing = () => {
           required
         />
       </form>
-    </div>
+    </div> */}
     
         </div>
       {/* <div>
