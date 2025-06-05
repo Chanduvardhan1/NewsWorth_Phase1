@@ -4,7 +4,8 @@ import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
 import Landing from "../landing/landing";
 import CityLogin from '../../src/city/city-login';
 import LogoOnly from '../city/logo';
-
+import { MapPinHouse } from 'lucide-react';
+import { User } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from 'react-router-dom';
 import camera1 from "../../src/assets/Images/dashboard/camera (2).png"
@@ -749,7 +750,7 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
    
    
 
-    <div className=" relative top-28">
+    <div className=" relative top-24">
 
     <div className="flex p-4 pl-[60px] justify-between items-center mt-10">
       <h1 className="text-[#245FB1] font-semibold text-[25px]">My Profile</h1>
@@ -1076,16 +1077,16 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
            
             {showRegistr ?(
                        <div className="flex justify-end">
-                       <button className="primary-btn" onClick={handleEditClick}>Edit</button>
+                       <button className="text-white   rounded-md px-2 bg-[#245FB1] text-[12px] font-bold w-auto h-6" onClick={handleEditClick}>Edit</button>
                      </div>
             
             ):(
               <div className="flex justify-between ">
               <div className="">
-              <button className="primary-btn"onClick={handleCancel}>Cancel</button>
+              <button className="text-white   rounded-md px-2 bg-[#245FB1] text-[12px] font-bold w-auto h-6"onClick={handleCancel}>Cancel</button>
             </div>
               <div className="">
-                       <button className="primary-btn"onClick={handleSaveClick} >Save</button>
+                       <button className="text-white   rounded-md px-2 bg-[#245FB1] text-[12px] font-bold w-auto h-6"onClick={handleSaveClick} >Save</button>
                      </div>
                      </div>
             )}
