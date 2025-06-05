@@ -7,7 +7,8 @@ import { Transition } from "@headlessui/react";
 import { toast, ToastContainer } from "react-toastify";
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import CityLogin from '../../src/city/city-login';
-import FiltersCategory from '../../src/filters/filter-categories'
+import FiltersCategory from '../../src/filters/filter-categories';
+import LogoOnly from '../city/logo';
 
 import "react-toastify/dist/ReactToastify.css";
 import x from "../../src/assets/Images/dashboard/cross-button.png"
@@ -350,12 +351,13 @@ useEffect(() => {
   return (
     <div>
    <div className=" relative">
-    <FiltersCategory/>
     <CityLogin/>
+    <LogoOnly/>
+    {/* <FiltersCategory/> */}
     {/* <Landing/> */}
     <ToastContainer />
 
-    <div className="p-[20px] bg-white relative top-[65px]">
+    <div className="p-[20px] bg-white relative top-[100px]">
      
    
 
@@ -365,8 +367,8 @@ useEffect(() => {
   
 <div className="bg-white shadow-md rounded-lg p-6 mt-8 w-[70%]"> 
       <div className="border-b mb-4">
-        <h2 className="text-2xl font-semibold blue-color">Shopping Bag</h2>
-        <p className=" underline text-blue-500 cursor-pointer" onClick={handledashboard}>Add more items to Cart</p>
+        <h2 className="text-2xl font-semibold text-[#245FB1]">Shopping Bag</h2>
+        <p className=" underline text-[#245FB1] cursor-pointer" onClick={handledashboard}>Add more items to Cart</p>
         <div className="flex justify-between mt-2 px-2">
           <h2 className="text-[14px] font-semibold text-gray-500">Item</h2>
           <h2 className="text-[14px] font-semibold text-gray-500">Price</h2>
@@ -450,9 +452,9 @@ useEffect(() => {
       )}
     </div>
 
-<div className="w-[30%] p-5">
+<div className="w-[30%] p-5 top-52">
 <div className="mb-6">
-    <h2 className="text-2xl blue-color font-semibold">Order Summary</h2>
+    <h2 className="text-2xl text-[#245FB1]  font-semibold">Order Summary</h2>
     {/* <p className="text-red-500 font-semibold mt-2">
           Time Left: {formatTime(timeLeft)}
         </p>
@@ -483,7 +485,7 @@ onClick={() => {
   buyContent(contentIds); // Pass all content IDs
 }} className=" mt-5 p-2 px-5 cursor-pointer bg-[#0f2b9fd9] flex justify-center">
 
-<button className="text-white font-bold" onClick={() => {
+<button className="text-white bg-[#245FB1] font-bold" onClick={() => {
                             const contentIds = shoppingItems.map(item => item.content_id); // Collect all content IDs
                             buyContent(contentIds); // Pass all content IDs
                         }}>Buy</button>

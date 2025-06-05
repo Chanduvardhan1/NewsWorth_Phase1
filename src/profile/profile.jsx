@@ -2,6 +2,8 @@ import React, { useState,useEffect ,useContext} from "react";
 import Navbar from "../Navbar/navbar";
 import home from '../../src/assets/Images/home/IMG_20240906_161755.jpg'
 import Landing from "../landing/landing";
+import CityLogin from '../../src/city/city-login';
+import LogoOnly from '../city/logo';
 
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from 'react-router-dom';
@@ -740,14 +742,16 @@ const handleAddToCart = async (contentId, contentLink, finalprice) => {
 
   return (
     <>
-   <Landing/>
+    <CityLogin/>
+    <LogoOnly/>
+   {/* <Landing/> */}
    <ToastContainer />
    
    
 
-    <div className=" relative top-[65px]">
+    <div className=" relative top-28">
 
-    <div className="flex p-4 pl-[60px] justify-between items-center ">
+    <div className="flex p-4 pl-[60px] justify-between items-center mt-10">
       <h1 className="text-[#245FB1] font-semibold text-[25px]">My Profile</h1>
       {/* <img src={logout1} alt="" onClick={handleBackToLogin} className="w-[25px] h-[25px] cursor-pointer" /> */}
     </div>

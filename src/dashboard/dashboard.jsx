@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import facebook from "../../src/assets/Images/footer/facebook-app-symbol.png"
 import CityLogin from '../../src/city/city-login';
+import FiltersCategory from '../../src/filters/filter-categories'
 // import Footer from "../footer/footer";
 import { TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
@@ -907,9 +908,10 @@ useEffect(() => {
     <div>
    <div className=" relative">
     <CityLogin/>
-    {/* <Landing/> */}
+    <Landing/>
     <ToastContainer />
-   <Filters/>
+    <FiltersCategory/>
+   {/* <Filters/> */}
     <div className="px-[20px] bg-white relative">
       {/* Button to toggle the sidebar */}
       
@@ -958,7 +960,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
-   <div className=" fixed z-10 w-full  top-[130px] bg-white">
+   <div className=" fixed z-10 w-full  top-[250px] bg-white">
 <div className="flex w-full items-center pr-[20px]">
       {/* Audio Tab */}
     
@@ -989,7 +991,7 @@ useEffect(() => {
       </div>
     </div>
     </div>
-    <div className=" relative top-[160px]">
+    <div className=" relative top-[270px]">
     <div className="flex  items-center my-4 ">
    
 
