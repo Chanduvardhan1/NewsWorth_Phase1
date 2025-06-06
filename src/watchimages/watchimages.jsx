@@ -1,6 +1,7 @@
 import React, { useState, useEffect ,useRef,useContext} from "react";
 import { AuthContext } from "../Authcontext/AuthContext";
 import { useTimer } from "../timerContext";
+import CityLogin from '../city/city-login';
 
 import Navbar from "../Navbar/navbar";
 import { useNavigate } from "react-router-dom";
@@ -494,6 +495,7 @@ const watchimages = () => {
   };
   return (
     <>
+    <CityLogin/>
    <Landing/>
    {/* <div className="flex w-full items-center p-4">
      
@@ -546,7 +548,7 @@ const watchimages = () => {
         &gt;
       </button>
     </div> */}
-        <div className=" relative top-[65px]">
+        <div className=" relative top-[135px]">
     {selectedimage ? (
  <div className="flex flex-row justify-between items-start px-4 py-2 gap-4">
  {/* Text Section */}
