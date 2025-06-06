@@ -182,7 +182,7 @@ const landing = () => {
     <div className=" fixed w-full top-14 z-50">
    <div className=" relative">
 <div className=" w-full flex justify-between p-[5px] px-[20px]  bg-white ">
-    <div className="flex justify-center items-center ml-28">
+    <div className="flex justify-center items-center ml-16">
         <div>
         <img src={logo} alt="" onClick={handleNavigation} className=" cursor-pointer w-[150px] h-[50px]" />
         </div>
@@ -191,7 +191,7 @@ const landing = () => {
 
         </div>
     </div>
-    <div className="content flex items-center justify-center gap-2 ml-[16cm]">
+    <div className="content flex items-center justify-center gap-2 ml-[21cm]">
   {/* Videos Tab */}
   <p
     className={`cursor-pointer flex items-center justify-center gap-2 border border-[#245FB1] w-[100px] h-[40px] rounded-md font-medium ${

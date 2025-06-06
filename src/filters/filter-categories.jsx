@@ -90,7 +90,7 @@ function filtersCategory(){
 
   return (
     <>
-     <div className="fixed top-[116px] left-6 inline-flex w-fit z-50 ml-[110px]">
+     <div className="fixed top-[116px] left-6 inline-flex w-fit z-50 ml-[58px]">
   {Array.isArray(categories) &&
     categories.map((cat, index) => {
       const name =

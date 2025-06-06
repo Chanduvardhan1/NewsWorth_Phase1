@@ -7,148 +7,167 @@ import { AuthContext } from "../Authcontext/AuthContext";
 import expanding from '../../src/assets/Images/dashboard/maximize.png';
 import card from '../../src/assets/Images/dashboard/shopping-cart.png';
 import { useTimer } from "../timerContext";
+import { useNavigate } from 'react-router-dom';
+import check from '../../src/assets/Images/dashboard/check.png'
 
 function Health(){
-     const [imageData, setImageData] = useState([]);
-      const { isAuthenticated, authToken } = useContext(AuthContext);
-      const [loading, setLoading] = useState(true);
-      const userId = location.state?.user_id || localStorage.getItem("userId");
-      const [cartContent, setCartContent] = useState(null);
-      const [showPopup1, setShowPopup1] = useState(false);
-      const [showCartNotification, setShowCartNotification] = useState(false);
-      const [error, setError] = useState('');
-      const [finalPrice, setFinalPrice] = useState(null);
-      const { startTimer } = useTimer();
-      const [showTimer, setShowTimer] = useState(false);
-      const [cartCount, setCartCount] = useState(0);
-    
-      // Fetch image data for Business & Economy
-      const fetchData = useCallback(async () => {
-        try {
-          setLoading(true);
-          const response = await fetch(`${URL}/landing page?user_id=${userId}`, {
-            method: "POST",
-            headers: {
-              "accept": "application/json",
-              Authorization: `Bearer ${authToken}`,
-            },
-            body: JSON.stringify({}),
-          });
-    
-          const data = await response.json();
-    
-          if (data.response === "success") {
-            console.log("Fetched data: ", data);
-            setImageData(data.data);
-          }
-        } catch (error) {
-          console.error("Error fetching data", error);
-        } finally {
-          setLoading(false);
-        }
-      }, [authToken, userId]);
-    
-      useEffect(() => {
-        fetchData();
-      }, [fetchData]);
-    
-      // Memoize filtered content to avoid recalculating on every render
-      const filteredContent = useMemo(() => {
-        const filtered = imageData.filter(item => item.content_categories === "Health");
-        console.log("Filtered Health content: ", filtered);  // Log the filtered content
-        return filtered;
-      }, [imageData]);
-    
-      // Add content to cart
-      const handleAddToCart = useCallback(async (contentId, contentLink, finalPrice) => {
-        try {
-          const response = await fetch(`${URL}/add_to_cart`, {
-            method: 'POST',
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${authToken}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              user_id: userId,
-              content_id: contentId,
-            }),
-          });
-    
-          const data = await response.json();
-    
-          if (response.ok && data.response === 'success') {
-            const isVideo = contentLink?.includes('.mp4') || 
-                            contentLink?.includes('.webm') || 
-                            contentLink?.includes('.ogg');
-    
-            setCartContent({ link: contentLink, isVideo });
-            setShowCartNotification(true);
-            setFinalPrice(finalPrice);
-            await fetchCartItems();
-            startTimer();
-            setShowTimer(true);
-            return;
-          }
-    
-          if (data.response_message === 'Content already added to cart.') {
-            setShowPopup1(true);
-            setError(data.response_message);
-            return;
-          } else if (data.response === 'fail' && data.response_message === 'The content is locked.') {
-            setShowPopup1(true);
-            setError(data.response_message);
-            return;
-          }
-    
-          setShowPopup1(true);
-          setError('Failed to add content to cart.');
-        } catch (error) {
-          console.error('Request error:', error);
-          setShowPopup1(true);
-          setError('An error occurred while adding to the cart.');
-        }
-      }, [authToken, userId]);
-    
-      // Fetch cart items
-      const fetchCartItems = useCallback(async () => {
-        try {
-          const response = await fetch(`${URL}/total_cart_items?user_id=${userId}`, {
-            method: 'POST',
-            headers: {
-              'accept': 'application/json',
-              Authorization: `Bearer ${authToken}`,
-            },
-          });
-    
-          if (!response.ok) {
-            throw new Error('Failed to fetch cart items');
-          }
-    
-          const data = await response.json();
-          setCartCount(data.response_message);
-          localStorage.setItem('totalCartItems', data.response_message);
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      }, [authToken, userId]);
-    
-      useEffect(() => {
-        fetchCartItems();
-      }, [fetchCartItems]);
-    
-      const handleImagesClick = (imageItem) => {
-        navigate(`/Watchimages`,{ state: {  imageData: imageItem } });
-      };
-        const handleVideoClick = (videoItem) => {
-        navigate("/watch", { state: { videoData: videoItem } });
-      };
-    
-      const handleCart = () => {
-        navigate(`/cart`);
-      };
+       const [finalprice,setfinalprice] = useState(null);
+   const navigate = useNavigate();
+  const [imageData, setImageData] = useState([]);
+  const { isAuthenticated, authToken } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+  const userId = location.state?.user_id || localStorage.getItem("userId");
+  const [cartContent, setCartContent] = useState(null);
+  const [showPopup1, setShowPopup1] = useState(false);
+  const [showCartNotification, setShowCartNotification] = useState(false);
+  const [error, setError] = useState('');
+  const [finalPrice, setFinalPrice] = useState(null);
+  const { startTimer } = useTimer();
+  const [showTimer, setShowTimer] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
+  // Fetch image data for Business & Economy
+  const fetchData = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${URL}/landing page?user_id=${userId}`, {
+        method: "POST",
+        headers: {
+          "accept": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify({}),
+      });
+
+      const data = await response.json();
+
+      if (data.response === "success") {
+        console.log("Fetched data: ", data);
+        setImageData(data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching data", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [authToken, userId]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  // Memoize filtered content to avoid recalculating on every render
+  const filteredContent = useMemo(() => {
+    const filtered = imageData.filter(item => item.content_categories === "Health");
+    console.log("Filtered Health content: ", filtered);  // Log the filtered content
+    return filtered;
+  }, [imageData]);
+
+  // Add content to cart
+  const handleAddToCart = async (contentId, contentLink, finalprice) => {
+  try {
+    const response = await fetch(`${URL}/add_to_cart`, {
+      method: 'POST',
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${authToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        content_id: contentId,
+      }),
+    });
+
+    const data = await response.json();
+
+    // Debugging logs
+    console.log("Response status:", response.status);
+    console.log("Response data:", data);
+
+    if (response.ok && data.response === 'success') {
+      const isVideo = contentLink?.includes('.mp4') || 
+                      contentLink?.includes('.webm') || 
+                      contentLink?.includes('.ogg');
+
+      setCartContent({ link: contentLink, isVideo });
+      setShowCartNotification(true);
+      setFinalPrice(finalprice);  // Make sure you consistently use setFinalPrice (not setfinalprice)
+
+      await fetchCartItems();
+      startTimer();
+      setShowTimer(true); 
+      return;
+    }
+
+    // Handle content already in cart
+    if (data.response_message === 'Content already added to cart.') {
+      setShowPopup1(true);
+      setError(data.response_message);
+      return;
+    }
+
+    // Handle content locked
+    if (
+      data.response === 'fail' &&
+      data.response_message === `The content you're trying to add is locked at the moment. Please try again later.`
+    ) {
+      setShowPopup1(true);
+      setError(data.response_message);
+      return;
+    }
+
+    // Unexpected errors
+    console.error('Unexpected response:', data);
+    setShowPopup1(true);
+    setError('Failed to add content to cart.');
+  } catch (error) {
+    console.error('Request error:', error);
+    setShowPopup1(true);
+    setError('An error occurred while adding to the cart.');
+  }
+};
+
+
+  // Fetch cart items
+  const fetchCartItems = useCallback(async () => {
+    try {
+      const response = await fetch(`${URL}/total_cart_items?user_id=${userId}`, {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch cart items');
+      }
+
+      const data = await response.json();
+      setCartCount(data.response_message);
+      localStorage.setItem('totalCartItems', data.response_message);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }, [authToken, userId]);
+
+  useEffect(() => {
+    fetchCartItems();
+  }, [fetchCartItems]);
+
+  const handleImagesClick = (imageItem) => {
+    navigate(`/Watchimages`,{ state: {  imageData: imageItem } });
+  };
+    const handleVideoClick = (videoItem) => {
+    navigate("/watch", { state: { videoData: videoItem } });
+  };
+
+  const handleCart = () => {
+    navigate(`/cart`);
+  };
     return(
-        <>
+     <>
       <FilterCategories />
       <CityLogin />
       <Landing />
@@ -203,7 +222,7 @@ function Health(){
                       <video
                         controls
                         className="w-full h-60 object-cover"
-                        onClick={() => handleImagesClick(contentItem)}
+                        onClick={() => handleVideoClick(contentItem)}
                       >
                         <source
                           src={contentItem.Video_link || "path-to-fallback-video.mp4"}
@@ -211,7 +230,7 @@ function Health(){
                         />
                         Your browser does not support the video tag.
                       </video>
-                      <div onClick={() => handleImagesClick(contentItem)} className="absolute top-2 right-2">
+                      <div onClick={() => handleVideoClick(contentItem)} className="absolute top-2 right-2">
                         <img
                           src={expanding}
                           alt="Expand"
@@ -251,7 +270,11 @@ function Health(){
                         src={card}
                         alt="Add to Cart"
                         onClick={() =>
-                          handleAddToCart(contentItem.content_id, contentItem.Image_link, contentItem.final_price)
+                         handleAddToCart(
+      contentItem.content_id,
+      contentItem.content_type === "Video" ? contentItem.Video_link : contentItem.Image_link,
+      contentItem.final_price
+    )
                         }
                         className="w-[25px] h-[25px] cursor-pointer"
                       />
@@ -281,6 +304,82 @@ function Health(){
           )}
         </div>
       </div>
+             {showCartNotification && (
+               <div
+                 className="fixed right-0 top-0 transition-transform duration-500 transform translate-x-0 shadow-xl p-4 bg-white lg:w-[25%] z-50"
+                 style={{ transform: showCartNotification ? 'translateX(0)' : 'translateX(100%)' }} // Sliding effect
+               >
+                 <div className="flex items-center gap-[5px]">
+                   {/* Close button */}
+                   <button 
+                     className="absolute top-2 right-2 text-xl font-bold" 
+                     onClick={() => setShowCartNotification(false)} // Close on click
+                   >
+                     X
+                   </button>
+             
+                   {/* Show the image from content_link */}
+                   {cartContent.isVideo ? (
+               <video
+                 src={cartContent.link}
+                 className="object-cover w-[100px] h-[100px]"
+                 controls
+                 autoPlay
+                 muted
+                 loop
+                 type="video/mp4" // Ensure you specify the correct video type
+                 onError={(e) => {
+                   console.error('Error loading video:', e);
+                   // alert('Video failed to load. Please check the video URL or format.');
+                 }}
+               >
+                 Your browser does not support the video tag.
+               </video>
+             ) : (
+               <img
+                 src={cartContent.link}
+                 alt="Cart Content"
+                 className="object-cover w-[100px] h-[100px]"
+                 onError={(e) => console.error('Error loading image:', e)} // Handle errors
+               />
+             )}
+             
+                   {/* <img src={cartContent} alt="Added Content" className="w-[100px] h-[100px]" /> */}
+             
+                   <div className="flex items-center gap-[5px]">
+                     <img src={check} alt="Check" className="w-[15px] h-[15px]" />
+                     <h2 className="text-xl font-semibold">Added to Cart</h2>
+                   </div>
+                 </div>
+             
+                 <div className="flex flex-col gap-2 mt-4">
+                   <h1 className="font-semibold text-2xl">Cart Subtotal: {finalprice}</h1>
+                   {/* <div className="bg-yellow-400 rounded-2xl flex justify-center">
+                     <button className="text-black p-2">  Proceed to Buy ({cartCount} item{cartCount !== 1 ? 's' : ''})</button>
+                   </div> */}
+                   <div onClick={handleCart} className="bg-white border-[1px] border-black rounded-2xl flex justify-center">
+                     <button className="text-black p-2" onClick={handleCart}>Go to Cart</button>
+                   </div>
+                 </div>
+               </div>
+             )}
+             {showPopup1 && (
+               <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+               <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+                 {/* <div  onClick={() => setShowPopup1(false)} className="flex justify-end items-end">
+                 <img  onClick={() => setShowPopup1(false)} src={x} alt="" className="w-[25px] h-[25px]" />
+                 </div> */}
+                 {/* <h2 className="text-2xl font-semibold mb-4 text-red-600">Hurry up!</h2> */}
+                 <p className="text-lg">{error}</p>
+                 <button 
+                 onClick={() => setShowPopup1(false)}  
+                   className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg"
+                 >
+                   Close
+                 </button>
+               </div>
+             </div> 
+             )}
     </>
     )
 }
