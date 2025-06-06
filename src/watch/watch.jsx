@@ -1,5 +1,5 @@
 import React, { useState, useEffect ,useRef,useContext} from "react";
-
+import CItyLogin from '../city/city-login';
 import Navbar from "../Navbar/navbar";
 import { useNavigate } from "react-router-dom";
 import Landing from "../landing/landing";
@@ -491,6 +491,7 @@ const watch = () => {
   
   return (
     <>
+    <CItyLogin/>
    <Landing/>
    <ToastContainer/>
    {/* <div className="flex w-full items-center p-4">
@@ -547,7 +548,7 @@ const watch = () => {
         &gt;
       </button>
     </div> */}
-    <div className=" relative top-[65px]">
+    <div className=" relative top-[135px]">
      {selectedVideo ? ( 
  <div className="flex flex-row justify-between items-start px-4 py-2 gap-4">
   <div className="w-[20%]">
