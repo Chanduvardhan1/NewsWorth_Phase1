@@ -201,7 +201,7 @@ useEffect(() => {
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#EFF7FF] h-14 flex items-center z-50 shadow-md justify-between">
-    <div className="weather flex ml-32 items-center space-x-2 text-sm text-gray-800">
+    <div className="weather flex ml-20 items-center space-x-2 text-sm text-gray-800">
            <p className='ml-2 mr-2'><Haze/></p>
             <p>{main.temp}°C  <span  className='mr-2 ml-1'> {city} </span></p>
             {/* <p>{<MapPinned className='ml-2 mr-2'/>}</p>
