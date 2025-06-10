@@ -8,7 +8,7 @@ import expanding from '../../src/assets/Images/dashboard/maximize.png';
 import card from '../../src/assets/Images/dashboard/shopping-cart.png';
 import { useTimer } from "../timerContext";
 import { useNavigate } from 'react-router-dom';
-import check from '../../src/assets/Images/dashboard/check.png'
+import check from '../../src/assets/Images/dashboard/check.png';
 import LogoOnly from '../city/logo';
 
 function BreakingNews() {
