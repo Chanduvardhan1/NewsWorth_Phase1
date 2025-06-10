@@ -1,7 +1,9 @@
 import { URL } from "../url";
+import { Search } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import slugify from 'slugify';
+import { useNavigate } from "react-router-dom";
 
 import { NavLink,useLocation } from 'react-router-dom';
 function customSlugifyWithUnderscore(str) {
@@ -12,10 +14,13 @@ function customSlugifyWithUnderscore(str) {
 }
 
 function filtersCategory(){
+  const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
   const location = useLocation();
   const authToken = localStorage.getItem('authToken') || null;
  const [searchQuery, setSearchQuery] = useState('');
+
+ 
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -90,7 +95,7 @@ function filtersCategory(){
 
   return (
     <>
-     <div className="fixed top-[116px] left-6 inline-flex w-fit z-50 ml-[58px]">
+     <div className="fixed top-[116px] left-6 inline-flex w-fit z-50 ml-[27px]">
   {Array.isArray(categories) &&
     categories.map((cat, index) => {
       const name =
@@ -111,8 +116,27 @@ function filtersCategory(){
           {name}
         </NavLink>
       );
-    })}
+    })} 
 </div>
+  <div className="fixed top-[115px] right-6 z-50 ">
+    <div className="relative">
+      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+        <Search className="w-4 h-4  dark:text-gray-400 text-white" /> {/* Lucide Search Icon */}
+      </div>
+      <form onSubmit={handleSearch}>
+        <input
+          type="search"
+          id="default-search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-[180px] p-2 pl-10  text-sm bg-[#2c2c2c] text-white border border-gray-300   focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Search"
+          required
+        />
+      </form>
+    </div>
+  </div>
+
 
 
        
